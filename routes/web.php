@@ -19,13 +19,17 @@ Route::post('/verify', [AuthController::class, 'verify'])->name('verify.post');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
+Route::post('/verify/resend', [AuthController::class, 'resend'])
+    ->name('verify.resend');
+
+
 /*
 |--------------------------------------------------------------------------
 | Protected Routes (Authenticated Users)
 |--------------------------------------------------------------------------
 */
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/', [HomeController::class, 'home'])->name('home');
 

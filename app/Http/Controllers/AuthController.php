@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -17,30 +18,36 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
+
     public function register(Request $request)
     {
+        // 1️⃣ Validate input (MATCHES your form)
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
         ]);
 
-        $code = rand(100000, 999999); // OTP code
+        // 2️⃣ Generate OTP
+        $code = rand(100000, 999999);
 
+        // 3️⃣ Create user (NOT verified yet)
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'verification_code' => $code,
+            'verification_expires_at' => Carbon::now()->addMinutes(10),
         ]);
 
-        // send email
-        Mail::raw("Your verification code is: $code", function ($message) use ($user) {
-            $message->to($user->email)
-                ->subject('Email Verification Code');
-        });
+        // 4️⃣ Send OTP email
+        Mail::to($user->email)->send(
+            new \App\Mail\VerificationCodeMail($code)
+        );
 
-        return redirect('/verify')->with('success', 'Check your email for verification code');
+        // 5️⃣ Redirect to verify page
+        return redirect()->route('verify')
+            ->with('success', 'We sent a verification code to your email.');
     }
 
 
@@ -53,20 +60,28 @@ class AuthController extends Controller
     public function verify(Request $request)
     {
         $request->validate([
-            'code' => 'required'
+            'otp' => 'required|digits:6',
         ]);
 
-        $user = User::where('verification_code', $request->code)->first();
+        $user = User::where('verification_code', $request->otp)->first();
 
         if (!$user) {
-            return back()->withErrors(['code' => 'Invalid verification code']);
+            return back()->with('error', 'Invalid verification code');
         }
 
-        $user->email_verified_at = now();
-        $user->verification_code = null;
-        $user->save();
+        if (Carbon::now()->gt($user->verification_expires_at)) {
+            return back()->with('error', 'Verification code expired');
+        }
 
-        return redirect('/login')->with('success', 'Email verified, you can login now');
+        $user->update([
+            'email_verified_at' => now(),
+            'verification_code' => null,
+            'verification_expires_at' => null,
+        ]);
+
+        Auth::login($user);
+
+        return redirect()->route('home')->with('success', 'Email verified successfully');
     }
 
 
@@ -87,10 +102,32 @@ class AuthController extends Controller
                 return back()->withErrors(['email' => 'Verify your email first']);
             }
 
-            return redirect('/dashboard');
+            return redirect('/');
         }
 
         return back()->withErrors(['email' => 'Invalid credentials']);
+    }
+
+
+    // reset logic
+    public function resend()
+    {
+        $user = User::whereNull('email_verified_at')->latest()->first();
+
+        if (!$user) {
+            return back()->with('error', 'No pending verification found');
+        }
+
+        $user->update([
+            'verification_code' => rand(100000, 999999),
+            'verification_expires_at' => now()->addMinutes(10),
+        ]);
+
+        Mail::to($user->email)->send(
+            new \App\Mail\VerificationCodeMail($user)
+        );
+
+        return back()->with('success', 'Verification code resent');
     }
 
     // Logout logic
