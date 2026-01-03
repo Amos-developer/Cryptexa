@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\VerificationCodeMail;
 use Carbon\Carbon;
 
 class AuthController extends Controller
@@ -18,23 +19,24 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-
     public function register(Request $request)
     {
-        // 1️⃣ Validate input (MATCHES your form)
+        // 1️⃣ Validate input
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
+            'phone' => 'required',
             'password' => 'required|min:6|confirmed',
         ]);
 
         // 2️⃣ Generate OTP
         $code = rand(100000, 999999);
 
-        // 3️⃣ Create user (NOT verified yet)
+        // 3️⃣ Create user
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'verification_code' => $code,
             'verification_expires_at' => Carbon::now()->addMinutes(10),
@@ -42,10 +44,10 @@ class AuthController extends Controller
 
         // 4️⃣ Send OTP email
         Mail::to($user->email)->send(
-            new \App\Mail\VerificationCodeMail($code)
+            new VerificationCodeMail($code)
         );
 
-        // 5️⃣ Redirect to verify page
+        // 5️⃣ Redirect to OTP page
         return redirect()->route('verify')
             ->with('success', 'We sent a verification code to your email.');
     }
