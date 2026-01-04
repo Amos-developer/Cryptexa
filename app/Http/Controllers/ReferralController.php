@@ -40,21 +40,25 @@ class ReferralController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | MEMBERS STATS (LEVEL 1 ONLY)
+        | MEMBERS STATS (LEVEL 1)
         |--------------------------------------------------------------------------
         */
-        $totalMembers   = $level1->count();
+        $totalMembers = $level1->count();
 
-        $activeMembers  = $level1->where('balance', '>', 3)->count();
+        $activeMembers = $level1
+            ->where('balance', '>', 3)
+            ->count();
 
-        $inactiveMembers = $level1->where('balance', '<=', 3)->count();
+        $inactiveMembers = $level1
+            ->where('balance', '<=', 3)
+            ->count();
 
         /*
         |--------------------------------------------------------------------------
-        | REFERRAL EARNINGS (PLACEHOLDER)
+        | REFERRAL EARNINGS (REAL DATA)
         |--------------------------------------------------------------------------
         */
-        $earnings = 0; // will change when referral bonus logic is added
+        $earnings = $user->referral_earnings;
 
         return view('team', compact(
             'level1',

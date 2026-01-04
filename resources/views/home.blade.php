@@ -5,11 +5,11 @@
 @section('content')
 
 <!-- PRELOADER -->
-<div class="preload preload-container">
+<!-- <div class="preload preload-container">
     <div class="preload-logo" style="background-image: url('{{ asset('images/logo/144.png') }}')">
         <div class="spinner"></div>
     </div>
-</div>
+</div> -->
 
 <!-- HEADER CONTENT -->
 

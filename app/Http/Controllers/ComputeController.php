@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ComputePlan;
 use App\Models\ComputeOrder;
+use App\Services\ReferralService;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Models\User;
 
@@ -52,9 +54,43 @@ class ComputeController extends Controller
             'status'            => 'running', // recommended
         ]);
 
+        // 🚀 REFERRAL BONUSES
+        $this->creditReferralBonuses($user, $plan->price);
+
+
         return redirect()->route('home')
             ->with('success', 'Compute plan activated successfully!');
     }
+
+    // Add refferral bonuses
+    protected function creditReferralBonuses(User $user, float $amount)
+    {
+        // LEVEL 1 – 4%
+        if ($user->referrer) {
+            $bonus1 = round($amount * 0.04, 2);
+
+            $user->referrer->increment('balance', $bonus1);
+            $user->referrer->increment('referral_earnings', $bonus1);
+
+            // LEVEL 2 – 2%
+            if ($user->referrer->referrer) {
+                $bonus2 = round($amount * 0.02, 2);
+
+                $user->referrer->referrer->increment('balance', $bonus2);
+                $user->referrer->referrer->increment('referral_earnings', $bonus2);
+
+                // LEVEL 3 – 1%
+                if ($user->referrer->referrer->referrer) {
+                    $bonus3 = round($amount * 0.01, 2);
+
+                    $user->referrer->referrer->referrer->increment('balance', $bonus3);
+                    $user->referrer->referrer->referrer->increment('referral_earnings', $bonus3);
+                }
+            }
+        }
+    }
+
+
 
     // TRACK ORDER
     public function track()
@@ -76,5 +112,37 @@ class ComputeController extends Controller
         }
 
         return view('track', compact('order'));
+    }
+
+    public function purchase($planId, ReferralService $referralService)
+    {
+        $user = auth()->user();
+        $plan = ComputePlan::findOrFail($planId);
+
+        if ($user->balance < $plan->price) {
+            return back()->with('error', 'Insufficient balance');
+        }
+
+        DB::transaction(function () use ($user, $plan, $referralService) {
+
+            // 1️⃣ Deduct user balance
+            $user->decrement('balance', $plan->price);
+
+            // 2️⃣ Create compute order
+            ComputeOrder::create([
+                'user_id' => $user->id,
+                'plan_id' => $plan->id,
+                'amount' => $plan->price,
+                'status' => 'running',
+            ]);
+
+            // 3️⃣ Pay referral commissions 🔥
+            $referralService->handleComputeCommission(
+                $user,
+                $plan->price
+            );
+        });
+
+        return back()->with('success', 'Compute plan started');
     }
 }
