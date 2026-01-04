@@ -12,200 +12,343 @@
 </div>
 
 <!-- HEADER CONTENT -->
-<div class="header-style2 fixed-top bg-menuDark">
-    <div class="d-flex justify-content-between align-items-center gap-14">
-        <div class="box-account style-2">
-            <a href="#">
-                <img src="{{ asset('images/avt/avt2.jpg') }}" class="avt">
-            </a>
 
-            <div>
-                <strong class="text-white">{{ auth()->user()->name }}</strong><br>
-                <small>{{ auth()->user()->email }}</small>
-            </div>
-        </div>
-
-        <div class="d-flex align-items-center gap-8">
-            <a href="#" class="icon-gift"></a>
-            <a href="#notification" class="icon-noti box-noti" data-bs-toggle="modal"></a>
-        </div>
-    </div>
-</div>
 
 <!-- MAIN CONTENT -->
 <div class="pt-58 pb-80">
 
     <!-- WALLET -->
-    <div class="bg-menuDark tf-container">
-        <div class="pt-12 pb-12 mt-4">
-            <h5>
-                <span class="text-primary">Balance</span>
-                <!-- <a href="#" class="choose-account" data-bs-toggle="modal" data-bs-target="#accountWallet">
-                    <span class="dom-text">balance </span>
-                    <i class="icon-select-down"></i>
-                </a> -->
+    <div class="tf-container mt-60"
+        style="
+        background: linear-gradient(180deg, #020617, #0f172a);
+        border-radius: 16px;
+        box-shadow: 0 20px 40px rgba(56,189,248,0.15);
+        padding: 16px;
+     ">
+
+        {{-- BALANCE --}}
+        <div class="pt-12 pb-12">
+
+            <h5 class="text-secondary">
+                <span style="
+                color:#38bdf8;
+                font-weight:600;
+            ">
+                    Balance
+                </span>
             </h5>
 
-            <h1 class="mt-16">$2,159.34</h1>
+            <h1 class="mt-12"
+                style="
+                color:#e5e7eb;
+                font-weight:700;
+                letter-spacing:0.5px;
+                text-shadow:0 0 24px rgba(56,189,248,0.4);
+            ">
+                ${{ number_format(auth()->user()->balance, 2) }}
+            </h1>
 
-            <ul class="mt-16 grid-4 m--16">
-                <li><a href="#" class="tf-list-item d-flex flex-column gap-8 align-items-center"><span class="box-round bg-surface"><i class="icon icon-way"></i></span>Deposit</a></li>
-                <li><a href="#" class="tf-list-item d-flex flex-column gap-8 align-items-center"><span class="box-round bg-surface"><i class="icon icon-way2"></i></span>Withdraw</a></li>
-                <li><a href="#" class="tf-list-item d-flex flex-column gap-8 align-items-center"><span class="box-round bg-surface"><i class="icon icon-wallet"></i></span>Invites</a></li>
-                <li><a href="#" class="tf-list-item d-flex flex-column gap-8 align-items-center"><span class="box-round bg-surface"><i class="icon icon-exchange"></i></span>Support</a></li>
-            </ul>
-        </div>
-    </div>
+            {{-- ACTIONS --}}
+            <ul class="mt-20 grid-4 gap-12">
 
-    <!-- MARKET -->
-    <div class="bg-menuDark tf-container">
-        <div class="pt-12 pb-12 mt-4">
-            <h5>Market</h5>
+                {{-- Deposit --}}
+                <li>
+                    <a href="{{ route('choose.cryptocurrency') }}"
+                        class="d-flex flex-column align-items-center gap-8 text-decoration-none">
 
-            <div class="swiper market-swiper mt-16">
-                <div class="swiper-wrapper">
+                        <span style="
+                        width:48px;
+                        height:48px;
+                        border-radius:50%;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        background: rgba(56,189,248,0.12);
+                        border:1px solid rgba(56,189,248,0.5);
+                        box-shadow:0 0 16px rgba(56,189,248,0.6);
+                    ">
+                            <i class="icon icon-way text-primary"></i>
+                        </span>
 
-                    <!-- SLIDE 1 -->
-                    <div class="swiper-slide">
-                        <a href="#" class="coin-box d-block">
-                            <div class="coin-logo">
-                                <img src="{{ asset('images/coin/market-1.jpg') }}" class="logo">
-                                <div class="title">
-                                    <p>Bitcoin</p>
-                                    <span>BTC</span>
-                                </div>
-                            </div>
-                            <div class="coin-price d-flex justify-content-between">
-                                <span>$30780</span>
-                                <span class="text-primary d-flex align-items-center gap-2">
-                                    <i class="icon-select-up"></i> 11,75%
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- SLIDE 2 -->
-                    <div class="swiper-slide">
-                        <a href="#" class="coin-box d-block">
-                            <div class="coin-logo">
-                                <img src="{{ asset('images/coin/market-3.jpg') }}" class="logo">
-                                <div class="title">
-                                    <p>Binance</p>
-                                    <span>BNB</span>
-                                </div>
-                            </div>
-                            <div class="coin-price d-flex justify-content-between">
-                                <span>$270.10</span>
-                                <span class="text-primary d-flex align-items-center gap-2">
-                                    <i class="icon-select-up"></i> 21,59%
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- SLIDE 3 -->
-                    <div class="swiper-slide">
-                        <a href="#" class="coin-box d-block">
-                            <div class="coin-logo">
-                                <img src="{{ asset('images/coin/coin-3.jpg') }}" class="logo">
-                                <div class="title">
-                                    <p>Ethereum</p>
-                                    <span>ETH</span>
-                                </div>
-                            </div>
-                            <div class="coin-price d-flex justify-content-between">
-                                <span>$1478.10</span>
-                                <span class="text-primary d-flex align-items-center gap-2">
-                                    <i class="icon-select-up"></i> 4,75%
-                                </span>
-                            </div>
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- END MARKET -->
-
-
-    <!-- OTHER -->
-    <div class="bg-menuDark tf-container">
-        <div class="pt-16 pb-16 mt-4">
-
-            <!-- Header -->
-            <div class="wrap-filter-swiper mb-12">
-                <h5 class="d-flex align-items-center gap-8">
-                    <i class="icon-star text-warning"></i>
-                    <a href="{{ url('#') }}" class="cryptex-rating text-decoration-none">
-                        Cryptexa Rating
+                        <span style="color:#e5e7eb;font-size:12px;">Deposit</span>
                     </a>
-                </h5>
+                </li>
 
-                <div class="swiper swiper-wrapper-r market-swiper mt-12" data-space-between="20" data-preview="auto">
-                    <div class="swiper-wrapper menu-tab-v3" role="tablist">
-                        <div class="swiper-slide nav-link active px-16 py-8 rounded"
-                            data-bs-toggle="tab"
-                            data-bs-target="#favorites"
-                            role="tab"
-                            aria-selected="true">
-                            Favorites
+                {{-- Withdraw --}}
+                <li>
+                    <a href="#"
+                        class="d-flex flex-column align-items-center gap-8 text-decoration-none">
+
+                        <span style="
+                        width:48px;
+                        height:48px;
+                        border-radius:50%;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        background: rgba(34,197,94,0.12);
+                        border:1px solid rgba(34,197,94,0.5);
+                        box-shadow:0 0 16px rgba(34,197,94,0.6);
+                    ">
+                            <i class="icon icon-way2 text-success"></i>
+                        </span>
+
+                        <span style="color:#e5e7eb;font-size:12px;">Withdraw</span>
+                    </a>
+                </li>
+
+                {{-- Invites --}}
+                <li>
+                    <a href="{{ route('invites') }}"
+                        class="d-flex flex-column align-items-center gap-8 text-decoration-none">
+
+                        <span style="
+                        width:48px;
+                        height:48px;
+                        border-radius:50%;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        background: rgba(168,85,247,0.12);
+                        border:1px solid rgba(168,85,247,0.5);
+                        box-shadow:0 0 16px rgba(168,85,247,0.6);
+                    ">
+                            <i class="icon icon-wallet text-purple"></i>
+                        </span>
+
+                        <span style="color:#e5e7eb;font-size:12px;">Invites</span>
+                    </a>
+                </li>
+
+                {{-- Support --}}
+                <li>
+                    <a href="#"
+                        class="d-flex flex-column align-items-center gap-8 text-decoration-none">
+
+                        <span style="
+                        width:48px;
+                        height:48px;
+                        border-radius:50%;
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        background: rgba(251,191,36,0.12);
+                        border:1px solid rgba(251,191,36,0.5);
+                        box-shadow:0 0 16px rgba(251,191,36,0.6);
+                    ">
+                            <i class="icon icon-exchange text-warning"></i>
+                        </span>
+
+                        <span style="color:#e5e7eb;font-size:12px;">Support</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+
+
+    <!-- COMPUTE ACTIVITY -->
+    <div class="tf-container mt-12"
+        style="
+        background: linear-gradient(135deg, #0f172a, #020617);
+        border-radius: 20px;
+        padding: 16px;
+        box-shadow:
+            0 0 0 1px rgba(56,189,248,0.08),
+            0 10px 30px rgba(0,0,0,0.6),
+            inset 0 0 30px rgba(56,189,248,0.04);
+        ">
+
+        <h5 class="mb-12 text-white">History</h5>
+
+        <div class="swiper compute-swiper activity-swiper">
+            <div class="swiper-wrapper">
+
+                @forelse ($orders as $order)
+                <div class="swiper-slide">
+
+                    <div
+                        style="
+                        width:260px;
+                        padding:14px;
+                        border-radius:16px;
+                        background:linear-gradient(135deg,#020617,#020617);
+                        border:1px solid rgba(255,255,255,.06);
+                        box-shadow:0 8px 24px rgba(0,0,0,.45);
+                    ">
+
+                        <!-- PLAN -->
+                        <p class="fw-semibold text-white mb-6">
+                            {{ $order->computePlan->name }}
+                        </p>
+
+                        <!-- AMOUNT -->
+                        <span class="text-secondary text-small d-block mb-8">
+                            Invested: ${{ number_format($order->amount, 2) }}
+                        </span>
+
+                        <!-- STATUS -->
+                        @php
+                        $running = now()->lt($order->ends_at);
+                        @endphp
+
+                        <span
+                            style="
+                            font-size:12px;
+                            padding:4px 12px;
+                            border-radius:999px;
+                            font-weight:600;
+                            {{ $running 
+                                ? 'color:#38bdf8;background:rgba(56,189,248,.15);' 
+                                : 'color:#22c55e;background:rgba(34,197,94,.15);' }}
+                        ">
+                            {{ $running ? 'Running' : 'Completed' }}
+                        </span>
+
+                        <!-- TIME -->
+                        <div class="mt-10 text-secondary text-small">
+                            {{ $order->created_at->diffForHumans() }}
                         </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Content -->
-            <div class="tab-content mt-12">
-
-                <!-- FAVORITES -->
-                <div class="tab-pane fade show active" id="favorites" role="tabpanel">
-
-                    <!-- Table Header -->
-                    <div class="d-flex justify-content-between align-items-center text-small text-secondary mb-12">
-                        <span>Name</span>
-                        <div class="d-flex gap-16">
-                            <span>Last price</span>
-                            <span>Change</span>
-                        </div>
                     </div>
 
-                    <!-- Coin List -->
-                    <ul class="mt-8 d-flex flex-column gap-12">
-
-                        @for ($i = 0; $i < 4; $i++)
-                            <li>
-                            <a href="{{ url('#') }}"
-                                class="coin-item style-2 d-flex gap-12 p-12 rounded bg-surface w-100">
-
-                                <img src="{{ asset('images/coin/coin-6.jpg') }}"
-                                    class="img rounded-circle"
-                                    style="width:40px;height:40px;">
-
-                                <div class="content flex-grow-1">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <p class="mb-2 text-button">ETH</p>
-                                            <span class="text-secondary text-small">$360.6M</span>
-                                        </div>
-
-                                        <div class="text-end">
-                                            <span class="text-small d-block">$1,878.80</span>
-                                            <span class="coin-btn decrease mt-2 d-inline-block">-1.62%</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </a>
-                            </li>
-                            @endfor
-
-                    </ul>
                 </div>
+                @empty
+                <div class="text-secondary">No compute orders yet</div>
+                @endforelse
+
             </div>
         </div>
     </div>
+    <!-- END COMPU -->
+
+
+
+    <!-- AI COMPUTE PLANS -->
+    <div class="tf-container mt-12"
+        style="
+    background:linear-gradient(135deg,#020617,#0f172a);
+    border-radius:20px;
+    box-shadow:
+        0 0 0 1px rgba(56,189,248,.08),
+        0 15px 40px rgba(0,0,0,.6),
+        inset 0 0 30px rgba(56,189,248,.04);
+">
+
+        <div class="pt-16 pb-16">
+
+            <!-- HEADER -->
+            <div class="mb-16">
+                <h5 class="d-flex align-items-center gap-8 mb-8 text-white">
+                    <i class="icon-cpu" style="color:#38bdf8;"></i>
+                    <span class="fw-semibold">AI Compute Plans</span>
+                </h5>
+                <small style="color:#94a3b8;">
+                    Lease decentralized AI & cloud compute resources
+                </small>
+            </div>
+
+            <!-- TABLE HEADER -->
+            <div class="d-flex justify-content-between align-items-center text-small mb-12"
+                style="color:#94a3b8;">
+                <span>Plan</span>
+                <div class="d-flex gap-24">
+                    <span>Cost</span>
+                    <span>Yield</span>
+                </div>
+            </div>
+
+            <!-- PLAN LIST -->
+            <ul class="d-flex flex-column gap-12">
+
+
+
+                @foreach ($plans as $plan)
+                <li>
+                    <div class="d-flex align-items-center gap-12 p-12 rounded"
+                        style="
+                    background:linear-gradient(135deg,#020617,#020617);
+                    border:1px solid rgba(255,255,255,.06);
+                    box-shadow:0 8px 24px rgba(0,0,0,.45);
+                ">
+
+                        <!-- ICON -->
+                        <div style="
+                        width:46px;
+                        height:46px;
+                        border-radius:50%;
+                        background:rgba(56,189,248,.08);
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        border:1px solid rgba(56,189,248,.2);
+                    ">
+                            <img src="{{ asset('images/coin/'.$plan['icon']) }}"
+                                style="width:22px;height:22px;object-fit:contain;">
+                        </div>
+
+                        <!-- INFO -->
+                        <div class="flex-grow-1">
+                            <p class="mb-2 fw-semibold text-white">
+                                {{ $plan['name'] }}
+                            </p>
+                            <span class="text-secondary text-small">
+                                {{ $plan['type'] }} · {{ $plan['duration'] }}
+                            </span>
+                        </div>
+
+                        <!-- ACTION -->
+                        <div class="text-end">
+
+                            <span class="d-block text-white text-small">
+                                {{ $plan['price'] }} USDT
+                            </span>
+
+                            <span
+                                class="mt-2 d-inline-block"
+                                style="
+                            font-size:12px;
+                            padding:3px 10px;
+                            border-radius:999px;
+                            font-weight:600;
+                            color:#22c55e;
+                            background:rgba(34,197,94,.15);
+                        ">
+                                {{ $plan['yield'] }}
+                            </span>
+
+                            <a href="{{ route('compute.show', $plan->id) }}"
+                                style="
+                                display:block;
+                                width:100%;
+                                text-align:center;
+                                padding:8px 14px;
+                                border-radius:12px;
+                                font-size:13px;
+                                font-weight:600;
+                                color:#020617;
+                                background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+                                box-shadow:0 0 14px rgba(56,189,248,.45);
+                                text-decoration:none;
+                               ">
+                                Unlock Plan
+                            </a>
+
+
+                        </div>
+
+                    </div>
+                </li>
+                @endforeach
+
+            </ul>
+
+        </div>
+    </div>
+
+
 
 
 

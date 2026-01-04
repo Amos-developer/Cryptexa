@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -21,7 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'phone',
+        'balance',
         'password',
+        'referral_code',
+        'referred_by',
         'verification_code',
         'verification_expires_at',
         'email_verified_at',
@@ -48,5 +52,34 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'referred_by');
+    }
+
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'referred_by');
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($user) {
+
+            if (empty($user->referral_code)) {
+                do {
+                    $code = str_pad(
+                        random_int(0, 99999999),
+                        8,
+                        '0',
+                        STR_PAD_LEFT
+                    );
+                } while (self::where('referral_code', $code)->exists());
+
+                $user->referral_code = $code;
+            }
+        });
     }
 }

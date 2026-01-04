@@ -9,11 +9,10 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('verification_code')->nullable();
-            $table->timestamp('email_verified_at')->nullable()->change();
+        Schema::table('compute_orders', function (Blueprint $table) {
+            $table->timestamp('completed_at')->nullable();
         });
     }
 
@@ -22,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('compute_orders', function (Blueprint $table) {
             //
         });
     }

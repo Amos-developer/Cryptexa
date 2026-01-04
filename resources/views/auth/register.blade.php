@@ -58,7 +58,7 @@
             <form method="POST" action="{{ route('register.post') }}" class="mt-32 mb-16">
                 @csrf
 
-                <h2 class="text-center">Register Cointex</h2>
+                <h2 class="text-center">Register CRYPTEXA</h2>
 
                 <fieldset class="mt-40">
                     <label class="label-ip">
@@ -80,6 +80,41 @@
                         <input type="text" name="phone" value="{{ old('phone') }}">
                     </label>
                 </fieldset>
+
+                @php
+                $refCode = request('ref') ?? old('ref');
+                @endphp
+
+                <fieldset class="mt-16">
+                    <label class="label-ip">
+                        <p class="mb-8 text-small">
+                            Referral Code <span class="text-danger">*</span>
+                        </p>
+
+                        <input
+                            type="text"
+                            name="ref"
+                            value="{{ $refCode }}"
+                            required
+                            inputmode="numeric"
+                            pattern="[0-9]*"
+                            maxlength="8"
+                            placeholder="Enter 8-digit referral code"
+                            {{ request('ref') ? 'readonly' : '' }}
+                            style="
+                        {{ request('ref') 
+                            ? 'background:#020617;color:#38bdf8;border:1px solid rgba(56,189,248,.3);' 
+                            : '' 
+                        }}
+                    ">
+                    </label>
+
+                        @if(request('ref'))
+                        <small class="text-success">
+                            Referral code applied automatically ✔
+                        </small>
+                        @endif
+                    </fieldset>
 
                 <fieldset class="mt-16">
                     <label class="label-ip">
