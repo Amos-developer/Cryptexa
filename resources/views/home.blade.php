@@ -139,7 +139,7 @@
                             <i class="icon icon-exchange text-warning"></i>
                         </span>
 
-                        <span style="color:#e5e7eb;font-size:12px;">Support</span>
+                        <span style="color:#e5e7eb;font-size:12px;">Community</span>
                     </a>
                 </li>
 

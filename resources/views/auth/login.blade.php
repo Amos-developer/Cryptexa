@@ -40,7 +40,7 @@
         <div class="tf-container">
 
             <div class="mt-32">
-                <h2 class="text-center">Login Cointex</h2>
+                <h2 class="text-center">Login CRYPTEXA</h2>
             </div>
 
             {{-- SUCCESS MESSAGE --}}
