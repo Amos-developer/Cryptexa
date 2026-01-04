@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Deposit extends Model
+{
+    protected $fillable = [
+        'user_id',
+        'amount',
+        'currency',
+        'payment_id',
+        'pay_address',
+        'pay_currency',
+        'pay_amount',
+        'status',
+        'txid'
+    ];
+}
