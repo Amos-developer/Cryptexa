@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ChooseCryptocurrency;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\ComputeController;
+use App\Http\Controllers\AccountController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes (Guest)
@@ -33,7 +34,11 @@ Route::middleware('auth')->group(function () {
         ->name('team');
 });
 
-
+Route::middleware('auth')->group(function () {
+    Route::get('/account', fn () => view('settings'))->name('account.settings');
+    Route::get('/account/password', fn () => view('password'))->name('account.password');
+    Route::get('/about', fn () => view('about'))->name('about');
+});
 
 
 /*

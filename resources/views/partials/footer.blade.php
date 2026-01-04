@@ -58,7 +58,7 @@
 
         {{-- ACCOUNT --}}
         <li style="flex:1; text-align:center;">
-            <a href="#"
+        <a href="{{ route('account.settings') }}"
                 style="display:flex;flex-direction:column;align-items:center;gap:4px;color:#94a3b8;text-decoration:none;">
                 <i class="icon icon-user" style="font-size:20px;"></i>
                 <span style="font-size:11px;">Account</span>
