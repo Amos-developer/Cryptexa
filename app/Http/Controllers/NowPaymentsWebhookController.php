@@ -11,13 +11,22 @@ class NowPaymentsWebhookController extends Controller
 {
     public function handle(Request $request)
     {
+        /**
+         * 1️⃣ Verify signature FIRST
+         */
         if (!$this->isValidSignature($request)) {
-            Log::warning('NOWPayments invalid signature');
+            Log::warning('NOWPayments invalid signature', [
+                'payload' => $request->all()
+            ]);
+
             return response()->json(['error' => 'Invalid signature'], 403);
         }
 
         $data = $request->all();
 
+        /**
+         * 2️⃣ Required fields
+         */
         if (
             empty($data['payment_id']) ||
             empty($data['payment_status'])
@@ -25,43 +34,74 @@ class NowPaymentsWebhookController extends Controller
             return response()->json(['status' => 'ignored']);
         }
 
-        $deposit = Deposit::where('payment_id', $data['payment_id'])->lockForUpdate()->first();
+        /**
+         * 3️⃣ Process atomically
+         */
+        DB::transaction(function () use ($data) {
 
-        if (!$deposit || $deposit->status === 'completed') {
-            return response()->json(['status' => 'already_processed']);
-        }
+            /** 🔒 Lock deposit row */
+            $deposit = Deposit::where('payment_id', $data['payment_id'])
+                ->lockForUpdate()
+                ->first();
 
-        if (!in_array($data['payment_status'], ['finished', 'partially_paid'])) {
-            return response()->json(['status' => 'pending']);
-        }
+            if (!$deposit) {
+                Log::warning('NOWPayments deposit not found', [
+                    'payment_id' => $data['payment_id']
+                ]);
+                return;
+            }
 
-        DB::transaction(function () use ($deposit, $data) {
+            /**
+             * 4️⃣ Idempotency — never credit twice
+             */
+            if ($deposit->status === 'completed') {
+                return;
+            }
+
+            /**
+             * 5️⃣ Ignore unpaid states
+             */
+            if (!in_array($data['payment_status'], ['finished', 'partially_paid'])) {
+                return;
+            }
+
+            /**
+             * 6️⃣ Finalize deposit
+             */
+            $paidAmount = (float) ($data['actually_paid'] ?? 0);
+
+            if ($paidAmount <= 0) {
+                Log::warning('NOWPayments paid amount invalid', $data);
+                return;
+            }
 
             $deposit->update([
                 'status'     => 'completed',
-                'pay_amount' => (float) $data['actually_paid'],
+                'pay_amount' => $paidAmount,
                 'txid'       => $data['payin_hash'] ?? null,
             ]);
 
-            $deposit->user->increment(
-                'balance',
-                (float) $data['actually_paid']
-            );
+            /**
+             * 7️⃣ Credit user balance
+             */
+            $deposit->user()->lockForUpdate()->increment('balance', $paidAmount);
         });
 
         return response()->json(['status' => 'ok']);
     }
 
+    /**
+     * 🔐 NOWPayments signature verification
+     */
     private function isValidSignature(Request $request): bool
     {
         $signature = $request->header('x-nowpayments-sig');
         if (!$signature) return false;
 
-        $payload = $request->getContent();
-        $secret  = config('services.nowpayments.ipn_secret');
+        $secret = config('services.nowpayments.ipn_secret');
 
         return hash_equals(
-            hash_hmac('sha512', $payload, $secret),
+            hash_hmac('sha512', $request->getContent(), $secret),
             $signature
         );
     }

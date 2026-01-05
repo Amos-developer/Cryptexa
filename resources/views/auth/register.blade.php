@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover">
 
     <!-- Fonts -->
     <link rel="stylesheet" href="{{ asset('fonts/fonts.css') }}">
@@ -17,97 +18,148 @@
     <link rel="shortcut icon" href="{{ asset('images/logo/48.png') }}" />
     <link rel="apple-touch-icon-precomposed" href="{{ asset('images/logo/48.png') }}" />
 
-    <title>Register</title>
+    <title>Register | CRYPTEXA</title>
 </head>
 
-<body>
+<body style="background:#020617;">
 
-    <!-- Preloader -->
-    <div class="preload preload-container">
-        <div class="preload-logo" style="background-image: url('{{ asset('images/logo/144.png') }}')">
+    <!-- PRELOADER -->
+    <!-- <div class="preload preload-container">
+        <div class="preload-logo" style="background-image:url('{{ asset('images/logo/144.png') }}')">
             <div class="spinner"></div>
         </div>
-    </div>
-    <!-- /Preloader -->
+    </div> -->
 
-    <div class="header fixed-top bg-surface">
+    <!-- HEADER -->
+    <div class="header fixed-top"
+        style="background:#020617;border-bottom:1px solid rgba(56,189,248,.15);">
         <a href="{{ route('login') }}" class="left back-btn">
-            <i class="icon-left-btn"></i>
+            <i class="icon-left-btn text-white"></i>
         </a>
     </div>
 
-    <div class="pt-45">
+    <!-- CONTENT -->
+    <div class="pt-45 pb-20">
         <div class="tf-container">
 
-            {{-- SUCCESS MESSAGE --}}
-            @if(session('success'))
-            <p class="text-success text-center mt-16">
-                {{ session('success') }}
-            </p>
-            @endif
+            <!-- CARD -->
+            <div class="mx-auto mt-32"
+                style="
+                max-width:460px;
+                background:linear-gradient(180deg,#020617,#0f172a);
+                border-radius:20px;
+                padding:28px;
+                border:1px solid rgba(56,189,248,.25);
+                box-shadow:0 20px 40px rgba(56,189,248,.25);
+             ">
 
-            {{-- ERROR MESSAGES --}}
-            @if($errors->any())
-            <div class="text-danger mt-16">
-                @foreach($errors->all() as $error)
-                <p class="text-small">{{ $error }}</p>
-                @endforeach
-            </div>
-            @endif
+                <!-- LOGO -->
+                <!-- <div class="text-center mb-20">
+                    <img src="{{ asset('images/logo/144.png') }}" style="width:72px;">
+                </div> -->
 
-            <form method="POST" action="{{ route('register.post') }}" class="mt-32 mb-16">
-                @csrf
+                <h2 class="text-center text-white mb-4"
+                    style="font-weight:600;text-shadow:0 0 20px rgba(56,189,248,.4);">
+                    Join CRYPTEXA Trading
+                </h2>
 
-                <h2 class="text-center">Register CRYPTEXA</h2>
+                <p class="text-center text-secondary text-small mb-20">
+                    Create your account to get started 
+                </p>
 
-                <fieldset class="mt-40">
-                    <label class="label-ip">
-                        <p class="mb-8 text-small">Name</p>
-                        <input type="text" name="name" value="{{ old('name') }}" required>
-                    </label>
-                </fieldset>
+                {{-- SUCCESS --}}
+                @if(session('success'))
+                <div class="alert alert-success text-center py-2 mb-12">
+                    {{ session('success') }}
+                </div>
+                @endif
 
-                <fieldset class="mt-16">
-                    <label class="label-ip">
-                        <p class="mb-8 text-small">Email</p>
-                        <input type="email" name="email" value="{{ old('email') }}" required>
-                    </label>
-                </fieldset>
+                {{-- ERRORS --}}
+                @if($errors->any())
+                <div class="text-danger mb-12">
+                    @foreach($errors->all() as $error)
+                    <p class="text-small mb-1">{{ $error }}</p>
+                    @endforeach
+                </div>
+                @endif
 
-                <fieldset class="mt-16">
-                    <label class="label-ip">
-                        <p class="mb-8 text-small">Phone Number</p>
-                        <input type="text" name="phone" value="{{ old('phone') }}">
-                    </label>
-                </fieldset>
+                <form method="POST" action="{{ route('register.post') }}">
+                    @csrf
 
-                @php
-                $refCode = request('ref') ?? old('ref');
-                @endphp
+                    <!-- NAME -->
+                    <fieldset class="mb-16">
+                        <label class="label-ip">
+                            <p class="mb-8 text-small text-secondary">Full Name</p>
+                            <input type="text" name="name" value="{{ old('name') }}" required
+                                style="
+                                background:#020617;
+                                border:1px solid rgba(56,189,248,.35);
+                                color:#e5e7eb;
+                                border-radius:14px;
+                                padding:14px;
+                            ">
+                        </label>
+                    </fieldset>
 
-                <fieldset class="mt-16">
-                    <label class="label-ip">
-                        <p class="mb-8 text-small">
-                            Referral Code <span class="text-danger">*</span>
-                        </p>
+                    <!-- EMAIL -->
+                    <fieldset class="mb-16">
+                        <label class="label-ip">
+                            <p class="mb-8 text-small text-secondary">Email Address</p>
+                            <input type="email" name="email" value="{{ old('email') }}" required
+                                style="
+                                background:#020617;
+                                border:1px solid rgba(56,189,248,.35);
+                                color:#e5e7eb;
+                                border-radius:14px;
+                                padding:14px;
+                            ">
+                        </label>
+                    </fieldset>
 
-                        <input
-                            type="text"
-                            name="ref"
-                            value="{{ $refCode }}"
-                            required
-                            inputmode="numeric"
-                            pattern="[0-9]*"
-                            maxlength="8"
-                            placeholder="Enter 8-digit referral code"
-                            {{ request('ref') ? 'readonly' : '' }}
-                            style="
-                        {{ request('ref') 
-                            ? 'background:#020617;color:#38bdf8;border:1px solid rgba(56,189,248,.3);' 
-                            : '' 
-                        }}
-                    ">
-                    </label>
+                    <!-- PHONE -->
+                    <fieldset class="mb-16">
+                        <label class="label-ip">
+                            <p class="mb-8 text-small text-secondary">Phone Number (optional)</p>
+                            <input type="text" name="phone" value="{{ old('phone') }}"
+                                style="
+                                background:#020617;
+                                border:1px solid rgba(56,189,248,.35);
+                                color:#e5e7eb;
+                                border-radius:14px;
+                                padding:14px;
+                            ">
+                        </label>
+                    </fieldset>
+
+                    @php
+                    $refCode = request('ref') ?? old('ref');
+                    @endphp
+
+                    <!-- REFERRAL -->
+                    <fieldset class="mb-16">
+                        <label class="label-ip">
+                            <p class="mb-8 text-small text-secondary">
+                                Referral Code <span class="text-danger">*</span>
+                            </p>
+                            <input
+                                type="text"
+                                name="ref"
+                                value="{{ $refCode }}"
+                                required
+                                inputmode="numeric"
+                                pattern="[0-9]*"
+                                maxlength="8"
+                                placeholder="8-digit referral code"
+                                {{ request('ref') ? 'readonly' : '' }}
+                                style="
+                                background:#020617;
+                                color:#e5e7eb;
+                                border-radius:14px;
+                                padding:14px;
+                                border:1px solid rgba(56,189,248,.35);
+                                {{ request('ref') ? 'color:#38bdf8;' : '' }}
+                            ">
+                        </label>
 
                         @if(request('ref'))
                         <small class="text-success">
@@ -116,41 +168,87 @@
                         @endif
                     </fieldset>
 
-                <fieldset class="mt-16">
-                    <label class="label-ip">
-                        <p class="mb-8 text-small">Password</p>
-                        <div class="box-auth-pass">
-                            <input type="password" name="password" required placeholder="6 - 20 characters" class="password-field">
-                            <span class="show-pass">
-                                <i class="icon-view"></i>
-                                <i class="icon-view-hide"></i>
-                            </span>
-                        </div>
-                    </label>
-                </fieldset>
+                    <!-- PASSWORD -->
+                    <fieldset class="mb-16">
+                        <label class="label-ip">
+                            <p class="mb-8 text-small text-secondary">Password</p>
+                            <div class="box-auth-pass">
+                                <input type="password" name="password" required
+                                    placeholder="6 - 20 characters"
+                                    class="password-field"
+                                    style="
+                                        background:#020617;
+                                        border:1px solid rgba(56,189,248,.35);
+                                        color:#e5e7eb;
+                                        border-radius:14px;
+                                        padding:14px;
+                                   ">
+                                <span class="show-pass">
+                                    <i class="icon-view"></i>
+                                    <i class="icon-view-hide"></i>
+                                </span>
+                            </div>
+                        </label>
+                    </fieldset>
 
-                <fieldset class="mt-16">
-                    <label class="label-ip">
-                        <p class="mb-8 text-small">Confirm Password</p>
-                        <div class="box-auth-pass">
-                            <input type="password" name="password_confirmation" required placeholder="Confirm password" class="password-field2">
-                            <span class="show-pass2">
-                                <i class="icon-view"></i>
-                                <i class="icon-view-hide"></i>
-                            </span>
-                        </div>
-                    </label>
-                </fieldset>
+                    <!-- CONFIRM -->
+                    <fieldset class="mb-16">
+                        <label class="label-ip">
+                            <p class="mb-8 text-small text-secondary">Confirm Password</p>
+                            <div class="box-auth-pass">
+                                <input type="password" name="password_confirmation" required
+                                    placeholder="Confirm password"
+                                    class="password-field2"
+                                    style="
+                                        background:#020617;
+                                        border:1px solid rgba(56,189,248,.35);
+                                        color:#e5e7eb;
+                                        border-radius:14px;
+                                        padding:14px;
+                                   ">
+                                <span class="show-pass2">
+                                    <i class="icon-view"></i>
+                                    <i class="icon-view-hide"></i>
+                                </span>
+                            </div>
+                        </label>
+                    </fieldset>
 
-                <fieldset class="group-cb cb-signup mt-12">
-                    <input type="checkbox" class="tf-checkbox" id="cb-ip" required>
-                    <label for="cb-ip">
-                        I agree to <span class="text-white">Terms and condition</span>
-                    </label>
-                </fieldset>
+                    <!-- TERMS -->
+                    <fieldset class="group-cb cb-signup mb-20">
+                        <input type="checkbox" class="tf-checkbox" id="cb-ip" required>
+                        <label for="cb-ip" class="text-secondary">
+                            I agree to the <span class="text-white">Terms & Conditions</span>
+                        </label>
+                    </fieldset>
 
-                <button type="submit" class="mt-40">Create an account</button>
-            </form>
+                    <!-- BUTTON -->
+                    <button type="submit"
+                        class="w-100"
+                        style="
+                            background:#38bdf8;
+                            color:#020617;
+                            font-weight:600;
+                            padding:14px;
+                            border-radius:14px;
+                            border:none;
+                            box-shadow:0 10px 30px rgba(56,189,248,.4);
+                        ">
+                        Create Account
+                    </button>
+
+                    <!-- LOGIN -->
+                    <p class="mt-20 text-center text-small text-secondary">
+                        Already have an account?
+                        <a href="{{ route('login') }}" class="text-info fw-semibold">
+                            Login
+                        </a>
+                    </p>
+
+                </form>
+
+            </div>
+            <!-- END CARD -->
 
         </div>
     </div>

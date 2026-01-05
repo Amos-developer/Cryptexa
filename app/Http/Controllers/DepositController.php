@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 class DepositController extends Controller
 {
     /**
-     * STEP 1: User selects crypto/network
-     * STEP 2: Create payment & show QR immediately
+     * STEP 1: Select network
      */
     public function store(Request $request, NowPaymentsService $nowPayments)
     {
@@ -18,13 +17,25 @@ class DepositController extends Controller
             'currency' => 'required|in:usdttrc20,usdtbsc,usdcbsc,bnbbsc',
         ]);
 
+        // Reuse active deposit per user + network
+        $deposit = Deposit::where('user_id', auth()->id())
+            ->where('currency', $request->currency)
+            ->whereIn('status', ['pending', 'confirming'])
+            ->first();
+
+        if ($deposit) {
+            return redirect()->route('deposit.qr', $deposit->id);
+        }
+
+        // Create new deposit
         $deposit = Deposit::create([
             'user_id'  => auth()->id(),
-            'amount'   => 50, // minimum
+            'amount'   => 50, // minimum USD
             'currency' => $request->currency,
             'status'   => 'pending',
         ]);
 
+        // Create NOWPayments payment
         $payment = $nowPayments->createPayment(
             $request->currency,
             $deposit->id
@@ -32,7 +43,7 @@ class DepositController extends Controller
 
         if (empty($payment['payment_id'])) {
             logger()->error('NOWPayments create failed', $payment);
-            return back()->withErrors(['error' => 'Payment provider error']);
+            abort(500, 'Payment provider error');
         }
 
         $deposit->update([
@@ -43,20 +54,25 @@ class DepositController extends Controller
     }
 
     /**
-     * QR PAGE — NO API CALLS HERE
+     * STEP 2: QR page
+     * Fetch address ONLY if missing
      */
     public function showQrCode(Deposit $deposit, NowPaymentsService $nowPayments)
     {
         abort_if($deposit->user_id !== auth()->id(), 403);
 
-        if (!$deposit->payment_address) {
+        // Only active deposits
+        abort_if(!in_array($deposit->status, ['pending', 'confirming']), 404);
+
+        // 🔑 THIS WAS MISSING
+        if (!$deposit->pay_address && $deposit->payment_id) {
             $status = $nowPayments->getPaymentStatus($deposit->payment_id);
 
             if (!empty($status['pay_address'])) {
                 $deposit->update([
-                    'payment_address' => $status['pay_address'],
-                    'pay_amount'      => $status['pay_amount'],
-                    'pay_currency'    => $status['pay_currency'],
+                    'pay_address'  => $status['pay_address'],
+                    'pay_currency' => $status['pay_currency'],
+                    'pay_amount'   => $status['pay_amount'],
                 ]);
             }
         }

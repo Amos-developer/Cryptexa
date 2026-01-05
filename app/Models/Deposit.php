@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Deposit extends Model
 {
+    // 🔐 Deposit statuses
+    public const STATUS_WAITING   = 'pending';
+    public const STATUS_COMPLETED = 'completed';
+    public const STATUS_EXPIRED   = 'expired';
+
     protected $fillable = [
         'user_id',
         'amount',
@@ -18,9 +23,13 @@ class Deposit extends Model
         'status',
     ];
 
+    protected $casts = [
+        'amount'      => 'float',
+        'pay_amount'  => 'float',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 }

@@ -17,89 +17,157 @@
     <link rel="shortcut icon" href="{{ asset('images/logo/48.png') }}" />
     <link rel="apple-touch-icon-precomposed" href="{{ asset('images/logo/48.png') }}" />
 
-    <title>Login</title>
+    <title>Login | CRYPTEXA</title>
 </head>
 
-<body>
+<body style="background:#020617;">
 
-    <!-- Preloader -->
-    <div class="preload preload-container">
-        <div class="preload-logo" style="background-image: url('{{ asset('images/logo/144.png') }}')">
+    <!-- PRELOADER -->
+    <!-- <div class="preload preload-container">
+        <div class="preload-logo" style="background-image:url('{{ asset('images/logo/144.png') }}')">
             <div class="spinner"></div>
         </div>
-    </div>
-    <!-- /Preloader -->
+    </div> -->
 
-    <div class="header fixed-top bg-surface">
+    <!-- HEADER -->
+    <div class="header fixed-top"
+        style="background:#020617;border-bottom:1px solid rgba(56,189,248,.15);">
         <a href="{{ route('register') }}" class="left back-btn">
-            <i class="icon-left-btn"></i>
+            <i class="icon-left-btn text-white"></i>
         </a>
     </div>
 
+    <!-- CONTENT -->
     <div class="pt-45 pb-20">
         <div class="tf-container">
 
-            <div class="mt-32">
-                <h2 class="text-center">Login CRYPTEXA</h2>
-            </div>
+            <!-- CARD -->
+            <div class="mx-auto mt-32"
+                style="
+                max-width:420px;
+                background:linear-gradient(180deg,#020617,#0f172a);
+                border-radius:20px;
+                padding:28px;
+                border:1px solid rgba(56,189,248,.25);
+                box-shadow:0 20px 40px rgba(56,189,248,.25);
+             ">
 
-            {{-- SUCCESS MESSAGE --}}
-            @if(session('success'))
-            <p class="text-success text-center mt-16">
-                {{ session('success') }}
-            </p>
-            @endif
+                <!-- LOGO -->
+                <!-- <div class="text-center mb-20">
+                    <img src="{{ asset('images/logo/144.png') }}" style="width:72px;">
+                </div> -->
 
-            {{-- ERROR MESSAGE --}}
-            @if(session('error'))
-            <p class="text-danger text-center mt-16">
-                {{ session('error') }}
-            </p>
-            @endif
+                <h2 class="text-center text-white mb-4"
+                    style="font-weight:600;text-shadow:0 0 20px rgba(56,189,248,.4);">
+                    Login to CRYPTEXA
+                </h2>
 
-            {{-- VALIDATION ERRORS --}}
-            @if($errors->any())
-            <div class="text-danger mt-16">
-                @foreach($errors->all() as $error)
-                <p class="text-small">{{ $error }}</p>
-                @endforeach
-            </div>
-            @endif
-
-            <div class="auth-line mt-12">Or</div>
-
-            <form method="POST" action="{{ route('login.post') }}" class="mt-16">
-                @csrf
-
-                <fieldset class="mt-16">
-                    <label class="label-ip">
-                        <p class="mb-8 text-small">Email</p>
-                        <input type="email" name="email" value="{{ old('email') }}" required>
-                    </label>
-                </fieldset>
-
-                <fieldset class="mt-16 mb-12">
-                    <label class="label-ip">
-                        <p class="mb-8 text-small">Password</p>
-                        <div class="box-auth-pass">
-                            <input type="password" name="password" required placeholder="Your password" class="password-field">
-                            <span class="show-pass">
-                                <i class="icon-view"></i>
-                                <i class="icon-view-hide"></i>
-                            </span>
-                        </div>
-                    </label>
-                </fieldset>
-
-                <a href="#" class="text-secondary">Forgot Password?</a>
-
-                <button type="submit" class="mt-20">Login</button>
-
-                <p class="mt-20 text-center text-small">
-                    Don’t have an account?
-                    &ensp;<a href="{{ route('register') }}">Sign up</a>
+                <p class="text-center text-secondary text-small mb-20">
+                    Secure access to your account
                 </p>
-            </form>
+
+                {{-- SUCCESS --}}
+                @if(session('success'))
+                <div class="alert alert-success text-center py-2 mb-12">
+                    {{ session('success') }}
+                </div>
+                @endif
+
+                {{-- ERROR --}}
+                @if(session('error'))
+                <div class="alert alert-danger text-center py-2 mb-12">
+                    {{ session('error') }}
+                </div>
+                @endif
+
+                {{-- VALIDATION --}}
+                @if($errors->any())
+                <div class="text-danger mb-12">
+                    @foreach($errors->all() as $error)
+                    <p class="text-small mb-1">{{ $error }}</p>
+                    @endforeach
+                </div>
+                @endif
+
+                <form method="POST" action="{{ route('login.post') }}">
+                    @csrf
+
+                    <!-- EMAIL -->
+                    <fieldset class="mb-16">
+                        <label class="label-ip">
+                            <p class="mb-8 text-small text-secondary">Email address</p>
+                            <input type="email"
+                                name="email"
+                                value="{{ old('email') }}"
+                                required
+                                style="
+                                    background:#020617;
+                                    border:1px solid rgba(56,189,248,.35);
+                                    color:#e5e7eb;
+                                    border-radius:14px;
+                                    padding:14px;
+                               ">
+                        </label>
+                    </fieldset>
+
+                    <!-- PASSWORD -->
+                    <fieldset class="mb-8">
+                        <label class="label-ip">
+                            <p class="mb-8 text-small text-secondary">Password</p>
+                            <div class="box-auth-pass">
+                                <input type="password"
+                                    name="password"
+                                    required
+                                    placeholder="Your password"
+                                    class="password-field"
+                                    style="
+                                        background:#020617;
+                                        border:1px solid rgba(56,189,248,.35);
+                                        color:#e5e7eb;
+                                        border-radius:14px;
+                                        padding:14px;
+                                   ">
+                                <span class="show-pass">
+                                    <i class="icon-view"></i>
+                                    <i class="icon-view-hide"></i>
+                                </span>
+                            </div>
+                        </label>
+                    </fieldset>
+
+                    <!-- FORGOT -->
+                    <div class="text-end mb-20">
+                        <a href="#" class="text-secondary text-small">
+                            Forgot password?
+                        </a>
+                    </div>
+
+                    <!-- BUTTON -->
+                    <button type="submit"
+                        class="w-100"
+                        style="
+                            background:#38bdf8;
+                            color:#020617;
+                            font-weight:600;
+                            padding:14px;
+                            border-radius:14px;
+                            border:none;
+                            box-shadow:0 10px 30px rgba(56,189,248,.4);
+                        ">
+                        Login
+                    </button>
+
+                    <!-- REGISTER -->
+                    <p class="mt-20 text-center text-small text-secondary">
+                        Don’t have an account?
+                        <a href="{{ route('register') }}" class="text-info fw-semibold">
+                            Sign up
+                        </a>
+                    </p>
+
+                </form>
+            </div>
+            <!-- END CARD -->
 
         </div>
     </div>

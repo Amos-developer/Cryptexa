@@ -103,7 +103,7 @@
 <script>
     function copyAddress() {
         const text = document.getElementById('walletAddress').innerText;
-        if (!text || text.includes('Waiting')) return;
+        if (!text || text.includes('pending')) return;
 
         navigator.clipboard.writeText(text);
         alert('Deposit address copied!');
