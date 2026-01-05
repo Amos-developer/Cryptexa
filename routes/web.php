@@ -60,9 +60,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         [ChooseCryptocurrency::class, 'chooseCryptocurrency']
     )->name('choose.cryptocurrency');
 
-    Route::get('/qr-code', [DepositController::class, 'showQrCode'])
-        ->name('qr.code');
+    Route::post('/deposit', [DepositController::class, 'store'])
+        ->name('deposit.store');
 
+    Route::get('/deposit/{deposit}/qr', [DepositController::class, 'showQrCode'])
+        ->name('deposit.qr');
+
+    Route::post('/nowpayments/ipn', [\App\Http\Controllers\NowPaymentsWebhookController::class, 'handle'])
+        ->name('nowpayments.ipn');
+
+    Route::get('/deposit/success', fn() => view('deposit-success'))
+        ->name('deposit.success');
+
+    Route::get('/deposit/cancel', fn() => view('deposit-cancel'))
+        ->name('deposit.cancel');
 
     Route::post('/compute/unlock/{id}', [ComputeController::class, 'unlock'])
         ->name('compute.unlock');

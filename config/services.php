@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'nowpayments' => [
+        'key' => env('NOWPAYMENTS_API_KEY'),
+        'url' => env('NOWPAYMENTS_BASE_URL'),
+    ],
+
 ];
