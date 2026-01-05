@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'phone',
         'balance',
+        'role',
         'password',
         'referral_code',
         'referred_by',
@@ -86,5 +87,10 @@ class User extends Authenticatable
                 $user->referral_code = $code;
             }
         });
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 }

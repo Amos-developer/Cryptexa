@@ -6,12 +6,16 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ChooseCryptocurrency;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\ComputeController;
-use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminDepositController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AdminWithdrawalController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes (Guest)
 |--------------------------------------------------------------------------
 */
+
 
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
@@ -71,3 +75,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+
+// Admin Routes
+Route::middleware(['auth', 'admin'])
+    ->prefix('admin')
+    ->group(function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index']);
+        Route::get('/users', [UserController::class, 'index']);
+        Route::get('/deposits', [AdminDepositController::class, 'index']);
+        Route::get('/withdrawals', [AdminWithdrawalController::class, 'index']);
+
+        Route::post('/withdrawals/{withdrawal}/approve', [AdminWithdrawalController::class, 'approve']);
+        Route::post('/withdrawals/{withdrawal}/reject', [AdminWithdrawalController::class, 'reject']);
+        Route::post('/withdrawals/{withdrawal}/complete', [AdminWithdrawalController::class, 'complete']);
+    });
+
+require __DIR__ . '/admin.php';

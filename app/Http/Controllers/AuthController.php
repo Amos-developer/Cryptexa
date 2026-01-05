@@ -110,23 +110,32 @@ class AuthController extends Controller
     {
         return view('auth.login');
     }
-
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
 
-            if (!Auth::user()->email_verified_at) {
+            $request->session()->regenerate();
+
+            $user = Auth::user();
+
+            if (!$user->email_verified_at) {
                 Auth::logout();
                 return back()->withErrors(['email' => 'Verify your email first']);
             }
 
-            return redirect('/');
+            // 🔥 ROLE-BASED REDIRECT
+            if ($user->role === 'admin') {
+                return redirect('/admin/dashboard');
+            }
+
+            return redirect('/'); // normal user
         }
 
         return back()->withErrors(['email' => 'Invalid credentials']);
     }
+
 
 
     // reset logic

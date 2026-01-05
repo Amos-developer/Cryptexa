@@ -4,23 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Deposit extends Model
+class Withdrawal extends Model
 {
     protected $fillable = [
         'user_id',
         'amount',
         'currency',
-        'payment_id',
-        'pay_address',
-        'pay_currency',
-        'pay_amount',
-        'txid',
+        'address',
         'status',
+        'txid',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 }
