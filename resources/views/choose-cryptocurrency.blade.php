@@ -5,8 +5,18 @@
 
 @section('content')
 
+<div class="header fixed-top d-flex justify-content-between align-items-center px-16"
+    style="background:#020617;border-bottom:1px solid rgba(56,189,248,0.2);">
+    <a href="{{ url()->previous() }}" class="left back-btn">
+        <i class="icon-left-btn text-white"></i>
+    </a>
+    <!-- <h3 class="text-white" style="text-align: center;">Deposit</h3> -->
+    <span></span>
+</div>
+
+
 <div class="pb-16 pt-40">
-    <div class="tf-container">
+    <div class="tf-container mt-24">
 
         <h4 class="mb-20 text-white">Select Network</h4>
 

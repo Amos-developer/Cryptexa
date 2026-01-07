@@ -12,7 +12,7 @@
         <i class="icon-left-btn text-white"></i>
     </a>
 
-    <h3 class="text-white">Deposit</h3>
+    <!-- <h3 class="text-white" style="text-align: center;">Deposit</h3> -->
     <span></span>
 </div>
 
@@ -22,7 +22,7 @@
 
         <h2 class="mt-20"
             style="color:#e5e7eb;font-weight:600;text-shadow:0 0 20px rgba(56,189,248,0.4);">
-            Send Crypto to This Address
+            Scan to get payment address
         </h2>
 
         {{-- QR CARD --}}
@@ -83,11 +83,12 @@
         {{-- AMOUNT (optional) --}}
         @if(!empty($deposit->pay_amount))
         <p class="mt-16 text-secondary text-small">
-            Send exactly
+            Send only 
             <strong class="text-white">
-                {{ $deposit->pay_amount }}
+                <!-- {{ $deposit->pay_amount }} -->
                 {{ strtoupper($deposit->pay_currency ?? $deposit->currency) }}
             </strong>
+            to the address above.
         </p>
         @endif
 

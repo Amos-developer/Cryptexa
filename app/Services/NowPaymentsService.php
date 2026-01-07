@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 class NowPaymentsService
 {
     protected string $apiKey;
-    protected string $baseUrl = 'https://api.nowpayments.io/v1';
+    protected string $baseUrl;
 
     public function __construct()
     {
@@ -23,7 +23,7 @@ class NowPaymentsService
             'x-api-key' => $this->apiKey,
             'Content-Type' => 'application/json',
         ])->post($this->baseUrl . '/payment', [
-            'price_amount'      => 50,          // ✅ minimum deposit
+            'price_amount'      => 50,          // minimum deposit
             'price_currency'    => 'usd',
             'pay_currency'      => $payCurrency,
             'order_id'          => (string) $orderId,
