@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Contracts\Console\Kernel as ConsoleKernelContract;
+use App\Console\Kernel as ConsoleKernel;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -10,6 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+
+    ->withSingletons([
+        ConsoleKernelContract::class => ConsoleKernel::class,
+    ])
 
     ->withMiddleware(function ($middleware) {
         $middleware->alias([

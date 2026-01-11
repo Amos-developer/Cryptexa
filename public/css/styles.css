@@ -1870,6 +1870,68 @@ input[type=text].ip-style2 {
   gap: 8px;
 }
 
+.community-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    z-index: 9999;
+}
+
+.community-modal.active {
+    display: block;
+}
+
+.community-sheet {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(180deg, #020617, #0f172a);
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    transition: bottom 0.3s ease;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
+}
+
+.community-modal.active .community-sheet {
+    bottom: 0;
+}
+
+.drag-bar {
+    width: 40px;
+    height: 4px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 4px;
+    margin: 0 auto 16px;
+}
+
+.community-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.community-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #e5e7eb;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.community-item:hover {
+    background: rgba(56,189,248,0.12);
+    border-color: rgba(56,189,248,0.4);
+}
+
+
 .banner-received {
   position: relative;
   text-align: center;

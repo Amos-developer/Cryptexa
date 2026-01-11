@@ -49,4 +49,5 @@ class NowPaymentsService
 
         return $response->json();
     }
+    
 }

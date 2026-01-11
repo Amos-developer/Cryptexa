@@ -120,28 +120,30 @@
                     </a>
                 </li>
 
-                {{-- Support --}}
+                <!-- Community -->
                 <li>
-                    <a href="#"
+                    <a href="javascript:void(0)"
+                        onclick="openCommunityModal()"
                         class="d-flex flex-column align-items-center gap-8 text-decoration-none">
 
                         <span style="
-                        width:48px;
-                        height:48px;
-                        border-radius:50%;
-                        display:flex;
-                        align-items:center;
-                        justify-content:center;
-                        background: rgba(251,191,36,0.12);
-                        border:1px solid rgba(251,191,36,0.5);
-                        box-shadow:0 0 16px rgba(251,191,36,0.6);
-                    ">
+                            width:48px;
+                            height:48px;
+                            border-radius:50%;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            background: rgba(251,191,36,0.12);
+                            border:1px solid rgba(251,191,36,0.5);
+                            box-shadow:0 0 16px rgba(251,191,36,0.6);
+                        ">
                             <i class="icon icon-exchange text-warning"></i>
                         </span>
 
                         <span style="color:#e5e7eb;font-size:12px;">Community</span>
                     </a>
                 </li>
+
 
             </ul>
 
@@ -163,7 +165,7 @@
 
         <h5 class="mb-12 text-white">History</h5>
 
-        <div class="swiper compute-swiper activity-swiper">
+        <div class="swiper compute-swiper activity-swiper market-swiper">
             <div class="swiper-wrapper">
 
                 @forelse ($orders as $order)
@@ -347,9 +349,6 @@
 
         </div>
     </div>
-
-
-
 
 
     <script>

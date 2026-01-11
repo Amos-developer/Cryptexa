@@ -30,7 +30,7 @@ class DepositController extends Controller
         // Create new deposit
         $deposit = Deposit::create([
             'user_id'  => auth()->id(),
-            'amount'   => 50, // minimum USD
+            'amount'   => 10000, // minimum USD
             'currency' => $request->currency,
             'status'   => 'pending',
         ]);
