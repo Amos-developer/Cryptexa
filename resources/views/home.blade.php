@@ -165,11 +165,11 @@
 
         <h5 class="mb-12 text-white">History</h5>
 
-        <div class="swiper compute-swiper activity-swiper market-swiper">
+        <div class="swiper compute-swiper activity-swiper">
             <div class="swiper-wrapper">
 
                 @forelse ($orders as $order)
-                <div class="swiper-slide">
+                <div class="swiper-slide market-swiper">
 
                     <div
                         style="

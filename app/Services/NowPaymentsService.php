@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 class NowPaymentsService
 {
     protected string $apiKey;
-    protected string $baseUrl;
+    protected string $baseUrl = 'https://api.nowpayments.io/v1';
 
     public function __construct()
     {
