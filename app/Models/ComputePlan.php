@@ -15,4 +15,5 @@ class ComputePlan extends Model
         'max_profit',
         'duration_minutes'
     ];
+    
 }

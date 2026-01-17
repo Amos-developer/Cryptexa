@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDepositController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminWithdrawalController;
+use App\Http\Controllers\WithdrawalController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes (Guest)
@@ -75,6 +76,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/deposit/cancel', fn() => view('deposit-cancel'))
         ->name('deposit.cancel');
 
+    Route::get('/withdraw', [WithdrawalController::class, 'index'])
+        ->middleware('auth')
+        ->name('withdraw');
+
+    Route::post('/withdraw', [WithdrawalController::class, 'submit'])
+        ->name('withdraw.submit')
+        ->middleware('auth');
+
+        
     Route::post('/compute/unlock/{id}', [ComputeController::class, 'unlock'])
         ->name('compute.unlock');
 

@@ -76,9 +76,9 @@
 
                 {{-- Withdraw --}}
                 <li>
-                    <a href="#"
-                        class="d-flex flex-column align-items-center gap-8 text-decoration-none">
-
+                    <a href="{{ route('withdraw') }}"
+                        class="d-flex flex-column align-items-center gap-8 text-decoration-none
+                    {{ request()->routeIs('withdraw') ? 'opacity-100' : 'opacity-75' }}">
                         <span style="
                         width:48px;
                         height:48px;
@@ -89,13 +89,14 @@
                         background: rgba(34,197,94,0.12);
                         border:1px solid rgba(34,197,94,0.5);
                         box-shadow:0 0 16px rgba(34,197,94,0.6);
-                    ">
+                        ">
                             <i class="icon icon-way2 text-success"></i>
                         </span>
 
                         <span style="color:#e5e7eb;font-size:12px;">Withdraw</span>
                     </a>
                 </li>
+
 
                 {{-- Invites --}}
                 <li>
@@ -170,7 +171,6 @@
 
                 @forelse ($orders as $order)
                 <div class="swiper-slide market-swiper">
-
                     <div
                         style="
                         width:260px;
@@ -180,7 +180,6 @@
                         border:1px solid rgba(255,255,255,.06);
                         box-shadow:0 8px 24px rgba(0,0,0,.45);
                     ">
-
                         <!-- PLAN -->
                         <p class="fw-semibold text-white mb-6">
                             {{ $order->computePlan->name }}
@@ -196,18 +195,15 @@
                         $running = now()->lt($order->ends_at);
                         @endphp
 
-                        <span
-                            style="
-                            font-size:12px;
-                            padding:4px 12px;
-                            border-radius:999px;
-                            font-weight:600;
-                            {{ $running 
-                                ? 'color:#38bdf8;background:rgba(56,189,248,.15);' 
-                                : 'color:#22c55e;background:rgba(34,197,94,.15);' }}
-                        ">
-                            {{ $running ? 'Running' : 'Completed' }}
+                        @if ($running)
+                        <span style="font-size:12px; padding:4px 12px; border-radius:999px; font-weight:600; color:#38bdf8; background:rgba(56,189,248,.15);">
+                            Running
                         </span>
+                        @else
+                        <span style="font-size:12px; padding:4px 12px; border-radius:999px; font-weight:600; color:#22c55e; background:rgba(34,197,94,.15);">
+                            Completed
+                        </span>
+                        @endif
 
                         <!-- TIME -->
                         <div class="mt-10 text-secondary text-small">
@@ -224,7 +220,7 @@
             </div>
         </div>
     </div>
-    <!-- END COMPU -->
+    <!-- END COMPUTE -->
 
 
 

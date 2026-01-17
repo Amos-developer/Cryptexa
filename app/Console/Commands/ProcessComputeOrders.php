@@ -9,40 +9,37 @@ use Illuminate\Support\Facades\DB;
 class ProcessComputeOrders extends Command
 {
     protected $signature = 'compute:process';
-    protected $description = 'Process completed compute orders and credit users';
+    protected $description = 'Process completed compute orders and credit users safely';
 
     public function handle()
     {
-        $now = now();
+        DB::transaction(function () {
 
-        // Get running orders that expired
-        $orders = ComputeOrder::where('status', 'running')
-            ->where('ends_at', '<=', $now)
-            ->lockForUpdate()
-            ->get();
+            $orders = ComputeOrder::where('status', 'running')
+                ->where('ends_at', '<=', now())
+                ->where('is_paid', false)
+                ->lockForUpdate()
+                ->get();
 
-        foreach ($orders as $order) {
-            DB::transaction(function () use ($order) {
-
-                // Safety re-check inside transaction
-                if ($order->status !== 'running') {
-                    return;
-                }
+            foreach ($orders as $order) {
 
                 $user = $order->user;
 
-                // Total return = capital + profit
+                // Capital + profit
                 $totalReturn = $order->amount + $order->expected_profit;
 
-                // Credit user
+                // Credit user balance ONCE
                 $user->increment('balance', $totalReturn);
 
-                // Mark order completed
+                // Mark order as completed & paid
                 $order->update([
-                    'status' => 'completed',
+                    'status'  => 'completed',
+                    'is_paid' => true,
                 ]);
-            });
-        }
+            }
+        });
+
+        $this->info('✅ Compute orders processed successfully.');
 
         return Command::SUCCESS;
     }

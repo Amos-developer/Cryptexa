@@ -42,64 +42,85 @@
                 loading="lazy"
                 referrerpolicy="no-referrer">
             @else
-        <div style="padding:60px 0;color:#94a3b8;font-size:14px;">
-            Generating deposit address…
+            <div style="padding:60px 0;color:#94a3b8;font-size:14px;">
+                Generating deposit address…
+            </div>
+            @endif
+
         </div>
-        @endif
 
-    </div>
-
-    {{-- ADDRESS --}}
-    <div class="mt-24"
-        style="
+        {{-- ADDRESS --}}
+        <div class="mt-24"
+            style="
                 background:rgba(15,23,42,0.9);
                 border-radius:12px;
                 padding:12px;
                 border:1px solid rgba(56,189,248,0.2);
              ">
 
-        <small class="text-secondary">Deposit Address</small>
+            <small class="text-secondary">Deposit Address</small>
 
-        <p id="walletAddress"
-            style="color:#e5e7eb;font-size:13px;word-break:break-all;">
-            {{ $deposit->pay_address ?? 'Waiting for deposit address…' }}
-        </p>
+            <p id="walletAddress"
+                style="color:#e5e7eb;font-size:13px;word-break:break-all;">
+                {{ $deposit->pay_address ?? 'Waiting for deposit address…' }}
+            </p>
 
-        <button
-            onclick="copyAddress()"
-            class="btn btn-sm mt-8"
-            style="
-                    background:{{ $deposit->pay_address ? '#38bdf8' : '#64748b' }};
+            @if($deposit->pay_address)
+            <button
+                onclick="copyAddress()"
+                class="btn btn-sm mt-8"
+                style="
+                    background:#38bdf8;
                     color:#020617;
                     font-weight:600;
                     border-radius:8px;
-                "
-            {{ empty($deposit->pay_address) ? 'disabled' : '' }}>
-            Copy Address
-        </button>
+                    ">
+                Copy Address
+            </button>
+            @else
+            <button
+                class="btn btn-sm mt-8"
+                style="
+                    background:#64748b;
+                    color:#020617;
+                    font-weight:600;
+                    border-radius:8px;
+                    "
+                disabled>
+                Copy Address
+            </button>
+            @endif
+        </div>
+
+        {{-- AMOUNT (optional) --}}
+        @if(!empty($deposit->pay_amount))
+        <p class="mt-16 text-secondary text-small">
+            Send only
+            <strong class="text-white">
+                {{ strtoupper($deposit->pay_currency ?? $deposit->currency) }}
+            </strong>
+            to the address above.
+        </p>
+        @endif
+
+        {{-- INFO --}}
+        <p class="mt-8 text-secondary text-small">
+            Funds will be credited automatically after network confirmation.
+        </p>
 
     </div>
-
-    {{-- AMOUNT (optional) --}}
-    @if(!empty($deposit->pay_amount))
-    <p class="mt-16 text-secondary text-small">
-        Send only
-        <strong class="text-white">
-            {{ strtoupper($deposit->pay_currency ?? $deposit->currency) }}
-        </strong>
-        to the address above.
-    </p>
-    @endif
-
-    {{-- INFO --}}
-    <p class="mt-8 text-secondary text-small">
-        Funds will be credited automatically after network confirmation.
-    </p>
-
-</div>
 </div>
 
 {{-- SCRIPTS --}}
+@if(empty($deposit->pay_address))
+<script>
+    // 🔄 Auto-refresh ONLY while address is missing
+    setTimeout(() => {
+        location.reload();
+    }, 4000);
+</script>
+@endif
+
 <script>
     function copyAddress() {
         const text = document.getElementById('walletAddress').innerText;
@@ -108,13 +129,6 @@
         navigator.clipboard.writeText(text);
         alert('Deposit address copied!');
     }
-
-    // 🔄 Auto-refresh ONLY while address is missing
-    @if(empty($deposit->pay_address))
-    setTimeout(() => {
-        location.reload();
-    }, 4000);
-    @endif
 </script>
 
 @endsection

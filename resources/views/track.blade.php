@@ -1,133 +1,184 @@
 @extends('layouts.app')
 
-@section('title', 'Track Compute Order')
+@section('title', 'My Compute Orders')
 @section('hide-header', true)
 
 @section('content')
+
 <div class="tf-container mt-20">
 
-    @if(!$order)
-    <div class="text-center text-secondary mt-40">
-        <i class="icon-warning mb-8" style="font-size:32px;"></i>
-        <p>No active compute orders</p>
+    <!-- TABS -->
+    <div class="d-flex gap-8 mb-16">
+        <button class="tab-btn active" onclick="showTab('active')">Active Orders</button>
+        <button class="tab-btn" onclick="showTab('completed')">Completed Orders</button>
     </div>
-    @else
 
-    <div
-        style="
-        background:linear-gradient(135deg,#020617,#0f172a);
-        border-radius:22px;
-        padding:22px;
-        box-shadow:
-            0 0 0 1px rgba(56,189,248,.08),
-            0 20px 45px rgba(0,0,0,.65);
-    ">
+    <!-- ACTIVE ORDERS -->
+    <div id="active-orders">
 
-        <!-- HEADER -->
-        <div class="mb-16">
-            <h4 class="text-white mb-6">
-                {{ optional($order->plan)->name ?? 'Compute Plan' }}
-            </h4>
+        @forelse($activeOrders as $order)
+        <div class="order-card mb-16">
 
-            <span
-                style="
-                font-size:12px;
-                padding:4px 12px;
-                border-radius:999px;
-                font-weight:600;
-                {{ $order->status === 'completed'
-                    ? 'background:rgba(34,197,94,.15);color:#22c55e;'
-                    : 'background:rgba(251,191,36,.15);color:#fbbf24;' }}
-            ">
-                {{ strtoupper($order->status) }}
-            </span>
-        </div>
-
-        <!-- PROGRESS -->
-        <div class="mb-12">
-            <div
-                style="
-                background:#020617;
-                border-radius:999px;
-                height:12px;
-                overflow:hidden;
-                border:1px solid rgba(255,255,255,.06);
-            ">
-                <div
-                    style="
-                    width:{{ $order->progress_percentage }}%;
-                    height:100%;
-                    background:linear-gradient(90deg,#38bdf8,#0ea5e9);
-                    transition:width .6s ease;
-                ">
-                </div>
+            <div class="d-flex justify-content-between mb-8">
+                {{ optional($order->computePlan)->name ?? 'Compute Plan' }}
+                <span class="badge-running">RUNNING</span>
             </div>
 
-            <div class="d-flex justify-content-between text-small mt-6 text-secondary">
-                <span>{{ $order->progress_percentage }}% completed</span>
-                <span>
-                    {{ $order->status === 'completed' ? 'Completed' : 'Processing' }}
-                </span>
+            <!-- COUNTDOWN -->
+            @php
+            $remaining = max(0, now()->diffInSeconds($order->ends_at, false));
+            @endphp
+
+            <div class="countdown text-primary mb-8"
+                data-remaining="{{ $remaining }}">
             </div>
-        </div>
 
-        <!-- TIME INFO -->
-        <div class="d-flex justify-content-between text-small text-secondary mb-16">
-            <span>Started: {{ $order->started_at->diffForHumans() }}</span>
-            <span>Ends: {{ $order->ends_at->diffForHumans() }}</span>
-        </div>
+            <div class="d-flex justify-content-between text-small text-secondary">
+                <span>Capital</span>
+                <span>${{ number_format($order->amount, 2) }}</span>
+            </div>
 
-        <hr style="border-color:rgba(255,255,255,.08);margin:16px 0;">
+            <div class="d-flex justify-content-between text-small text-success">
+                <span>Expected Profit</span>
+                <span>+${{ number_format($order->expected_profit, 2) }}</span>
+            </div>
 
-        <!-- FINANCIAL DETAILS -->
-        <div class="d-flex justify-content-between mb-10">
-            <span class="text-secondary">Capital</span>
-            <span class="text-white fw-semibold">${{ number_format($order->amount, 2) }}</span>
         </div>
-
-        <div class="d-flex justify-content-between mb-10">
-            <span class="text-secondary">Profit</span>
-            <span class="text-success fw-semibold">
-                +${{ number_format($order->expected_profit, 2) }}
-            </span>
+        @empty
+        <div class="text-center text-secondary mt-40">
+            No active orders
         </div>
-
-        <div class="d-flex justify-content-between">
-            <span class="text-secondary">Total Return</span>
-            <span class="fw-bold text-primary">
-                ${{ number_format($order->amount + $order->expected_profit, 2) }}
-            </span>
-        </div>
-
-        <!-- COMPLETED MESSAGE -->
-        @if($order->status === 'completed')
-        <div
-            class="mt-16 text-center"
-            style="
-                padding:14px;
-                border-radius:14px;
-                background:rgba(34,197,94,.12);
-                border:1px solid rgba(34,197,94,.35);
-                color:#22c55e;
-                font-weight:600;
-            ">
-            ✅ Compute completed successfully
-            <br>
-            Profit added to your balance
-        </div>
-        @endif
+        @endforelse
 
     </div>
 
-    @endif
+    <!-- COMPLETED ORDERS -->
+    <div id="completed-orders" style="display:none;">
+
+        @forelse($completedOrders as $order)
+        <div class="order-card mb-16">
+
+            <div class="d-flex justify-content-between mb-8">
+                {{ optional($order->computePlan)->name ?? 'Compute Plan' }}
+                <span class="badge-completed">COMPLETED</span>
+            </div>
+
+            <div class="d-flex justify-content-between text-small text-secondary">
+                <span>Capital</span>
+                <span>${{ number_format($order->amount, 2) }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between text-small text-success">
+                <span>Profit</span>
+                <span>+${{ number_format($order->expected_profit, 2) }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between text-small text-primary mt-6">
+                <span>Total Return</span>
+                <span>${{ number_format($order->amount + $order->expected_profit, 2) }}</span>
+            </div>
+
+            <div class="text-secondary text-small mt-6">
+                Finished {{ $order->ends_at->diffForHumans() }}
+            </div>
+
+        </div>
+        @empty
+        <div class="text-center text-secondary mt-40">
+            No completed orders
+        </div>
+        @endforelse
+
+    </div>
+
 </div>
 
-@if($order && $order->status !== 'completed')
+{{-- STYLES --}}
+<style>
+    .tab-btn {
+        flex: 1;
+        padding: 10px;
+        border-radius: 999px;
+        border: none;
+        background: #020617;
+        color: #94a3b8;
+        font-weight: 600;
+    }
+
+    .tab-btn.active {
+        background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+        color: #020617;
+    }
+
+    .order-card {
+        background: linear-gradient(135deg, #020617, #0f172a);
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .6);
+    }
+
+    .badge-running {
+        background: rgba(251, 191, 36, .15);
+        color: #fbbf24;
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .badge-completed {
+        background: rgba(34, 197, 94, .15);
+        color: #22c55e;
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .countdown {
+        font-size: 18px;
+        font-weight: 700;
+    }
+</style>
+
+{{-- SCRIPTS --}}
 <script>
-    setInterval(() => {
-        location.reload();
-    }, 15000); // refresh every 15 seconds
+    function showTab(tab) {
+        document.getElementById('active-orders').style.display = tab === 'active' ? 'block' : 'none';
+        document.getElementById('completed-orders').style.display = tab === 'completed' ? 'block' : 'none';
+
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    /* COUNTDOWN TIMER */
+    document.querySelectorAll('.countdown').forEach(el => {
+        let seconds = parseInt(el.dataset.remaining);
+
+        function tick() {
+            if (seconds <= 0) {
+                el.innerText = 'Completed';
+                el.style.color = '#22c55e';
+
+                // soft refresh after 2s (optional)
+                setTimeout(() => {
+                    window.location.href = window.location.href;
+                }, 2000);
+
+                return;
+            }
+
+            let h = Math.floor(seconds / 3600);
+            let m = Math.floor((seconds % 3600) / 60);
+            let s = seconds % 60;
+
+            el.innerText = `${h}h ${m}m ${s}s remaining`;
+            seconds--;
+        }
+
+        tick();
+        setInterval(tick, 1000);
+    });
 </script>
-@endif
 
 @endsection
