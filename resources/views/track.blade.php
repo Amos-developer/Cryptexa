@@ -154,16 +154,20 @@
     /* COUNTDOWN TIMER */
     document.querySelectorAll('.countdown').forEach(el => {
         let seconds = parseInt(el.dataset.remaining);
+        let hasRefreshed = false;
 
         function tick() {
             if (seconds <= 0) {
                 el.innerText = 'Completed';
                 el.style.color = '#22c55e';
 
-                // soft refresh after 2s (optional)
-                setTimeout(() => {
-                    window.location.href = window.location.href;
-                }, 2000);
+                // Refresh ONLY once when countdown reaches 0
+                if (!hasRefreshed) {
+                    hasRefreshed = true;
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                }
 
                 return;
             }
