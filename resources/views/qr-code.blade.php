@@ -268,10 +268,68 @@
 <!-- SCRIPTS -->
 @if(empty($deposit->pay_address))
 <script>
-    // 🔄 Auto-refresh ONLY while address is missing
-    setTimeout(() => {
-        location.reload();
-    }, 4000);
+    let retryCount = 0;
+    const maxRetries = 30; // 5 minutes with 10-second intervals
+
+    // 🔄 Auto-refresh address via AJAX
+    function refreshPaymentAddress() {
+        if (document.getElementById('walletAddress').innerText.includes('Waiting') === false) {
+            return; // Address already loaded, stop refreshing
+        }
+
+        fetch('{{ route("deposit.refresh-address", $deposit->id) }}')
+            .then(response => response.json())
+            .then(data => {
+                if (data.pay_address) {
+                    // Address received, update UI
+                    document.getElementById('walletAddress').innerText = data.pay_address;
+
+                    // Update QR code
+                    const qrContainer = document.querySelector('[style*="background: #fff"]');
+                    if (qrContainer) {
+                        const img = qrContainer.querySelector('img');
+                        if (img) {
+                            img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=260x260&format=svg&data=' + encodeURIComponent(data.pay_address);
+                        }
+                    }
+
+                    // Show success message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Address Ready',
+                        text: 'Your deposit address has been generated',
+                        timer: 2000,
+                        showConfirmButton: false,
+                        background: '#020617',
+                        color: '#e5e7eb'
+                    });
+                } else if (retryCount < maxRetries) {
+                    // Keep retrying
+                    retryCount++;
+                    setTimeout(refreshPaymentAddress, 10000); // Retry every 10 seconds
+                } else {
+                    // Max retries reached
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Address Generation Timeout',
+                        text: 'Please reload the page to try again',
+                        background: '#020617',
+                        color: '#e5e7eb',
+                        confirmButtonColor: '#ef4444'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error refreshing address:', error);
+                if (retryCount < maxRetries) {
+                    retryCount++;
+                    setTimeout(refreshPaymentAddress, 10000);
+                }
+            });
+    }
+
+    // Wait 30s before first check to give provider time to allocate address, then every 10s
+    setTimeout(refreshPaymentAddress, 30000);
 </script>
 @endif
 

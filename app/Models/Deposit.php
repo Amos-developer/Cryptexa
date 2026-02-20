@@ -16,6 +16,7 @@ class Deposit extends Model
         'amount',
         'currency',
         'payment_id',
+        'token_id',
         'pay_address',
         'pay_currency',
         'pay_amount',

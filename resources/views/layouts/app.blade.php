@@ -25,6 +25,9 @@
 
 <body>
 
+    {{-- Preloader --}}
+    @include('partials.preloader')
+
     <div class="app-dark">
 
         {{-- Header --}}

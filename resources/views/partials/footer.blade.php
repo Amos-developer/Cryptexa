@@ -37,7 +37,9 @@
                 <span style="
                     font-size: 20px;
                     {{ request()->routeIs('home') ? 'text-shadow: 0 0 10px rgba(56,189,248,0.6);' : '' }}
-                ">🏠</span>
+                ">
+                    <img src="{{ asset('images/icons/home.svg') }}" alt="Home" style="width: 20px; height: 20px;">
+                </span>
                 <span style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Home</span>
             </a>
         </li>
@@ -61,7 +63,9 @@
                 <span style="
                     font-size: 20px;
                     {{ request()->routeIs('compute.track') ? 'text-shadow: 0 0 10px rgba(251,191,36,0.6);' : '' }}
-                ">📊</span>
+                ">
+                    <img src="{{ asset('images/icons/track.svg') }}" alt="Track" style="width: 20px; height: 20px;">
+                </span>
                 <span style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Track</span>
             </a>
         </li>
@@ -85,7 +89,9 @@
                 <span style="
                     font-size: 20px;
                     {{ request()->routeIs('team') ? 'text-shadow: 0 0 10px rgba(34,197,94,0.6);' : '' }}
-                ">👥</span>
+                ">
+                    <img src="{{ asset('images/icons/team.svg') }}" alt="Team" style="width: 20px; height: 20px;">
+                </span>
                 <span style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Team</span>
             </a>
         </li>
@@ -109,7 +115,9 @@
                 <span style="
                     font-size: 20px;
                     {{ request()->routeIs('account.settings') ? 'text-shadow: 0 0 10px rgba(168,85,247,0.6);' : '' }}
-                ">⚙️</span>
+                ">
+                    <img src="{{ asset('images/icons/account.svg') }}" alt="Account" style="width: 20px; height: 20px;">
+                </span>
                 <span style="font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Account</span>
             </a>
         </li>

@@ -67,13 +67,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/deposit/{deposit}/qr', [DepositController::class, 'showQrCode'])
         ->name('deposit.qr');
 
+    Route::get('/deposit/{deposit}/refresh-address', [DepositController::class, 'refreshAddress'])
+        ->name('deposit.refresh-address');
+
     Route::post('/nowpayments/ipn', [\App\Http\Controllers\NowPaymentsWebhookController::class, 'handle'])
         ->name('nowpayments.ipn');
 
-    Route::get('/deposit/success', fn() => view('deposit-success'))
+    Route::get('/deposit/success/{deposit?}', fn() => view('deposit-success'))
         ->name('deposit.success');
 
-    Route::get('/deposit/cancel', fn() => view('deposit-cancel'))
+    Route::get('/deposit/cancel/{deposit?}', fn() => view('deposit-cancel'))
         ->name('deposit.cancel');
 
     Route::get('/withdraw', [WithdrawalController::class, 'index'])

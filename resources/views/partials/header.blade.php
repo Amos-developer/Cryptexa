@@ -69,7 +69,7 @@
                     "
                     onmouseover="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0.1) 100%)'; this.style.borderColor='rgba(56,189,248,0.4)'; this.style.boxShadow='0 0 15px rgba(56,189,248,0.2)';"
                     onmouseout="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1) 0%, rgba(56,189,248,0.05) 100%)'; this.style.borderColor='rgba(56,189,248,0.2)'; this.style.boxShadow='none';">
-                    🔔
+                    <img src="{{ asset('images/icons/bell.svg') }}" alt="Notifications" style="width: 20px; height: 20px;">
                 </button>
                 <span style="
                     position: absolute;
@@ -103,7 +103,7 @@
                 "
                 onmouseover="this.style.background='linear-gradient(135deg, rgba(168,85,247,0.15) 0%, rgba(168,85,247,0.1) 100%)'; this.style.borderColor='rgba(168,85,247,0.4)'; this.style.boxShadow='0 0 15px rgba(168,85,247,0.2)';"
                 onmouseout="this.style.background='linear-gradient(135deg, rgba(168,85,247,0.1) 0%, rgba(168,85,247,0.05) 100%)'; this.style.borderColor='rgba(168,85,247,0.2)'; this.style.boxShadow='none';">
-                ⚙️
+                <img src="{{ asset('images/icons/account.svg') }}" alt="Account" style="width: 20px; height: 20px;">
             </a>
 
         </div>

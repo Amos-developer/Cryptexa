@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class DepositController extends Controller
 {
     /**
-     * STEP 1: Select network
+     * STEP 1: Create deposit + payment
      */
     public function store(Request $request, NowPaymentsService $nowPayments)
     {
@@ -17,7 +17,7 @@ class DepositController extends Controller
             'currency' => 'required|in:usdttrc20,usdtbsc,usdcbsc,bnbbsc',
         ]);
 
-        // Reuse active deposit per user + network
+        // Prevent duplicate active deposits
         $deposit = Deposit::where('user_id', auth()->id())
             ->where('currency', $request->currency)
             ->whereIn('status', ['pending', 'confirming'])
@@ -27,23 +27,25 @@ class DepositController extends Controller
             return redirect()->route('deposit.qr', $deposit->id);
         }
 
-        // Create new deposit
+        $amount = 50; // USD (must match NOWPayments)
+
         $deposit = Deposit::create([
             'user_id'  => auth()->id(),
-            'amount'   => 10000, // minimum USD
+            'amount'   => $amount,
             'currency' => $request->currency,
             'status'   => 'pending',
         ]);
 
-        // Create NOWPayments payment
+        // ✅ Correct argument order
         $payment = $nowPayments->createPayment(
-            $request->currency,
-            $deposit->id
+            $deposit->id,
+            $request->currency
         );
 
         if (empty($payment['payment_id'])) {
             logger()->error('NOWPayments create failed', $payment);
-            abort(500, 'Payment provider error');
+            $deposit->delete();
+            return back()->with('error', 'Unable to create payment.');
         }
 
         $deposit->update([
@@ -55,28 +57,48 @@ class DepositController extends Controller
 
     /**
      * STEP 2: QR page
-     * Fetch address ONLY if missing
      */
     public function showQrCode(Deposit $deposit, NowPaymentsService $nowPayments)
     {
         abort_if($deposit->user_id !== auth()->id(), 403);
-
-        // Only active deposits
         abort_if(!in_array($deposit->status, ['pending', 'confirming']), 404);
 
-        // 🔑 THIS WAS MISSING
         if (!$deposit->pay_address && $deposit->payment_id) {
-            $status = $nowPayments->getPaymentStatus($deposit->payment_id);
-
-            if (!empty($status['pay_address'])) {
-                $deposit->update([
-                    'pay_address'  => $status['pay_address'],
-                    'pay_currency' => $status['pay_currency'],
-                    'pay_amount'   => $status['pay_amount'],
-                ]);
-            }
+            $this->fetchPaymentAddress($deposit, $nowPayments);
         }
 
         return view('qr-code', compact('deposit'));
+    }
+
+    /**
+     * AJAX refresh
+     */
+    public function refreshAddress(Deposit $deposit, NowPaymentsService $nowPayments)
+    {
+        abort_if($deposit->user_id !== auth()->id(), 403);
+
+        $this->fetchPaymentAddress($deposit, $nowPayments);
+
+        return response()->json([
+            'pay_address' => $deposit->fresh()->pay_address,
+            'pay_currency' => $deposit->fresh()->pay_currency,
+            'pay_amount'  => $deposit->fresh()->pay_amount,
+        ]);
+    }
+
+    /**
+     * Fetch address from NOWPayments
+     */
+    private function fetchPaymentAddress(Deposit $deposit, NowPaymentsService $nowPayments)
+    {
+        $status = $nowPayments->getPaymentStatus($deposit->payment_id);
+
+        if (!empty($status['pay_address'])) {
+            $deposit->update([
+                'pay_address'  => $status['pay_address'],
+                'pay_currency' => $status['pay_currency'] ?? $deposit->currency,
+                'pay_amount'   => $status['pay_amount'] ?? null,
+            ]);
+        }
     }
 }
