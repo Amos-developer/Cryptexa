@@ -76,6 +76,26 @@ class ComputeController extends Controller
 
     public function track()
     {
+        // 🔄 Auto-complete expired orders and credit balance
+        $completingOrders = ComputeOrder::where('user_id', auth()->id())
+            ->where('status', 'running')
+            ->where('ends_at', '<=', now())
+            ->get();
+
+        foreach ($completingOrders as $order) {
+            DB::transaction(function () use ($order) {
+                // Credit user with capital + profit
+                $totalReturn = $order->amount + $order->expected_profit;
+                $order->user->increment('balance', $totalReturn);
+
+                // Mark as paid and completed
+                $order->update([
+                    'status' => 'completed',
+                    'is_paid' => true,
+                ]);
+            });
+        }
+
         $activeOrders = ComputeOrder::where('user_id', auth()->id())
             ->where('status', 'running')
             ->latest()
@@ -87,5 +107,47 @@ class ComputeController extends Controller
             ->get();
 
         return view('track', compact('activeOrders', 'completedOrders'));
+    }
+
+    /**
+     * API Endpoint for real-time order status polling
+     */
+    public function statusApi()
+    {
+        $user = auth()->user();
+
+        // Get all orders with status updates
+        $orders = ComputeOrder::where('user_id', $user->id)
+            ->with('computePlan')
+            ->latest()
+            ->get()
+            ->map(function ($order) {
+                // Check if order should be auto-completed
+                if ($order->status === 'running' && now()->gte($order->ends_at)) {
+                    $order->status = 'completed';
+                    $order->completed_at = $order->ends_at;
+                    $order->save();
+
+                    // Credit balance
+                    $user = $order->user;
+                    $user->increment('balance', $order->amount + $order->expected_profit);
+                }
+
+                return [
+                    'id' => $order->id,
+                    'status' => $order->status,
+                    'amount' => $order->amount,
+                    'expected_profit' => $order->expected_profit,
+                    'total_value' => $order->amount + $order->expected_profit,
+                    'created_at' => $order->created_at,
+                    'ends_at' => $order->ends_at,
+                ];
+            });
+
+        return response()->json([
+            'success' => true,
+            'orders' => $orders,
+            'timestamp' => now(),
+        ]);
     }
 }

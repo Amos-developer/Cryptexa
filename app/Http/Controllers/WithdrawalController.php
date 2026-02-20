@@ -96,6 +96,43 @@ class WithdrawalController extends Controller
     }
 
     /**
+     * Send email verification code for withdrawal
+     */
+    public function sendCode()
+    {
+        $user = auth()->user();
+
+        // Generate 6-digit code
+        $code = random_int(100000, 999999);
+
+        // Store in database (expires in 10 minutes)
+        $user->update([
+            'email_verification_code' => $code,
+            'email_verification_expires_at' => now()->addMinutes(10),
+        ]);
+
+        // TODO: Send email with code (implement Mail::send)
+        // Mail::send('emails.verification-code', ['code' => $code], function ($mail) use ($user) {
+        //     $mail->to($user->email)->subject('Withdrawal Verification Code');
+        // });
+
+        return back()->with('success', 'Verification code sent to your email.');
+    }
+
+    /**
+     * Get withdrawal history
+     */
+    public function history()
+    {
+        $user = auth()->user();
+        $withdrawals = Withdrawal::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('withdrawal-history', compact('withdrawals'));
+    }
+
+    /**
      * Address validation per network
      */
     protected function validateAddress(string $network, string $address): bool

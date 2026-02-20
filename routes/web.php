@@ -40,9 +40,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/account', fn () => view('settings'))->name('account.settings');
-    Route::get('/account/password', fn () => view('password'))->name('account.password');
-    Route::get('/about', fn () => view('about'))->name('about');
+    Route::get('/account', fn() => view('settings'))->name('account.settings');
+    Route::get('/account/password', fn() => view('password'))->name('account.password');
+    Route::get('/about', fn() => view('about'))->name('about');
 });
 
 
@@ -84,7 +84,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('withdraw.submit')
         ->middleware('auth');
 
-        
+    Route::post('/withdraw/send-code', [WithdrawalController::class, 'sendCode'])
+        ->name('withdraw.send-code')
+        ->middleware('auth');
+
+    Route::get('/withdraw/history', [WithdrawalController::class, 'history'])
+        ->name('withdraw.history')
+        ->middleware('auth');
+
+
     Route::post('/compute/unlock/{id}', [ComputeController::class, 'unlock'])
         ->name('compute.unlock');
 
@@ -93,6 +101,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/track', [ComputeController::class, 'track'])
         ->name('compute.track');
+
+    // API endpoint for real-time order status polling
+    Route::get('/api/orders/status', [ComputeController::class, 'statusApi'])
+        ->name('api.orders.status');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

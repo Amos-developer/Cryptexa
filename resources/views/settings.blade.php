@@ -1,145 +1,274 @@
 @extends('layouts.app')
 
-@section('title', 'Account')
+@section('title', 'Account Settings | Cryptexa')
 
 @section('content')
-<div class="tf-container mt-20">
 
-    <!-- ACCOUNT LIST -->
-    <div style="
-        margin-top: 80px;
-        background:linear-gradient(135deg,#020617,#0f172a);
-        border-radius:20px;
-        overflow:hidden;
-        box-shadow:0 20px 40px rgba(0,0,0,.6);
-        border: 2px solid rgba(0,0,0,.6);
-    ">
+<!-- HEADER -->
+<div style="
+    background: linear-gradient(135deg, #020617, #0f172a);
+    border-bottom: 1px solid rgba(56,189,248,0.2);
+    padding: 16px 0;
+    margin-top: 60px;
+">
+    <div class="tf-container">
+        <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0;">Account Settings</h1>
+        <p class="text-secondary" style="font-size: 14px; margin: 8px 0 0 0;">Manage your account preferences and security</p>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="pt-32 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%);">
+    <div class="tf-container">
 
         @php
-        $items = [
+        $sections = [
         [
-        'icon' => 'icon-wallet',
-        'color' => '#8b5cf6',
-        'title' => 'Account Mode',
-        'desc' => 'Tap to switch Demo / Live',
-        'badge' => 'LIVE',
-        'link' => '#'
-        ],
+        'title' => 'Security & Access',
+        'items' => [
         [
-        'icon' => 'icon-shield',
-        'color' => '#facc15',
-        'title' => 'KYC Verification',
-        'desc' => 'ID Verification',
-        'link' => '#'
-        ],
-        [
-        'icon' => 'icon-lock',
-        'color' => '#22d3ee',
-        'title' => 'Two-Factor Authentication',
-        'desc' => 'Extra security protection',
-        'link' => '#'
-        ],
-        [
-        'icon' => 'icon-card',
-        'color' => '#22c55e',
-        'title' => 'Withdrawal Method',
-        'desc' => 'Bank or wallet address',
-        'link' => '#'
-        ],
-        [
-        'icon' => 'icon-key',
-        'color' => '#f59e0b',
-        'title' => 'Withdrawal Password',
-        'desc' => 'Update withdrawal password',
-        'link' => '#'
-        ],
-        [
-        'icon' => 'icon-lock',
-        'color' => '#ec4899',
+        'icon' => '🔐',
         'title' => 'Account Password',
         'desc' => 'Change login password',
+        'color' => 'rgba(236,72,153,',
         'link' => route('account.password')
         ],
         [
-        'icon' => 'icon-time',
-        'color' => '#38bdf8',
+        'icon' => '🔒',
+        'title' => 'Two-Factor Authentication',
+        'desc' => 'Add extra security layer',
+        'color' => 'rgba(34,211,238,',
+        'link' => '#'
+        ],
+        [
+        'icon' => '🛡️',
+        'title' => 'Withdrawal Password',
+        'desc' => 'Secure withdrawal requests',
+        'color' => 'rgba(245,158,11,',
+        'link' => '#'
+        ]
+        ]
+        ],
+        [
+        'title' => 'Account Verification',
+        'items' => [
+        [
+        'icon' => '✓',
+        'title' => 'KYC Verification',
+        'desc' => 'Identity verification',
+        'color' => 'rgba(250,204,21,',
+        'link' => '#'
+        ],
+        [
+        'icon' => '👤',
+        'title' => 'Account Mode',
+        'desc' => 'Switch between Demo / Live',
+        'color' => 'rgba(139,92,246,',
+        'link' => '#',
+        'badge' => 'LIVE'
+        ]
+        ]
+        ],
+        [
+        'title' => 'Withdrawal Management',
+        'items' => [
+        [
+        'icon' => '💳',
+        'title' => 'Withdrawal Method',
+        'desc' => 'Bank account or wallet',
+        'color' => 'rgba(34,197,94,',
+        'link' => '#'
+        ]
+        ]
+        ],
+        [
+        'title' => 'System Information',
+        'items' => [
+        [
+        'icon' => '⏰',
         'title' => 'System Time',
         'desc' => now()->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
+        'color' => 'rgba(56,189,248,',
         'link' => '#'
         ],
         [
-        'icon' => 'icon-download',
-        'color' => '#34d399',
+        'icon' => '📱',
         'title' => 'Download App',
-        'desc' => 'Android & iOS',
+        'desc' => 'iOS & Android',
+        'color' => 'rgba(52,211,153,',
         'link' => '#'
         ],
         [
-        'icon' => 'icon-info',
-        'color' => '#94a3b8',
+        'icon' => 'ℹ️',
         'title' => 'About Us',
         'desc' => 'Company information',
+        'color' => 'rgba(148,163,184,',
         'link' => route('about')
-        ],
+        ]
+        ]
+        ]
         ];
-        
         @endphp
 
-        @foreach($items as $item)
-        <a href="{{ $item['link'] }}"
-            style="
-                display:flex;
-                align-items:center;
-                justify-content:space-between;
-                padding:14px 16px;
-                border-bottom:1px solid rgba(255,255,255,.05);
-                text-decoration:none;
-           ">
+        @foreach($sections as $sectionIndex => $section)
+        <!-- SECTION HEADER -->
+        <div style="
+            margin-bottom: 12px;
+            margin-top: {{ $sectionIndex === 0 ? '0' : '24px' }};
+            animation: slideDown 0.6s ease {{ $sectionIndex * 0.1 }}s backwards;
+        ">
+            <h3 style="color: #e5e7eb; font-size: 16px; font-weight: 700; margin: 0 0 12px 0;">
+                {{ $section['title'] }}
+            </h3>
 
-            <!-- LEFT -->
-            <div class="d-flex align-items-center gap-12">
-                <span style="
-                    width:42px;
-                    height:42px;
-                    border-radius:12px;
-                    background:{{ $item['color'] }}22;
-                    display:flex;
-                    align-items:center;
-                    justify-content:center;
-                ">
-                    <i class="icon {{ $item['icon'] }}" style="color:{{ $item['color'] }}"></i>
-                </span>
+            <!-- SETTINGS CARDS GRID -->
+            <div style="display: grid; gap: 10px;">
+                @foreach($section['items'] as $itemIndex => $item)
+                <a href="{{ $item['link'] }}"
+                    style="
+                        display: flex;
+                        align-items: center;
+                        gap: 14px;
+                        padding: 16px;
+                        background: linear-gradient(135deg, {{ $item['color'] }}0.08) 0%, {{ $item['color'] }}0.02) 100%);
+                        border: 1px solid {{ $item['color'] }}0.15);
+                        border-radius: 12px;
+                        text-decoration: none;
+                        transition: all 0.3s ease;
+                        animation: slideUp 0.6s ease {{ (0.2 + ($sectionIndex * 0.1) + ($itemIndex * 0.08)) }}s backwards;
+                    "
+                    onmouseover="this.style.borderColor='{{ $item['color'] }}0.3)'; this.style.background='linear-gradient(135deg, {{ $item['color'] }}0.12) 0%, {{ $item['color'] }}0.05) 100%)'; this.style.boxShadow='0 0 20px {{ $item['color'] }}0.15)';"
+                    onmouseout="this.style.borderColor='{{ $item['color'] }}0.15)'; this.style.background='linear-gradient(135deg, {{ $item['color'] }}0.08) 0%, {{ $item['color'] }}0.02) 100%)'; this.style.boxShadow='none';">
 
-                <div>
-                    <div class="text-white text-small fw-semibold">
-                        {{ $item['title'] }}
-                    </div>
-                    <div class="text-secondary text-xs">
-                        {{ $item['desc'] }}
-                    </div>
-                </div>
-            </div>
-
-            <!-- RIGHT -->
-            <div class="d-flex align-items-center gap-8">
-                @if(isset($item['badge']))
-                <span style="
-                        font-size:10px;
-                        padding:2px 8px;
-                        border-radius:999px;
-                        background:#22c55e22;
-                        color:#22c55e;
-                        font-weight:600;
+                    <!-- ICON -->
+                    <div style="
+                        width: 44px;
+                        height: 44px;
+                        border-radius: 10px;
+                        background: {{ $item['color'] }}0.1);
+                        border: 1px solid {{ $item['color'] }}0.2);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-shrink: 0;
+                        font-size: 20px;
                     ">
-                    {{ $item['badge'] }}
-                </span>
-                @endif
-                <i class="icon icon-right-arrow text-secondary"></i>
-            </div>
+                        {{ $item['icon'] }}
+                    </div>
 
-        </a>
+                    <!-- INFO -->
+                    <div style="flex: 1;">
+                        <p style="color: #e5e7eb; font-weight: 600; font-size: 14px; margin: 0 0 4px 0;">
+                            {{ $item['title'] }}
+                        </p>
+                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">
+                            {{ $item['desc'] }}
+                        </p>
+                    </div>
+
+                    <!-- BADGE & ARROW -->
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        @if(isset($item['badge']))
+                        <span style="
+                            background: rgba(34,197,94,0.15);
+                            color: #22c55e;
+                            padding: 4px 10px;
+                            border-radius: 999px;
+                            font-size: 10px;
+                            font-weight: 700;
+                        ">
+                            {{ $item['badge'] }}
+                        </span>
+                        @endif
+                        <i class="icon icon-right-arrow" style="color: #64748b; font-size: 14px;"></i>
+                    </div>
+
+                </a>
+                @endforeach
+            </div>
+        </div>
         @endforeach
 
     </div>
 </div>
+
+<!-- ANIMATIONS & STYLES -->
+<style>
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 768px) {
+        .pt-32 {
+            padding-top: 20px !important;
+        }
+
+        .pb-80 {
+            padding-bottom: 60px !important;
+        }
+
+        h1 {
+            font-size: 24px !important;
+        }
+
+        h3 {
+            font-size: 14px !important;
+        }
+
+        [style*="padding: 16px"] {
+            padding: 14px !important;
+        }
+
+        [style*="gap: 14px"] {
+            gap: 12px !important;
+        }
+
+        [style*="gap: 10px"] {
+            gap: 8px !important;
+        }
+
+        [style*="width: 44px"] {
+            width: 40px !important;
+            height: 40px !important;
+            font-size: 18px !important;
+        }
+
+        p {
+            font-size: 12px !important;
+        }
+    }
+
+    /* TABLET RESPONSIVE */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        h1 {
+            font-size: 26px !important;
+        }
+
+        h3 {
+            font-size: 15px !important;
+        }
+    }
+</style>
+
 @endsection

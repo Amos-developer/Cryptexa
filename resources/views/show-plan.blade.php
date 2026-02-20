@@ -1,99 +1,283 @@
 @extends('layouts.app')
 
 @section('hide-header', true)
-@section('title', $plan->name)
+@section('title', $plan->name . ' | Cryptexa')
 
 @section('content')
 
-<div class="tf-container mt-24 mb-32">
-
-    <!-- CARD -->
-    <div
+<!-- HEADER BAR -->
+<div class="header fixed-top d-flex justify-content-between align-items-center px-16"
+    style="
+        background: linear-gradient(135deg, #020617, #0f172a);
+        border-bottom: 1px solid rgba(56,189,248,0.2);
+        backdrop-filter: blur(10px);
+        z-index: 100;
+        padding: 12px 16px;
+    ">
+    <a href="{{ url()->previous() }}"
         style="
-            background:linear-gradient(135deg,#020617,#0f172a);
-            border-radius:22px;
-            padding:22px;
-            box-shadow:
-                0 0 0 1px rgba(56,189,248,.12),
-                0 25px 60px rgba(0,0,0,.75),
-                inset 0 0 30px rgba(56,189,248,.05);
+            width: 36px;
+            height: 36px;
+            background: rgba(56,189,248,0.1);
+            border: 1px solid rgba(56,189,248,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        "
+        onmouseover="this.style.background='rgba(56,189,248,0.15)'; this.style.borderColor='rgba(56,189,248,0.4)';"
+        onmouseout="this.style.background='rgba(56,189,248,0.1)'; this.style.borderColor='rgba(56,189,248,0.2)';">
+        <i class="icon-left-btn" style="color: #38bdf8; font-size: 18px;"></i>
+    </a>
+    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">{{ $plan->name }}</h6>
+    <span style="width: 36px;"></span>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%);">
+    <div class="tf-container">
+
+        <!-- HERO SECTION -->
+        <div class="mb-32" style="animation: slideDown 0.6s ease;">
+            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 12px 0;">
+                {{ $plan->name }}
+            </h1>
+            <p class="text-secondary" style="font-size: 14px; margin: 0; line-height: 1.6;">
+                {{ $plan->description }}
+            </p>
+        </div>
+
+        <!-- PLAN DETAILS CARD -->
+        <div style="
+            background: linear-gradient(135deg, rgba(56,189,248,0.08) 0%, rgba(56,189,248,0.02) 100%);
+            border: 1px solid rgba(56,189,248,0.15);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(56,189,248,0.05), inset 0 0 20px rgba(56,189,248,0.03);
+            backdrop-filter: blur(10px);
+            margin-bottom: 24px;
+            animation: slideUp 0.6s ease 0.1s backwards;
         ">
 
-        <!-- PLAN NAME -->
-        <h2 class="text-white mb-8 fw-bold">
-            {{ $plan->name }}
-        </h2>
+            <!-- DETAILS GRID -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
 
-        <!-- DESCRIPTION -->
-        <p class="text-secondary mb-20" style="line-height:1.6;">
-            {{ $plan->description }}
-        </p>
+                <!-- PRICE -->
+                <div style="
+                    background: rgba(255,255,255,0.02);
+                    padding: 16px;
+                    border-radius: 12px;
+                    border: 1px solid rgba(56,189,248,0.2);
+                ">
+                    <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">💰 Plan Price</p>
+                    <h3 style="color: #38bdf8; font-size: 24px; font-weight: 900; margin: 0;">
+                        ${{ number_format($plan->price, 2) }}
+                    </h3>
+                </div>
 
-        <!-- INFO BOX -->
-        <div
-            style="
-                background:rgba(2,6,23,.7);
-                border:1px solid rgba(255,255,255,.08);
-                border-radius:16px;
-                padding:16px;
-                margin-bottom:20px;
+                <!-- DURATION -->
+                <div style="
+                    background: rgba(255,255,255,0.02);
+                    padding: 16px;
+                    border-radius: 12px;
+                    border: 1px solid rgba(56,189,248,0.2);
+                ">
+                    <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">⏱️ Duration</p>
+                    <h3 style="color: #e5e7eb; font-size: 24px; font-weight: 900; margin: 0;">
+                        {{ $plan->duration_minutes }} <span style="font-size: 14px; color: #94a3b8;">min</span>
+                    </h3>
+                </div>
+
+            </div>
+
+            <!-- PROFIT SECTION -->
+            <div style="
+                background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.02) 100%);
+                border: 1px solid rgba(34,197,94,0.15);
+                border-radius: 12px;
+                padding: 16px;
             ">
-
-            <div class="d-flex justify-content-between mb-12">
-                <span class="text-secondary">Plan Price</span>
-                <span class="text-white fw-semibold">${{ number_format($plan->price, 2) }}</span>
-            </div>
-
-            <div class="d-flex justify-content-between mb-12">
-                <span class="text-secondary">Duration</span>
-                <span class="text-white fw-semibold">
-                    {{ $plan->duration_minutes }} minutes
-                </span>
-            </div>
-
-            <div class="d-flex justify-content-between">
-                <span class="text-secondary">Expected Profit</span>
-                <span
-                    style="
-                        color:#22c55e;
-                        background:rgba(34,197,94,.12);
-                        padding:4px 10px;
-                        border-radius:999px;
-                        font-weight:600;
-                        font-size:13px;
-                    ">
+                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">📈 Expected Profit Range</p>
+                <h3 style="color: #22c55e; font-size: 28px; font-weight: 900; margin: 0;">
                     +{{ $plan->min_profit }}% – {{ $plan->max_profit }}%
-                </span>
+                </h3>
+                <p style="color: #86efac; font-size: 12px; margin: 8px 0 0 0;">
+                    Estimated returns on your investment
+                </p>
             </div>
 
         </div>
 
-        <!-- ACTION BUTTON -->
-        <form method="POST" action="{{ route('compute.unlock', $plan->id) }}">
+        <!-- FEATURES SECTION -->
+        <div style="
+            background: linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(251,191,36,0.02) 100%);
+            border: 1px solid rgba(251,191,36,0.15);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(251,191,36,0.05), inset 0 0 20px rgba(251,191,36,0.03);
+            backdrop-filter: blur(10px);
+            margin-bottom: 24px;
+            animation: slideUp 0.6s ease 0.2s backwards;
+        ">
+            <h5 style="color: #fbbf24; font-weight: 700; font-size: 16px; margin: 0 0 16px 0;">💡 Plan Features</h5>
+
+            <div style="display: grid; gap: 12px;">
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: #fbbf24; font-size: 18px; margin-top: 2px;">✓</span>
+                    <div>
+                        <p style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin: 0 0 2px 0;">Flexible Investment</p>
+                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">Invest any amount within your account balance</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: #fbbf24; font-size: 18px; margin-top: 2px;">✓</span>
+                    <div>
+                        <p style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin: 0 0 2px 0;">Auto-Completion</p>
+                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">Plan automatically completes and profits are credited</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: #fbbf24; font-size: 18px; margin-top: 2px;">✓</span>
+                    <div>
+                        <p style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin: 0 0 2px 0;">Real-time Tracking</p>
+                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">Monitor your investment progress in real-time</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="color: #fbbf24; font-size: 18px; margin-top: 2px;">✓</span>
+                    <div>
+                        <p style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin: 0 0 2px 0;">Secure & Verified</p>
+                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">All plans are thoroughly audited and verified</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTIVATION BUTTON -->
+        <form method="POST" action="{{ route('compute.unlock', $plan->id) }}" style="animation: slideUp 0.6s ease 0.3s backwards;">
             @csrf
-            <button
+            <button type="submit"
                 style="
-                    width:100%;
-                    padding:14px;
-                    border-radius:16px;
-                    background:linear-gradient(90deg,#22c55e,#4ade80);
-                    color:#020617;
-                    font-size:15px;
-                    font-weight:700;
-                    border:none;
-                    box-shadow:0 0 18px rgba(34,197,94,.45);
-                ">
-                Activate Compute Plan
+                    width: 100%;
+                    padding: 16px;
+                    border-radius: 12px;
+                    background: linear-gradient(135deg, rgba(34,197,94,0.2) 0%, rgba(34,197,94,0.1) 100%);
+                    border: 1px solid rgba(34,197,94,0.3);
+                    color: #22c55e;
+                    font-weight: 700;
+                    font-size: 15px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 0 30px rgba(34,197,94,0.0);
+                "
+                onmouseover="this.style.background='linear-gradient(135deg, rgba(34,197,94,0.3) 0%, rgba(34,197,94,0.15) 100%)'; this.style.boxShadow='0 0 30px rgba(34,197,94,0.3)';"
+                onmouseout="this.style.background='linear-gradient(135deg, rgba(34,197,94,0.2) 0%, rgba(34,197,94,0.1) 100%)'; this.style.boxShadow='0 0 30px rgba(34,197,94,0.0)';">
+                🚀 Activate Plan
             </button>
         </form>
 
-        <!-- FOOT NOTE -->
-        <p class="text-secondary text-center mt-12" style="font-size:12px;">
-            Funds will be locked until plan completes.
-        </p>
+        <!-- INFO MESSAGE -->
+        <div style="
+            background: linear-gradient(135deg, rgba(168,85,247,0.08) 0%, rgba(168,85,247,0.02) 100%);
+            border: 1px solid rgba(168,85,247,0.15);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            margin-top: 16px;
+            animation: slideUp 0.6s ease 0.4s backwards;
+        ">
+            <p class="text-secondary" style="font-size: 12px; margin: 0;">
+                <span style="color: #a855f7; font-weight: 600;">🔒 Locked Funds</span> - Your investment will be locked until the plan completes
+            </p>
+        </div>
 
     </div>
-
 </div>
+
+<!-- ANIMATIONS & STYLES -->
+<style>
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 768px) {
+        .pt-80 {
+            padding-top: 80px !important;
+        }
+
+        .pb-80 {
+            padding-bottom: 60px !important;
+        }
+
+        h1 {
+            font-size: 24px !important;
+        }
+
+        h3 {
+            font-size: 20px !important;
+        }
+
+        [style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+        }
+
+        [style*="padding: 24px"] {
+            padding: 16px !important;
+        }
+
+        [style*="padding: 16px"] {
+            padding: 12px !important;
+        }
+
+        [style*="gap: 16px"] {
+            gap: 12px !important;
+        }
+
+        .mb-32 {
+            margin-bottom: 20px !important;
+        }
+
+        .mb-24 {
+            margin-bottom: 18px !important;
+        }
+    }
+
+    /* TABLET RESPONSIVE */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        h1 {
+            font-size: 28px !important;
+        }
+
+        h3 {
+            font-size: 22px !important;
+        }
+    }
+</style>
 
 @endsection

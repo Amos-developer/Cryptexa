@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class NowPaymentsWebhookController extends Controller
-{
+class NowPaymentsWebhookController extends Controller {
     public function handle(Request $request)
     {
         /**
