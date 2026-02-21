@@ -96,8 +96,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('auth');
 
 
-    Route::post('/compute/unlock/{id}', [ComputeController::class, 'unlock'])
-        ->name('compute.unlock');
+    Route::post('/pools/activate/{id}', [ComputeController::class, 'activatePool'])
+        ->name('pools.activate');
 
     Route::get('/compute/{plan}', [HomeController::class, 'showComputePlan'])
         ->name('compute.show');

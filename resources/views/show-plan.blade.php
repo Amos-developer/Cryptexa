@@ -158,7 +158,7 @@
         </div>
 
         <!-- ACTIVATION BUTTON -->
-        <form method="POST" action="{{ route('compute.unlock', $plan->id) }}" style="animation: slideUp 0.6s ease 0.3s backwards;">
+        <form method="POST" action="{{ route('pools.activate', $plan->id) }}" style="animation: slideUp 0.6s ease 0.3s backwards;">
             @csrf
             <button type="submit"
                 style="

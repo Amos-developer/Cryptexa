@@ -2,7 +2,8 @@
 
 @section('title', 'Compute Orders | Cryptexa')
 
-@section('hide-header')@endsection
+@section('hide-header')
+@endsection
 
 @section('content')
 

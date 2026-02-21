@@ -7,9 +7,10 @@
 <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 
 <div class="dashboard-container">
+
     <!-- Top Header -->
     <div class="dashboard-top">
-        <div class="dashboard-brand">Golhold°</div>
+        <div class="dashboard-brand">Cryptexa</div>
         <div class="dashboard-menu">
             <img src="{{ asset('images/icons/settings.svg') }}" alt="Settings" style="width: 18px; height: 18px;">
         </div>
@@ -17,11 +18,12 @@
 
     <!-- Balance Section -->
     <div class="balance-section">
-        <p class="balance-label">Balance in dollars</p>
-        <div class="balance-amount">${{ number_format(auth()->user()->balance, 0) }}</div>
+        <p class="balance-label">Total Account Balance</p>
+        <div class="balance-amount">${{ number_format(auth()->user()->balance, 2) }}</div>
         <div class="balance-change">
-            <span class="balance-change-positive">+ ${{ number_format(auth()->user()->balance * 0.02, 2) }}</span>
-            <span class="balance-change-percent">· 3.95% for today</span>
+            <span class="balance-change-positive">
+                Active Liquidity Allocation
+            </span>
         </div>
         <div class="balance-chart">
             <div class="chart-bar"></div>
@@ -32,21 +34,23 @@
     <div class="quick-actions">
         <a href="{{ route('choose.cryptocurrency') }}" class="action-card">
             <div class="action-icon">
-                <img src="{{ asset('images/icons/history.svg') }}" alt="History" style="width: 20px; height: 20px;">
-            </div>
-            <div class="action-label">History</div>
-        </a>
-        <a href="{{ route('choose.cryptocurrency') }}" class="action-card">
-            <div class="action-icon">
                 <img src="{{ asset('images/icons/deposit.svg') }}" alt="Deposit" style="width: 20px; height: 20px;">
             </div>
             <div class="action-label">Deposit</div>
         </a>
+
         <a href="{{ route('withdraw') }}" class="action-card">
             <div class="action-icon">
-                <img src="{{ asset('images/icons/favorites.svg') }}" alt="Favorites" style="width: 20px; height: 20px;">
+                <img src="{{ asset('images/icons/favorites.svg') }}" alt="Withdraw" style="width: 20px; height: 20px;">
             </div>
-            <div class="action-label">Favorites</div>
+            <div class="action-label">Withdraw</div>
+        </a>
+
+        <a href="{{ route('choose.cryptocurrency') }}" class="action-card">
+            <div class="action-icon">
+                <img src="{{ asset('images/icons/history.svg') }}" alt="History" style="width: 20px; height: 20px;">
+            </div>
+            <div class="action-label">Transactions</div>
         </a>
     </div>
 
@@ -56,75 +60,68 @@
             <div class="portfolio-icon">
                 <img src="{{ asset('images/icons/analytics.svg') }}" alt="Analytics" style="width: 16px; height: 16px;">
             </div>
-            <p class="portfolio-text">Portfolio Analytics</p>
+            <p class="portfolio-text">Liquidity Portfolio Overview</p>
         </div>
     </div>
 
-    <!-- Sections Grid -->
+    <!-- Liquidity Growth Pools Section -->
     <div class="main-grid">
-        <!-- Compute Plans Section -->
+
         <div class="section-container">
             <div class="section-header">
                 <span class="section-title">
-                    <img src="{{ asset('images/icons/compute.svg') }}" alt="Compute" style="width: 16px; height: 16px;">
-                    AI Compute Plans
+                    <img src="{{ asset('images/icons/compute.svg') }}" alt="Liquidity" style="width: 16px; height: 16px;">
+                    Liquidity Growth Pools
                 </span>
-                <span class="section-change">+2.42%</span>
             </div>
+
             <div class="cards-list">
+
                 @forelse ($plans as $plan)
+
+                @php
+                $days = $plan->duration_minutes / 1440;
+                @endphp
+
                 <a href="{{ route('compute.show', $plan->id) }}" class="card-item">
+
                     <div class="card-icon">
-                        <img src="{{ asset('images/coin/'.$plan['icon']) }}" alt="{{ $plan['name'] }}"
+                        <img src="{{ asset('images/coin/default.png') }}"
+                            alt="{{ $plan->name }}"
                             style="width: 20px; height: 20px; object-fit: contain;">
                     </div>
+
                     <div class="card-info">
-                        <p class="card-name">{{ $plan['name'] }}</p>
-                        <p class="card-meta">{{ $plan['type'] }} · {{ $plan['duration'] }}</p>
+                        <p class="card-name">{{ $plan->name }}</p>
+                        <p class="card-meta">
+                            {{ $plan->type }} · {{ $days }} Day{{ $days > 1 ? 's' : '' }}
+                        </p>
                     </div>
+
                     <div class="card-price">
-                        <p class="card-amount">${{ $plan['price'] }}</p>
-                        <p class="card-change card-change-positive">+{{ $plan['yield'] }}</p>
+                        <p class="card-amount">
+                            Min: ${{ number_format($plan->price, 0) }}
+                        </p>
+                        <p class="card-change card-change-positive">
+                            {{ $plan->min_profit }}% – {{ $plan->max_profit }}% Daily
+                        </p>
                     </div>
+
                 </a>
+
                 @empty
+
                 <div class="card-item" style="justify-content: center;">
-                    <p style="color: rgba(226, 232, 240, 0.5); margin: 0;">No plans available</p>
+                    <p style="color: rgba(226, 232, 240, 0.5); margin: 0;">
+                        No liquidity pools available
+                    </p>
                 </div>
+
                 @endforelse
+
             </div>
         </div>
 
-        <!-- Quick Links Section -->
-        <!-- <div class="section-container">
-            <div class="section-header">
-                <span class="section-title">🔗 Quick Links</span>
-                <span class="section-change">+1.28%</span>
-            </div>
-            <div class="cards-list">
-                <a href="{{ route('invites') }}" class="card-item">
-                    <div class="card-icon">👥</div>
-                    <div class="card-info">
-                        <p class="card-name">Referrals</p>
-                        <p class="card-meta">Earn from invites</p>
-                    </div>
-                </a>
-                <a href="javascript:void(0)" onclick="openCommunityModal()" class="card-item">
-                    <div class="card-icon">🌐</div>
-                    <div class="card-info">
-                        <p class="card-name">Community</p>
-                        <p class="card-meta">Join the network</p>
-                    </div>
-                </a>
-                <a href="{{ route('withdraw') }}" class="card-item">
-                    <div class="card-icon">📤</div>
-                    <div class="card-info">
-                        <p class="card-name">Withdraw</p>
-                        <p class="card-meta">Cash out funds</p>
-                    </div>
-                </a>
-            </div>
-        </div> -->
     </div>
 
 </div>

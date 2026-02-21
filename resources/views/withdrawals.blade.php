@@ -49,7 +49,7 @@
         @if ($errors->any())
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const errors = @json($errors - > all());
+                const errors = @json($errors -> all());
                 Swal.fire({
                     title: 'Error!',
                     html: errors.join('<br>'),

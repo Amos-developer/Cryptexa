@@ -1,24 +1,41 @@
 @extends('layouts.app')
 
 @section('title', 'Account Settings | Cryptexa')
+@section('hide-header', true)
 
 @section('content')
 
-<!-- HEADER -->
-<div style="
-    background: linear-gradient(135deg, #020617, #0f172a);
-    border-bottom: 1px solid rgba(56,189,248,0.2);
-    padding: 16px 0;
-    margin-top: 60px;
-">
-    <div class="tf-container">
-        <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0;">Account Settings</h1>
-        <p class="text-secondary" style="font-size: 14px; margin: 8px 0 0 0;">Manage your account preferences and security</p>
-    </div>
+<!-- HEADER BAR -->
+<div class="header fixed-top d-flex justify-content-between align-items-center px-16"
+    style="
+        background: linear-gradient(135deg, #020617, #0f172a);
+        border-bottom: 1px solid rgba(56,189,248,0.2);
+        backdrop-filter: blur(10px);
+        z-index: 100;
+        padding: 12px 16px;
+    ">
+    <a href="{{ url()->previous() }}"
+        style="
+            width: 36px;
+            height: 36px;
+            background: rgba(56,189,248,0.1);
+            border: 1px solid rgba(56,189,248,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        "
+        onmouseover="this.style.background='rgba(56,189,248,0.15)'; this.style.borderColor='rgba(56,189,248,0.4)';"
+        onmouseout="this.style.background='rgba(56,189,248,0.1)'; this.style.borderColor='rgba(56,189,248,0.2)';">
+        <i class="icon-left-btn" style="color: #38bdf8; font-size: 18px;"></i>
+    </a>
+    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Account Settings</h6>
+    <span style="width: 36px;"></span>
 </div>
 
 <!-- MAIN CONTENT -->
-<div class="pt-32 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%);">
+<div class="pt-32 pb-24" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%);">
     <div class="tf-container">
 
         @php
@@ -189,6 +206,33 @@
         </div>
         @endforeach
 
+        <!-- LOGOUT BUTTON AT BOTTOM -->
+        <!-- <div style="margin-top: 40px; padding: 0 16px; display: flex; justify-content: center; animation: slideUp 0.6s ease 0.5s backwards;">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 14px 24px;
+                    background: linear-gradient(135deg, rgba(236,72,153,0.15), rgba(34,211,238,0.15));
+                    color: #ffffff;
+                    font-weight: 700;
+                    font-size: 14px;
+                    border: none;
+                    border-radius: 12px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                "
+                    onmouseover="this.style.background='linear-gradient(135deg, rgba(236,72,153,0.25), rgba(34,211,238,0.25))'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.2)';"
+                    onmouseout="this.style.background='linear-gradient(135deg, rgba(236,72,153,0.15), rgba(34,211,238,0.15))'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';">
+                    <span>🚪</span>
+                    <span>Logout</span>
+                </button>
+            </form>
+        </div> -->
+
     </div>
 </div>
 
@@ -224,7 +268,7 @@
             padding-top: 20px !important;
         }
 
-        .pb-80 {
+        .pb-24 {
             padding-bottom: 60px !important;
         }
 
@@ -256,6 +300,13 @@
 
         p {
             font-size: 12px !important;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            justify-content: center;
+            padding: 14px;
+            font-size: 13px;
         }
     }
 
