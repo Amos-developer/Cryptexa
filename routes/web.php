@@ -44,6 +44,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/account', fn() => view('settings'))->name('account.settings');
     Route::get('/account/password', fn() => view('password'))->name('account.password');
     Route::get('/about', fn() => view('about'))->name('about');
+
+    // Withdrawal PIN routes
+    Route::get('/withdrawal-pin/set', [\App\Http\Controllers\WithdrawalPinController::class, 'showSet'])->name('withdrawal-pin.set');
+    Route::post('/withdrawal-pin/set', [\App\Http\Controllers\WithdrawalPinController::class, 'store'])->name('withdrawal-pin.store');
+    Route::get('/withdrawal-pin/change', [\App\Http\Controllers\WithdrawalPinController::class, 'showChange'])->name('withdrawal-pin.change');
+    Route::put('/withdrawal-pin/change', [\App\Http\Controllers\WithdrawalPinController::class, 'update'])->name('withdrawal-pin.update');
 });
 
 

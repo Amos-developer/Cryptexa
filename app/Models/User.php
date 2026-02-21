@@ -25,6 +25,7 @@ class User extends Authenticatable
         'balance',
         'role',
         'password',
+        'withdrawal_pin',
         'referral_code',
         'referred_by',
         'verification_code',

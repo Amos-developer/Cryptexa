@@ -57,10 +57,10 @@
     ],
     [
     'icon' => 'key',
-    'title' => 'Withdrawal Password',
-    'desc' => 'Secure withdrawal requests',
+    'title' => 'Withdrawal PIN',
+    'desc' => auth()->user()->withdrawal_pin ? 'Change your withdrawal PIN' : 'Create a withdrawal PIN',
     'color' => '#f59e0b',
-    'link' => '#'
+    'link' => auth()->user()->withdrawal_pin ? route('withdrawal-pin.change') : route('withdrawal-pin.set')
     ]
     ]
     ],
@@ -114,15 +114,22 @@
     ]
     ],
     [
-    'title' => 'Withdrawal Management',
-    'icon' => '💳',
+    'title' => 'Transaction Management',
+    'icon' => '📊',
     'items' => [
     [
-    'icon' => 'credit-card',
-    'title' => 'Withdrawal Method',
-    'desc' => 'Bank account or wallet',
-    'color' => '#22c55e',
+    'icon' => 'download',
+    'title' => 'Deposit History',
+    'desc' => 'View all your deposits',
+    'color' => '#10b981',
     'link' => '#'
+    ],
+    [
+    'icon' => 'upload',
+    'title' => 'Withdrawal History',
+    'desc' => 'View all your withdrawals',
+    'color' => '#f59e0b',
+    'link' => route('withdraw.history')
     ]
     ]
     ],
@@ -238,6 +245,13 @@
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="7 10 12 15 17 10"></polyline>
                         <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    @break
+                    @case('upload')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
                     </svg>
                     @break
                     @case('info')
