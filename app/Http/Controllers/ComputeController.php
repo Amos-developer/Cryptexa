@@ -71,31 +71,10 @@ class ComputeController extends Controller
                     'amount'   => $principal,
                 ],
             ]);
-
-            $this->payReferralBonuses($user, $principal);
         });
 
         return redirect()->route('home')
             ->with('success', 'Liquidity pool activated successfully.');
-    }
-
-    protected function payReferralBonuses(User $user, float $amount): void
-    {
-        // Safer referral structure
-        $levels = [0.03, 0.015, 0.005];
-
-        $referrer = $user->referrer;
-
-        foreach ($levels as $rate) {
-            if (!$referrer) break;
-
-            $bonus = round($amount * $rate, 2);
-
-            $referrer->increment('balance', $bonus);
-            $referrer->increment('referral_earnings', $bonus);
-
-            $referrer = $referrer->referrer;
-        }
     }
 
     public function track()

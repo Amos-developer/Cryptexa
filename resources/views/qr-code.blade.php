@@ -168,6 +168,37 @@
             @endif
         </div>
 
+        <!-- PAYMENT STATUS INDICATOR -->
+        <div id="statusSection" style="display: none;">
+            <div style="
+                background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.02) 100%);
+                border: 1px solid rgba(34,197,94,0.15);
+                border-radius: 16px;
+                padding: 16px;
+                margin-bottom: 20px;
+                animation: slideUp 0.6s ease backwards;
+            ">
+                <p style="color: #22c55e; font-size: 13px; font-weight: 600; margin: 0 0 8px 0; display: flex; align-items: center;">
+                    <span id="statusIcon" style="margin-right: 8px; font-size: 16px;">⏳</span>
+                    <span id="statusText">Waiting for payment confirmation...</span>
+                </p>
+                <div id="progressBar" style="
+                    width: 100%;
+                    height: 4px;
+                    background: rgba(34,197,94,0.2);
+                    border-radius: 2px;
+                    overflow: hidden;
+                ">
+                    <div style="
+                        height: 100%;
+                        background: linear-gradient(90deg, #22c55e, #10b981);
+                        width: 30%;
+                        animation: loading 2s infinite;
+                    "></div>
+                </div>
+            </div>
+        </div>
+
         <!-- INFO BOXES -->
         <div style="
             background: linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(251,191,36,0.02) 100%);
@@ -218,6 +249,21 @@
         to {
             opacity: 1;
             transform: translateY(0);
+        }
+    }
+
+    @keyframes loading {
+        0% {
+            width: 30%;
+            background-position: 0 0;
+        }
+
+        50% {
+            width: 80%;
+        }
+
+        100% {
+            width: 30%;
         }
     }
 
@@ -349,6 +395,143 @@
             background: '#020617',
             color: '#e5e7eb'
         });
+    }
+</script>
+
+<!-- PAYMENT STATUS POLLING -->
+<script>
+    let isPolling = false;
+    let checkCount = 0;
+    const maxChecks = 120; // 10 minutes with 5-second intervals
+
+    function startPaymentStatusPolling() {
+        // Only start polling if address is loaded
+        const addressText = document.getElementById('walletAddress')?.innerText || '';
+        if (addressText.includes('Waiting') || !addressText) {
+            // Address not loaded yet, wait and try again
+            setTimeout(startPaymentStatusPolling, 5000);
+            return;
+        }
+
+        if (isPolling || checkCount >= maxChecks) return;
+
+        isPolling = true;
+
+        // Show status section
+        document.getElementById('statusSection').style.display = 'block';
+
+        // Fetch payment status
+        fetch('{{ route("deposit.check-status", $deposit->id) }}', {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                checkCount++;
+
+                if (data.status === 'finished') {
+                    // Payment confirmed!
+                    updatePaymentStatus('finished', data);
+                    stopPolling();
+                } else if (data.status === 'confirming' || data.status === 'waiting') {
+                    // Still waiting
+                    updatePaymentStatus('waiting', data);
+                    scheduleNextCheck();
+                } else {
+                    // Payment not found yet or other status
+                    updatePaymentStatus('checking', data);
+                    scheduleNextCheck();
+                }
+            })
+            .catch(error => {
+                console.error('Error checking payment status:', error);
+                updatePaymentStatus('error', {
+                    message: 'Connection error, retrying...'
+                });
+                scheduleNextCheck();
+            })
+            .finally(() => {
+                isPolling = false;
+            });
+    }
+
+    function scheduleNextCheck() {
+        if (checkCount < maxChecks) {
+            setTimeout(startPaymentStatusPolling, 5000); // Check every 5 seconds
+        } else {
+            updatePaymentStatus('timeout', {
+                message: 'Payment not detected. Please check manually or contact support.'
+            });
+        }
+    }
+
+    function updatePaymentStatus(status, data) {
+        const statusIcon = document.getElementById('statusIcon');
+        const statusText = document.getElementById('statusText');
+
+        switch (status) {
+            case 'finished':
+                statusIcon.innerHTML = '✅';
+                statusText.innerHTML = `Payment Confirmed! Received ${data.received || data.amount} ${data.currency || ''}`;
+
+                // Show success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Payment Received!',
+                    text: 'Your balance has been updated and referral bonuses distributed',
+                    timer: 2000,
+                    showConfirmButton: false,
+                    background: '#020617',
+                    color: '#e5e7eb'
+                }).then(() => {
+                    // Redirect to success page or reload
+                    window.location.href = '{{ route("home") }}';
+                });
+                break;
+
+            case 'confirming':
+            case 'waiting':
+                statusIcon.innerHTML = '⏳';
+                statusText.innerHTML = 'Confirming payment... (Attempt ' + checkCount + ')';
+                break;
+
+            case 'checking':
+                statusIcon.innerHTML = '🔄';
+                statusText.innerHTML = 'Checking payment status... (Attempt ' + checkCount + ')';
+                break;
+
+            case 'error':
+                statusIcon.innerHTML = '⚠️';
+                statusText.innerHTML = data.message || 'Connection error, retrying...';
+                break;
+
+            case 'timeout':
+                statusIcon.innerHTML = '❌';
+                statusText.innerHTML = data.message || 'Payment check timeout';
+                break;
+        }
+    }
+
+    function stopPolling() {
+        isPolling = false;
+        checkCount = maxChecks; // Stop any future checks
+    }
+
+    // Start polling when page loads (after a brief delay to allow address loading)
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(startPaymentStatusPolling, 2000);
+    });
+
+    // Also start polling immediately in case DOM is already loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(startPaymentStatusPolling, 2000);
+        });
+    } else {
+        setTimeout(startPaymentStatusPolling, 2000);
     }
 </script>
 

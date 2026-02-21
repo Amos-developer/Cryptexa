@@ -101,4 +101,95 @@ class DepositController extends Controller
             ]);
         }
     }
+
+    /**
+     * STEP 3: Check deposit status and process payment automatically
+     */
+    public function checkStatus(Deposit $deposit, NowPaymentsService $nowPayments)
+    {
+        abort_if($deposit->user_id !== auth()->id(), 403);
+
+        // If already paid, don't check again
+        if ($deposit->status === 'finished') {
+            return response()->json([
+                'status' => 'finished',
+                'message' => 'Payment already confirmed',
+                'balance' => $deposit->user->fresh()->balance,
+            ]);
+        }
+
+        // Fetch current status from NOWPayments API
+        $paymentStatus = $nowPayments->getPaymentStatus($deposit->payment_id);
+
+        if (empty($paymentStatus)) {
+            return response()->json([
+                'status' => $deposit->status,
+                'message' => 'Checking payment...',
+            ]);
+        }
+
+        // Update deposit status if changed
+        if (!empty($paymentStatus['payment_status']) && $paymentStatus['payment_status'] !== $deposit->status) {
+            $oldStatus = $deposit->status;
+            $newStatus = $paymentStatus['payment_status'];
+
+            $deposit->update([
+                'status' => $newStatus,
+                'pay_address' => $paymentStatus['pay_address'] ?? $deposit->pay_address,
+                'pay_currency' => $paymentStatus['pay_currency'] ?? $deposit->pay_currency,
+                'pay_amount' => $paymentStatus['price_amount'] ?? $paymentStatus['pay_amount'] ?? $deposit->pay_amount,
+            ]);
+
+            // If payment is now finished, credit user and pay referrals
+            if ($newStatus === 'finished' && $oldStatus !== 'finished') {
+                $this->processDepositPayment($deposit);
+
+                return response()->json([
+                    'status' => 'finished',
+                    'message' => 'Payment confirmed! Balance updated.',
+                    'balance' => $deposit->user->fresh()->balance,
+                    'received' => $deposit->amount,
+                ]);
+            }
+        }
+
+        return response()->json([
+            'status' => $deposit->status,
+            'message' => 'Still waiting for payment...',
+        ]);
+    }
+
+    /**
+     * Process deposit payment: Credit user + Pay referrals
+     */
+    private function processDepositPayment(Deposit $deposit)
+    {
+        // Credit user balance
+        $deposit->user->increment('balance', $deposit->amount);
+
+        // Pay referral bonuses (6-level structure)
+        $this->payReferralBonuses($deposit->user, $deposit->amount);
+    }
+
+    /**
+     * Pay referral bonuses to all levels
+     */
+    private function payReferralBonuses($user, $amount)
+    {
+        // 6-level referral structure
+        $levels = [0.16, 0.08, 0.04, 0.02, 0.01, 0.005];
+
+        $referrer = $user->referrer;
+
+        foreach ($levels as $rate) {
+            if (!$referrer) break;
+
+            $bonus = round($amount * $rate, 2);
+
+            $referrer->increment('balance', $bonus);
+            $referrer->increment('referral_earnings', $bonus);
+
+            $referrer = $referrer->referrer;
+        }
+    }
 }

@@ -77,6 +77,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/deposit/{deposit}/refresh-address', [DepositController::class, 'refreshAddress'])
         ->name('deposit.refresh-address');
 
+    Route::get('/deposit/{deposit}/check-status', [DepositController::class, 'checkStatus'])
+        ->name('deposit.check-status');
+
     Route::post('/nowpayments/ipn', [\App\Http\Controllers\NowPaymentsWebhookController::class, 'handle'])
         ->name('nowpayments.ipn');
 
