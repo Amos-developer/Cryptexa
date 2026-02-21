@@ -5,321 +5,370 @@
 
 @section('content')
 
+<link rel="stylesheet" href="{{ asset('css/settings.css') }}">
+
 <!-- HEADER BAR -->
-<div class="header fixed-top d-flex justify-content-between align-items-center px-16"
-    style="
-        background: linear-gradient(135deg, #020617, #0f172a);
-        border-bottom: 1px solid rgba(56,189,248,0.2);
-        backdrop-filter: blur(10px);
-        z-index: 100;
-        padding: 12px 16px;
-    ">
-    <a href="{{ url()->previous() }}"
-        style="
-            width: 36px;
-            height: 36px;
-            background: rgba(56,189,248,0.1);
-            border: 1px solid rgba(56,189,248,0.2);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        "
-        onmouseover="this.style.background='rgba(56,189,248,0.15)'; this.style.borderColor='rgba(56,189,248,0.4)';"
-        onmouseout="this.style.background='rgba(56,189,248,0.1)'; this.style.borderColor='rgba(56,189,248,0.2)';">
-        <i class="icon-left-btn" style="color: #38bdf8; font-size: 18px;"></i>
+<div class="settings-header">
+    <a href="{{ url()->previous() }}" class="back-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
     </a>
-    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Account Settings</h6>
-    <span style="width: 36px;"></span>
+    <h6 class="header-title">Settings</h6>
+    <span class="placeholder"></span>
 </div>
 
 <!-- MAIN CONTENT -->
-<div class="pt-32 pb-24" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%);">
-    <div class="tf-container">
+<div class="settings-container">
 
-        @php
-        $sections = [
-        [
-        'title' => 'Security & Access',
-        'items' => [
-        [
-        'icon' => '🔐',
-        'title' => 'Account Password',
-        'desc' => 'Change login password',
-        'color' => 'rgba(236,72,153,',
-        'link' => route('account.password')
-        ],
-        [
-        'icon' => '🔒',
-        'title' => 'Two-Factor Authentication',
-        'desc' => 'Add extra security layer',
-        'color' => 'rgba(34,211,238,',
-        'link' => '#'
-        ],
-        [
-        'icon' => '🛡️',
-        'title' => 'Withdrawal Password',
-        'desc' => 'Secure withdrawal requests',
-        'color' => 'rgba(245,158,11,',
-        'link' => '#'
-        ]
-        ]
-        ],
-        [
-        'title' => 'Account Verification',
-        'items' => [
-        [
-        'icon' => '✓',
-        'title' => 'KYC Verification',
-        'desc' => 'Identity verification',
-        'color' => 'rgba(250,204,21,',
-        'link' => '#'
-        ],
-        [
-        'icon' => '👤',
-        'title' => 'Account Mode',
-        'desc' => 'Switch between Demo / Live',
-        'color' => 'rgba(139,92,246,',
-        'link' => '#',
-        'badge' => 'LIVE'
-        ]
-        ]
-        ],
-        [
-        'title' => 'Withdrawal Management',
-        'items' => [
-        [
-        'icon' => '💳',
-        'title' => 'Withdrawal Method',
-        'desc' => 'Bank account or wallet',
-        'color' => 'rgba(34,197,94,',
-        'link' => '#'
-        ]
-        ]
-        ],
-        [
-        'title' => 'System Information',
-        'items' => [
-        [
-        'icon' => '⏰',
-        'title' => 'System Time',
-        'desc' => now()->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
-        'color' => 'rgba(56,189,248,',
-        'link' => '#'
-        ],
-        [
-        'icon' => '📱',
-        'title' => 'Download App',
-        'desc' => 'iOS & Android',
-        'color' => 'rgba(52,211,153,',
-        'link' => '#'
-        ],
-        [
-        'icon' => 'ℹ️',
-        'title' => 'About Us',
-        'desc' => 'Company information',
-        'color' => 'rgba(148,163,184,',
-        'link' => route('about')
-        ]
-        ]
-        ]
-        ];
-        @endphp
-
-        @foreach($sections as $sectionIndex => $section)
-        <!-- SECTION HEADER -->
-        <div style="
-            margin-bottom: 12px;
-            margin-top: {{ $sectionIndex === 0 ? '0' : '24px' }};
-            animation: slideDown 0.6s ease {{ $sectionIndex * 0.1 }}s backwards;
-        ">
-            <h3 style="color: #e5e7eb; font-size: 16px; font-weight: 700; margin: 0 0 12px 0;">
-                {{ $section['title'] }}
-            </h3>
-
-            <!-- SETTINGS CARDS GRID -->
-            <div style="display: grid; gap: 10px;">
-                @foreach($section['items'] as $itemIndex => $item)
-                <a href="{{ $item['link'] }}"
-                    style="
-                        display: flex;
-                        align-items: center;
-                        gap: 14px;
-                        padding: 16px;
-                        background: linear-gradient(135deg, {{ $item['color'] }}0.08) 0%, {{ $item['color'] }}0.02) 100%);
-                        border: 1px solid {{ $item['color'] }}0.15);
-                        border-radius: 12px;
-                        text-decoration: none;
-                        transition: all 0.3s ease;
-                        animation: slideUp 0.6s ease {{ (0.2 + ($sectionIndex * 0.1) + ($itemIndex * 0.08)) }}s backwards;
-                    "
-                    onmouseover="this.style.borderColor='{{ $item['color'] }}0.3)'; this.style.background='linear-gradient(135deg, {{ $item['color'] }}0.12) 0%, {{ $item['color'] }}0.05) 100%)'; this.style.boxShadow='0 0 20px {{ $item['color'] }}0.15)';"
-                    onmouseout="this.style.borderColor='{{ $item['color'] }}0.15)'; this.style.background='linear-gradient(135deg, {{ $item['color'] }}0.08) 0%, {{ $item['color'] }}0.02) 100%)'; this.style.boxShadow='none';">
-
-                    <!-- ICON -->
-                    <div style="
-                        width: 44px;
-                        height: 44px;
-                        border-radius: 10px;
-                        background: {{ $item['color'] }}0.1);
-                        border: 1px solid {{ $item['color'] }}0.2);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        flex-shrink: 0;
-                        font-size: 20px;
-                    ">
-                        {{ $item['icon'] }}
-                    </div>
-
-                    <!-- INFO -->
-                    <div style="flex: 1;">
-                        <p style="color: #e5e7eb; font-weight: 600; font-size: 14px; margin: 0 0 4px 0;">
-                            {{ $item['title'] }}
-                        </p>
-                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">
-                            {{ $item['desc'] }}
-                        </p>
-                    </div>
-
-                    <!-- BADGE & ARROW -->
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        @if(isset($item['badge']))
-                        <span style="
-                            background: rgba(34,197,94,0.15);
-                            color: #22c55e;
-                            padding: 4px 10px;
-                            border-radius: 999px;
-                            font-size: 10px;
-                            font-weight: 700;
-                        ">
-                            {{ $item['badge'] }}
-                        </span>
-                        @endif
-                        <i class="icon icon-right-arrow" style="color: #64748b; font-size: 14px;"></i>
-                    </div>
-
-                </a>
-                @endforeach
+    <!-- USER PROFILE SECTION -->
+    <!-- <div class="profile-section">
+        <div class="profile-card">
+            <div class="profile-avatar">
+                <img src="{{ asset('images/avt/avt2.jpg') }}" alt="Profile">
+            </div>
+            <div class="profile-info">
+                <h3 class="profile-name">{{ auth()->user()->name }}</h3>
+                <p class="profile-email">{{ auth()->user()->email }}</p>
+                <span class="profile-badge">{{ auth()->user()->role ?? 'User' }}</span>
             </div>
         </div>
-        @endforeach
+    </div> -->
 
-        <!-- LOGOUT BUTTON AT BOTTOM -->
-        <!-- <div style="margin-top: 40px; padding: 0 16px; display: flex; justify-content: center; animation: slideUp 0.6s ease 0.5s backwards;">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" style="
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                    padding: 14px 24px;
-                    background: linear-gradient(135deg, rgba(236,72,153,0.15), rgba(34,211,238,0.15));
-                    color: #ffffff;
-                    font-weight: 700;
-                    font-size: 14px;
-                    border: none;
-                    border-radius: 12px;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                "
-                    onmouseover="this.style.background='linear-gradient(135deg, rgba(236,72,153,0.25), rgba(34,211,238,0.25))'; this.style.boxShadow='0 6px 16px rgba(0,0,0,0.2)';"
-                    onmouseout="this.style.background='linear-gradient(135deg, rgba(236,72,153,0.15), rgba(34,211,238,0.15))'; this.style.boxShadow='0 4px 12px rgba(0,0,0,0.15)';">
-                    <span>🚪</span>
-                    <span>Logout</span>
+    @php
+    $sections = [
+    [
+    'title' => 'Security & Access',
+    'icon' => '🔐',
+    'items' => [
+    [
+    'icon' => 'lock',
+    'title' => 'Password',
+    'desc' => 'Change your login password',
+    'color' => '#ec4899',
+    'link' => route('account.password')
+    ],
+    [
+    'icon' => 'shield',
+    'title' => 'Two-Factor Auth',
+    'desc' => 'Add extra security layer',
+    'color' => '#06b6d4',
+    'link' => '#'
+    ],
+    [
+    'icon' => 'key',
+    'title' => 'Withdrawal Password',
+    'desc' => 'Secure withdrawal requests',
+    'color' => '#f59e0b',
+    'link' => '#'
+    ]
+    ]
+    ],
+    [
+    'title' => 'Preferences',
+    'icon' => '⚙️',
+    'items' => [
+    [
+    'icon' => 'globe',
+    'title' => 'Language',
+    'desc' => 'Choose your preferred language',
+    'color' => '#3b82f6',
+    'link' => '#',
+    'action' => 'language'
+    ],
+    [
+    'icon' => 'moon',
+    'title' => 'Theme',
+    'desc' => 'Dark mode is enabled',
+    'color' => '#8b5cf6',
+    'link' => '#'
+    ],
+    [
+    'icon' => 'bell',
+    'title' => 'Notifications',
+    'desc' => 'Manage notification settings',
+    'color' => '#22c55e',
+    'link' => '#'
+    ]
+    ]
+    ],
+    [
+    'title' => 'Account Verification',
+    'icon' => '✓',
+    'items' => [
+    [
+    'icon' => 'check-circle',
+    'title' => 'KYC Verification',
+    'desc' => 'Identity verification',
+    'color' => '#fbbf24',
+    'link' => '#'
+    ],
+    [
+    'icon' => 'user-check',
+    'title' => 'Account Mode',
+    'desc' => 'Current: LIVE Mode',
+    'color' => '#a855f7',
+    'link' => '#',
+    'badge' => 'LIVE'
+    ]
+    ]
+    ],
+    [
+    'title' => 'Withdrawal Management',
+    'icon' => '💳',
+    'items' => [
+    [
+    'icon' => 'credit-card',
+    'title' => 'Withdrawal Method',
+    'desc' => 'Bank account or wallet',
+    'color' => '#22c55e',
+    'link' => '#'
+    ]
+    ]
+    ],
+    [
+    'title' => 'System Information',
+    'icon' => '📱',
+    'items' => [
+    [
+    'icon' => 'clock',
+    'title' => 'System Time',
+    'desc' => now()->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
+    'color' => '#38bdf8',
+    'link' => '#'
+    ],
+    [
+    'icon' => 'download',
+    'title' => 'Download App',
+    'desc' => 'iOS & Android available',
+    'color' => '#10b981',
+    'link' => '#'
+    ],
+    [
+    'icon' => 'info',
+    'title' => 'About Cryptexa',
+    'desc' => 'Company information',
+    'color' => '#94a3b8',
+    'link' => route('about')
+    ]
+    ]
+    ]
+    ];
+    @endphp
+
+    @foreach($sections as $sectionIndex => $section)
+    <!-- SECTION HEADER -->
+    <div class="settings-section">
+        <div class="section-header">
+            <h3 class="section-title">{{ $section['title'] }}</h3>
+        </div>
+
+        <!-- SETTINGS CARDS GRID -->
+        <div class="settings-grid">
+            @foreach($section['items'] as $itemIndex => $item)
+            <a href="{{ $item['link'] }}"
+                class="settings-card"
+                data-action="{{ $item['action'] ?? '' }}"
+                style="--card-color: {{ $item['color'] }}">
+
+                <!-- ICON -->
+                <div class="card-icon">
+                    @switch($item['icon'])
+                    @case('lock')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    @break
+                    @case('shield')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    @break
+                    @case('key')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="7.5" cy="15.5" r="5.5"></circle>
+                        <path d="M21 2l-9.6 9.6"></path>
+                    </svg>
+                    @break
+                    @case('globe')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    @break
+                    @case('moon')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    @break
+                    @case('bell')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    @break
+                    @case('check-circle')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    @break
+                    @case('user-check')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="8.5" cy="7" r="4"></circle>
+                        <polyline points="17 11 19 13 23 9"></polyline>
+                    </svg>
+                    @break
+                    @case('credit-card')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                        <line x1="1" y1="10" x2="23" y2="10"></line>
+                    </svg>
+                    @break
+                    @case('clock')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    @break
+                    @case('download')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    @break
+                    @case('info')
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    @break
+                    @default
+                    <span>{{ $item['icon'] }}</span>
+                    @endswitch
+                </div>
+
+                <!-- CONTENT -->
+                <div class="card-content">
+                    <p class="card-title">{{ $item['title'] }}</p>
+                    <p class="card-desc">{{ $item['desc'] }}</p>
+                </div>
+
+                <!-- BADGE & ARROW -->
+                <div class="card-action">
+                    @if(isset($item['badge']))
+                    <span class="badge">{{ $item['badge'] }}</span>
+                    @endif
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </a>
+            @endforeach
+        </div>
+    </div>
+    @endforeach
+
+    <!-- LOGOUT SECTION -->
+    <div class="logout-section">
+        <form method="POST" action="{{ route('logout') }}" class="logout-form">
+            @csrf
+            <button type="submit" class="logout-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span>Logout</span>
+            </button>
+        </form>
+    </div>
+
+</div>
+
+<!-- LANGUAGE MODAL -->
+<div id="languageModal" class="modal hidden">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Select Language</h3>
+            <button class="modal-close" onclick="closeLanguageModal()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="language-grid">
+                <button class="language-btn active" data-lang="en">
+                    <span class="flag">🇬🇧</span>
+                    <span>English</span>
                 </button>
-            </form>
-        </div> -->
-
+                <button class="language-btn" data-lang="es">
+                    <span class="flag">🇪🇸</span>
+                    <span>Español</span>
+                </button>
+                <button class="language-btn" data-lang="fr">
+                    <span class="flag">🇫🇷</span>
+                    <span>Français</span>
+                </button>
+                <button class="language-btn" data-lang="de">
+                    <span class="flag">🇩🇪</span>
+                    <span>Deutsch</span>
+                </button>
+                <button class="language-btn" data-lang="pt">
+                    <span class="flag">🇵🇹</span>
+                    <span>Português</span>
+                </button>
+                <button class="language-btn" data-lang="zh">
+                    <span class="flag">🇨🇳</span>
+                    <span>中文</span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
-<!-- ANIMATIONS & STYLES -->
-<style>
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
 
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+<!-- SCRIPTS -->
+<script>
+    // Language modal functionality
+    const languageCard = document.querySelector('[data-action="language"]');
+    const languageModal = document.getElementById('languageModal');
+    const languageBtns = document.querySelectorAll('.language-btn');
+
+    if (languageCard) {
+        languageCard.addEventListener('click', (e) => {
+            e.preventDefault();
+            languageModal.classList.remove('hidden');
+        });
     }
 
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(15px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    function closeLanguageModal() {
+        languageModal.classList.add('hidden');
     }
 
-    /* MOBILE RESPONSIVE */
-    @media (max-width: 768px) {
-        .pt-32 {
-            padding-top: 20px !important;
-        }
+    languageBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            languageBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            // Here you can add logic to change the language
+            console.log('Language selected:', btn.dataset.lang);
+            setTimeout(() => closeLanguageModal(), 300);
+        });
+    });
 
-        .pb-24 {
-            padding-bottom: 60px !important;
+    // Close modal when clicking outside
+    languageModal.addEventListener('click', (e) => {
+        if (e.target === languageModal) {
+            closeLanguageModal();
         }
-
-        h1 {
-            font-size: 24px !important;
-        }
-
-        h3 {
-            font-size: 14px !important;
-        }
-
-        [style*="padding: 16px"] {
-            padding: 14px !important;
-        }
-
-        [style*="gap: 14px"] {
-            gap: 12px !important;
-        }
-
-        [style*="gap: 10px"] {
-            gap: 8px !important;
-        }
-
-        [style*="width: 44px"] {
-            width: 40px !important;
-            height: 40px !important;
-            font-size: 18px !important;
-        }
-
-        p {
-            font-size: 12px !important;
-        }
-
-        button[type="submit"] {
-            width: 100%;
-            justify-content: center;
-            padding: 14px;
-            font-size: 13px;
-        }
-    }
-
-    /* TABLET RESPONSIVE */
-    @media (min-width: 769px) and (max-width: 1024px) {
-        h1 {
-            font-size: 26px !important;
-        }
-
-        h3 {
-            font-size: 15px !important;
-        }
-    }
-</style>
+    });
+</script>
 
 @endsection

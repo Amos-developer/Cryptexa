@@ -15,39 +15,57 @@ class ReferralController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | LEVEL 1 REFERRALS
+        | REFERRAL LEVELS (1-6)
         |--------------------------------------------------------------------------
         */
+
+        // Level 1: Direct referrals
         $level1 = User::where('referred_by', $user->id)->get();
 
-        /*
-        |--------------------------------------------------------------------------
-        | LEVEL 2 REFERRALS
-        |--------------------------------------------------------------------------
-        */
+        // Level 2
         $level2 = User::whereIn(
             'referred_by',
             $level1->pluck('id')
         )->get();
 
-        /*
-        |--------------------------------------------------------------------------
-        | LEVEL 3 REFERRALS
-        |--------------------------------------------------------------------------
-        */
+        // Level 3
         $level3 = User::whereIn(
             'referred_by',
             $level2->pluck('id')
         )->get();
 
+        // Level 4
+        $level4 = User::whereIn(
+            'referred_by',
+            $level3->pluck('id')
+        )->get();
+
+        // Level 5
+        $level5 = User::whereIn(
+            'referred_by',
+            $level4->pluck('id')
+        )->get();
+
+        // Level 6
+        $level6 = User::whereIn(
+            'referred_by',
+            $level5->pluck('id')
+        )->get();
+
         /*
         |--------------------------------------------------------------------------
-        | MEMBERS STATS
+        | ACTIVE MEMBERS STATS (balance > 0)
         |--------------------------------------------------------------------------
         */
-        $totalMembers   = $level1->count();
-        $activeMembers  = $level1->where('balance', '>', 3)->count();
-        $inactiveMembers = $level1->where('balance', '<=', 3)->count();
+        $level1Active = $level1->where('balance', '>', 0)->count();
+        $level2Active = $level2->where('balance', '>', 0)->count();
+        $level3Active = $level3->where('balance', '>', 0)->count();
+        $level4Active = $level4->where('balance', '>', 0)->count();
+        $level5Active = $level5->where('balance', '>', 0)->count();
+        $level6Active = $level6->where('balance', '>', 0)->count();
+
+        $totalActiveMembers = $level1Active + $level2Active + $level3Active + $level4Active + $level5Active + $level6Active;
+        $totalMembers = $level1->count() + $level2->count() + $level3->count() + $level4->count() + $level5->count() + $level6->count();
 
         /*
         |--------------------------------------------------------------------------
@@ -56,54 +74,22 @@ class ReferralController extends Controller
         */
         $earnings = $user->referral_earnings ?? 0;
 
-        /*
-        |--------------------------------------------------------------------------
-        | CHART DATA (Last 7 Days Earnings)
-        |--------------------------------------------------------------------------
-        | Assumes you have a referral_transactions table
-        | with columns: user_id, amount, created_at
-        |--------------------------------------------------------------------------
-        */
-
-        $chartLabels = [];
-        $chartData   = [];
-
-        for ($i = 6; $i >= 0; $i--) {
-            $date = Carbon::today()->subDays($i);
-
-            $chartLabels[] = $date->format('D');
-
-            $dailyTotal = DB::table('referral_transactions')
-                ->where('user_id', $user->id)
-                ->whereDate('created_at', $date)
-                ->sum('amount');
-
-            $chartData[] = $dailyTotal ?? 0;
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | LEADERBOARD (Top 5 Referrers)
-        |--------------------------------------------------------------------------
-        | Requires column: total_ref_earnings in users table
-        |--------------------------------------------------------------------------
-        */
-
-        $topReferrers = User::orderByDesc('referral_earnings')
-            ->take(5)
-            ->get();
-
         return view('team', compact(
             'level1',
             'level2',
             'level3',
+            'level4',
+            'level5',
+            'level6',
+            'level1Active',
+            'level2Active',
+            'level3Active',
+            'level4Active',
+            'level5Active',
+            'level6Active',
             'totalMembers',
-            'activeMembers',
-            'inactiveMembers',
-            'earnings',
-            'chartLabels',
-            'chartData',
-            'topReferrers'
+            'totalActiveMembers',
+            'earnings'
         ));
     }
 }
