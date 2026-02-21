@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'My Team | Cryptexa')
+@section('title', 'Referral Dashboard | Cryptexa')
 @section('hide-header', true)
 
 @section('content')
-
 <!-- HEADER BAR -->
 <div class="header fixed-top d-flex justify-content-between align-items-center px-16"
     style="
@@ -34,199 +33,168 @@
     <span style="width: 36px;"></span>
 </div>
 
-<!-- MAIN CONTENT -->
-<div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%);">
+<div style="min-height:100vh;background:linear-gradient(135deg,#020617 0%,#0f172a 100%);padding-top:80px;padding-bottom:80px;">
+
     <div class="tf-container">
 
-        <!-- PAGE HEADER -->
-        <div class="mb-32" style="animation: slideDown 0.6s ease;">
-            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 12px 0;">Referral Dashboard</h1>
-            <p class="text-secondary" style="font-size: 14px; margin: 0;">Track your team growth and referral earnings</p>
+        <!-- PAGE TITLE -->
+        <div style="margin-bottom:28px;">
+            <h1 style="color:#fff;font-size:26px;font-weight:800;margin-bottom:6px;">
+                Referral Program
+            </h1>
+            <p style="color:#94a3b8;font-size:13px;margin:0;">
+                Earn passive income by inviting others
+            </p>
         </div>
 
-        <!-- STATS GRID -->
+        <!-- REFERRAL LINK CARD -->
         <div style="
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin-bottom: 32px;
-            animation: slideUp 0.6s ease 0.1s backwards;
-        ">
+        background:rgba(255,255,255,0.03);
+        border:1px solid rgba(56,189,248,0.2);
+        border-radius:18px;
+        padding:20px;
+        margin-bottom:25px;
+        backdrop-filter:blur(12px);
+    ">
 
-            <!-- TOTAL MEMBERS -->
-            <div style="
-                background: linear-gradient(135deg, rgba(56,189,248,0.08) 0%, rgba(56,189,248,0.02) 100%);
-                border: 1px solid rgba(56,189,248,0.15);
-                border-radius: 14px;
-                padding: 18px;
-                box-shadow: 0 10px 30px rgba(56,189,248,0.05), inset 0 0 20px rgba(56,189,248,0.03);
-                backdrop-filter: blur(10px);
-                transition: all 0.3s ease;
-            "
-                onmouseover="this.style.borderColor='rgba(56,189,248,0.3)'; this.style.boxShadow='0 10px 30px rgba(56,189,248,0.1), inset 0 0 20px rgba(56,189,248,0.05)';"
-                onmouseout="this.style.borderColor='rgba(56,189,248,0.15)'; this.style.boxShadow='0 10px 30px rgba(56,189,248,0.05), inset 0 0 20px rgba(56,189,248,0.03)';">
-                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">👥 Total Members</p>
-                <h3 style="color: #38bdf8; font-size: 32px; font-weight: 900; margin: 0;">{{ $totalMembers }}</h3>
+            <p style="color:#38bdf8;font-size:12px;font-weight:600;margin-bottom:6px;">
+                Your Referral Code
+            </p>
+
+            <div style="display:flex;gap:10px;margin-bottom:14px;">
+                <input id="refCode"
+                    value="{{ auth()->user()->referral_code }}"
+                    readonly
+                    style="flex:1;padding:12px;border-radius:12px;border:none;background:#0f172a;color:#fff;font-weight:600;">
+                <button onclick="copyText('refCode')" style="padding:12px 14px;border-radius:12px;border:none;background:#38bdf8;color:#000;font-weight:700;cursor:pointer;">
+                    Copy
+                </button>
             </div>
 
-            <!-- MY EARNINGS -->
-            <div style="
-                background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.02) 100%);
-                border: 1px solid rgba(34,197,94,0.15);
-                border-radius: 14px;
-                padding: 18px;
-                box-shadow: 0 10px 30px rgba(34,197,94,0.05), inset 0 0 20px rgba(34,197,94,0.03);
-                backdrop-filter: blur(10px);
-                transition: all 0.3s ease;
-            "
-                onmouseover="this.style.borderColor='rgba(34,197,94,0.3)'; this.style.boxShadow='0 10px 30px rgba(34,197,94,0.1), inset 0 0 20px rgba(34,197,94,0.05)';"
-                onmouseout="this.style.borderColor='rgba(34,197,94,0.15)'; this.style.boxShadow='0 10px 30px rgba(34,197,94,0.05), inset 0 0 20px rgba(34,197,94,0.03)';">
-                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">💰 My Earnings</p>
-                <h3 style="color: #22c55e; font-size: 32px; font-weight: 900; margin: 0;">${{ number_format($earnings, 2) }}</h3>
+            <p style="color:#38bdf8;font-size:12px;font-weight:600;margin-bottom:6px;">
+                Referral Link
+            </p>
+
+            <div style="display:flex;gap:10px;margin-bottom:16px;">
+                <input id="refLink"
+                    value="{{ url('/register?ref='.auth()->user()->referral_code) }}"
+                    readonly
+                    style="flex:1;padding:12px;border-radius:12px;border:none;background:#0f172a;color:#fff;font-size:12px;">
+                <button onclick="copyText('refLink')" style="padding:12px 14px;border-radius:12px;border:none;background:#22c55e;color:#000;font-weight:700;cursor:pointer;">
+                    Copy
+                </button>
             </div>
 
-            <!-- ACTIVE MEMBERS -->
-            <div style="
-                background: linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(251,191,36,0.02) 100%);
-                border: 1px solid rgba(251,191,36,0.15);
-                border-radius: 14px;
-                padding: 18px;
-                box-shadow: 0 10px 30px rgba(251,191,36,0.05), inset 0 0 20px rgba(251,191,36,0.03);
-                backdrop-filter: blur(10px);
-                transition: all 0.3s ease;
-            "
-                onmouseover="this.style.borderColor='rgba(251,191,36,0.3)'; this.style.boxShadow='0 10px 30px rgba(251,191,36,0.1), inset 0 0 20px rgba(251,191,36,0.05)';"
-                onmouseout="this.style.borderColor='rgba(251,191,36,0.15)'; this.style.boxShadow='0 10px 30px rgba(251,191,36,0.05), inset 0 0 20px rgba(251,191,36,0.03)';">
-                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">✓ Active Members</p>
-                <h3 style="color: #fbbf24; font-size: 32px; font-weight: 900; margin: 0;">{{ $activeMembers }}</h3>
-            </div>
+            <!-- SHARE BUTTONS -->
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <a target="_blank"
+                    href="https://wa.me/?text={{ urlencode('Join Cryptexa using my link: '.url('/register?ref='.auth()->user()->referral_code)) }}"
+                    style="flex:1;padding:10px;border-radius:12px;text-align:center;background:#25D366;color:#000;font-weight:700;text-decoration:none;">
+                    WhatsApp
+                </a>
 
-            <!-- INACTIVE MEMBERS -->
-            <div style="
-                background: linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(239,68,68,0.02) 100%);
-                border: 1px solid rgba(239,68,68,0.15);
-                border-radius: 14px;
-                padding: 18px;
-                box-shadow: 0 10px 30px rgba(239,68,68,0.05), inset 0 0 20px rgba(239,68,68,0.03);
-                backdrop-filter: blur(10px);
-                transition: all 0.3s ease;
-            "
-                onmouseover="this.style.borderColor='rgba(239,68,68,0.3)'; this.style.boxShadow='0 10px 30px rgba(239,68,68,0.1), inset 0 0 20px rgba(239,68,68,0.05)';"
-                onmouseout="this.style.borderColor='rgba(239,68,68,0.15)'; this.style.boxShadow='0 10px 30px rgba(239,68,68,0.05), inset 0 0 20px rgba(239,68,68,0.03)';">
-                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">✗ Inactive Members</p>
-                <h3 style="color: #ef4444; font-size: 32px; font-weight: 900; margin: 0;">{{ $inactiveMembers }}</h3>
+                <a target="_blank"
+                    href="https://t.me/share/url?url={{ urlencode(url('/register?ref='.auth()->user()->referral_code)) }}"
+                    style="flex:1;padding:10px;border-radius:12px;text-align:center;background:#0088cc;color:#fff;font-weight:700;text-decoration:none;">
+                    Telegram
+                </a>
+
+                <a target="_blank"
+                    href="https://twitter.com/intent/tweet?text={{ urlencode('Join Cryptexa and earn passive income! '.url('/register?ref='.auth()->user()->referral_code)) }}"
+                    style="flex:1;padding:10px;border-radius:12px;text-align:center;background:#1DA1F2;color:#fff;font-weight:700;text-decoration:none;">
+                    Twitter
+                </a>
             </div>
 
         </div>
 
-        <!-- LEVEL ANALYTICS -->
-        @foreach([
-        'Level 1' => $level1,
-        'Level 2' => $level2,
-        'Level 3' => $level3
-        ] as $levelIndex => $users)
-
+        <!-- COMMISSION STRUCTURE -->
         <div style="
-            animation: slideUp 0.6s ease {{ (0.2 + ($loop->index * 0.1)) }}s backwards;
-            margin-bottom: 20px;
-        ">
-            <!-- LEVEL HEADER -->
+        background:rgba(168,85,247,0.05);
+        border:1px solid rgba(168,85,247,0.2);
+        border-radius:18px;
+        padding:18px;
+        margin-bottom:25px;
+    ">
+            <h4 style="color:#a855f7;font-size:14px;font-weight:700;margin-bottom:12px;">
+                Commission Structure
+            </h4>
+
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;font-size:13px;color:#e5e7eb;">
+                <div>Level 1: <b>16%</b></div>
+                <div>Level 2: <b>8%</b></div>
+                <div>Level 3: <b>4%</b></div>
+                <div>Level 4: <b>2%</b></div>
+                <div>Level 5: <b>1%</b></div>
+                <div>Level 6: <b>0.5%</b></div>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:25px;">
+
+            <div class="statCard">
+                <p>Total Members</p>
+                <h3>{{ $totalMembers }}</h3>
+            </div>
+
+            <div class="statCard green">
+                <p>Total Earnings</p>
+                <h3>${{ number_format($earnings,2) }}</h3>
+            </div>
+
+        </div>
+
+        <!-- LEVEL MEMBERS -->
+        @foreach(['Level 1'=>$level1,'Level 2'=>$level2,'Level 3'=>$level3] as $levelName=>$users)
+
+        <div style="margin-bottom:18px;">
             <div style="
-                background: linear-gradient(135deg, rgba(168,85,247,0.08) 0%, rgba(168,85,247,0.02) 100%);
-                border: 1px solid rgba(168,85,247,0.15);
-                border-radius: 14px;
-                padding: 16px;
-                box-shadow: 0 10px 30px rgba(168,85,247,0.05), inset 0 0 20px rgba(168,85,247,0.03);
-                backdrop-filter: blur(10px);
-                margin-bottom: 12px;
-            ">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h5 style="color: #a855f7; font-weight: 700; font-size: 16px; margin: 0;">
-                        {{ $loop->index === 0 ? '🥇' : ($loop->index === 1 ? '🥈' : '🥉') }} {{ $levelIndex }}
-                    </h5>
-                    <span style="color: #94a3b8; font-size: 12px; font-weight: 600;">
-                        {{ $users->count() }} member{{ $users->count() !== 1 ? 's' : '' }}
-                    </span>
-                </div>
+            display:flex;
+            justify-content:space-between;
+            padding:14px;
+            border-radius:14px;
+            background:rgba(255,255,255,0.03);
+            border:1px solid rgba(255,255,255,0.08);
+            margin-bottom:10px;
+        ">
+                <strong style="color:#38bdf8;">{{ $levelName }}</strong>
+                <span style="color:#94a3b8;font-size:12px;">
+                    {{ $users->count() }} Members
+                </span>
             </div>
 
             @if($users->isEmpty())
-            <div style="
-                background: rgba(255,255,255,0.02);
-                border: 1px solid rgba(255,255,255,0.08);
-                border-radius: 12px;
-                padding: 20px;
-                text-align: center;
-                color: #94a3b8;
-                font-size: 13px;
-            ">
-                No members yet - Invite more people to build your team!
+            <div style="padding:16px;border-radius:12px;background:rgba(255,255,255,0.02);color:#94a3b8;font-size:12px;">
+                No members yet.
             </div>
             @else
-            <div style="display: grid; gap: 10px;">
-                @foreach($users as $u)
-                <div style="
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    padding: 14px;
-                    border-radius: 10px;
-                    background: rgba(255,255,255,0.02);
-                    border: 1px solid rgba(255,255,255,0.08);
-                    transition: all 0.3s ease;
-                "
-                    onmouseover="this.style.background='rgba(255,255,255,0.04)'; this.style.borderColor='rgba(56,189,248,0.2)';"
-                    onmouseout="this.style.background='rgba(255,255,255,0.02)'; this.style.borderColor='rgba(255,255,255,0.08)';">
-
-                    <!-- LEFT INFO -->
-                    <div>
-                        <p style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin: 0 0 4px 0;">
-                            ID: <span style="font-family: 'Courier New', monospace;">{{ $u->referral_code }}</span>
-                        </p>
-                        <p style="color: #94a3b8; font-size: 11px; margin: 0;">
-                            Joined {{ $u->created_at->diffForHumans() }}
-                        </p>
+            @foreach($users as $u)
+            <div style="
+                    display:flex;
+                    justify-content:space-between;
+                    padding:12px;
+                    border-radius:12px;
+                    background:rgba(255,255,255,0.02);
+                    border:1px solid rgba(255,255,255,0.08);
+                    margin-bottom:8px;
+                ">
+                <div>
+                    <div style="color:#fff;font-size:13px;font-weight:600;">
+                        {{ $u->referral_code }}
                     </div>
-
-                    <!-- RIGHT STATUS -->
-                    <div style="text-align: right;">
-                        @if($u->balance > 3)
-                        <span style="
-                            display: inline-block;
-                            background: rgba(34,197,94,0.15);
-                            color: #22c55e;
-                            padding: 4px 10px;
-                            border-radius: 999px;
-                            font-size: 11px;
-                            font-weight: 700;
-                            margin-bottom: 4px;
-                        ">
-                            ✓ Active
-                        </span>
-                        @else
-                        <span style="
-                            display: inline-block;
-                            background: rgba(251,191,36,0.15);
-                            color: #fbbf24;
-                            padding: 4px 10px;
-                            border-radius: 999px;
-                            font-size: 11px;
-                            font-weight: 700;
-                            margin-bottom: 4px;
-                        ">
-                            ⏳ Inactive
-                        </span>
-                        @endif
-                        <p style="color: #94a3b8; font-size: 11px; margin: 0;">
-                            Balance: <span style="color: #e5e7eb; font-weight: 600;">${{ number_format($u->balance, 2) }}</span>
-                        </p>
+                    <div style="color:#94a3b8;font-size:11px;">
+                        Joined {{ $u->created_at->diffForHumans() }}
                     </div>
-
                 </div>
-                @endforeach
+                <div style="text-align:right;">
+                    <div style="color:#22c55e;font-weight:600;font-size:12px;">
+                        ${{ number_format($u->balance,2) }}
+                    </div>
+                </div>
             </div>
+            @endforeach
             @endif
-
         </div>
 
         @endforeach
@@ -234,106 +202,49 @@
     </div>
 </div>
 
-<!-- ANIMATIONS & STYLES -->
 <style>
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .statCard {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(56, 189, 248, 0.15);
+        border-radius: 16px;
+        padding: 18px;
     }
 
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(15px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .statCard p {
+        color: #94a3b8;
+        font-size: 12px;
+        margin: 0 0 6px;
     }
 
-    /* MOBILE RESPONSIVE */
-    @media (max-width: 768px) {
-        .pt-80 {
-            padding-top: 80px !important;
-        }
+    .statCard h3 {
+        color: #38bdf8;
+        font-size: 24px;
+        margin: 0;
+    }
 
-        .pb-80 {
-            padding-bottom: 60px !important;
-        }
+    .statCard.green h3 {
+        color: #22c55e;
+    }
 
+    @media(max-width:768px) {
         h1 {
-            font-size: 24px !important;
+            font-size: 22px !important;
         }
 
-        h3 {
-            font-size: 24px !important;
-        }
-
-        h5 {
-            font-size: 14px !important;
-        }
-
-        [style*="grid-template-columns: 1fr 1fr"] {
-            grid-template-columns: 1fr !important;
-            gap: 12px !important;
-        }
-
-        [style*="padding: 18px"] {
-            padding: 14px !important;
-        }
-
-        [style*="padding: 16px"] {
-            padding: 12px !important;
-        }
-
-        [style*="padding: 14px"] {
-            padding: 12px !important;
-        }
-
-        [style*="gap: 14px"] {
-            gap: 10px !important;
-        }
-
-        [style*="gap: 10px"] {
-            gap: 8px !important;
-        }
-
-        .mb-32 {
-            margin-bottom: 20px !important;
-        }
-
-        .mb-20 {
-            margin-bottom: 16px !important;
-        }
-
-        p {
-            font-size: 12px !important;
-        }
-    }
-
-    /* TABLET RESPONSIVE */
-    @media (min-width: 769px) and (max-width: 1024px) {
-        h1 {
-            font-size: 28px !important;
-        }
-
-        h3 {
-            font-size: 28px !important;
-        }
-
-        [style*="gap: 14px"] {
-            gap: 12px !important;
+        .tf-container {
+            padding: 0 16px;
         }
     }
 </style>
+
+<script>
+    function copyText(id) {
+        let copyText = document.getElementById(id);
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        alert("Copied successfully!");
+    }
+</script>
 
 @endsection
