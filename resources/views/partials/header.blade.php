@@ -208,7 +208,7 @@
     }
 
     function markNotificationAsRead(notificationId) {
-        fetch(`{{ route('api.notifications.mark-as-read', '') }}/${notificationId}`, {
+        fetch(`/api/notifications/${notificationId}/read`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
