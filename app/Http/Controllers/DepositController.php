@@ -179,11 +179,8 @@ class DepositController extends Controller
      */
     private function processDepositPayment(Deposit $deposit)
     {
-        // Credit user balance
-        $deposit->user->increment('balance', $deposit->amount);
-
-        // Pay referral bonuses (6-level structure)
-        $this->payReferralBonuses($deposit->user, $deposit->amount);
+        // Dispatch queued, idempotent processing job
+        \App\Jobs\ProcessDepositPayment::dispatch($deposit->id);
     }
 
     /**

@@ -20,6 +20,9 @@ class Deposit extends Model
         'pay_address',
         'pay_currency',
         'pay_amount',
+        'provider_payload',
+        'provider_status_raw',
+        'processed_at',
         'txid',
         'status',
     ];
@@ -27,6 +30,8 @@ class Deposit extends Model
     protected $casts = [
         'amount'      => 'float',
         'pay_amount'  => 'float',
+        'provider_payload' => 'array',
+        'processed_at' => 'datetime',
     ];
 
     public function user()

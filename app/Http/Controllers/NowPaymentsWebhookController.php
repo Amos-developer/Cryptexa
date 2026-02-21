@@ -11,12 +11,14 @@ class NowPaymentsWebhookController extends Controller
 {
     public function handle(Request $request, NowPaymentsService $now)
     {
-        $payload = $request->json()->all();
+        // Use the raw request body for signature verification
+        $payloadRaw = (string) $request->getContent();
+        $payload = json_decode($payloadRaw, true) ?? [];
 
         // Signature header (try common names)
         $signature = $request->header('x-nowpayments-signature') ?? $request->header('x-signature') ?? null;
 
-        if ($signature && !$now->verifyIpnSignature($payload, $signature)) {
+        if ($signature && !$now->verifyIpnSignature($payloadRaw, $signature)) {
             logger()->warning('NOWPayments IPN signature verification failed', ['payload' => $payload]);
             return response()->json(['error' => 'invalid signature'], 400);
         }
@@ -49,7 +51,7 @@ class NowPaymentsWebhookController extends Controller
             return response()->json(['ok' => true]);
         }
 
-        // Update deposit with any provided payment details
+        // Update deposit with any provided payment details and store raw payload for audit
         $update = [];
         if (!empty($payload['pay_address'])) {
             $update['pay_address'] = $payload['pay_address'];
@@ -78,6 +80,7 @@ class NowPaymentsWebhookController extends Controller
             ];
 
             $update['status'] = $map[$providerStatus] ?? $deposit->status;
+            $update['provider_status_raw'] = $providerStatus;
         }
 
         if (!empty($payload['id']) && empty($deposit->payment_id)) {
@@ -88,15 +91,25 @@ class NowPaymentsWebhookController extends Controller
             $update['token_id'] = $payload['token_id'];
         }
 
+        // store raw JSON payload for audit
+        $update['provider_payload'] = $payload;
+
         $previousStatus = $deposit->status;
 
         if (!empty($update)) {
             $deposit->update($update);
         }
 
-        // Pay referral bonuses when deposit is confirmed as paid (mapped to 'completed')
+        // Validate received amounts (if present)
+        $received = $payload['price_amount'] ?? $payload['pay_amount'] ?? null;
+        if ($received !== null && (float)$received < (float)$deposit->amount) {
+            logger()->warning('NOWPayments IPN: received amount less than deposit amount, skipping processing', ['deposit_id' => $deposit->id, 'received' => $received, 'expected' => $deposit->amount]);
+            return response()->json(['ok' => true]);
+        }
+
+        // Dispatch processing job when deposit transitions to completed
         if (!empty($update['status']) && $update['status'] === 'completed' && $previousStatus !== 'completed') {
-            $this->payReferralBonuses($deposit->user, $deposit->amount);
+            \App\Jobs\ProcessDepositPayment::dispatch($deposit->id);
         }
 
         logger()->info('NOWPayments IPN processed', ['deposit_id' => $deposit->id, 'update' => $update]);
