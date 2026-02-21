@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ComputePlan;      // Keep model for now
 use App\Models\ComputeOrder;
 use App\Models\User;
+use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 
 class ComputeController extends Controller
@@ -45,7 +46,7 @@ class ComputeController extends Controller
             $finalAmount = $principal * pow((1 + ($dailyPercent / 100)), $days);
             $expectedProfit = round($finalAmount - $principal, 2);
 
-            ComputeOrder::create([
+            $order = ComputeOrder::create([
                 'user_id'         => $user->id,
                 'compute_plan_id' => $plan->id,
                 'amount'          => $principal,
@@ -54,6 +55,21 @@ class ComputeController extends Controller
                 'ends_at'         => now()->addDays($days),
                 'status'          => 'running',
                 'is_paid'         => false,
+            ]);
+
+            // Create notification for pool activation
+            Notification::create([
+                'user_id'   => $user->id,
+                'type'      => 'plan_activated',
+                'title'     => 'Liquidity Pool Activated',
+                'message'   => "Your {$plan->name} pool has been activated with ${$principal}. Expected profit: ${$expectedProfit}",
+                'icon_type' => 'success',
+                'is_read'   => false,
+                'data'      => [
+                    'order_id' => $order->id,
+                    'plan_id'  => $plan->id,
+                    'amount'   => $principal,
+                ],
             ]);
 
             $this->payReferralBonuses($user, $principal);

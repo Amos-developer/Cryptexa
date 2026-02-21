@@ -19,6 +19,7 @@
         href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
 
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
 
     <link rel="shortcut icon" href="{{ asset('images/logo/48.png') }}">
 </head>

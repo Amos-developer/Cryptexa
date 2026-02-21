@@ -71,7 +71,7 @@
                     onmouseout="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1) 0%, rgba(56,189,248,0.05) 100%)'; this.style.borderColor='rgba(56,189,248,0.2)'; this.style.boxShadow='none';">
                     <img src="{{ asset('images/icons/bell.svg') }}" alt="Notifications" style="width: 20px; height: 20px;">
                 </button>
-                <span style="
+                <span id="unread-badge" style="
                     position: absolute;
                     top: 6px;
                     right: 6px;
@@ -81,6 +81,7 @@
                     border-radius: 50%;
                     border: 2px solid #020617;
                     box-shadow: 0 0 8px rgba(239,68,68,0.6);
+                    display: none;
                 "></span>
             </div>
 
@@ -112,31 +113,134 @@
 </div>
 
 <script>
+    // Update unread badge on page load
+    updateUnreadBadge();
+
+    // Update badge every 10 seconds
+    setInterval(updateUnreadBadge, 10000);
+
+    function updateUnreadBadge() {
+        fetch('{{ route("api.notifications.unread-count") }}')
+            .then(response => response.json())
+            .then(data => {
+                const badge = document.getElementById('unread-badge');
+                if (data.unread_count > 0) {
+                    badge.style.display = 'block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Error fetching unread count:', error));
+    }
+
     function toggleNotifications() {
+        fetch('{{ route("api.notifications.index") }}')
+            .then(response => response.json())
+            .then(data => {
+                displayNotifications(data.notifications);
+            })
+            .catch(error => {
+                console.error('Error fetching notifications:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to load notifications',
+                    icon: 'error',
+                    confirmButtonColor: '#38bdf8',
+                    background: '#020617',
+                    color: '#e5e7eb',
+                });
+            });
+    }
+
+    function displayNotifications(notifications) {
+        let notificationsHtml = '';
+
+        if (notifications.length === 0) {
+            notificationsHtml = '<div style="padding: 20px; text-align: center; color: #94a3b8;">No notifications yet</div>';
+        } else {
+            notificationsHtml = notifications.map(notification => {
+                const iconColor = getIconColor(notification.icon_type);
+                const bgColor = getBgColor(notification.icon_type);
+
+                return `
+                    <div style="padding: 12px; background: ${bgColor}; border-left: 3px solid ${iconColor}; border-radius: 4px; margin-bottom: 8px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div style="flex: 1;">
+                                <p style="margin: 0 0 4px 0; font-weight: 600; font-size: 13px; color: #e5e7eb;">${notification.title}</p>
+                                <p style="margin: 0; font-size: 12px; color: #94a3b8;">${notification.message}</p>
+                                <p style="margin: 4px 0 0 0; font-size: 11px; color: #64748b;">${notification.created_at}</p>
+                            </div>
+                            <button onclick="markNotificationAsRead(${notification.id})" style="background: none; border: none; color: #64748b; cursor: pointer; font-size: 16px; padding: 4px 8px;">✓</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
         Swal.fire({
             title: '🔔 Notifications',
             html: `
-                <div style="text-align: left; color: #e5e7eb;">
-                    <div style="padding: 12px; background: rgba(56,189,248,0.1); border-left: 3px solid #38bdf8; border-radius: 4px; margin-bottom: 8px;">
-                        <p style="margin: 0 0 4px 0; font-weight: 600; font-size: 13px;">Order Completed</p>
-                        <p style="margin: 0; font-size: 12px; color: #94a3b8;">Your compute order #1234 completed successfully</p>
-                        <p style="margin: 4px 0 0 0; font-size: 11px; color: #64748b;">2 hours ago</p>
-                    </div>
-                    <div style="padding: 12px; background: rgba(34,197,94,0.1); border-left: 3px solid #22c55e; border-radius: 4px;">
-                        <p style="margin: 0 0 4px 0; font-weight: 600; font-size: 13px;">Withdrawal Approved</p>
-                        <p style="margin: 0; font-size: 12px; color: #94a3b8;">Your withdrawal request has been approved and will be processed soon</p>
-                        <p style="margin: 4px 0 0 0; font-size: 11px; color: #64748b;">5 hours ago</p>
-                    </div>
+                <div style="text-align: left; color: #e5e7eb; max-height: 400px; overflow-y: auto;">
+                    ${notificationsHtml}
                 </div>
             `,
             icon: 'info',
             confirmButtonColor: '#38bdf8',
+            confirmButtonText: 'Mark all as read',
             background: '#020617',
             color: '#e5e7eb',
             customClass: {
                 popup: 'swal-dark-popup'
+            },
+            didOpen: () => {
+                // Mark all as read when modal opens
+                fetch('{{ route("api.notifications.mark-all-as-read") }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    })
+                    .then(() => updateUnreadBadge())
+                    .catch(error => console.error('Error marking notifications as read:', error));
             }
         });
+    }
+
+    function markNotificationAsRead(notificationId) {
+        fetch(`{{ route('api.notifications.mark-as-read', '') }}/${notificationId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                updateUnreadBadge();
+                toggleNotifications();
+            })
+            .catch(error => console.error('Error marking notification as read:', error));
+    }
+
+    function getIconColor(iconType) {
+        const colors = {
+            'success': '#22c55e',
+            'warning': '#fbbf24',
+            'error': '#ef4444',
+            'info': '#38bdf8'
+        };
+        return colors[iconType] || colors['info'];
+    }
+
+    function getBgColor(iconType) {
+        const colors = {
+            'success': 'rgba(34,197,94,0.1)',
+            'warning': 'rgba(251,191,36,0.1)',
+            'error': 'rgba(239,68,68,0.1)',
+            'info': 'rgba(56,189,248,0.1)'
+        };
+        return colors[iconType] || colors['info'];
     }
 </script>
 

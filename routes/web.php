@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminDepositController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminWithdrawalController;
 use App\Http\Controllers\WithdrawalController;
+use App\Http\Controllers\NotificationController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes (Guest)
@@ -108,6 +109,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // API endpoint for real-time order status polling
     Route::get('/api/orders/status', [ComputeController::class, 'statusApi'])
         ->name('api.orders.status');
+
+    // Notification API endpoints
+    Route::get('/api/notifications', [NotificationController::class, 'index'])
+        ->name('api.notifications.index');
+
+    Route::get('/api/notifications/unread-count', [NotificationController::class, 'unreadCount'])
+        ->name('api.notifications.unread-count');
+
+    Route::post('/api/notifications/{id}/read', [NotificationController::class, 'markAsRead'])
+        ->name('api.notifications.mark-as-read');
+
+    Route::post('/api/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])
+        ->name('api.notifications.mark-all-as-read');
+
+    Route::delete('/api/notifications/{id}', [NotificationController::class, 'delete'])
+        ->name('api.notifications.delete');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

@@ -52,6 +52,13 @@
             </div>
             <div class="action-label">Transactions</div>
         </a>
+
+        <a href="{{ route('team') }}" class="action-card">
+            <div class="action-icon">
+                <img src="{{ asset('images/icons/team.svg') }}" alt="Team" style="width: 20px; height: 20px;">
+            </div>
+            <div class="action-label">Invite</div>
+        </a>
     </div>
 
     <!-- Portfolio Analytics -->
