@@ -54,15 +54,38 @@ class ReferralController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | ACTIVE MEMBERS STATS (balance > 0)
+        | ACTIVE MEMBERS STATS (users with actual deposits)
         |--------------------------------------------------------------------------
         */
-        $level1Active = $level1->where('balance', '>', 0)->count();
-        $level2Active = $level2->where('balance', '>', 0)->count();
-        $level3Active = $level3->where('balance', '>', 0)->count();
-        $level4Active = $level4->where('balance', '>', 0)->count();
-        $level5Active = $level5->where('balance', '>', 0)->count();
-        $level6Active = $level6->where('balance', '>', 0)->count();
+        $level1Active = $level1->filter(
+            fn($user) =>
+            DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
+        )->count();
+
+        $level2Active = $level2->filter(
+            fn($user) =>
+            DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
+        )->count();
+
+        $level3Active = $level3->filter(
+            fn($user) =>
+            DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
+        )->count();
+
+        $level4Active = $level4->filter(
+            fn($user) =>
+            DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
+        )->count();
+
+        $level5Active = $level5->filter(
+            fn($user) =>
+            DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
+        )->count();
+
+        $level6Active = $level6->filter(
+            fn($user) =>
+            DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
+        )->count();
 
         $totalActiveMembers = $level1Active + $level2Active + $level3Active + $level4Active + $level5Active + $level6Active;
         $totalMembers = $level1->count() + $level2->count() + $level3->count() + $level4->count() + $level5->count() + $level6->count();

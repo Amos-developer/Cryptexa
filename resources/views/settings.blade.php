@@ -61,6 +61,13 @@
     'desc' => auth()->user()->withdrawal_pin ? 'Change your withdrawal PIN' : 'Create a withdrawal PIN',
     'color' => '#f59e0b',
     'link' => auth()->user()->withdrawal_pin ? route('withdrawal-pin.change') : route('withdrawal-pin.set')
+    ],
+    [
+    'icon' => 'credit-card',
+    'title' => 'Withdrawal Method',
+    'desc' => 'Set or bind your withdrawal address',
+    'color' => '#22c55e',
+    'link' => '#'
     ]
     ]
     ],
