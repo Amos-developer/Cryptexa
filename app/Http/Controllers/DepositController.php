@@ -109,10 +109,10 @@ class DepositController extends Controller
     {
         abort_if($deposit->user_id !== auth()->id(), 403);
 
-        // If already paid, don't check again
-        if ($deposit->status === 'finished') {
+        // If already completed, don't check again
+        if ($deposit->status === 'completed') {
             return response()->json([
-                'status' => 'finished',
+                'status' => 'completed',
                 'message' => 'Payment already confirmed',
                 'balance' => $deposit->user->fresh()->balance,
             ]);
@@ -128,24 +128,39 @@ class DepositController extends Controller
             ]);
         }
 
-        // Update deposit status if changed
-        if (!empty($paymentStatus['payment_status']) && $paymentStatus['payment_status'] !== $deposit->status) {
+        // Update deposit status if changed. Map provider statuses to our internal enum.
+        if (!empty($paymentStatus['payment_status'])) {
             $oldStatus = $deposit->status;
-            $newStatus = $paymentStatus['payment_status'];
+            $providerStatus = $paymentStatus['payment_status'];
 
-            $deposit->update([
-                'status' => $newStatus,
-                'pay_address' => $paymentStatus['pay_address'] ?? $deposit->pay_address,
-                'pay_currency' => $paymentStatus['pay_currency'] ?? $deposit->pay_currency,
-                'pay_amount' => $paymentStatus['price_amount'] ?? $paymentStatus['pay_amount'] ?? $deposit->pay_amount,
-            ]);
+            // Map NOWPayments statuses to our deposits.status enum
+            $map = [
+                'waiting'   => 'pending',
+                'confirming' => 'confirming',
+                'finished'  => 'completed',
+                'expired'   => 'expired',
+                'failed'    => 'failed',
+            ];
 
-            // If payment is now finished, credit user and pay referrals
-            if ($newStatus === 'finished' && $oldStatus !== 'finished') {
+            $mappedStatus = $map[$providerStatus] ?? $deposit->status;
+
+            // Only update if mapped status differs from current
+            if ($mappedStatus !== $deposit->status || !empty($paymentStatus['pay_address']) || !empty($paymentStatus['pay_amount'])) {
+                $deposit->update([
+                    'status' => $mappedStatus,
+                    'pay_address' => $paymentStatus['pay_address'] ?? $deposit->pay_address,
+                    'pay_currency' => $paymentStatus['pay_currency'] ?? $deposit->pay_currency,
+                    'pay_amount' => $paymentStatus['price_amount'] ?? $paymentStatus['pay_amount'] ?? $deposit->pay_amount,
+                ]);
+            }
+
+            // If payment is now completed, credit user and pay referrals
+            if ($mappedStatus === 'completed' && $oldStatus !== 'completed') {
                 $this->processDepositPayment($deposit);
 
                 return response()->json([
-                    'status' => 'finished',
+                    'status' => 'completed',
+                    'provider_status' => $providerStatus,
                     'message' => 'Payment confirmed! Balance updated.',
                     'balance' => $deposit->user->fresh()->balance,
                     'received' => $deposit->amount,

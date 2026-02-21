@@ -65,10 +65,19 @@ class NowPaymentsWebhookController extends Controller
             $update['pay_amount'] = $payload['pay_amount'];
         }
 
-        if (!empty($payload['payment_status'])) {
-            $update['status'] = $payload['payment_status'];
-        } elseif (!empty($payload['status'])) {
-            $update['status'] = $payload['status'];
+        if (!empty($payload['payment_status']) || !empty($payload['status'])) {
+            $providerStatus = $payload['payment_status'] ?? $payload['status'];
+
+            // Map provider statuses to our internal enum
+            $map = [
+                'waiting'    => 'pending',
+                'confirming' => 'confirming',
+                'finished'   => 'completed',
+                'expired'    => 'expired',
+                'failed'     => 'failed',
+            ];
+
+            $update['status'] = $map[$providerStatus] ?? $deposit->status;
         }
 
         if (!empty($payload['id']) && empty($deposit->payment_id)) {
@@ -85,8 +94,8 @@ class NowPaymentsWebhookController extends Controller
             $deposit->update($update);
         }
 
-        // Pay referral bonuses when deposit is confirmed as paid
-        if (!empty($update['status']) && $update['status'] === 'finished' && $previousStatus !== 'finished') {
+        // Pay referral bonuses when deposit is confirmed as paid (mapped to 'completed')
+        if (!empty($update['status']) && $update['status'] === 'completed' && $previousStatus !== 'completed') {
             $this->payReferralBonuses($deposit->user, $deposit->amount);
         }
 

@@ -432,11 +432,13 @@
             .then(data => {
                 checkCount++;
 
-                if (data.status === 'finished') {
-                    // Payment confirmed!
+                const provider = data.provider_status || data.status || '';
+
+                // Treat provider 'finished' or our internal 'completed' as success
+                if (provider === 'finished' || provider === 'completed' || data.status === 'completed') {
                     updatePaymentStatus('finished', data);
                     stopPolling();
-                } else if (data.status === 'confirming' || data.status === 'waiting') {
+                } else if (provider === 'confirming' || provider === 'waiting' || data.status === 'confirming' || data.status === 'pending') {
                     // Still waiting
                     updatePaymentStatus('waiting', data);
                     scheduleNextCheck();

@@ -80,8 +80,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/deposit/{deposit}/check-status', [DepositController::class, 'checkStatus'])
         ->name('deposit.check-status');
 
-    Route::post('/nowpayments/ipn', [\App\Http\Controllers\NowPaymentsWebhookController::class, 'handle'])
-        ->name('nowpayments.ipn');
+
 
     Route::get('/deposit/success/{deposit?}', fn() => view('deposit-success'))
         ->name('deposit.success');
@@ -154,3 +153,7 @@ Route::middleware(['auth', 'admin'])
     });
 
 require __DIR__ . '/admin.php';
+
+// Public NOWPayments IPN (webhook) - must be reachable by NOWPayments (no auth/CSRF)
+Route::post('/nowpayments/ipn', [\App\Http\Controllers\NowPaymentsWebhookController::class, 'handle'])
+    ->name('nowpayments.ipn');
