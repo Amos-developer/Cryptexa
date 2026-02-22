@@ -63,6 +63,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/withdrawal-pin/set', [\App\Http\Controllers\WithdrawalPinController::class, 'store'])->name('withdrawal-pin.store');
     Route::get('/withdrawal-pin/change', [\App\Http\Controllers\WithdrawalPinController::class, 'showChange'])->name('withdrawal-pin.change');
     Route::put('/withdrawal-pin/change', [\App\Http\Controllers\WithdrawalPinController::class, 'update'])->name('withdrawal-pin.update');
+
+    // Withdrawal Method route
+    Route::get('/withdrawal-method', fn() => view('withdrawal-method'))->name('withdrawal-method');
+    
+    // Settings pages
+    Route::get('/settings/language', fn() => view('settings.language'))->name('settings.language');
+    Route::get('/settings/notifications', fn() => view('settings.notifications'))->name('settings.notifications');
+    Route::get('/settings/kyc', fn() => view('settings.kyc'))->name('settings.kyc');
+    Route::get('/deposit/history', fn() => view('deposit-history'))->name('deposit.history');
 });
 
 

@@ -68,7 +68,7 @@
     'title' => 'Withdrawal Method',
     'desc' => 'Set or bind your withdrawal address',
     'color' => '#22c55e',
-    'link' => '#'
+    'link' => route('withdrawal-method')
     ]
     ]
     ],
@@ -81,7 +81,7 @@
     'title' => 'Language',
     'desc' => 'Choose your preferred language',
     'color' => '#3b82f6',
-    'link' => '#',
+    'link' => route('settings.language'),
     'action' => 'language'
     ],
     [
@@ -96,7 +96,7 @@
     'title' => 'Notifications',
     'desc' => 'Manage notification settings',
     'color' => '#22c55e',
-    'link' => '#'
+    'link' => route('settings.notifications')
     ]
     ]
     ],
@@ -109,7 +109,7 @@
     'title' => 'KYC Verification',
     'desc' => 'Identity verification',
     'color' => '#fbbf24',
-    'link' => '#'
+    'link' => route('settings.kyc')
     ],
     [
     'icon' => 'user-check',
@@ -130,7 +130,7 @@
     'title' => 'Deposit History',
     'desc' => 'View all your deposits',
     'color' => '#10b981',
-    'link' => '#'
+    'link' => route('deposit.history')
     ],
     [
     'icon' => 'upload',
