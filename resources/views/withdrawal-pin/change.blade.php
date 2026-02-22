@@ -5,208 +5,323 @@
 
 @section('content')
 
-<link rel="stylesheet" href="{{ asset('css/withdrawal-pin.css') }}">
+<style>
+    :root {
+        --primary: #38bdf8;
+        --bg-dark: #020617;
+        --bg-darker: #0f172a;
+        --text-light: #e5e7eb;
+        --text-muted: #94a3b8;
+        --border: rgba(56, 189, 248, 0.2);
+        --success: #22c55e;
+        --danger: #ef4444;
+    }
 
-<!-- HEADER BAR -->
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* HEADER */
+    .pin-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 55px;
+        background: linear-gradient(135deg, var(--bg-dark), var(--bg-darker));
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+        z-index: 100;
+    }
+
+    .back-btn {
+        width: 36px;
+        height: 36px;
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        text-decoration: none;
+    }
+
+    .header-title {
+        color: var(--text-light);
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .placeholder {
+        width: 36px;
+    }
+
+    /* WRAPPER */
+    .pin-container {
+        min-height: 100vh;
+        padding: 80px 16px 40px;
+        background: linear-gradient(135deg, var(--bg-dark), var(--bg-darker));
+        display: flex;
+        justify-content: center;
+    }
+
+    /* CARD */
+    .pin-card {
+        width: 100%;
+        max-width: 420px;
+        background: rgba(56, 189, 248, 0.05);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 28px 20px;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .card-header {
+        text-align: center;
+        margin-bottom: 28px;
+    }
+
+    .card-header svg {
+        color: var(--primary);
+        margin-bottom: 12px;
+    }
+
+    .card-title {
+        color: var(--text-light);
+        font-size: 20px;
+        margin-bottom: 6px;
+    }
+
+    .card-desc {
+        color: var(--text-muted);
+        font-size: 13px;
+    }
+
+    /* PIN SECTIONS */
+    .pin-section {
+        margin-bottom: 24px;
+    }
+
+    .pin-section label {
+        color: var(--text-light);
+        font-size: 13px;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .pin-group {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+    }
+
+    .pin-box {
+        width: 55px;
+        height: 55px;
+        background: var(--bg-dark);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        text-align: center;
+        font-size: 22px;
+        color: var(--text-light);
+        transition: 0.2s;
+    }
+
+    .pin-box:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+    /* BUTTON */
+    .btn-submit {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+        color: white;
+        font-weight: 600;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+    /* ALERTS */
+    .alert-success {
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        color: var(--success);
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-size: 13px;
+    }
+
+    .alert-error {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: var(--danger);
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-size: 13px;
+    }
+
+    /* INFO BOX */
+    .info-box {
+        margin-top: 25px;
+        background: rgba(100, 116, 139, 0.1);
+        border: 1px solid rgba(100, 116, 139, 0.2);
+        padding: 14px;
+        border-radius: 10px;
+        font-size: 12px;
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+
+    .info-box strong {
+        color: var(--text-light);
+    }
+
+    /* DESKTOP */
+    @media (min-width: 768px) {
+        .pin-card {
+            padding: 40px;
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<!-- HEADER -->
 <div class="pin-header">
-    <a href="{{ route('account.settings') }}" class="back-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-        </svg>
-    </a>
+    <a href="{{ route('account.settings') }}" class="back-btn">←</a>
     <h6 class="header-title">Change Withdrawal PIN</h6>
     <span class="placeholder"></span>
 </div>
 
-<!-- MAIN CONTENT -->
 <div class="pin-container">
 
-    <!-- CARD SECTION -->
     <div class="pin-card">
+
         <div class="card-header">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
                 <circle cx="12" cy="12" r="1"></circle>
                 <circle cx="19" cy="12" r="1"></circle>
                 <circle cx="5" cy="12" r="1"></circle>
             </svg>
             <h2 class="card-title">Update Your Withdrawal PIN</h2>
-            <p class="card-desc">Change your withdrawal PIN to a new secure 4-digit number</p>
+            <p class="card-desc">Enter your current PIN and choose a new secure 4-digit PIN.</p>
         </div>
 
-        <!-- FORM -->
-        <form method="POST" action="{{ route('withdrawal-pin.update') }}" class="pin-form">
+        @if(session('success'))
+        <div class="alert-success">{{ session('success') }}</div>
+        @endif
+
+        @if($errors->any())
+        <div class="alert-error">{{ $errors->first() }}</div>
+        @endif
+
+        <form method="POST" action="{{ route('withdrawal-pin.update') }}">
             @csrf
             @method('PUT')
 
-            <!-- CURRENT PIN INPUT -->
-            <div class="form-group">
-                <label for="current_pin" class="form-label">Current PIN</label>
-                <div class="pin-input-wrapper">
-                    <input
-                        type="password"
-                        id="current_pin"
-                        name="current_pin"
-                        class="form-control pin-input @error('current_pin') is-invalid @enderror"
-                        placeholder="••••"
-                        maxlength="4"
-                        inputmode="numeric"
-                        required>
-                    <button type="button" class="toggle-pin" onclick="togglePin('current_pin')">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                    </button>
+            <!-- CURRENT PIN -->
+            <div class="pin-section">
+                <label>Current PIN</label>
+                <div class="pin-group current-group">
+                    @for($i=1;$i<=4;$i++)
+                        <input type="password" maxlength="1" class="pin-box current-box" required>
+                        @endfor
                 </div>
-                @error('current_pin')
-                <p class="error-msg">{{ $message }}</p>
-                @enderror
+                <input type="hidden" name="current_pin" id="currentPin">
             </div>
 
-            <!-- NEW PIN INPUT -->
-            <div class="form-group">
-                <label for="new_pin" class="form-label">New PIN</label>
-                <div class="pin-input-wrapper">
-                    <input
-                        type="password"
-                        id="new_pin"
-                        name="new_pin"
-                        class="form-control pin-input @error('new_pin') is-invalid @enderror"
-                        placeholder="••••"
-                        maxlength="4"
-                        inputmode="numeric"
-                        required>
-                    <button type="button" class="toggle-pin" onclick="togglePin('new_pin')">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                    </button>
+            <!-- NEW PIN -->
+            <div class="pin-section">
+                <label>New PIN</label>
+                <div class="pin-group new-group">
+                    @for($i=1;$i<=4;$i++)
+                        <input type="password" maxlength="1" class="pin-box new-box" required>
+                        @endfor
                 </div>
-                @error('new_pin')
-                <p class="error-msg">{{ $message }}</p>
-                @enderror
+                <input type="hidden" name="new_pin" id="newPin">
             </div>
 
-            <!-- NEW PIN CONFIRMATION INPUT -->
-            <div class="form-group">
-                <label for="new_pin_confirmation" class="form-label">Confirm New PIN</label>
-                <div class="pin-input-wrapper">
-                    <input
-                        type="password"
-                        id="new_pin_confirmation"
-                        name="new_pin_confirmation"
-                        class="form-control pin-input @error('new_pin_confirmation') is-invalid @enderror"
-                        placeholder="••••"
-                        maxlength="4"
-                        inputmode="numeric"
-                        required>
-                    <button type="button" class="toggle-pin" onclick="togglePin('new_pin_confirmation')">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                    </button>
+            <!-- CONFIRM -->
+            <div class="pin-section">
+                <label>Confirm New PIN</label>
+                <div class="pin-group confirm-group">
+                    @for($i=1;$i<=4;$i++)
+                        <input type="password" maxlength="1" class="pin-box confirm-box" required>
+                        @endfor
                 </div>
-                @error('new_pin_confirmation')
-                <p class="error-msg">{{ $message }}</p>
-                @enderror
+                <input type="hidden" name="new_pin_confirmation" id="confirmPin">
             </div>
 
-            <!-- PIN RULES -->
-            <div class="pin-rules">
-                <h4 class="rules-title">PIN Requirements</h4>
-                <ul class="rules-list">
-                    <li class="rule-item" id="rule-length">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        <span>Exactly 4 digits</span>
-                    </li>
-                    <li class="rule-item" id="rule-numeric">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        <span>Numbers only (0-9)</span>
-                    </li>
-                    <li class="rule-item" id="rule-different">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        <span>New PIN must be different</span>
-                    </li>
-                    <li class="rule-item" id="rule-match">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                        <span>Both new PINs must match</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- SUBMIT BUTTON -->
             <button type="submit" class="btn-submit">Change PIN</button>
+
         </form>
 
-        <!-- INFO BOX -->
         <div class="info-box">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            </svg>
-            <div>
-                <p><strong>Keep your PIN safe:</strong> Never share your PIN with anyone. You'll need it to confirm all withdrawal requests.</p>
-            </div>
+            <strong>Security Notice:</strong>
+            Your PIN is encrypted and required for all withdrawals.
+            Avoid predictable combinations and never share your PIN with anyone.
         </div>
+
     </div>
 
 </div>
 
 <script>
-    function togglePin(fieldId) {
-        const input = document.getElementById(fieldId);
-        const isPassword = input.type === 'password';
-        input.type = isPassword ? 'text' : 'password';
-    }
+    function setupPin(boxClass, hiddenInputId) {
+        const boxes = document.querySelectorAll(boxClass);
+        const hidden = document.getElementById(hiddenInputId);
 
-    // PIN validation rules
-    const currentPinInput = document.getElementById('current_pin');
-    const newPinInput = document.getElementById('new_pin');
-    const newPinConfirm = document.getElementById('new_pin_confirmation');
+        boxes.forEach((box, index) => {
+            box.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
 
-    function validatePin() {
-        const newPin = newPinInput.value;
-        const confirm = newPinConfirm.value;
-        const currentPin = currentPinInput.value;
+                if (this.value && index < boxes.length - 1) {
+                    boxes[index + 1].focus();
+                }
 
-        // Check length
-        const lengthValid = newPin.length === 4;
-        document.getElementById('rule-length').classList.toggle('valid', lengthValid);
+                updateHidden();
+            });
 
-        // Check numeric
-        const numericValid = /^\d{4}$/.test(newPin);
-        document.getElementById('rule-numeric').classList.toggle('valid', numericValid);
-
-        // Check different from current
-        const differentValid = newPin !== currentPin && newPin.length > 0;
-        document.getElementById('rule-different').classList.toggle('valid', differentValid);
-
-        // Check match
-        const matchValid = newPin === confirm && newPin.length > 0;
-        document.getElementById('rule-match').classList.toggle('valid', matchValid);
-    }
-
-    newPinInput.addEventListener('input', validatePin);
-    newPinConfirm.addEventListener('input', validatePin);
-    currentPinInput.addEventListener('input', validatePin);
-
-    // Only allow numbers
-    [currentPinInput, newPinInput, newPinConfirm].forEach(input => {
-        input.addEventListener('input', function() {
-            this.value = this.value.replace(/[^\d]/g, '').slice(0, 4);
+            box.addEventListener('keydown', function(e) {
+                if (e.key === "Backspace" && !this.value && index > 0) {
+                    boxes[index - 1].focus();
+                }
+            });
         });
-    });
+
+        function updateHidden() {
+            let value = '';
+            boxes.forEach(b => value += b.value);
+            hidden.value = value;
+        }
+    }
+
+    setupPin('.current-box', 'currentPin');
+    setupPin('.new-box', 'newPin');
+    setupPin('.confirm-box', 'confirmPin');
 </script>
 
 @endsection
