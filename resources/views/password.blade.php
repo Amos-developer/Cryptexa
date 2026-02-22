@@ -3,6 +3,8 @@
 @section('title', 'Change Password | Cryptexa')
 @section('hide-header', true)
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 @section('content')
 
 <!-- HEADER BAR -->
@@ -262,5 +264,119 @@
         }
     }
 </style>
+
+<script>
+    // Validate password requirements in real-time
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.querySelector('input[name="password"]');
+
+        if (passwordInput) {
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+
+                // Check length (8+)
+                const lengthCheck = password.length >= 8;
+                updateRequirement('req-length', lengthCheck);
+
+                // Check uppercase
+                const uppercaseCheck = /[A-Z]/.test(password);
+                updateRequirement('req-uppercase', uppercaseCheck);
+
+                // Check lowercase
+                const lowercaseCheck = /[a-z]/.test(password);
+                updateRequirement('req-lowercase', lowercaseCheck);
+
+                // Check number
+                const numberCheck = /\d/.test(password);
+                updateRequirement('req-number', numberCheck);
+
+                // Check special character
+                const specialCheck = /[!@#$%^&*()_+\-=\[\]{};:\'",.<>?\/\\|`~]/.test(password);
+                updateRequirement('req-special', specialCheck);
+            });
+        }
+
+        function updateRequirement(id, isValid) {
+            const element = document.getElementById(id);
+            if (isValid) {
+                element.style.color = '#22c55e';
+                element.textContent = element.textContent.replace('✗', '✓');
+            } else {
+                element.style.color = '#94a3b8';
+                element.textContent = element.textContent.replace('✓', '✗');
+            }
+        }
+    });
+
+    // Handle form submission with SweetAlert
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form[action*="account.password.update"]');
+
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(this);
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+
+                // Disable button
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '⏳ Updating...';
+
+                fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json',
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Clear form
+                            form.reset();
+
+                            // Show success alert
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Password Updated!',
+                                text: 'Your password has been changed successfully.',
+                                confirmButtonText: 'OK',
+                                confirmButtonColor: '#38bdf8',
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                            }).then(() => {
+                                // Page stays on same URL
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = originalBtnText;
+                            });
+                        } else {
+                            return response.json().then(data => {
+                                throw new Error(data.message || 'An error occurred');
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        // Show error alert
+                        const errors = error.message || 'An error occurred. Please try again.';
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Update Failed',
+                            text: errors,
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#ef4444',
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                        }).then(() => {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalBtnText;
+                        });
+                    });
+            });
+        }
+    });
+</script>
 
 @endsection

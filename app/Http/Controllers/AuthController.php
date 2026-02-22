@@ -165,4 +165,54 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+
+    // Update password logic
+    public function updatePassword(Request $request)
+    {
+        try {
+            $request->validate([
+                'current_password' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        if (!Hash::check($value, Auth::user()->password)) {
+                            $fail('The current password is incorrect.');
+                        }
+                    },
+                ],
+                'password' => [
+                    'required',
+                    'min:8',
+                    'confirmed',
+                    function ($attribute, $value, $fail) use ($request) {
+                        // New password must not be same as current password
+                        if (Hash::check($value, Auth::user()->password)) {
+                            $fail('New password must be different from current password.');
+                        }
+                    },
+                ],
+            ]);
+
+            Auth::user()->update([
+                'password' => Hash::make($request->password),
+            ]);
+
+            // Return JSON response for AJAX requests
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Password updated successfully'
+                ]);
+            }
+
+            return back()->with('success', 'Password updated successfully');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => collect($e->errors())->flatten()->first()
+                ], 422);
+            }
+            throw $e;
+        }
+    }
 }
