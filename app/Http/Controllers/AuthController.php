@@ -125,6 +125,15 @@ class AuthController extends Controller
                 return back()->withErrors(['email' => 'Verify your email first']);
             }
 
+            // Check if user has 2FA enabled
+            if ($user->two_factor_enabled) {
+                // Store user ID in session for 2FA verification
+                Auth::logout();
+                $request->session()->put('2fa_pending_user_id', $user->id);
+                $request->session()->put('2fa_pending_remember', $request->boolean('remember'));
+                return redirect()->route('two-factor.login');
+            }
+
             // 🔥 ROLE-BASED REDIRECT
             if ($user->role === 'admin') {
                 return redirect('/admin/dashboard');

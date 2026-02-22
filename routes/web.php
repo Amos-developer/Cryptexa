@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ChooseCryptocurrency;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\ComputeController;
+use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDepositController;
 use App\Http\Controllers\Admin\UserController;
@@ -28,6 +29,9 @@ Route::post('/verify', [AuthController::class, 'verify'])->name('verify.post');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
+Route::get('/two-factor/login', [TwoFactorController::class, 'showLoginVerification'])->name('two-factor.login');
+Route::post('/two-factor/login/verify', [TwoFactorController::class, 'verifyLogin'])->name('two-factor.login.verify');
+
 Route::post('/verify/resend', [AuthController::class, 'resend'])
     ->name('verify.resend');
 
@@ -45,6 +49,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/account/password', fn() => view('password'))->name('account.password');
     Route::post('/account/password', [AuthController::class, 'updatePassword'])->name('account.password.update');
     Route::get('/about', fn() => view('about'))->name('about');
+
+    // Two-Factor Authentication routes
+    Route::get('/account/two-factor', [TwoFactorController::class, 'show'])->name('two-factor.show');
+    Route::post('/account/two-factor/generate', [TwoFactorController::class, 'generateSecret'])->name('two-factor.generate');
+    Route::post('/account/two-factor/verify', [TwoFactorController::class, 'verify'])->name('two-factor.verify');
+    Route::post('/account/two-factor/disable', [TwoFactorController::class, 'disable'])->name('two-factor.disable');
 
     // Withdrawal PIN routes
     Route::get('/withdrawal-pin/set', [\App\Http\Controllers\WithdrawalPinController::class, 'showSet'])->name('withdrawal-pin.set');

@@ -53,7 +53,7 @@
     'title' => 'Two-Factor Auth',
     'desc' => 'Add extra security layer',
     'color' => '#06b6d4',
-    'link' => '#'
+    'link' => route('two-factor.show')
     ],
     [
     'icon' => 'key',
