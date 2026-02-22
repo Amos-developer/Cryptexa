@@ -29,8 +29,10 @@ Route::post('/verify', [AuthController::class, 'verify'])->name('verify.post');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
-Route::get('/two-factor/login', [TwoFactorController::class, 'showLoginVerification'])->name('two-factor.login');
-Route::post('/two-factor/login/verify', [TwoFactorController::class, 'verifyLogin'])->name('two-factor.login.verify');
+Route::middleware('require.2fa.pending')->group(function () {
+    Route::get('/two-factor/login', [TwoFactorController::class, 'showLoginVerification'])->name('two-factor.login');
+    Route::post('/two-factor/login/verify', [TwoFactorController::class, 'verifyLogin'])->name('two-factor.login.verify');
+});
 
 Route::post('/verify/resend', [AuthController::class, 'resend'])
     ->name('verify.resend');

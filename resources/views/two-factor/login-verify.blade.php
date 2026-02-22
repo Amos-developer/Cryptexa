@@ -21,7 +21,7 @@
     width: 100%;
     z-index: 100;
 ">
-    <a href="{{ url()->previous() }}" class="back-btn" style="
+    <a href="{{ route('login') }}" class="back-btn" style="
         width: 36px;
         height: 36px;
         background: rgba(56,189,248,0.1);
@@ -159,6 +159,7 @@
             opacity: 0;
             transform: translateY(-20px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -170,6 +171,7 @@
             opacity: 0;
             transform: translateY(20px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -200,41 +202,43 @@
         btn.innerHTML = '⏳ Verifying...';
 
         fetch('{{ route("two-factor.login.verify") }}', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ code })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Verified!',
-                    text: 'Redirecting to dashboard...',
-                    confirmButtonColor: '#38bdf8',
-                    allowOutsideClick: false,
-                    allowEscapeKey: false
-                }).then(() => {
-                    window.location.href = data.redirect;
-                });
-            } else {
-                errorDiv.textContent = data.message || 'Invalid code';
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    code
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Verified!',
+                        text: 'Redirecting to dashboard...',
+                        confirmButtonColor: '#38bdf8',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    }).then(() => {
+                        window.location.href = data.redirect;
+                    });
+                } else {
+                    errorDiv.textContent = data.message || 'Invalid code';
+                    errorDiv.style.display = 'block';
+                    btn.disabled = false;
+                    btn.innerHTML = '✓ Verify & Login';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                errorDiv.textContent = 'An error occurred. Please try again.';
                 errorDiv.style.display = 'block';
                 btn.disabled = false;
                 btn.innerHTML = '✓ Verify & Login';
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            errorDiv.textContent = 'An error occurred. Please try again.';
-            errorDiv.style.display = 'block';
-            btn.disabled = false;
-            btn.innerHTML = '✓ Verify & Login';
-        });
+            });
     }
 
     // Auto-format verification code input

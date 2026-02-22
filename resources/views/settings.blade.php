@@ -51,9 +51,10 @@
     [
     'icon' => 'shield',
     'title' => 'Two-Factor Auth',
-    'desc' => 'Add extra security layer',
-    'color' => '#06b6d4',
-    'link' => route('two-factor.show')
+    'desc' => auth()->user()->two_factor_enabled ? '✓ Enabled - Click to manage' : 'Add extra security layer',
+    'color' => auth()->user()->two_factor_enabled ? '#10b981' : '#06b6d4',
+    'link' => route('two-factor.show'),
+    'badge' => auth()->user()->two_factor_enabled ? 'ENABLED' : null
     ],
     [
     'icon' => 'key',

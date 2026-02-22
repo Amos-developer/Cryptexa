@@ -201,48 +201,70 @@ class TwoFactorController extends Controller
     }
 
     /**
-     * Verify TOTP code
+     * Decode base32 string
+     */
+    private function base32Decode($input)
+    {
+        $baseMap = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+        $input = strtoupper($input);
+        $bits = '';
+
+        for ($i = 0; $i < strlen($input); $i++) {
+            $idx = strpos($baseMap, $input[$i]);
+            if ($idx === false) {
+                continue;
+            }
+            $bits .= str_pad(decbin($idx), 5, '0', STR_PAD_LEFT);
+        }
+
+        $ret = '';
+        for ($i = 0; $i + 8 <= strlen($bits); $i += 8) {
+            $ret .= chr(bindec(substr($bits, $i, 8)));
+        }
+        return $ret;
+    }
+
+    /**
+     * Verify TOTP code according to RFC 6238
      */
     private function verifyCode($code, $secret)
     {
-        // Base32 decode
-        $secret = str_replace(' ', '', $secret);
-        $secret = preg_replace('/[^A-Z2-7]/', '', $secret);
+        $secret = preg_replace('/[^A-Z2-7]/', '', strtoupper($secret));
+        $key = $this->base32Decode($secret);
 
-        if (strlen($secret) === 0) {
+        if (strlen($key) < 8) {
             return false;
         }
 
-        $base32chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
-        $bits = '';
-
-        for ($i = 0; $i < strlen($secret); $i++) {
-            $val = strpos($base32chars, $secret[$i]);
-            if ($val === false) {
-                return false;
-            }
-            $bits .= str_pad(decbin($val), 5, '0', STR_PAD_LEFT);
-        }
-
-        if (strlen($bits) % 8 != 0) {
-            return false;
-        }
-
-        $byteSecret = '';
-        for ($i = 0; $i < strlen($bits); $i += 8) {
-            $byteSecret .= chr(bindec(substr($bits, $i, 8)));
-        }
-
-        // Verify TOTP
+        // Time counter - check current and adjacent time windows
         $timeCounter = intdiv(time(), 30);
 
-        // Check current and previous time windows for tolerance
         for ($i = -1; $i <= 1; $i++) {
-            $hmac = hash_hmac('sha1', pack('N*', $timeCounter + $i), $byteSecret, true);
-            $offset = ord($hmac[19]) & 0xf;
-            $totp = (unpack('N', substr($hmac, $offset, 4))[1] & 0x7fffffff) % 1000000;
+            $timestamp = $timeCounter + $i;
 
-            if ($totp == (int)$code) {
+            // Pack timestamp as 64-bit big-endian
+            $binary = '';
+            for ($j = 7; $j >= 0; $j--) {
+                $binary .= chr(($timestamp >> ($j * 8)) & 0xff);
+            }
+
+            // Calculate HMAC-SHA1
+            $hmac = hash_hmac('sha1', $binary, $key, true);
+
+            // Extract offset from last 4 bits of HMAC
+            $offset = ord(substr($hmac, -1)) & 0x0f;
+
+            // Extract 4 bytes and convert to 32-bit value
+            $value = 0;
+            for ($j = 0; $j < 4; $j++) {
+                $value = ($value << 8) | ord(substr($hmac, $offset + $j, 1));
+            }
+
+            // Mask MSB and modulo 1000000
+            $token = ($value & 0x7fffffff) % 1000000;
+            $totp = str_pad($token, 6, '0', STR_PAD_LEFT);
+
+            if ($totp === $code) {
                 return true;
             }
         }
