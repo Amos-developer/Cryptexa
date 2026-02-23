@@ -46,18 +46,18 @@
             <div class="action-label">Withdraw</div>
         </a>
 
-        <a href="{{ route('choose.cryptocurrency') }}" class="action-card">
+        <a href="#" class="action-card">
             <div class="action-icon">
-                <img src="{{ asset('images/icons/history.svg') }}" alt="History" style="width: 20px; height: 20px;">
+                <img src="{{ asset('images/icons/checkin.svg') }}" alt="Check-in" style="width: 20px; height: 20px;">
             </div>
-            <div class="action-label">Transactions</div>
+            <div class="action-label">Check-in</div>
         </a>
 
-        <a href="{{ route('team') }}" class="action-card">
+        <a href="#" class="action-card">
             <div class="action-icon">
-                <img src="{{ asset('images/icons/team.svg') }}" alt="Team" style="width: 20px; height: 20px;">
+                <img src="{{ asset('images/icons/luckybox.svg') }}" alt="Lucky Box" style="width: 20px; height: 20px;">
             </div>
-            <div class="action-label">Invite</div>
+            <div class="action-label">Lucky Box</div>
         </a>
     </div>
 

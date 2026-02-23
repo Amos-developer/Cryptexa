@@ -27,7 +27,7 @@
 <body>
 
     {{-- Preloader --}}
-    @include('partials.preloader')
+    {{-- @include('partials.preloader') --}}
 
     <div class="app-dark">
 
