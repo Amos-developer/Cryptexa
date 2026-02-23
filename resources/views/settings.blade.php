@@ -122,7 +122,7 @@
     'title' => 'System Time',
     'desc' => now()->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
     'color' => '#38bdf8',
-    'link' => '#'
+    'link' => route('settings.system-time')
     ],
     [
     'icon' => 'download',

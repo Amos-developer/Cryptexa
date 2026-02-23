@@ -11,18 +11,18 @@ class CheckInController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $today = Carbon::today();
+        $today = Carbon::now()->startOfDay();
         
         $lastCheckIn = CheckIn::where('user_id', $user->id)
             ->orderBy('check_in_date', 'desc')
             ->first();
         
-        $canCheckIn = !$lastCheckIn || $lastCheckIn->check_in_date->lt($today);
+        $canCheckIn = !$lastCheckIn || $lastCheckIn->check_in_date->startOfDay()->lt($today);
         $currentStreak = $lastCheckIn ? $lastCheckIn->streak : 0;
         
         // Calculate next reward based on what the NEW streak will be
         $nextStreak = 1;
-        if ($lastCheckIn && $lastCheckIn->check_in_date->eq($today->copy()->subDay())) {
+        if ($lastCheckIn && $lastCheckIn->check_in_date->startOfDay()->eq($today->copy()->subDay())) {
             $nextStreak = $lastCheckIn->streak + 1;
         }
         $nextReward = 0.10 + ($nextStreak * 0.01);
@@ -32,24 +32,24 @@ class CheckInController extends Controller
             ->orderBy('check_in_date', 'desc')
             ->get();
         
-        return view('checkin', compact('canCheckIn', 'currentStreak', 'nextReward', 'checkIns'));
+        return view('checkin', compact('canCheckIn', 'currentStreak', 'nextReward', 'checkIns', 'lastCheckIn'));
     }
     
     public function store(Request $request)
     {
         $user = auth()->user();
-        $today = Carbon::today();
+        $today = Carbon::now()->startOfDay();
         
         $lastCheckIn = CheckIn::where('user_id', $user->id)
             ->orderBy('check_in_date', 'desc')
             ->first();
         
-        if ($lastCheckIn && $lastCheckIn->check_in_date->eq($today)) {
+        if ($lastCheckIn && $lastCheckIn->check_in_date->startOfDay()->eq($today)) {
             return back()->with('error', 'You have already checked in today!');
         }
         
         $streak = 1;
-        if ($lastCheckIn && $lastCheckIn->check_in_date->eq($today->copy()->subDay())) {
+        if ($lastCheckIn && $lastCheckIn->check_in_date->startOfDay()->eq($today->copy()->subDay())) {
             $streak = $lastCheckIn->streak + 1;
         }
         

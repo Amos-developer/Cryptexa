@@ -52,12 +52,21 @@
 
     <script>
         @if(!$canCheckIn)
+        let countdownInterval;
+        
         function updateCountdown() {
             const now = new Date();
             const tomorrow = new Date(now);
             tomorrow.setHours(24, 0, 0, 0);
             
             const diff = tomorrow - now;
+            
+            if (diff <= 1000) {
+                clearInterval(countdownInterval);
+                window.location.reload();
+                return;
+            }
+            
             const hours = Math.floor(diff / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
@@ -67,7 +76,7 @@
         }
         
         updateCountdown();
-        setInterval(updateCountdown, 1000);
+        countdownInterval = setInterval(updateCountdown, 1000);
         @endif
 
         document.getElementById('checkinForm')?.addEventListener('submit', function(e) {

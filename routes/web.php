@@ -76,6 +76,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/theme', fn() => view('settings.theme'))->name('settings.theme');
     Route::get('/settings/notifications', fn() => view('settings.notifications'))->name('settings.notifications');
     Route::get('/settings/kyc', fn() => view('settings.kyc'))->name('settings.kyc');
+    Route::get('/settings/system-time', fn() => view('settings.system-time'))->name('settings.system-time');
     Route::get('/deposit/history', function() {
         $deposits = \App\Models\Deposit::where('user_id', auth()->id())
             ->orderBy('created_at', 'desc')
