@@ -18,7 +18,7 @@ class WithdrawalController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('withdrawals', compact('withdrawals'));
+        return view('withdrawal.index', compact('withdrawals'));
     }
     /**
      * Submit withdrawal request
@@ -129,7 +129,7 @@ class WithdrawalController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('withdrawal-history', compact('withdrawals'));
+        return view('withdrawal.history', compact('withdrawals'));
     }
 
     /**

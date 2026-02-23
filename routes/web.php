@@ -15,6 +15,7 @@ use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\CheckInController;
 use App\Http\Controllers\LuckyBoxController;
+use App\Http\Controllers\WithdrawalMethodController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes (Guest)
@@ -67,7 +68,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/withdrawal-pin/change', [\App\Http\Controllers\WithdrawalPinController::class, 'update'])->name('withdrawal-pin.update');
 
     // Withdrawal Method route
-    Route::get('/withdrawal-method', fn() => view('withdrawal-method'))->name('withdrawal-method');
+    Route::get('/withdrawal-method', fn() => view('withdrawal.method'))->name('withdrawal-method');
+    Route::post('/withdrawal-method', [WithdrawalMethodController::class, 'store'])->name('withdrawal-method.store');
     
     // Settings pages
     Route::get('/settings/language', fn() => view('settings.language'))->name('settings.language');
