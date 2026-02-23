@@ -17,6 +17,12 @@ class Kernel extends ConsoleKernel
             ->withoutOverlapping()
             ->onOneServer()
             ->runInBackground();
+            
+        $schedule->command('compute:daily-compound')
+            ->daily()
+            ->withoutOverlapping()
+            ->onOneServer()
+            ->runInBackground();
     }
 
     /**

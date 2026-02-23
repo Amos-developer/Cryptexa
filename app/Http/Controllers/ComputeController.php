@@ -32,27 +32,29 @@ class ComputeController extends Controller
 
             $user->decrement('balance', $plan->price);
 
-            $days = $plan->duration_minutes / 1440;
-
-            // Random daily percentage within range
+            // Random daily percentage within range (as decimal)
             $dailyPercent = mt_rand(
                 $plan->min_profit * 100,
                 $plan->max_profit * 100
             ) / 100;
 
             $principal = $plan->price;
+            $days = $plan->duration_minutes / 1440;
 
-            // ✅ Compounded profit calculation
-            $finalAmount = $principal * pow((1 + ($dailyPercent / 100)), $days);
+            // Calculate expected profit with compound interest
+            $finalAmount = $principal * pow((1 + $dailyPercent), $days);
             $expectedProfit = round($finalAmount - $principal, 2);
 
             $order = ComputeOrder::create([
                 'user_id'         => $user->id,
                 'compute_plan_id' => $plan->id,
                 'amount'          => $principal,
+                'investment_amount' => $principal,
                 'expected_profit' => $expectedProfit,
+                'daily_profit_percent' => $dailyPercent,
                 'started_at'      => now(),
                 'ends_at'         => now()->addDays($days),
+                'last_compound_at' => now(),
                 'status'          => 'running',
                 'is_paid'         => false,
             ]);

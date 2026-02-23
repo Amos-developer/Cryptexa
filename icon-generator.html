@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cryptexa Icon Generator</title>
+</head>
+<body>
+    <h1>Cryptexa PWA Icon Generator</h1>
+    <p>Right-click on each icon and "Save image as..."</p>
+    
+    <h2>192x192 Icon</h2>
+    <canvas id="icon192" width="192" height="192"></canvas>
+    <br><button onclick="download('icon192', 'icon-192.png')">Download 192x192</button>
+    
+    <h2>512x512 Icon</h2>
+    <canvas id="icon512" width="512" height="512"></canvas>
+    <br><button onclick="download('icon512', 'icon-512.png')">Download 512x512</button>
+
+    <script>
+        function drawIcon(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width;
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#38bdf8');
+            gradient.addColorStop(1, '#0ea5e9');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // Diamond emoji (simplified as a diamond shape)
+            ctx.fillStyle = '#ffffff';
+            ctx.font = `${size * 0.5}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('💎', size / 2, size / 2);
+            
+            // Text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = `bold ${size * 0.12}px Arial`;
+            ctx.fillText('CRYPTEXA', size / 2, size * 0.85);
+        }
+        
+        function download(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const url = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = url;
+            link.click();
+        }
+        
+        // Draw icons on load
+        window.onload = function() {
+            drawIcon(document.getElementById('icon192'));
+            drawIcon(document.getElementById('icon512'));
+        };
+    </script>
+</body>
+</html>

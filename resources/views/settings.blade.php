@@ -127,9 +127,10 @@
     [
     'icon' => 'download',
     'title' => 'Download App',
-    'desc' => 'iOS & Android available',
+    'desc' => 'Get Android APK',
     'color' => '#10b981',
-    'link' => '#'
+    'link' => asset('downloads/cryptexa.apk'),
+    'action' => 'download-apk'
     ],
     [
     'icon' => 'info',
@@ -330,6 +331,38 @@
 
 <!-- SCRIPTS -->
 <script>
+    // PWA Install functionality
+    let deferredPrompt;
+    const installAppCard = document.querySelector('[data-action="install-app"]');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (installAppCard) {
+            installAppCard.style.display = 'flex';
+        }
+    });
+
+    if (installAppCard) {
+        installAppCard.addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            if (!deferredPrompt) {
+                // Show manual instructions
+                alert('To install:\n\niOS: Tap Share button → Add to Home Screen\n\nAndroid: Tap Menu (⋮) → Install App or Add to Home Screen');
+                return;
+            }
+            
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            
+            if (outcome === 'accepted') {
+                console.log('App installed');
+            }
+            deferredPrompt = null;
+        });
+    }
+
     // Language modal functionality
     const languageCard = document.querySelector('[data-action="language"]');
     const languageModal = document.getElementById('languageModal');
@@ -351,13 +384,11 @@
             e.preventDefault();
             languageBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            // Here you can add logic to change the language
             console.log('Language selected:', btn.dataset.lang);
             setTimeout(() => closeLanguageModal(), 300);
         });
     });
 
-    // Close modal when clicking outside
     languageModal.addEventListener('click', (e) => {
         if (e.target === languageModal) {
             closeLanguageModal();

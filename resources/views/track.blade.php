@@ -140,7 +140,7 @@
                 </div>
 
                 <!-- STATS GRID -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px;">
                     <div style="
                         background: rgba(255,255,255,0.02);
                         padding: 10px;
@@ -157,7 +157,17 @@
                         border-radius: 10px;
                         border: 1px solid rgba(251,191,36,0.2);
                     ">
-                        <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; margin: 0 0 4px 0;">Expected Profit</p>
+                        <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; margin: 0 0 4px 0;">Current</p>
+                        <p style="color: #22c55e; font-size: 13px; font-weight: 700; margin: 0;">+${{ number_format($order->amount - $order->investment_amount, 2) }}</p>
+                    </div>
+
+                    <div style="
+                        background: rgba(255,255,255,0.02);
+                        padding: 10px;
+                        border-radius: 10px;
+                        border: 1px solid rgba(251,191,36,0.2);
+                    ">
+                        <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; margin: 0 0 4px 0;">Expected</p>
                         <p style="color: #22c55e; font-size: 13px; font-weight: 700; margin: 0;">+${{ number_format($order->expected_profit, 2) }}</p>
                     </div>
                 </div>
