@@ -1,0 +1,41 @@
+
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+        .pt-80 { padding-top: 80px !important; }
+        .pb-80 { padding-bottom: 60px !important; }
+        
+        h1[style*="font-size: 36px"] { font-size: 28px !important; }
+        h2[style*="font-size: 24px"] { font-size: 20px !important; }
+        h3[style*="font-size: 24px"] { font-size: 20px !important; }
+        
+        [style*="grid-template-columns: repeat(3, 1fr)"] {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+        }
+        
+        [style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+        }
+        
+        [style*="padding: 32px"] { padding: 20px !important; }
+        [style*="padding: 24px"] { padding: 16px !important; }
+        [style*="margin-bottom: 48px"] { margin-bottom: 32px !important; }
+        [style*="margin-bottom: 40px"] { margin-bottom: 24px !important; }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+        [style*="grid-template-columns: repeat(3, 1fr)"] {
+            grid-template-columns: repeat(2, 1fr) !important;
+        }
+    }
+

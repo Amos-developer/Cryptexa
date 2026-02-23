@@ -1,0 +1,256 @@
+
+    /* App design tokens (override with global tokens if available) */
+    :root {
+        --color-primary: #2563eb;
+        --color-success: #16a34a;
+        --color-warning: #f59e0b;
+        --color-accent: #7c3aed;
+        --badge-text-dark: #0b1220;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(-15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 768px) {
+        .pt-80 {
+            padding-top: 80px !important;
+        }
+
+        .pb-80 {
+            padding-bottom: 60px !important;
+        }
+
+        .mb-32 h1 {
+            font-size: 24px !important;
+        }
+
+        .mb-32 {
+            margin-bottom: 20px !important;
+        }
+
+        [style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+        }
+
+        [style*="padding: 20px"] {
+            padding: 16px !important;
+        }
+
+        [style*="padding: 18px"] {
+            padding: 14px !important;
+        }
+
+        [style*="gap: 16px"] {
+            gap: 12px !important;
+        }
+
+        [style*="gap: 14px"] {
+            gap: 10px !important;
+        }
+
+        .mb-32 {
+            margin-bottom: 18px !important;
+        }
+
+        ol,
+        ul {
+            font-size: 12px !important;
+        }
+    }
+
+    /* TABLET RESPONSIVE */
+    @media (min-width: 769px) and (max-width: 1024px) {
+        .mb-32 h1 {
+            font-size: 28px !important;
+        }
+
+        [style*="gap: 16px"] {
+            gap: 14px !important;
+        }
+    }
+
+    /* Coins grid and card styles */
+    .coins-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 32px;
+        animation: slideUp 0.5s ease 0.1s backwards;
+    }
+
+    .coin-card {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px;
+        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.02));
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        color: #e5e7eb;
+        cursor: pointer;
+        text-align: left;
+        transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+        width: 100%;
+    }
+
+    .coin-card:active {
+        transform: translateY(1px);
+    }
+
+    .coin-card:hover {
+        box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
+        border-color: rgba(56, 189, 248, 0.18);
+    }
+
+    .coin-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.02);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .coin-icon img {
+        width: 34px;
+        height: 34px;
+        object-fit: contain;
+    }
+
+    .coin-info {
+        flex: 1;
+    }
+
+    .coin-title {
+        color: #e6edf3;
+        font-weight: 800;
+        font-size: 15px;
+    }
+
+    .coin-sub {
+        color: #94a3b8;
+        font-size: 12px;
+    }
+
+    .coin-desc {
+        color: #64748b;
+        font-size: 12px;
+        margin: 6px 0 0 0;
+    }
+
+    /* Badges (use design tokens via data-variant) */
+    .badge {
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 999px;
+        color: #fff;
+        display: inline-block;
+    }
+
+    .badge[data-variant="primary"] {
+        background: var(--color-primary);
+    }
+
+    .badge[data-variant="success"] {
+        background: var(--color-success);
+    }
+
+    .badge[data-variant="warning"] {
+        background: var(--color-warning);
+        color: var(--badge-text-dark);
+    }
+
+    .badge[data-variant="accent"] {
+        background: var(--color-accent);
+    }
+
+    /* Desktop: two-column grid */
+    @media (min-width: 900px) {
+        .coins-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+    }
+
+    /* Anim delays via data attribute */
+    .coin-card {
+        opacity: 0;
+        transform: translateY(8px);
+        animation: cardIn .45s forwards ease;
+    }
+
+    @keyframes cardIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Loading overlay when submit */
+    .loading-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(2, 6, 23, 0.6);
+        align-items: center;
+        justify-content: center;
+        z-index: 120;
+    }
+
+    .loading-overlay.show {
+        display: flex;
+    }
+
+    .spinner {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        border: 6px solid rgba(255, 255, 255, 0.08);
+        border-top-color: #38bdf8;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+

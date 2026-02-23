@@ -3,9 +3,9 @@
 @section('title', 'Withdrawal History')
 @section('hide-header', true)
 
-@section('content')
+<link rel="stylesheet" href="{{ asset('css/withdrawal-history.css') }}">
 
-<style>
+@section('content')
     :root {
         --primary: #38bdf8;
         --bg-dark: #020617;
