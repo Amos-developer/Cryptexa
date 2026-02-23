@@ -15,7 +15,7 @@ class ReferralController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | REFERRAL LEVELS (1-6)
+        | REFERRAL LEVELS (1-3)
         |--------------------------------------------------------------------------
         */
 
@@ -32,24 +32,6 @@ class ReferralController extends Controller
         $level3 = User::whereIn(
             'referred_by',
             $level2->pluck('id')
-        )->get();
-
-        // Level 4
-        $level4 = User::whereIn(
-            'referred_by',
-            $level3->pluck('id')
-        )->get();
-
-        // Level 5
-        $level5 = User::whereIn(
-            'referred_by',
-            $level4->pluck('id')
-        )->get();
-
-        // Level 6
-        $level6 = User::whereIn(
-            'referred_by',
-            $level5->pluck('id')
         )->get();
 
         /*
@@ -72,23 +54,8 @@ class ReferralController extends Controller
             DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
         )->count();
 
-        $level4Active = $level4->filter(
-            fn($user) =>
-            DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
-        )->count();
-
-        $level5Active = $level5->filter(
-            fn($user) =>
-            DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
-        )->count();
-
-        $level6Active = $level6->filter(
-            fn($user) =>
-            DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
-        )->count();
-
-        $totalActiveMembers = $level1Active + $level2Active + $level3Active + $level4Active + $level5Active + $level6Active;
-        $totalMembers = $level1->count() + $level2->count() + $level3->count() + $level4->count() + $level5->count() + $level6->count();
+        $totalActiveMembers = $level1Active + $level2Active + $level3Active;
+        $totalMembers = $level1->count() + $level2->count() + $level3->count();
 
         /*
         |--------------------------------------------------------------------------
@@ -101,15 +68,9 @@ class ReferralController extends Controller
             'level1',
             'level2',
             'level3',
-            'level4',
-            'level5',
-            'level6',
             'level1Active',
             'level2Active',
             'level3Active',
-            'level4Active',
-            'level5Active',
-            'level6Active',
             'totalMembers',
             'totalActiveMembers',
             'earnings'

@@ -42,7 +42,7 @@ class ProcessDepositPayment implements ShouldQueue
             $deposit->user->increment('balance', $deposit->amount);
 
             // Pay referral bonuses
-            $levels = [0.16, 0.08, 0.04, 0.02, 0.01, 0.005];
+            $levels = [0.02, 0.01, 0.005]; // Level 1: 2%, Level 2: 1%, Level 3: 0.5%
             $referrer = $deposit->user->referrer;
 
             foreach ($levels as $rate) {

@@ -119,8 +119,8 @@ class NowPaymentsWebhookController extends Controller
 
     protected function payReferralBonuses(User $user, float $amount): void
     {
-        // 6-level referral structure - paid when user makes a deposit
-        $levels = [0.16, 0.08, 0.04, 0.02, 0.01, 0.005];
+        // 3-level referral structure - paid when user makes a deposit
+        $levels = [0.02, 0.01, 0.005]; // Level 1: 2%, Level 2: 1%, Level 3: 0.5%
 
         $referrer = $user->referrer;
 

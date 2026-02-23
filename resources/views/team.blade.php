@@ -93,39 +93,24 @@
     <div class="commission-section">
         <div class="section-header">
             <h3>Commission Structure</h3>
-            <p>6-Level Earning System</p>
+            <p>3-Level Earning System</p>
         </div>
 
         <div class="commission-grid">
             <div class="commission-item level-1">
                 <div class="level-badge">Level 1</div>
-                <div class="commission-rate">16%</div>
+                <div class="commission-rate">2%</div>
                 <div class="commission-desc">Direct Referrals</div>
             </div>
             <div class="commission-item level-2">
                 <div class="level-badge">Level 2</div>
-                <div class="commission-rate">8%</div>
+                <div class="commission-rate">1%</div>
                 <div class="commission-desc">2nd Generation</div>
             </div>
             <div class="commission-item level-3">
                 <div class="level-badge">Level 3</div>
-                <div class="commission-rate">4%</div>
-                <div class="commission-desc">3rd Generation</div>
-            </div>
-            <div class="commission-item level-4">
-                <div class="level-badge">Level 4</div>
-                <div class="commission-rate">2%</div>
-                <div class="commission-desc">4th Generation</div>
-            </div>
-            <div class="commission-item level-5">
-                <div class="level-badge">Level 5</div>
-                <div class="commission-rate">1%</div>
-                <div class="commission-desc">5th Generation</div>
-            </div>
-            <div class="commission-item level-6">
-                <div class="level-badge">Level 6</div>
                 <div class="commission-rate">0.5%</div>
-                <div class="commission-desc">6th Generation</div>
+                <div class="commission-desc">3rd Generation</div>
             </div>
         </div>
 
@@ -189,12 +174,9 @@
 
         @php
         $levels = [
-        ['name' => 'Level 1', 'users' => $level1, 'active' => $level1Active, 'commission' => '16%', 'color' => 'level-1'],
-        ['name' => 'Level 2', 'users' => $level2, 'active' => $level2Active, 'commission' => '8%', 'color' => 'level-2'],
-        ['name' => 'Level 3', 'users' => $level3, 'active' => $level3Active, 'commission' => '4%', 'color' => 'level-3'],
-        ['name' => 'Level 4', 'users' => $level4, 'active' => $level4Active, 'commission' => '2%', 'color' => 'level-4'],
-        ['name' => 'Level 5', 'users' => $level5, 'active' => $level5Active, 'commission' => '1%', 'color' => 'level-5'],
-        ['name' => 'Level 6', 'users' => $level6, 'active' => $level6Active, 'commission' => '0.5%', 'color' => 'level-6'],
+        ['name' => 'Level 1', 'users' => $level1, 'active' => $level1Active, 'commission' => '2%', 'color' => 'level-1'],
+        ['name' => 'Level 2', 'users' => $level2, 'active' => $level2Active, 'commission' => '1%', 'color' => 'level-2'],
+        ['name' => 'Level 3', 'users' => $level3, 'active' => $level3Active, 'commission' => '0.5%', 'color' => 'level-3'],
         ];
         @endphp
 

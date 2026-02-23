@@ -4,7 +4,7 @@
         @if(session('success'))
         Swal.fire({
             icon: 'success',
-            title: 'Plan Activated',
+            title: 'Success',
             text: @json(session('success')),
             toast: true,
             position: 'center',
@@ -13,8 +13,6 @@
             background: '#020617',
             color: '#e5e7eb',
             iconColor: '#38bdf8'
-        }).then(() => {
-            window.location.href = "{{ route('home') }}";
         });
         @endif
 

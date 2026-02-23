@@ -46,14 +46,14 @@
             <div class="action-label">Withdraw</div>
         </a>
 
-        <a href="#" class="action-card">
+        <a href="{{ route('checkin') }}" class="action-card">
             <div class="action-icon">
                 <img src="{{ asset('images/icons/checkin.svg') }}" alt="Check-in" style="width: 20px; height: 20px;">
             </div>
             <div class="action-label">Check-in</div>
         </a>
 
-        <a href="#" class="action-card">
+        <a href="{{ route('luckybox') }}" class="action-card">
             <div class="action-icon">
                 <img src="{{ asset('images/icons/luckybox.svg') }}" alt="Lucky Box" style="width: 20px; height: 20px;">
             </div>

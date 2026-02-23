@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminWithdrawalController;
 use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\CheckInController;
+use App\Http\Controllers\LuckyBoxController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes (Guest)
@@ -125,6 +127,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/withdraw/history', [WithdrawalController::class, 'history'])
         ->name('withdraw.history')
         ->middleware('auth');
+
+    Route::get('/checkin', [CheckInController::class, 'index'])
+        ->name('checkin');
+
+    Route::post('/checkin', [CheckInController::class, 'store'])
+        ->name('checkin.store');
+
+    Route::get('/luckybox', [LuckyBoxController::class, 'index'])
+        ->name('luckybox');
+
+    Route::post('/luckybox/open', [LuckyBoxController::class, 'open'])
+        ->name('luckybox.open');
 
 
     Route::post('/pools/activate/{id}', [ComputeController::class, 'activatePool'])
