@@ -1,347 +1,109 @@
 @extends('layouts.app')
 
-@section('title', 'Withdrawal History')
 @section('hide-header', true)
-
-<link rel="stylesheet" href="{{ asset('css/withdrawal-history.css') }}">
+@section('title', 'Withdrawal History | Cryptexa')
 
 @section('content')
-    :root {
-        --primary: #38bdf8;
-        --bg-dark: #020617;
-        --bg-darker: #0f172a;
-        --text-light: #e5e7eb;
-        --text-muted: #94a3b8;
-        --border: rgba(56, 189, 248, 0.2);
-        --success: #22c55e;
-        --warning: #f59e0b;
-        --danger: #ef4444;
-    }
 
-    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+<div class="header fixed-top d-flex justify-content-between align-items-center px-16"
+    style="background: linear-gradient(135deg, #020617, #0f172a); border-bottom: 1px solid rgba(56,189,248,0.2); backdrop-filter: blur(10px); z-index: 100; padding: 12px 16px;">
+    <a href="{{ route('account.settings') }}"
+        style="width: 36px; height: 36px; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;"
+        onmouseover="this.style.background='rgba(56,189,248,0.15)'; this.style.borderColor='rgba(56,189,248,0.4)';"
+        onmouseout="this.style.background='rgba(56,189,248,0.1)'; this.style.borderColor='rgba(56,189,248,0.2)';">
+        <i class="icon-left-btn" style="color: #38bdf8; font-size: 18px;"></i>
+    </a>
+    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Withdrawal History</h6>
+    <span style="width: 36px;"></span>
+</div>
 
-    .settings-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 60px;
-        background: var(--bg-darker);
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-        z-index: 100;
-        backdrop-filter: blur(10px);
-    }
+<div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%); min-height: 100vh;">
+    <div class="tf-container">
+        <div style="margin-bottom: 24px; animation: slideDown 0.6s ease;">
+            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 8px 0;">Withdrawal History</h1>
+            <p style="color: #94a3b8; font-size: 14px; margin: 0;">View all your withdrawal transactions</p>
+        </div>
 
-    .back-btn {
-        width: 40px;
-        height: 40px;
-        background: rgba(56, 189, 248, 0.1);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary);
-        text-decoration: none;
-        transition: all 0.2s;
-    }
+        @if(!$withdrawals->isEmpty())
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; animation: slideUp 0.6s ease 0.1s backwards;">
+            <div style="background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(56,189,248,0.02)); border: 1px solid rgba(56,189,248,0.2); border-radius: 12px; padding: 16px; text-align: center;">
+                <div style="color: #38bdf8; font-weight: 900; font-size: 24px; margin-bottom: 4px;">${{ number_format($withdrawals->where('status', 'approved')->sum('amount'), 2) }}</div>
+                <div style="color: #94a3b8; font-size: 12px;">Total Withdrawn</div>
+            </div>
+            <div style="background: linear-gradient(135deg, rgba(34,197,94,0.08), rgba(34,197,94,0.02)); border: 1px solid rgba(34,197,94,0.2); border-radius: 12px; padding: 16px; text-align: center;">
+                <div style="color: #22c55e; font-weight: 900; font-size: 24px; margin-bottom: 4px;">{{ $withdrawals->count() }}</div>
+                <div style="color: #94a3b8; font-size: 12px;">Transactions</div>
+            </div>
+            <div style="background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(168,85,247,0.02)); border: 1px solid rgba(168,85,247,0.2); border-radius: 12px; padding: 16px; text-align: center;">
+                <div style="color: #a855f7; font-weight: 900; font-size: 24px; margin-bottom: 4px;">${{ $withdrawals->count() > 0 ? number_format($withdrawals->where('status', 'approved')->avg('amount'), 2) : '0.00' }}</div>
+                <div style="color: #94a3b8; font-size: 12px;">Average</div>
+            </div>
+        </div>
+        @endif
 
-    .back-btn:hover { background: rgba(56, 189, 248, 0.2); }
+        @if($withdrawals->isEmpty())
+        <div style="text-align: center; padding: 60px 20px; color: #94a3b8;">
+            <div style="font-size: 48px; margin-bottom: 16px;">💸</div>
+            <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">No Withdrawals Yet</div>
+            <div style="font-size: 14px;">Your withdrawal history will appear here</div>
+        </div>
+        @else
+        <div style="display: grid; gap: 12px; animation: slideUp 0.6s ease 0.2s backwards;">
+            @foreach($withdrawals as $index => $withdrawal)
+            <div style="
+                background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+                border: 1px solid rgba(255,255,255,0.06);
+                border-radius: 12px;
+                padding: 16px;
+                animation: slideIn 0.5s ease {{ 0.1 * $index }}s backwards;
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                    <div>
+                        <div style="color: #e5e7eb; font-weight: 700; font-size: 18px; margin-bottom: 4px;">${{ number_format($withdrawal->amount, 2) }}</div>
+                        <div style="color: #64748b; font-size: 13px;">Withdrawal Request</div>
+                    </div>
+                    @if($withdrawal->status === 'approved')
+                    <div style="background: rgba(34,197,94,0.2); color: #22c55e; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">Approved</div>
+                    @elseif($withdrawal->status === 'pending')
+                    <div style="background: rgba(251,191,36,0.2); color: #fbbf24; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">Pending</div>
+                    @else
+                    <div style="background: rgba(239,68,68,0.2); color: #ef4444; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">{{ ucfirst($withdrawal->status) }}</div>
+                    @endif
+                </div>
+                <div style="display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #64748b; font-size: 13px;">Requested</span>
+                        <span style="color: #94a3b8; font-size: 13px;">{{ $withdrawal->created_at->format('M d, Y') }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #64748b; font-size: 13px;">Time</span>
+                        <span style="color: #94a3b8; font-size: 13px;">{{ $withdrawal->created_at->format('h:i A') }}</span>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        @endif
 
-    .header-title {
-        color: var(--text-light);
-        font-size: 18px;
-        font-weight: 600;
-        letter-spacing: -0.3px;
-    }
+        <div style="background: linear-gradient(135deg, rgba(56,189,248,0.05), rgba(56,189,248,0.02)); border: 1px solid rgba(56,189,248,0.15); border-radius: 12px; padding: 16px; margin-top: 24px; text-align: center; animation: slideUp 0.6s ease 0.6s backwards;">
+            <p style="color: #94a3b8; font-size: 13px; margin: 0;">
+                <span style="color: #38bdf8; font-weight: 600;">💡 Tip:</span> Withdrawals are processed within 24-48 hours after approval
+            </p>
+        </div>
+    </div>
+</div>
 
-    .placeholder { width: 40px; }
-
-    .history-wrapper {
-        min-height: 100vh;
-        padding: 80px 20px 40px;
-        background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
-    }
-
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-        margin-bottom: 30px;
-    }
-
-    .stat-card {
-        background: rgba(56, 189, 248, 0.05);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 16px 12px;
-        text-align: center;
-    }
-
-    .stat-label {
-        font-size: 11px;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 8px;
-    }
-
-    .stat-value {
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--text-light);
-    }
-
-    .stat-value.success { color: var(--success); }
-    .stat-value.warning { color: var(--warning); }
-    .stat-value.danger { color: var(--danger); }
-
-    .section-title {
-        color: var(--text-light);
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 16px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .empty-box {
-        text-align: center;
-        padding: 60px 20px;
-        color: var(--text-muted);
-    }
-
-    .empty-icon {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto 20px;
-        background: rgba(56, 189, 248, 0.05);
-        border: 2px dashed var(--border);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .withdrawal-card {
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 18px;
-        margin-bottom: 12px;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .withdrawal-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 4px;
-        height: 100%;
-        background: var(--primary);
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
-
-    .withdrawal-card:hover {
-        border-color: var(--primary);
-        transform: translateX(4px);
-        box-shadow: 0 8px 24px rgba(56, 189, 248, 0.15);
-    }
-
-    .withdrawal-card:hover::before { opacity: 1; }
-
-    .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 14px;
-    }
-
-    .amount-section {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-    }
-
-    .amount-label {
-        font-size: 11px;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .amount {
-        font-size: 28px;
-        font-weight: 700;
-        color: var(--text-light);
-        letter-spacing: -0.5px;
-    }
-
-    .status {
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .status::before {
-        content: '';
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: currentColor;
-    }
-
-    .status-approved {
-        background: rgba(34, 197, 94, 0.15);
-        color: var(--success);
-        border: 1px solid rgba(34, 197, 94, 0.3);
-    }
-
-    .status-pending {
-        background: rgba(245, 158, 11, 0.15);
-        color: var(--warning);
-        border: 1px solid rgba(245, 158, 11, 0.3);
-    }
-
-    .status-rejected {
-        background: rgba(239, 68, 68, 0.15);
-        color: var(--danger);
-        border: 1px solid rgba(239, 68, 68, 0.3);
-    }
-
-    .card-details {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-        padding-top: 14px;
-        border-top: 1px solid var(--border);
-    }
-
-    .detail-item {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-    }
-
-    .detail-label {
-        font-size: 10px;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .detail-value {
-        font-size: 13px;
-        color: var(--text-light);
-        font-weight: 500;
-    }
-
-    @media (min-width: 768px) {
-        .history-wrapper {
-            padding: 100px 40px;
-            max-width: 800px;
-            margin: auto;
-        }
-        .stats-grid { gap: 16px; }
-        .stat-card { padding: 20px; }
+<style>
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(-15px); } to { opacity: 1; transform: translateX(0); } }
+    @media (max-width: 768px) {
+        .pt-80 { padding-top: 80px !important; }
+        h1[style*="font-size: 28px"] { font-size: 24px !important; }
+        [style*="grid-template-columns: repeat(3, 1fr)"] { grid-template-columns: 1fr !important; gap: 8px !important; }
+        [style*="font-size: 24px"] { font-size: 20px !important; }
     }
 </style>
 
-<!-- HEADER -->
-<div class="settings-header">
-    <a href="{{ url()->previous() }}" class="back-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-        </svg>
-    </a>
-    <h6 class="header-title">Withdrawal History</h6>
-    <span class="placeholder"></span>
-</div>
-
-<div class="history-wrapper">
-
-    @if(!$withdrawals->isEmpty())
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="stat-label">Total</div>
-            <div class="stat-value">${{ number_format($withdrawals->sum('amount'), 0) }}</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">Approved</div>
-            <div class="stat-value success">{{ $withdrawals->where('status', 'approved')->count() }}</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-label">Pending</div>
-            <div class="stat-value warning">{{ $withdrawals->where('status', 'pending')->count() }}</div>
-        </div>
-    </div>
-    @endif
-
-    <h2 class="section-title">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 10h18M3 6h18M3 14h18M3 18h18"/>
-        </svg>
-        Transaction History
-    </h2>
-
-    @if($withdrawals->isEmpty())
-    <div class="empty-box">
-        <div class="empty-icon">
-            <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/>
-            </svg>
-        </div>
-        <p style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">No Withdrawals Yet</p>
-        <p style="font-size: 13px;">Your withdrawal history will appear here</p>
-    </div>
-    @else
-
-    @foreach($withdrawals as $withdrawal)
-    <div class="withdrawal-card">
-        <div class="card-header">
-            <div class="amount-section">
-                <div class="amount-label">Amount</div>
-                <div class="amount">${{ number_format($withdrawal->amount, 2) }}</div>
-            </div>
-            @if($withdrawal->status === 'approved')
-            <span class="status status-approved">Approved</span>
-            @elseif($withdrawal->status === 'pending')
-            <span class="status status-pending">Pending</span>
-            @else
-            <span class="status status-rejected">Rejected</span>
-            @endif
-        </div>
-
-        <div class="card-details">
-            <div class="detail-item">
-                <div class="detail-label">Requested</div>
-                <div class="detail-value">{{ $withdrawal->created_at->format('M d, Y') }}</div>
-            </div>
-            <div class="detail-item">
-                <div class="detail-label">Time</div>
-                <div class="detail-value">{{ $withdrawal->created_at->format('h:i A') }}</div>
-            </div>
-        </div>
-    </div>
-    @endforeach
-
-    @endif
-
-</div>
-
 @endsection
+
