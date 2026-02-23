@@ -1,0 +1,51 @@
+/* Light Theme Styles */
+.app-light {
+    background: #f8fafc !important;
+    color: #1e293b !important;
+}
+
+.app-light .header,
+.app-light .settings-header,
+.app-light .withdrawal-header,
+.app-light .checkin-header,
+.app-light .luckybox-header {
+    background: linear-gradient(135deg, #ffffff, #f8fafc) !important;
+    border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+}
+
+.app-light .header-title,
+.app-light h1, .app-light h2, .app-light h3, .app-light h4, .app-light h5, .app-light h6 {
+    color: #1e293b !important;
+}
+
+.app-light p, .app-light span, .app-light div {
+    color: #475569 !important;
+}
+
+.app-light .back-btn {
+    background: rgba(0,0,0,0.05) !important;
+    border-color: rgba(0,0,0,0.1) !important;
+}
+
+.app-light .settings-card,
+.app-light .network-card,
+.app-light .withdrawal-card {
+    background: #ffffff !important;
+    border-color: rgba(0,0,0,0.1) !important;
+}
+
+.app-light .settings-container,
+.app-light .withdrawal-wrapper,
+.app-light .history-wrapper,
+.app-light .checkin-wrapper,
+.app-light .luckybox-wrapper {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+}
+
+.app-light .text-secondary {
+    color: #64748b !important;
+}
+
+.app-light .card-icon {
+    background: rgba(0,0,0,0.05) !important;
+}

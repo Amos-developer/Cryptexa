@@ -26,28 +26,26 @@
 
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; animation: slideUp 0.6s ease 0.1s backwards;">
             <div style="background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(56,189,248,0.02)); border: 1px solid rgba(56,189,248,0.2); border-radius: 12px; padding: 16px; text-align: center;">
-                <div style="color: #38bdf8; font-weight: 900; font-size: 24px; margin-bottom: 4px;">$12,450</div>
+                <div style="color: #38bdf8; font-weight: 900; font-size: 24px; margin-bottom: 4px;">${{ number_format($deposits->where('status', 'completed')->sum('amount'), 2) }}</div>
                 <div style="color: #94a3b8; font-size: 12px;">Total Deposited</div>
             </div>
             <div style="background: linear-gradient(135deg, rgba(34,197,94,0.08), rgba(34,197,94,0.02)); border: 1px solid rgba(34,197,94,0.2); border-radius: 12px; padding: 16px; text-align: center;">
-                <div style="color: #22c55e; font-weight: 900; font-size: 24px; margin-bottom: 4px;">24</div>
+                <div style="color: #22c55e; font-weight: 900; font-size: 24px; margin-bottom: 4px;">{{ $deposits->count() }}</div>
                 <div style="color: #94a3b8; font-size: 12px;">Transactions</div>
             </div>
             <div style="background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(168,85,247,0.02)); border: 1px solid rgba(168,85,247,0.2); border-radius: 12px; padding: 16px; text-align: center;">
-                <div style="color: #a855f7; font-weight: 900; font-size: 24px; margin-bottom: 4px;">$520</div>
+                <div style="color: #a855f7; font-weight: 900; font-size: 24px; margin-bottom: 4px;">${{ $deposits->count() > 0 ? number_format($deposits->where('status', 'completed')->avg('amount'), 2) : '0.00' }}</div>
                 <div style="color: #94a3b8; font-size: 12px;">Average</div>
             </div>
         </div>
 
-        @php
-        $deposits = [
-            ['amount' => '$500.00', 'currency' => 'USDT BEP20', 'date' => '2024-01-15 14:30', 'status' => 'completed', 'txid' => '0x7a8b...3f2e'],
-            ['amount' => '$1,200.00', 'currency' => 'USDC BEP20', 'date' => '2024-01-14 09:15', 'status' => 'completed', 'txid' => '0x9c4d...8a1b'],
-            ['amount' => '$750.00', 'currency' => 'USDT TRC20', 'date' => '2024-01-12 16:45', 'status' => 'completed', 'txid' => '0x2e5f...6d9c'],
-            ['amount' => '$300.00', 'currency' => 'BNB BSC', 'date' => '2024-01-10 11:20', 'status' => 'pending', 'txid' => '0x4b7a...2c8e'],
-        ];
-        @endphp
-
+        @if($deposits->isEmpty())
+        <div style="text-align: center; padding: 60px 20px; color: #94a3b8;">
+            <div style="font-size: 48px; margin-bottom: 16px;">📭</div>
+            <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">No Deposits Yet</div>
+            <div style="font-size: 14px;">Your deposit history will appear here</div>
+        </div>
+        @else
         <div style="display: grid; gap: 12px; animation: slideUp 0.6s ease 0.2s backwards;">
             @foreach($deposits as $index => $deposit)
             <div style="
@@ -59,28 +57,33 @@
             ">
                 <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
                     <div>
-                        <div style="color: #e5e7eb; font-weight: 700; font-size: 18px; margin-bottom: 4px;">{{ $deposit['amount'] }}</div>
-                        <div style="color: #64748b; font-size: 13px;">{{ $deposit['currency'] }}</div>
+                        <div style="color: #e5e7eb; font-weight: 700; font-size: 18px; margin-bottom: 4px;">${{ number_format($deposit->amount, 2) }}</div>
+                        <div style="color: #64748b; font-size: 13px;">{{ strtoupper($deposit->currency) }}</div>
                     </div>
-                    @if($deposit['status'] === 'completed')
+                    @if($deposit->status === 'completed')
                     <div style="background: rgba(34,197,94,0.2); color: #22c55e; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">Completed</div>
-                    @else
+                    @elseif($deposit->status === 'pending')
                     <div style="background: rgba(251,191,36,0.2); color: #fbbf24; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">Pending</div>
+                    @else
+                    <div style="background: rgba(239,68,68,0.2); color: #ef4444; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">{{ ucfirst($deposit->status) }}</div>
                     @endif
                 </div>
                 <div style="display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);">
                     <div style="display: flex; justify-content: space-between;">
                         <span style="color: #64748b; font-size: 13px;">Date</span>
-                        <span style="color: #94a3b8; font-size: 13px;">{{ $deposit['date'] }}</span>
+                        <span style="color: #94a3b8; font-size: 13px;">{{ $deposit->created_at->format('Y-m-d H:i') }}</span>
                     </div>
+                    @if($deposit->payment_id)
                     <div style="display: flex; justify-content: space-between;">
-                        <span style="color: #64748b; font-size: 13px;">Transaction ID</span>
-                        <span style="color: #38bdf8; font-size: 13px; font-family: monospace;">{{ $deposit['txid'] }}</span>
+                        <span style="color: #64748b; font-size: 13px;">Payment ID</span>
+                        <span style="color: #38bdf8; font-size: 13px; font-family: monospace;">{{ substr($deposit->payment_id, 0, 8) }}...{{ substr($deposit->payment_id, -4) }}</span>
                     </div>
+                    @endif
                 </div>
             </div>
             @endforeach
         </div>
+        @endif
 
         <div style="background: linear-gradient(135deg, rgba(56,189,248,0.05), rgba(56,189,248,0.02)); border: 1px solid rgba(56,189,248,0.15); border-radius: 12px; padding: 16px; margin-top: 24px; text-align: center; animation: slideUp 0.6s ease 0.6s backwards;">
             <p style="color: #94a3b8; font-size: 13px; margin: 0;">

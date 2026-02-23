@@ -20,6 +20,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/light-theme.css') }}">
 
     <link rel="shortcut icon" href="{{ asset('images/logo/48.png') }}">
 </head>
@@ -58,6 +59,11 @@
     <script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     @include('partials.alerts')
+    
+    <script>
+    // Clear theme from localStorage to reset to default dark mode
+    localStorage.removeItem('theme');
+    </script>
 
 </body>
 

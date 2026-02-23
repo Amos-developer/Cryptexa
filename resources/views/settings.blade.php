@@ -85,39 +85,11 @@
     'action' => 'language'
     ],
     [
-    'icon' => 'moon',
-    'title' => 'Theme',
-    'desc' => 'Dark mode is enabled',
-    'color' => '#8b5cf6',
-    'link' => '#'
-    ],
-    [
     'icon' => 'bell',
     'title' => 'Notifications',
     'desc' => 'Manage notification settings',
     'color' => '#22c55e',
     'link' => route('settings.notifications')
-    ]
-    ]
-    ],
-    [
-    'title' => 'Account Verification',
-    'icon' => '✓',
-    'items' => [
-    [
-    'icon' => 'check-circle',
-    'title' => 'KYC Verification',
-    'desc' => 'Identity verification',
-    'color' => '#fbbf24',
-    'link' => route('settings.kyc')
-    ],
-    [
-    'icon' => 'user-check',
-    'title' => 'Account Mode',
-    'desc' => 'Current: LIVE Mode',
-    'color' => '#a855f7',
-    'link' => '#',
-    'badge' => 'LIVE'
     ]
     ]
     ],
