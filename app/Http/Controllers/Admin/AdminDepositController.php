@@ -11,7 +11,12 @@ class AdminDepositController extends Controller
     public function index()
     {
         $deposits = Deposit::with('user')->latest()->paginate(20);
-        return view('admin.deposits.index', compact('deposits'));
+        $users = \App\Models\User::all();
+        $totalDeposits = Deposit::where('status', 'completed')->sum('amount');
+        $pendingDeposits = Deposit::whereIn('status', ['pending', 'confirming'])->sum('amount');
+        $todayDeposits = Deposit::whereDate('created_at', today())->where('status', 'completed')->sum('amount');
+        
+        return view('admin.deposits.index', compact('deposits', 'users', 'totalDeposits', 'pendingDeposits', 'todayDeposits'));
     }
     
     public function show(Deposit $deposit)

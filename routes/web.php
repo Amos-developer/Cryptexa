@@ -196,15 +196,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // Admin Routes
 Route::middleware(['auth', 'admin'])
     ->prefix('admin')
+    ->name('admin.')
     ->group(function () {
-        Route::get('/dashboard', [AdminDashboardController::class, 'index']);
-        Route::get('/users', [UserController::class, 'index']);
-        Route::get('/deposits', [AdminDepositController::class, 'index']);
-        Route::get('/withdrawals', [AdminWithdrawalController::class, 'index']);
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::resource('users', UserController::class);
+        Route::get('/deposits', [AdminDepositController::class, 'index'])->name('deposits.index');
+        Route::resource('withdrawals', AdminWithdrawalController::class)->only(['index']);
 
-        Route::post('/withdrawals/{withdrawal}/approve', [AdminWithdrawalController::class, 'approve']);
-        Route::post('/withdrawals/{withdrawal}/reject', [AdminWithdrawalController::class, 'reject']);
-        Route::post('/withdrawals/{withdrawal}/complete', [AdminWithdrawalController::class, 'complete']);
+        Route::post('/withdrawals/{withdrawal}/approve', [AdminWithdrawalController::class, 'approve'])->name('withdrawals.approve');
+        Route::post('/withdrawals/{withdrawal}/reject', [AdminWithdrawalController::class, 'reject'])->name('withdrawals.reject');
+        Route::post('/withdrawals/{withdrawal}/complete', [AdminWithdrawalController::class, 'complete'])->name('withdrawals.complete');
     });
 
 require __DIR__ . '/admin.php';

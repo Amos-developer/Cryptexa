@@ -59,6 +59,16 @@ class AdminWithdrawalController extends Controller
             'status' => 'completed',
             'txid' => $request->txid,
         ]);
+        
+        // Send email notification
+        try {
+            \Mail::send('emails.withdrawal-success', ['withdrawal' => $withdrawal], function ($message) use ($withdrawal) {
+                $message->to($withdrawal->user->email)
+                    ->subject('Withdrawal Completed - Cryptexa');
+            });
+        } catch (\Exception $e) {
+            \Log::error('Failed to send withdrawal email: ' . $e->getMessage());
+        }
 
         return back()->with('success', 'Withdrawal marked as completed');
     }

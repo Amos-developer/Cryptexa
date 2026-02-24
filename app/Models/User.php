@@ -25,6 +25,7 @@ class User extends Authenticatable
         'balance',
         'role',
         'password',
+        'account_id',
         'withdrawal_pin',
         'withdrawal_network',
         'withdrawal_address',
@@ -83,7 +84,21 @@ class User extends Authenticatable
     protected static function booted()
     {
         static::creating(function ($user) {
+            // Generate account_id
+            if (empty($user->account_id)) {
+                do {
+                    $accountId = str_pad(
+                        random_int(10000000, 99999999),
+                        8,
+                        '0',
+                        STR_PAD_LEFT
+                    );
+                } while (self::where('account_id', $accountId)->exists());
 
+                $user->account_id = $accountId;
+            }
+
+            // Generate referral_code
             if (empty($user->referral_code)) {
                 do {
                     $code = str_pad(

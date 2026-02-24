@@ -19,6 +19,12 @@ class AdminDashboardController extends Controller
             'recentUsers' => User::latest()->take(5)->get(),
             'recentDeposits' => Deposit::with('user')->latest()->take(5)->get(),
             'recentWithdrawals' => Withdrawal::with('user')->latest()->take(5)->get(),
+            'totalNfts' => 0,
+            'activeAuctions' => 0,
+            'newUsersToday' => User::whereDate('created_at', today())->count(),
+            'totalBids' => 0,
+            'recentNfts' => [],
+            'recentAuctions' => [],
         ]);
     }
 }

@@ -95,6 +95,19 @@ class ProcessDepositPayment implements ShouldQueue
             $deposit->processed_at = now();
             $deposit->save();
 
+            // Send email notification
+            try {
+                \Mail::send('emails.deposit-success', [
+                    'deposit' => $deposit,
+                    'newBalance' => $deposit->user->fresh()->balance
+                ], function ($message) use ($deposit) {
+                    $message->to($deposit->user->email)
+                        ->subject('Deposit Confirmed - Cryptexa');
+                });
+            } catch (\Exception $e) {
+                logger()->error('Failed to send deposit email: ' . $e->getMessage());
+            }
+
             logger()->info('ProcessDepositPayment: completed', ['deposit_id' => $deposit->id]);
         });
     }
