@@ -213,6 +213,8 @@ Route::middleware(['auth', 'admin'])
         Route::get('/withdrawals/{withdrawal}/edit', [AdminWithdrawalController::class, 'edit'])->name('withdrawals.edit');
         Route::put('/withdrawals/{withdrawal}', [AdminWithdrawalController::class, 'update'])->name('withdrawals.update');
         
+        Route::resource('pools', \App\Http\Controllers\Admin\AdminPoolController::class);
+        
         Route::post('/withdrawals/{withdrawal}/approve', [AdminWithdrawalController::class, 'approve'])->name('withdrawals.approve');
         Route::post('/withdrawals/{withdrawal}/reject', [AdminWithdrawalController::class, 'reject'])->name('withdrawals.reject');
         Route::post('/withdrawals/{withdrawal}/complete', [AdminWithdrawalController::class, 'complete'])->name('withdrawals.complete');

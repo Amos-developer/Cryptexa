@@ -8,14 +8,14 @@
 <style>
 @media (prefers-color-scheme: dark){:root{--bg-card:#1e293b;--bg-filter:#0f172a;--text-primary:#e2e8f0;--text-secondary:#94a3b8;--border-color:#334155;--hover-bg:#334155}}
 @media (prefers-color-scheme: light){:root{--bg-card:#fff;--bg-filter:#fff;--text-primary:#1e293b;--text-secondary:#64748b;--border-color:#e2e8f0;--hover-bg:#f8fafc}}
-.stat-card{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:16px;padding:24px;color:#fff;box-shadow:0 10px 30px rgba(102,126,234,.3);margin-bottom:20px;transition:transform .3s}
-.stat-card:hover{transform:translateY(-5px)}
-.stat-card.green{background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%)}
-.stat-card.orange{background:linear-gradient(135deg,#fa709a 0%,#fee140 100%)}
-.stat-card.blue{background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%)}
-.stat-icon{width:56px;height:56px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:16px}
-.stat-label{font-size:13px;opacity:.9;margin-bottom:8px;font-weight:500}
-.stat-value{font-size:32px;font-weight:700;line-height:1}
+.stat-box{background:#fff;padding:25px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);display:flex;align-items:center;gap:20px;margin-bottom:20px}
+.stat-icon{width:60px;height:60px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff}
+.stat-icon.blue{background:linear-gradient(135deg,#667eea,#764ba2)}
+.stat-icon.green{background:linear-gradient(135deg,#11998e,#38ef7d)}
+.stat-icon.yellow{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.stat-icon.purple{background:linear-gradient(135deg,#667eea,#764ba2)}
+.stat-info h4{margin:0;font-size:14px;color:#888;font-weight:400}
+.stat-info h2{margin:5px 0 0;font-size:28px;font-weight:700;color:#333}
 .filter-card{background:var(--bg-filter);border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:24px}
 .filter-row{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
 .filter-group{flex:1;min-width:200px}
@@ -56,8 +56,8 @@
 .empty-icon{font-size:64px;margin-bottom:16px;opacity:.5}
 @media (prefers-color-scheme: dark){.btn-secondary{background:#334155;color:#e2e8f0}.btn-secondary:hover{background:#475569}.pagination li:not(.active):not(.disabled) a{background:#334155;color:#e2e8f0}.pagination li:not(.active):not(.disabled) a:hover{background:#475569}.pagination li.disabled span{background:#1e293b;color:#64748b}}
 @media(max-width:768px){
-.stat-card{padding:20px}
-.stat-value{font-size:28px}
+.stat-box{padding:20px}
+.stat-info h2{font-size:24px}
 .filter-row{flex-direction:column}
 .filter-group{min-width:100%}
 .table-card{border-radius:12px}
@@ -72,46 +72,54 @@
 
 <div class="container-fluid" style="padding:20px">
   <div class="row">
-    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-      <div class="stat-card green">
-        <div class="stat-icon">👥</div>
-        <div class="stat-label">Total Users</div>
-        <div class="stat-value">{{ $users->total() }}</div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="stat-box">
+        <div class="stat-icon blue"><i class="fa fa-users"></i></div>
+        <div class="stat-info">
+          <h4>Total Users</h4>
+          <h2>{{ number_format($users->total()) }}</h2>
+        </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-      <div class="stat-card orange">
-        <div class="stat-icon">👑</div>
-        <div class="stat-label">Admin Users</div>
-        <div class="stat-value">{{ $users->where('role', 'admin')->count() }}</div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="stat-box">
+        <div class="stat-icon yellow"><i class="fa fa-crown"></i></div>
+        <div class="stat-info">
+          <h4>Admin Users</h4>
+          <h2>{{ number_format($users->where('role', 'admin')->count()) }}</h2>
+        </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-      <div class="stat-card blue">
-        <div class="stat-icon">👤</div>
-        <div class="stat-label">Regular Users</div>
-        <div class="stat-value">{{ $users->where('role', '!=', 'admin')->count() }}</div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="stat-box">
+        <div class="stat-icon green"><i class="fa fa-user"></i></div>
+        <div class="stat-info">
+          <h4>Regular Users</h4>
+          <h2>{{ number_format($users->where('role', '!=', 'admin')->count()) }}</h2>
+        </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-      <div class="stat-card">
-        <div class="stat-icon">⭐</div>
-        <div class="stat-label">Active Today</div>
-        <div class="stat-value">{{ $users->where('created_at', '>=', today())->count() }}</div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="stat-box">
+        <div class="stat-icon purple"><i class="fa fa-clock"></i></div>
+        <div class="stat-info">
+          <h4>Active Today</h4>
+          <h2>{{ number_format($users->where('created_at', '>=', today())->count()) }}</h2>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="filter-card">
-    <form action="{{ route('admin.users.index') }}" method="GET">
+    <form id="filterForm" action="{{ url('/admin/users') }}" method="GET">
       <div class="filter-row">
         <div class="filter-group">
           <label>🔍 Search</label>
-          <input type="text" name="search" class="filter-input" placeholder="Name, email, or ID" value="{{ request('search') }}">
+          <input type="text" name="search" id="searchInput" class="filter-input" placeholder="Name, email, or ID" value="{{ request('search') }}">
         </div>
         <div class="filter-group">
           <label>🎭 Role</label>
-          <select name="role" class="filter-select">
+          <select name="role" id="roleSelect" class="filter-select">
             <option value="">All Roles</option>
             <option value="user" {{ request('role') == 'user' ? 'selected' : '' }}>User</option>
             <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin</option>
@@ -119,11 +127,13 @@
         </div>
         <div style="display:flex;gap:8px">
           <button type="submit" class="btn-filter btn-primary">🔍 Filter</button>
-          <a href="{{ route('admin.users.index') }}" class="btn-filter btn-secondary">↻ Reset</a>
+          <button type="button" id="resetBtn" class="btn-filter btn-secondary">↻ Reset</button>
         </div>
       </div>
     </form>
   </div>
+
+  <div id="contentArea">
 
   <div class="table-card">
     <div class="table-header">
@@ -147,8 +157,8 @@
           @forelse($users as $user)
           <tr>
             <td data-label="User">
-              <span class="user-avatar">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
-              <span style="font-weight:600">{{ $user->name }}</span>
+              <span class="user-avatar">{{ strtoupper(substr($user->username ?? $user->email, 0, 1)) }}</span>
+              <span style="font-weight:600">{{ $user->username }}</span>
             </td>
             <td data-label="Account ID"><code style="background:var(--hover-bg);padding:4px 8px;border-radius:6px;font-size:12px">{{ $user->account_id }}</code></td>
             <td data-label="Email" style="color:var(--text-secondary)">{{ $user->email }}</td>
@@ -208,5 +218,73 @@
     </div>
     @endif
   </div>
+  </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('filterForm');
+  const searchInput = document.getElementById('searchInput');
+  const roleSelect = document.getElementById('roleSelect');
+  const resetBtn = document.getElementById('resetBtn');
+  const contentArea = document.getElementById('contentArea');
+  
+  let debounceTimer;
+  
+  function loadUsers(url) {
+    fetch(url, {
+      headers: {'X-Requested-With': 'XMLHttpRequest'}
+    })
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const newContent = doc.getElementById('contentArea');
+      if (newContent) {
+        contentArea.innerHTML = newContent.innerHTML;
+        attachPaginationListeners();
+      }
+    });
+  }
+  
+  function attachPaginationListeners() {
+    document.querySelectorAll('.pagination a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        loadUsers(this.href);
+      });
+    });
+  }
+  
+  searchInput.addEventListener('input', function() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      const formData = new FormData(form);
+      const params = new URLSearchParams(formData);
+      loadUsers('{{ route('admin.users.index') }}?' + params.toString());
+    }, 500);
+  });
+  
+  roleSelect.addEventListener('change', function() {
+    const formData = new FormData(form);
+    const params = new URLSearchParams(formData);
+    loadUsers('{{ route('admin.users.index') }}?' + params.toString());
+  });
+  
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const params = new URLSearchParams(formData);
+    loadUsers('{{ route('admin.users.index') }}?' + params.toString());
+  });
+  
+  resetBtn.addEventListener('click', function() {
+    searchInput.value = '';
+    roleSelect.value = '';
+    loadUsers('{{ route('admin.users.index') }}');
+  });
+  
+  attachPaginationListeners();
+});
+</script>
 @endsection

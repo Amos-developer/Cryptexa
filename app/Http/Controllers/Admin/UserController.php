@@ -8,9 +8,24 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::withCount('referrals')->latest()->paginate(20);
+        $query = User::withCount('referrals');
+        
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('username', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('account_id', 'like', "%{$search}%");
+            });
+        }
+        
+        if ($request->filled('role')) {
+            $query->where('role', $request->role);
+        }
+        
+        $users = $query->latest()->paginate(20)->appends($request->all());
         return view('admin.users.index', compact('users'));
     }
     
@@ -50,18 +65,26 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'username' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'username' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|email|unique:users,email,' . $user->id,
             'phone' => 'nullable|string|max:20',
             'password' => 'nullable|min:6|confirmed',
-            'role' => 'required|in:user,admin',
+            'role' => 'sometimes|required|in:user,admin',
             'balance' => 'nullable|numeric|min:0',
         ]);
         
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->role = $request->role;
+        if ($request->has('username')) {
+            $user->username = $request->username;
+        }
+        if ($request->has('email')) {
+            $user->email = $request->email;
+        }
+        if ($request->has('phone')) {
+            $user->phone = $request->phone;
+        }
+        if ($request->has('role')) {
+            $user->role = $request->role;
+        }
         
         if ($request->filled('password')) {
             $user->password = bcrypt($request->password);
