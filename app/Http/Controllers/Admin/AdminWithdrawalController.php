@@ -17,6 +17,12 @@ class AdminWithdrawalController extends Controller
 
         return view('admin.withdrawals.index', compact('withdrawals'));
     }
+    
+    public function show(Withdrawal $withdrawal)
+    {
+        $withdrawal->load('user');
+        return view('admin.withdrawals.show', compact('withdrawal'));
+    }
 
     public function approve(Withdrawal $withdrawal)
     {
