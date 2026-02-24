@@ -8,12 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('two_factor_secret')->nullable()->after('password');
-            $table->string('two_factor_recovery_codes')->nullable()->after('two_factor_secret');
-            $table->boolean('two_factor_enabled')->default(false)->after('two_factor_recovery_codes');
-            $table->timestamp('two_factor_confirmed_at')->nullable()->after('two_factor_enabled');
-        });
+        // Two-factor columns already exist in main users table migration
     }
 
     public function down(): void

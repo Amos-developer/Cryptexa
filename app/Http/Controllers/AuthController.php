@@ -23,7 +23,7 @@ class AuthController extends Controller
     {
         // 1️⃣ Validate input
         $request->validate([
-            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username|regex:/^[a-zA-Z0-9_]+$/',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required',
             'password' => 'required|min:6|confirmed',
@@ -47,7 +47,7 @@ class AuthController extends Controller
 
         // 5️⃣ Create user
         $user = User::create([
-            'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
@@ -112,7 +112,15 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        $credentials = [
+            'username' => $request->username,
+            'password' => $request->password,
+        ];
 
         if (Auth::attempt($credentials)) {
 
@@ -122,7 +130,7 @@ class AuthController extends Controller
 
             if (!$user->email_verified_at) {
                 Auth::logout();
-                return back()->withErrors(['email' => 'Verify your email first']);
+                return back()->withErrors(['username' => 'Verify your email first']);
             }
 
             // Check if user has 2FA enabled
@@ -142,7 +150,7 @@ class AuthController extends Controller
             return redirect('/'); // normal user
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials']);
+        return back()->withErrors(['username' => 'Invalid credentials']);
     }
 
 

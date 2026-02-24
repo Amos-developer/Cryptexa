@@ -70,7 +70,7 @@
                     border-radius: 12px;
                     border: 1px solid rgba(56,189,248,0.2);
                 ">
-                    <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">💰 Plan Price</p>
+                    <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">💰 Pool Price</p>
                     <h3 style="color: #38bdf8; font-size: 24px; font-weight: 900; margin: 0;">
                         ${{ number_format($plan->price, 2) }}
                     </h3>
@@ -98,12 +98,12 @@
                 border-radius: 12px;
                 padding: 16px;
             ">
-                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">📈 Expected Profit Range</p>
+                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">📈 Daily Return Range</p>
                 <h3 style="color: #22c55e; font-size: 28px; font-weight: 900; margin: 0;">
-                    +{{ $plan->min_profit }}% – {{ $plan->max_profit }}%
+                    {{ number_format($plan->min_profit, 1) }}% – {{ number_format($plan->max_profit, 1) }}%
                 </h3>
                 <p style="color: #86efac; font-size: 12px; margin: 8px 0 0 0;">
-                    Estimated returns on your investment
+                    Daily compounding returns on your investment
                 </p>
             </div>
 
@@ -120,14 +120,14 @@
             margin-bottom: 24px;
             animation: slideUp 0.6s ease 0.2s backwards;
         ">
-            <h5 style="color: #fbbf24; font-weight: 700; font-size: 16px; margin: 0 0 16px 0;">💡 Plan Features</h5>
+            <h5 style="color: #fbbf24; font-weight: 700; font-size: 16px; margin: 0 0 16px 0;">💡 Pool Features</h5>
 
             <div style="display: grid; gap: 12px;">
                 <div style="display: flex; gap: 12px; align-items: flex-start;">
                     <span style="color: #fbbf24; font-size: 18px; margin-top: 2px;">✓</span>
                     <div>
-                        <p style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin: 0 0 2px 0;">Flexible Investment</p>
-                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">Invest any amount within your account balance</p>
+                        <p style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin: 0 0 2px 0;">Compound Interest</p>
+                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">Daily compounding for maximum returns</p>
                     </div>
                 </div>
 
@@ -135,7 +135,7 @@
                     <span style="color: #fbbf24; font-size: 18px; margin-top: 2px;">✓</span>
                     <div>
                         <p style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin: 0 0 2px 0;">Auto-Completion</p>
-                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">Plan automatically completes and profits are credited</p>
+                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">Pool automatically completes and profits are credited</p>
                     </div>
                 </div>
 
@@ -150,8 +150,8 @@
                 <div style="display: flex; gap: 12px; align-items: flex-start;">
                     <span style="color: #fbbf24; font-size: 18px; margin-top: 2px;">✓</span>
                     <div>
-                        <p style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin: 0 0 2px 0;">Secure & Verified</p>
-                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">All plans are thoroughly audited and verified</p>
+                        <p style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin: 0 0 2px 0;">Secure & Audited</p>
+                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">All pools are thoroughly audited and verified</p>
                     </div>
                 </div>
             </div>
@@ -176,7 +176,7 @@
                 "
                 onmouseover="this.style.background='linear-gradient(135deg, rgba(34,197,94,0.3) 0%, rgba(34,197,94,0.15) 100%)'; this.style.boxShadow='0 0 30px rgba(34,197,94,0.3)';"
                 onmouseout="this.style.background='linear-gradient(135deg, rgba(34,197,94,0.2) 0%, rgba(34,197,94,0.1) 100%)'; this.style.boxShadow='0 0 30px rgba(34,197,94,0.0)';">
-                🚀 Activate Plan
+                🚀 Activate Pool
             </button>
         </form>
 

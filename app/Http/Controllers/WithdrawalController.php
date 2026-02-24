@@ -27,6 +27,15 @@ class WithdrawalController extends Controller
     {
         $user = auth()->user();
 
+        // Check if user has completed at least one pool
+        $hasCompletedPool = \App\Models\ComputeOrder::where('user_id', $user->id)
+            ->where('status', 'completed')
+            ->exists();
+
+        if (!$hasCompletedPool) {
+            return back()->with('error', 'You must complete at least one liquidity pool before withdrawing. Please activate a pool and wait for it to finish.');
+        }
+
         // 1️⃣ Validate
         $request->validate([
             'network'     => 'required|in:BEP20,TRC20,ERC20',

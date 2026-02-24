@@ -1,144 +1,57 @@
 <?php
 
-namespace App\Http\Controllers;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use App\Models\ComputePlan;
-use App\Models\ComputeOrder;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
-
-class ComputeController extends Controller
+return new class extends Migration
 {
-    /**
-     * 🔓 Unlock a compute plan
-     */
-    public function unlock($id)
+    public function up(): void
     {
-        $user = auth()->user();
-        $plan = ComputePlan::findOrFail($id);
-
-        // 1️⃣ One order per day per user
-        $alreadyToday = ComputeOrder::where('user_id', $user->id)
-            ->whereDate('created_at', Carbon::today())
-            ->exists();
-
-        if ($alreadyToday) {
-            return back()->with('error', 'You can only activate one compute plan per day.');
-        }
-
-        // 2️⃣ Check balance
-        if ($user->balance < $plan->price) {
-            return back()->with('error', 'Insufficient balance. Please deposit funds.');
-        }
-
-        // 3️⃣ Generate profit %
-        $profitPercent = random_int(
-            $plan->min_profit * 100,
-            $plan->max_profit * 100
-        ) / 100;
-
-        $profitAmount = round(($plan->price * $profitPercent) / 100, 2);
-
-        DB::transaction(function () use ($user, $plan, $profitAmount, $profitPercent) {
-
-            // 🔒 Lock user row
-            $user = User::where('id', $user->id)->lockForUpdate()->first();
-
-            if ($user->balance < $plan->price) {
-                throw new \Exception('Balance changed. Try again.');
-            }
-
-            // 4️⃣ Deduct capital (lock funds)
-            $user->decrement('balance', $plan->price);
-
-            // 5️⃣ Create compute order
-            ComputeOrder::create([
-                'user_id'           => $user->id,
-                'compute_plan_id'   => $plan->id,
-                'amount'            => $plan->price,
-                'profit_percent'    => $profitPercent,
-                'expected_profit'   => $profitAmount,
-                'started_at'        => now(),
-                'ends_at'           => now()->addMinutes($plan->duration_minutes),
-                'status'            => 'running',
-            ]);
-
-            // 6️⃣ Referral bonuses (optional & safe)
-            $this->creditReferralBonuses($user, $plan->price);
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('username')->unique();
+            $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->decimal('balance', 15, 2)->default(0);
+            $table->string('role')->default('user');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->string('withdrawal_pin')->nullable();
+            $table->string('withdrawal_network')->nullable();
+            $table->string('withdrawal_address')->nullable();
+            $table->string('referral_code', 8)->unique();
+            $table->unsignedBigInteger('referred_by')->nullable();
+            $table->string('verification_code')->nullable();
+            $table->timestamp('verification_expires_at')->nullable();
+            $table->text('two_factor_secret')->nullable();
+            $table->text('two_factor_recovery_codes')->nullable();
+            $table->boolean('two_factor_enabled')->default(false);
+            $table->timestamp('two_factor_confirmed_at')->nullable();
+            $table->rememberToken();
+            $table->timestamps();
         });
 
-        return redirect()->route('home')
-            ->with('success', 'Compute plan activated successfully.');
-    }
-
-    /**
-     * ⏱ Track latest order (SAFE AUTO-COMPLETION)
-     */
-    public function track()
-    {
-        $order = ComputeOrder::where('user_id', auth()->id())
-            ->latest()
-            ->first();
-
-        if (!$order) {
-            return view('track')->with('order', null);
-        }
-
-        DB::transaction(function () use ($order) {
-
-            // 🔒 Lock order row
-            $order = ComputeOrder::where('id', $order->id)
-                ->lockForUpdate()
-                ->first();
-
-            if (
-                $order->status === 'running' &&
-                now()->gte($order->ends_at)
-            ) {
-                $totalReturn = $order->amount + $order->expected_profit;
-
-                // Credit capital + profit
-                $order->user->increment('balance', $totalReturn);
-
-                $order->update([
-                    'status'       => 'completed',
-                    'completed_at' => now(),
-                ]);
-            }
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->primary();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
         });
 
-        return view('track', compact('order'));
+        Schema::create('sessions', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->foreignId('user_id')->nullable()->index();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->longText('payload');
+            $table->integer('last_activity')->index();
+        });
     }
 
-    /**
-     * 🤝 Referral bonuses (SAFE)
-     */
-    protected function creditReferralBonuses(User $user, float $amount): void
+    public function down(): void
     {
-        // Prevent self-referral
-        if (!$user->referrer || $user->referrer_id === $user->id) {
-            return;
-        }
-
-        // LEVEL 1 – 4%
-        $bonus1 = round($amount * 0.04, 2);
-        $user->referrer->increment('balance', $bonus1);
-        $user->referrer->increment('referral_earnings', $bonus1);
-
-        // LEVEL 2 – 2%
-        if ($user->referrer->referrer) {
-            $bonus2 = round($amount * 0.02, 2);
-            $user->referrer->referrer->increment('balance', $bonus2);
-            $user->referrer->referrer->increment('referral_earnings', $bonus2);
-        }
-
-        // LEVEL 3 – 1%
-        if ($user->referrer->referrer && $user->referrer->referrer->referrer) {
-            $bonus3 = round($amount * 0.01, 2);
-            $user->referrer->referrer->referrer->increment('balance', $bonus3);
-            $user->referrer->referrer->referrer->increment('referral_earnings', $bonus3);
-        }
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('sessions');
     }
-}
+};

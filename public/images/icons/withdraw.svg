@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M8 17H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"></path>
-  <polyline points="16 11 12 15 8 11"></polyline>
-  <line x1="12" y1="15" x2="12" y2="21"></line>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="2" y="5" width="20" height="14" rx="2" stroke="#38bdf8" stroke-width="2" fill="none"/>
+  <path d="M2 10H22" stroke="#38bdf8" stroke-width="2"/>
+  <circle cx="12" cy="14" r="2" fill="#38bdf8"/>
+  <path d="M12 21L12 17M12 21L10 19M12 21L14 19" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

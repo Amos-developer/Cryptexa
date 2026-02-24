@@ -12,8 +12,6 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('referral_code')->unique()->nullable();
-            $table->foreignId('referred_by')->nullable()->constrained('users')->nullOnDelete();
             $table->decimal('referral_earnings', 12, 2)->default(0);
         });
     }

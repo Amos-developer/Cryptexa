@@ -513,19 +513,19 @@
                 <form method="POST" action="{{ route('login.post') }}" id="loginForm">
                     @csrf
 
-                    <!-- Username/Email Field -->
+                    <!-- Username Field -->
                     <div class="form-group">
-                        <label class="form-label">Username or Email</label>
+                        <label class="form-label">Username</label>
                         <input
                             type="text"
-                            name="email"
-                            value="{{ old('email') }}"
-                            class="form-input{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                            placeholder="Enter your username or email"
+                            name="username"
+                            value="{{ old('username') }}"
+                            class="form-input{{ $errors->has('username') ? ' is-invalid' : '' }}"
+                            placeholder="Enter your username"
                             required
-                            autocomplete="on">
-                        @if($errors->has('email'))
-                        <span class="input-error">{{ $errors->first('email') }}</span>
+                            autocomplete="username">
+                        @if($errors->has('username'))
+                        <span class="input-error">{{ $errors->first('username') }}</span>
                         @endif
                     </div>
 
@@ -539,7 +539,7 @@
                                 class="form-input{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                 placeholder="Enter your password"
                                 required
-                                autocomplete="off"
+                                autocomplete="current-password"
                                 id="passwordInput">
                             <button type="button" class="input-icon" id="togglePassword" title="Show/Hide password">
                                 <span>👁️</span>

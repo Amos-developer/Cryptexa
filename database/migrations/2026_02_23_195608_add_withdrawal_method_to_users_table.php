@@ -11,10 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('withdrawal_network')->nullable();
-            $table->string('withdrawal_address')->nullable();
-        });
+        // Withdrawal network and address columns already exist in main users table migration
     }
 
     /**

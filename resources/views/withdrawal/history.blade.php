@@ -86,8 +86,11 @@
         @endif
 
         <div style="background: linear-gradient(135deg, rgba(56,189,248,0.05), rgba(56,189,248,0.02)); border: 1px solid rgba(56,189,248,0.15); border-radius: 12px; padding: 16px; margin-top: 24px; text-align: center; animation: slideUp 0.6s ease 0.6s backwards;">
+            <p style="color: #94a3b8; font-size: 13px; margin: 0 0 8px 0;">
+                <span style="color: #38bdf8; font-weight: 600;">⏱️ Processing Time:</span> All withdrawals require admin approval. Processing takes 20 minutes to 24 hours.
+            </p>
             <p style="color: #94a3b8; font-size: 13px; margin: 0;">
-                <span style="color: #38bdf8; font-weight: 600;">💡 Tip:</span> Withdrawals are processed within 24-48 hours after approval
+                <span style="color: #fbbf24; font-weight: 600;">🔒 Security:</span> Your withdrawal is reviewed by our security team before processing.
             </p>
         </div>
     </div>

@@ -41,12 +41,12 @@ class ProcessDailyCompoundInterest extends Command
                     continue;
                 }
 
-                // Get daily profit percentage
+                // Get daily profit percentage (stored as percentage like 1.5, not decimal)
                 $dailyPercent = $order->daily_profit_percent ?? (
-                    mt_rand($plan->min_profit * 100, $plan->max_profit * 100) / 100
+                    mt_rand($plan->min_profit * 10, $plan->max_profit * 10) / 10
                 );
 
-                // Calculate today's profit on current amount
+                // Calculate today's profit on current amount (convert percentage to decimal)
                 $todayProfit = $order->amount * ($dailyPercent / 100);
 
                 // Add profit to principal (compound)

@@ -45,6 +45,46 @@
             <p class="text-secondary" style="font-size: 14px; margin: 0;">Secure withdrawal with multiple network options</p>
         </div>
 
+        @php
+        $hasCompletedPool = \App\Models\ComputeOrder::where('user_id', auth()->id())->where('status', 'completed')->exists();
+        @endphp
+
+        @if(!$hasCompletedPool)
+        <!-- WITHDRAWAL LOCKED NOTICE -->
+        <div style="
+            background: linear-gradient(135deg, rgba(251,191,36,0.15) 0%, rgba(251,191,36,0.05) 100%);
+            border: 2px solid rgba(251,191,36,0.3);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+            animation: slideUp 0.6s ease 0.1s backwards;
+        ">
+            <div style="text-align: center;">
+                <div style="font-size: 48px; margin-bottom: 16px;">🔒</div>
+                <h3 style="color: #fbbf24; font-weight: 700; font-size: 20px; margin: 0 0 12px 0;">Withdrawal Locked</h3>
+                <p style="color: #e5e7eb; font-size: 14px; line-height: 1.6; margin: 0 0 20px 0;">
+                    To unlock withdrawals, you must first activate and complete at least one liquidity pool.
+                    This ensures platform security and prevents abuse.
+                </p>
+                <a href="{{ route('home') }}" style="
+                    display: inline-block;
+                    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+                    color: #0f172a;
+                    padding: 12px 24px;
+                    border-radius: 10px;
+                    font-weight: 700;
+                    font-size: 14px;
+                    text-decoration: none;
+                    transition: all 0.3s ease;
+                "
+                onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 25px rgba(251,191,36,0.3)';"
+                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                    🚀 Activate Your First Pool
+                </a>
+            </div>
+        </div>
+        @endif
+
         <!-- ALERTS WITH SWEET ALERT -->
         @if ($errors->any())
         <script>
@@ -83,7 +123,7 @@
         </script>
         @endif
 
-        <form method="POST" action="{{ route('withdraw.submit') }}">
+        <form method="POST" action="{{ route('withdraw.submit') }}" @if(!$hasCompletedPool) style="opacity: 0.5; pointer-events: none;" @endif>
             @csrf
 
             <!-- NETWORK SELECT -->
@@ -344,9 +384,13 @@
                 margin-top: 20px;
                 animation: slideUp 0.6s ease 0.35s backwards;
             ">
-                <p class="text-secondary" style="font-size: 12px; margin: 0; line-height: 1.6;">
+                <p class="text-secondary" style="font-size: 12px; margin: 0 0 10px 0; line-height: 1.6;">
                     <span style="color: #38bdf8; font-weight: 700;">⏱️ Processing Time:</span><br>
-                    Withdrawals typically process within 5-12 hours. Network confirmation may take additional time depending on blockchain congestion.
+                    All withdrawals require admin approval for security. Processing typically takes 20 minutes to 24 hours depending on verification and network confirmation.
+                </p>
+                <p class="text-secondary" style="font-size: 12px; margin: 0; line-height: 1.6;">
+                    <span style="color: #fbbf24; font-weight: 700;">🔒 Security Notice:</span><br>
+                    Your withdrawal will be reviewed by our security team before processing to ensure account safety.
                 </p>
             </div>
 

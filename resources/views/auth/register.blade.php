@@ -536,18 +536,18 @@
                 <form method="POST" action="{{ route('register.post') }}" id="registerForm">
                     @csrf
 
-                    <!-- Full Name Field -->
+                    <!-- Username Field -->
                     <div class="form-group">
-                        <label class="form-label">Full Name<span class="required">*</span></label>
+                        <label class="form-label">Username<span class="required">*</span></label>
                         <input
                             type="text"
-                            name="name"
-                            value="{{ old('name') }}"
-                            class="form-input{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                            placeholder="Enter your full name"
+                            name="username"
+                            value="{{ old('username') }}"
+                            class="form-input{{ $errors->has('username') ? ' is-invalid' : '' }}"
+                            placeholder="Choose a unique username"
                             required>
-                        @if($errors->has('name'))
-                        <span class="input-error">{{ $errors->first('name') }}</span>
+                        @if($errors->has('username'))
+                        <span class="input-error">{{ $errors->first('username') }}</span>
                         @endif
                     </div>
 
