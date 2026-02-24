@@ -91,6 +91,9 @@
       <li class="{{ request()->routeIs('admin.pools.*') ? 'active' : '' }}">
         <a href="{{ route('admin.pools.index') }}"><i class="fa fa-database"></i> Pools</a>
       </li>
+      <li class="{{ request()->routeIs('admin.user-pools.*') ? 'active' : '' }}">
+        <a href="{{ route('admin.user-pools.index') }}"><i class="fa fa-server"></i> User Pools</a>
+      </li>
     </ul>
   </div>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Withdrawal;
 use App\Models\User;
+use App\Services\NowPaymentsPayoutService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +17,19 @@ class AdminWithdrawalController extends Controller
             ->latest()
             ->paginate(20);
 
-        return view('admin.withdrawals.index', compact('withdrawals'));
+        // Calculate stats from all withdrawals
+        $totalWithdrawals = Withdrawal::whereIn('status', ['completed', 'approved'])->sum('amount');
+        $pendingWithdrawals = Withdrawal::where('status', 'pending')->sum('amount');
+        $approvedWithdrawals = Withdrawal::where('status', 'approved')->sum('amount');
+        $totalRequests = Withdrawal::count();
+
+        return view('admin.withdrawals.index', compact(
+            'withdrawals',
+            'totalWithdrawals',
+            'pendingWithdrawals',
+            'approvedWithdrawals',
+            'totalRequests'
+        ));
     }
     
     public function create()
@@ -73,11 +86,34 @@ class AdminWithdrawalController extends Controller
     {
         if ($withdrawal->status !== 'pending') return back();
 
-        $withdrawal->update([
-            'status' => 'approved'
-        ]);
+        try {
+            // Extract network from currency (e.g., USDT_BEP20 -> BEP20)
+            $network = str_replace('USDT_', '', $withdrawal->currency);
+            $currency = NowPaymentsPayoutService::mapCurrency($network);
 
-        return back()->with('success', 'Withdrawal approved');
+            // Create payout via NOWPayments
+            $payoutService = new NowPaymentsPayoutService();
+            $result = $payoutService->createPayout(
+                $withdrawal->address,
+                $withdrawal->amount,
+                $currency
+            );
+
+            if ($result['success']) {
+                $withdrawal->update([
+                    'status' => 'approved',
+                    'payout_id' => $result['id'] ?? null,
+                ]);
+
+                return back()->with('success', 'Withdrawal approved and payout initiated via NOWPayments');
+            } else {
+                return back()->with('error', 'Payout failed: ' . ($result['error'] ?? 'Unknown error'));
+            }
+
+        } catch (\Exception $e) {
+            \Log::error('Withdrawal approval error: ' . $e->getMessage());
+            return back()->with('error', 'Failed to process payout: ' . $e->getMessage());
+        }
     }
 
     public function reject(Withdrawal $withdrawal)

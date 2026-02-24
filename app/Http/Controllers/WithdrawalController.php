@@ -47,7 +47,7 @@ class WithdrawalController extends Controller
             'address'     => 'required|string|min:20|max:120',
             'amount'      => 'required|numeric|min:10',
             'pin'         => 'required|digits:4',
-            'email_code'  => 'required|digits:6',
+            'email_code'  => session('email_code_verified') ? 'nullable' : 'required|digits:6',
         ]);
 
         // 2️⃣ Verify PIN
@@ -55,12 +55,14 @@ class WithdrawalController extends Controller
             return back()->with('error', 'Invalid withdrawal PIN.');
         }
 
-        // 3️⃣ Verify email code
-        if (
-            $user->email_verification_code !== $request->email_code ||
-            now()->gt($user->email_verification_expires_at)
-        ) {
-            return back()->with('error', 'Invalid or expired email verification code.');
+        // 3️⃣ Verify email code (only if not already verified in session)
+        if (!session('email_code_verified')) {
+            if (
+                $user->email_verification_code !== $request->email_code ||
+                now()->gt($user->email_verification_expires_at)
+            ) {
+                return back()->with('error', 'Invalid or expired email verification code.');
+            }
         }
 
         // 4️⃣ Validate address by network
@@ -93,11 +95,14 @@ class WithdrawalController extends Controller
                 'status'   => 'pending',
             ]);
 
-            // Invalidate email code
+            // Invalidate email code and session
             $user->update([
                 'email_verification_code' => null,
                 'email_verification_expires_at' => null,
             ]);
+            
+            // Clear session flag
+            session()->forget('email_code_verified');
         });
 
         return redirect()->route('withdraw.history')
@@ -172,6 +177,9 @@ class WithdrawalController extends Controller
                 'message' => 'Invalid or expired verification code'
             ]);
         }
+
+        // Mark as verified in session
+        session(['email_code_verified' => true]);
 
         return response()->json([
             'success' => true,

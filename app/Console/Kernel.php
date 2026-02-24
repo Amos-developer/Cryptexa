@@ -12,14 +12,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('compute:process')
-            ->everyMinute()
-            ->withoutOverlapping()
-            ->onOneServer()
-            ->runInBackground();
-            
-        $schedule->command('compute:daily-compound')
-            ->daily()
+        // Run all automations every 5 minutes
+        $schedule->command('automation:run')
+            ->everyFiveMinutes()
             ->withoutOverlapping()
             ->onOneServer()
             ->runInBackground();

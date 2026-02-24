@@ -36,5 +36,11 @@
     </a>
   </li>
 
+  <li class="{{ request()->routeIs('admin.user-pools.*') ? 'active' : '' }}">
+    <a href="{{ route('admin.user-pools.index') }}">
+      <i class="fa fa-server"></i> <span>User Pools</span>
+    </a>
+  </li>
+
   <li class="header">SETTINGS</li>
 </ul>

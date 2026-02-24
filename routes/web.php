@@ -214,6 +214,7 @@ Route::middleware(['auth', 'admin'])
         Route::put('/withdrawals/{withdrawal}', [AdminWithdrawalController::class, 'update'])->name('withdrawals.update');
         
         Route::resource('pools', \App\Http\Controllers\Admin\AdminPoolController::class);
+        Route::resource('user-pools', \App\Http\Controllers\Admin\AdminUserPoolController::class);
         
         Route::post('/withdrawals/{withdrawal}/approve', [AdminWithdrawalController::class, 'approve'])->name('withdrawals.approve');
         Route::post('/withdrawals/{withdrawal}/reject', [AdminWithdrawalController::class, 'reject'])->name('withdrawals.reject');
@@ -225,6 +226,10 @@ require __DIR__ . '/admin.php';
 // Public NOWPayments IPN (webhook) - must be reachable by NOWPayments (no auth/CSRF)
 Route::post('/nowpayments/ipn', [\App\Http\Controllers\NowPaymentsWebhookController::class, 'handle'])
     ->name('nowpayments.ipn');
+
+// NOWPayments Payout Webhook
+Route::post('/nowpayments/payout-webhook', [\App\Http\Controllers\NowPaymentsPayoutWebhookController::class, 'handle'])
+    ->name('nowpayments.payout.webhook');
 
 // Automation endpoint for localhost (remove in production)
 Route::get('/automation/run', [\App\Http\Controllers\AutomationController::class, 'runAll'])

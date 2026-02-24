@@ -6,14 +6,14 @@
 
 @section('content')
 <style>
-.stat-card{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);border-radius:16px;padding:24px;color:#fff;box-shadow:0 10px 30px rgba(240,147,251,.3);margin-bottom:20px;transition:transform .3s}
-.stat-card:hover{transform:translateY(-5px)}
-.stat-card.green{background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%)}
-.stat-card.yellow{background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%)}
-.stat-card.blue{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%)}
-.stat-icon{width:56px;height:56px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:16px}
-.stat-label{font-size:13px;opacity:.9;margin-bottom:8px;font-weight:500}
-.stat-value{font-size:32px;font-weight:700;line-height:1}
+.stat-box{background:#fff;padding:25px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.08);display:flex;align-items:center;gap:20px;margin-bottom:20px}
+.stat-icon{width:60px;height:60px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff}
+.stat-icon.blue{background:linear-gradient(135deg,#667eea,#764ba2)}
+.stat-icon.green{background:linear-gradient(135deg,#11998e,#38ef7d)}
+.stat-icon.yellow{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.stat-icon.orange{background:linear-gradient(135deg,#ffa751,#ffe259)}
+.stat-info h4{margin:0;font-size:14px;color:#888;font-weight:400}
+.stat-info h2{margin:5px 0 0;font-size:28px;font-weight:700;color:#333}
 .table-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-top:24px}
 .table-header{padding:20px 24px;border-bottom:2px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center}
 .table-title{font-size:20px;font-weight:700;color:#1e293b}
@@ -45,8 +45,8 @@
 .empty-state{text-align:center;padding:60px 20px;color:#94a3b8}
 .empty-icon{font-size:64px;margin-bottom:16px;opacity:.5}
 @media(max-width:768px){
-.stat-card{padding:20px}
-.stat-value{font-size:28px}
+.stat-box{padding:20px}
+.stat-info h2{font-size:24px}
 .table-card{border-radius:12px}
 .modern-table{font-size:13px}
 .modern-table thead{display:none}
@@ -58,32 +58,40 @@
 
 <div class="container-fluid" style="padding:20px">
   <div class="row">
-    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-      <div class="stat-card yellow">
-        <div class="stat-icon">💸</div>
-        <div class="stat-label">Total Withdrawals</div>
-        <div class="stat-value">${{ number_format($withdrawals->where('status', 'completed')->sum('amount'), 2) }}</div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="stat-box">
+        <div class="stat-icon yellow"><i class="fa fa-arrow-up"></i></div>
+        <div class="stat-info">
+          <h4>Total Withdrawals</h4>
+          <h2>${{ number_format($totalWithdrawals, 2) }}</h2>
+        </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-      <div class="stat-card" style="background:linear-gradient(135deg,#ffa751 0%,#ffe259 100%)">
-        <div class="stat-icon">⏳</div>
-        <div class="stat-label">Pending</div>
-        <div class="stat-value">${{ number_format($withdrawals->where('status', 'pending')->sum('amount'), 2) }}</div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="stat-box">
+        <div class="stat-icon orange"><i class="fa fa-clock"></i></div>
+        <div class="stat-info">
+          <h4>Pending</h4>
+          <h2>${{ number_format($pendingWithdrawals, 2) }}</h2>
+        </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-      <div class="stat-card green">
-        <div class="stat-icon">✅</div>
-        <div class="stat-label">Approved</div>
-        <div class="stat-value">${{ number_format($withdrawals->where('status', 'approved')->sum('amount'), 2) }}</div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="stat-box">
+        <div class="stat-icon green"><i class="fa fa-check"></i></div>
+        <div class="stat-info">
+          <h4>Approved</h4>
+          <h2>${{ number_format($approvedWithdrawals, 2) }}</h2>
+        </div>
       </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-      <div class="stat-card blue">
-        <div class="stat-icon">📊</div>
-        <div class="stat-label">Total Requests</div>
-        <div class="stat-value">{{ $withdrawals->total() }}</div>
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+      <div class="stat-box">
+        <div class="stat-icon blue"><i class="fa fa-database"></i></div>
+        <div class="stat-info">
+          <h4>Total Requests</h4>
+          <h2>{{ number_format($totalRequests) }}</h2>
+        </div>
       </div>
     </div>
   </div>
