@@ -60,11 +60,14 @@ class ComputeController extends Controller
             ]);
 
             // Create notification for pool activation
+            $principalFormatted = number_format($principal, 2);
+            $expectedProfitFormatted = number_format($expectedProfit, 2);
+            
             Notification::create([
                 'user_id'   => $user->id,
                 'type'      => 'plan_activated',
                 'title'     => 'Liquidity Pool Activated',
-                'message'   => "Your {$plan->name} pool has been activated with ${$principal}. Expected profit: ${$expectedProfit}",
+                'message'   => "Your {$plan->name} pool has been activated with \${$principalFormatted}. Expected profit: \${$expectedProfitFormatted}",
                 'icon_type' => 'success',
                 'is_read'   => false,
                 'data'      => [
