@@ -15,13 +15,13 @@ class ComputeController extends Controller
         $user = auth()->user();
         $plan = ComputePlan::findOrFail($id);
 
-        // Allow only 2 pool activations per day
-        $todayCount = ComputeOrder::where('user_id', $user->id)
-            ->whereDate('created_at', today())
-            ->count();
+        // Check if user has any running orders
+        $hasRunningOrder = ComputeOrder::where('user_id', $user->id)
+            ->where('status', 'running')
+            ->exists();
 
-        if ($todayCount >= 2) {
-            return back()->with('error', 'You can only activate two liquidity pools per day.');
+        if ($hasRunningOrder) {
+            return back()->with('error', 'You already have an active pool. Please wait until it completes before activating another.');
         }
 
         if ($user->balance < $plan->price) {
