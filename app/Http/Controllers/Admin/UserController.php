@@ -50,21 +50,30 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
+            'username' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone' => 'nullable|string|max:20',
+            'password' => 'nullable|min:6|confirmed',
+            'role' => 'required|in:user,admin',
             'balance' => 'nullable|numeric|min:0',
-            'is_active' => 'nullable|boolean',
         ]);
+        
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->role = $request->role;
+        
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
         
         if ($request->has('balance')) {
             $user->balance = $request->balance;
         }
         
-        if ($request->has('is_active')) {
-            $user->is_active = $request->is_active;
-        }
-        
         $user->save();
         
-        return redirect()->back()->with('success', 'User updated successfully');
+        return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
     
     public function destroy(User $user)

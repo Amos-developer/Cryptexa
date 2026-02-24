@@ -136,6 +136,7 @@
   <div class="table-card">
     <div class="table-header">
       <h3 class="table-title">Deposits List</h3>
+      <a href="{{ route('admin.deposits.create') }}" class="btn-filter btn-primary" style="text-decoration:none">➕ Create Deposit</a>
     </div>
     <div style="overflow-x:auto">
       <table class="modern-table">
@@ -174,9 +175,8 @@
             </td>
             <td data-label="Date" style="color:#64748b">{{ $deposit->created_at->format('M d, Y H:i') }}</td>
             <td data-label="Action">
-              @if($deposit->user)
-                <a href="{{ route('admin.users.show', $deposit->user) }}" class="action-btn info" title="View User">👁️</a>
-              @endif
+              <button onclick="showDepositDetails({{ $deposit->id }}, '{{ $deposit->user->username ?? 'Unknown' }}', '{{ number_format($deposit->amount, 2) }}', '{{ strtoupper($deposit->currency) }}', '{{ ucfirst($deposit->status) }}', '{{ $deposit->created_at->format('M d, Y H:i') }}', '{{ $deposit->payment_id ?? 'N/A' }}')" class="action-btn info" title="View Details" style="margin-right:4px">👁️</button>
+              <a href="{{ route('admin.deposits.edit', $deposit) }}" class="action-btn" style="background:#fef3c7;color:#92400e" title="Edit">✏️</a>
             </td>
           </tr>
           @empty
@@ -216,4 +216,59 @@
     @endif
   </div>
 </div>
+
+<div id="depositModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:var(--bg-card,#fff);border-radius:16px;padding:32px;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+      <h3 style="font-size:24px;font-weight:700;color:var(--text-primary,#1e293b);margin:0">💰 Deposit Details</h3>
+      <button onclick="closeModal()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#64748b">×</button>
+    </div>
+    <div id="depositDetails" style="display:grid;gap:16px"></div>
+  </div>
+</div>
+
+<script>
+function showDepositDetails(id, user, amount, currency, status, date, paymentId) {
+  const details = `
+    <div style="padding:12px;background:#f8fafc;border-radius:8px">
+      <div style="font-size:12px;color:#64748b;margin-bottom:4px">DEPOSIT ID</div>
+      <div style="font-size:16px;font-weight:700;color:#1e293b">#${id}</div>
+    </div>
+    <div style="padding:12px;background:#f8fafc;border-radius:8px">
+      <div style="font-size:12px;color:#64748b;margin-bottom:4px">USER</div>
+      <div style="font-size:16px;font-weight:700;color:#1e293b">${user}</div>
+    </div>
+    <div style="padding:12px;background:#f8fafc;border-radius:8px">
+      <div style="font-size:12px;color:#64748b;margin-bottom:4px">AMOUNT</div>
+      <div style="font-size:20px;font-weight:700;color:#059669">$${amount}</div>
+    </div>
+    <div style="padding:12px;background:#f8fafc;border-radius:8px">
+      <div style="font-size:12px;color:#64748b;margin-bottom:4px">CURRENCY</div>
+      <div style="font-size:16px;font-weight:700;color:#1e293b">${currency}</div>
+    </div>
+    <div style="padding:12px;background:#f8fafc;border-radius:8px">
+      <div style="font-size:12px;color:#64748b;margin-bottom:4px">STATUS</div>
+      <div style="font-size:16px;font-weight:700;color:#1e293b">${status}</div>
+    </div>
+    <div style="padding:12px;background:#f8fafc;border-radius:8px">
+      <div style="font-size:12px;color:#64748b;margin-bottom:4px">DATE</div>
+      <div style="font-size:16px;font-weight:700;color:#1e293b">${date}</div>
+    </div>
+    <div style="padding:12px;background:#f8fafc;border-radius:8px">
+      <div style="font-size:12px;color:#64748b;margin-bottom:4px">PAYMENT ID</div>
+      <div style="font-size:14px;font-weight:600;color:#1e293b;word-break:break-all">${paymentId}</div>
+    </div>
+  `;
+  document.getElementById('depositDetails').innerHTML = details;
+  document.getElementById('depositModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('depositModal').style.display = 'none';
+}
+
+document.getElementById('depositModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
 @endsection
