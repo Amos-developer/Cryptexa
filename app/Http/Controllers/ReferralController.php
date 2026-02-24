@@ -36,22 +36,22 @@ class ReferralController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | ACTIVE MEMBERS STATS (users with actual deposits)
+        | ACTIVE MEMBERS STATS (users with completed deposits)
         |--------------------------------------------------------------------------
         */
         $level1Active = $level1->filter(
             fn($user) =>
-            DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
+            DB::table('deposits')->where('user_id', $user->id)->where('status', 'completed')->exists()
         )->count();
 
         $level2Active = $level2->filter(
             fn($user) =>
-            DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
+            DB::table('deposits')->where('user_id', $user->id)->where('status', 'completed')->exists()
         )->count();
 
         $level3Active = $level3->filter(
             fn($user) =>
-            DB::table('deposits')->where('user_id', $user->id)->where('status', 'paid')->exists()
+            DB::table('deposits')->where('user_id', $user->id)->where('status', 'completed')->exists()
         )->count();
 
         $totalActiveMembers = $level1Active + $level2Active + $level3Active;

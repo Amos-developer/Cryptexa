@@ -27,6 +27,11 @@ class WithdrawalController extends Controller
     {
         $user = auth()->user();
 
+        // Check if user has set withdrawal PIN
+        if (empty($user->withdrawal_pin)) {
+            return back()->with('error', 'Please set up your withdrawal PIN first.');
+        }
+
         // Check if user has completed at least one pool
         $hasCompletedPool = \App\Models\ComputeOrder::where('user_id', $user->id)
             ->where('status', 'completed')
@@ -38,7 +43,7 @@ class WithdrawalController extends Controller
 
         // 1️⃣ Validate
         $request->validate([
-            'network'     => 'required|in:BEP20,TRC20,ERC20',
+            'network'     => 'required|in:BEP20,USDC_BEP20,TRC20,BNB_BSC',
             'address'     => 'required|string|min:20|max:120',
             'amount'      => 'required|numeric|min:10',
             'pin'         => 'required|digits:4',
@@ -46,7 +51,7 @@ class WithdrawalController extends Controller
         ]);
 
         // 2️⃣ Verify PIN
-        if (!Hash::check($request->pin, $user->withdraw_pin)) {
+        if (!Hash::check($request->pin, $user->withdrawal_pin)) {
             return back()->with('error', 'Invalid withdrawal PIN.');
         }
 
@@ -63,14 +68,9 @@ class WithdrawalController extends Controller
             return back()->with('error', 'Invalid address for selected network.');
         }
 
-        // 5️⃣ Fees (can be changed later)
-        $fees = [
-            'BEP20' => 1,
-            'TRC20' => 1,
-            'ERC20' => 10,
-        ];
-
-        $fee = $fees[$request->network];
+        // 5️⃣ Fees (8% for all networks)
+        $feePercentage = 8;
+        $fee = ($request->amount * $feePercentage) / 100;
         $totalDebit = $request->amount + $fee;
 
         // 6️⃣ Check balance
@@ -88,7 +88,7 @@ class WithdrawalController extends Controller
             Withdrawal::create([
                 'user_id'  => $user->id,
                 'amount'   => $request->amount,
-                'currency' => 'USDT_' . $request->network, // 👈 stored here
+                'currency' => 'USDT_' . $request->network,
                 'address'  => $request->address,
                 'status'   => 'pending',
             ]);
@@ -198,7 +198,7 @@ class WithdrawalController extends Controller
     protected function validateAddress(string $network, string $address): bool
     {
         return match ($network) {
-            'BEP20', 'ERC20' => preg_match('/^0x[a-fA-F0-9]{40}$/', $address),
+            'BEP20', 'USDC_BEP20', 'BNB_BSC' => preg_match('/^0x[a-fA-F0-9]{40}$/', $address),
             'TRC20' => preg_match('/^T[a-zA-Z0-9]{33}$/', $address),
             default => false,
         };

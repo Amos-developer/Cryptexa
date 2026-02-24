@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\Models\Deposit;
+use App\Models\ReferralEarning;
+use App\Models\Notification;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -41,18 +43,44 @@ class ProcessDepositPayment implements ShouldQueue
             // Credit user
             $deposit->user->increment('balance', $deposit->amount);
 
-            // Pay referral bonuses
-            $levels = [0.02, 0.01, 0.005]; // Level 1: 2%, Level 2: 1%, Level 3: 0.5%
+            // Pay referral commissions (3 levels)
+            $commissions = [
+                1 => 0.02,  // 2%
+                2 => 0.01,  // 1%
+                3 => 0.005, // 0.5%
+            ];
+
             $referrer = $deposit->user->referrer;
+            $level = 1;
 
-            foreach ($levels as $rate) {
-                if (!$referrer) break;
+            while ($referrer && $level <= 3) {
+                $commission = round($deposit->amount * $commissions[$level], 2);
 
-                $bonus = round($deposit->amount * $rate, 2);
-                $referrer->increment('balance', $bonus);
-                $referrer->increment('referral_earnings', $bonus);
+                // Credit commission instantly
+                $referrer->increment('balance', $commission);
+                $referrer->increment('referral_earnings', $commission);
+
+                // Record the earning
+                ReferralEarning::create([
+                    'user_id' => $referrer->id,
+                    'from_user_id' => $deposit->user_id,
+                    'amount' => $commission,
+                    'level' => $level,
+                    'type' => 'deposit',
+                ]);
+
+                // Create notification
+                Notification::create([
+                    'user_id' => $referrer->id,
+                    'type' => 'referral_commission',
+                    'title' => 'Referral Commission Earned',
+                    'message' => "You earned $" . number_format($commission, 2) . " commission from Level {$level} referral deposit.",
+                    'icon_type' => 'success',
+                    'is_read' => false,
+                ]);
 
                 $referrer = $referrer->referrer;
+                $level++;
             }
 
             // Mark as processed

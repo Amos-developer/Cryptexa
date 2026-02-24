@@ -49,9 +49,45 @@
         </div>
 
         @php
-        $hasCompletedPool = true; // Temporarily unlocked for testing
-        // $hasCompletedPool = \App\Models\ComputeOrder::where('user_id', auth()->id())->where('status', 'completed')->exists();
+        $hasCompletedPool = \App\Models\ComputeOrder::where('user_id', auth()->id())->where('status', 'completed')->exists();
+        $hasWithdrawalPin = !empty(auth()->user()->withdrawal_pin);
         @endphp
+
+        @if(!$hasWithdrawalPin)
+        <!-- NO WITHDRAWAL PIN NOTICE -->
+        <div style="
+            background: linear-gradient(135deg, rgba(239,68,68,0.15) 0%, rgba(239,68,68,0.05) 100%);
+            border: 2px solid rgba(239,68,68,0.3);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+            animation: slideUp 0.6s ease 0.1s backwards;
+        ">
+            <div style="text-align: center;">
+                <div style="font-size: 48px; margin-bottom: 16px;">🔐</div>
+                <h3 style="color: #ef4444; font-weight: 700; font-size: 20px; margin: 0 0 12px 0;">Withdrawal PIN Required</h3>
+                <p style="color: #e5e7eb; font-size: 14px; line-height: 1.6; margin: 0 0 20px 0;">
+                    You must set up a 4-digit withdrawal PIN before you can withdraw funds.
+                    This adds an extra layer of security to your account.
+                </p>
+                <a href="{{ route('withdrawal-pin.set') }}" style="
+                    display: inline-block;
+                    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                    color: white;
+                    padding: 12px 24px;
+                    border-radius: 10px;
+                    font-weight: 700;
+                    font-size: 14px;
+                    text-decoration: none;
+                    transition: all 0.3s ease;
+                "
+                onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 25px rgba(239,68,68,0.3)';"
+                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                    🔒 Set Withdrawal PIN
+                </a>
+            </div>
+        </div>
+        @endif
 
         @if(!$hasCompletedPool)
         <!-- WITHDRAWAL LOCKED NOTICE -->
@@ -127,7 +163,7 @@
         </script>
         @endif
 
-        <form method="POST" action="{{ route('withdraw.submit') }}" @if(!$hasCompletedPool) style="opacity: 0.5; pointer-events: none;" @endif>
+        <form method="POST" action="{{ route('withdraw.submit') }}" @if(!$hasCompletedPool || !$hasWithdrawalPin) style="opacity: 0.5; pointer-events: none;" @endif>
             @csrf
 
             <!-- NETWORK SELECT -->
@@ -138,8 +174,8 @@
 
                 <div style="display: grid; gap: 10px;">
 
-                    <!-- BEP20 -->
-                    <div class="network-option" data-network="BEP20">
+                    <!-- USDT BEP20 -->
+                    <div class="network-option" data-network="BEP20" data-pattern="^0x[a-fA-F0-9]{40}$">
                         <input type="radio" name="network" value="BEP20" hidden required>
                         <div style="
                             background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.02) 100%);
@@ -155,16 +191,16 @@
                                 <div>
                                     <div style="display: inline-block; background: rgba(34,197,94,0.2); color: #22c55e; padding: 4px 10px; border-radius: 999px; font-size: 10px; font-weight: 700; margin-bottom: 8px;">✓ RECOMMENDED</div>
                                     <p style="color: #e5e7eb; font-weight: 700; font-size: 14px; margin: 0 0 4px 0;">USDT BEP20</p>
-                                    <p style="color: #94a3b8; font-size: 12px; margin: 0;">Binance Smart Chain - Lowest Fees</p>
+                                    <p style="color: #94a3b8; font-size: 12px; margin: 0;">Binance Smart Chain</p>
                                 </div>
-                                <span style="background: rgba(34,197,94,0.15); color: #22c55e; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700;">~$1</span>
+                                <span style="background: rgba(34,197,94,0.15); color: #22c55e; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700;">8%</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- TRC20 -->
-                    <div class="network-option" data-network="TRC20">
-                        <input type="radio" name="network" value="TRC20" hidden>
+                    <!-- USDC BEP20 -->
+                    <div class="network-option" data-network="USDC_BEP20" data-pattern="^0x[a-fA-F0-9]{40}$">
+                        <input type="radio" name="network" value="USDC_BEP20" hidden>
                         <div style="
                             background: linear-gradient(135deg, rgba(56,189,248,0.08) 0%, rgba(56,189,248,0.02) 100%);
                             border: 1.5px solid rgba(56,189,248,0.15);
@@ -177,17 +213,40 @@
                             onmouseout="this.style.borderColor='rgba(56,189,248,0.15)'; this.style.boxShadow='none';">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <p style="color: #e5e7eb; font-weight: 700; font-size: 14px; margin: 0 0 4px 0;">USDT TRC20</p>
-                                    <p style="color: #94a3b8; font-size: 12px; margin: 0;">Tron Network - High Security</p>
+                                    <p style="color: #e5e7eb; font-weight: 700; font-size: 14px; margin: 0 0 4px 0;">USDC BEP20</p>
+                                    <p style="color: #94a3b8; font-size: 12px; margin: 0;">Binance Smart Chain</p>
                                 </div>
-                                <span style="background: rgba(56,189,248,0.15); color: #38bdf8; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700;">~$2</span>
+                                <span style="background: rgba(56,189,248,0.15); color: #38bdf8; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700;">8%</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- ERC20 -->
-                    <div class="network-option" data-network="ERC20">
-                        <input type="radio" name="network" value="ERC20" hidden>
+                    <!-- USDT TRC20 -->
+                    <div class="network-option" data-network="TRC20" data-pattern="^T[a-zA-Z0-9]{33}$">
+                        <input type="radio" name="network" value="TRC20" hidden>
+                        <div style="
+                            background: linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(239,68,68,0.02) 100%);
+                            border: 1.5px solid rgba(239,68,68,0.15);
+                            border-radius: 12px;
+                            padding: 14px;
+                            cursor: pointer;
+                            transition: all 0.3s ease;
+                        "
+                            onmouseover="this.style.borderColor='rgba(239,68,68,0.3)'; this.style.boxShadow='0 0 15px rgba(239,68,68,0.15)';"
+                            onmouseout="this.style.borderColor='rgba(239,68,68,0.15)'; this.style.boxShadow='none';">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="color: #e5e7eb; font-weight: 700; font-size: 14px; margin: 0 0 4px 0;">USDT TRC20</p>
+                                    <p style="color: #94a3b8; font-size: 12px; margin: 0;">Tron Network</p>
+                                </div>
+                                <span style="background: rgba(239,68,68,0.15); color: #ef4444; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700;">8%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BNB BSC -->
+                    <div class="network-option" data-network="BNB_BSC" data-pattern="^0x[a-fA-F0-9]{40}$">
+                        <input type="radio" name="network" value="BNB_BSC" hidden>
                         <div style="
                             background: linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(251,191,36,0.02) 100%);
                             border: 1.5px solid rgba(251,191,36,0.15);
@@ -200,10 +259,10 @@
                             onmouseout="this.style.borderColor='rgba(251,191,36,0.15)'; this.style.boxShadow='none';">
                             <div style="display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <p style="color: #e5e7eb; font-weight: 700; font-size: 14px; margin: 0 0 4px 0;">USDT ERC20</p>
-                                    <p style="color: #94a3b8; font-size: 12px; margin: 0;">Ethereum Network - Higher Fees</p>
+                                    <p style="color: #e5e7eb; font-weight: 700; font-size: 14px; margin: 0 0 4px 0;">BNB BSC</p>
+                                    <p style="color: #94a3b8; font-size: 12px; margin: 0;">Binance Coin</p>
                                 </div>
-                                <span style="background: rgba(251,191,36,0.15); color: #fbbf24; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700;">~$10</span>
+                                <span style="background: rgba(251,191,36,0.15); color: #fbbf24; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700;">8%</span>
                             </div>
                         </div>
                     </div>
@@ -269,9 +328,10 @@
                     box-sizing: border-box;
                 "
                     onfocus="this.style.borderColor='rgba(56,189,248,0.3)'"
-                    onblur="this.style.borderColor='rgba(56,189,248,0.15)'"
+                    onblur="validateAddress()"
+                    oninput="validateAddress()"
                     required>
-                <p class="text-secondary" style="font-size: 12px; margin: 8px 0 0 0;">✓ Check your email for the 6-digit verification code</p>
+                <p id="addressHint" class="text-secondary" style="font-size: 12px; margin: 8px 0 0 0;"></p>
             </div>
 
             <!-- SECURITY SECTION -->
@@ -488,6 +548,9 @@
 
 {{-- SCRIPT --}}
 <script>
+    let selectedNetwork = null;
+    let addressPattern = null;
+    
     document.querySelectorAll('.network-option').forEach(option => {
         option.addEventListener('click', () => {
             document.querySelectorAll('.network-option')
@@ -495,12 +558,61 @@
 
             option.classList.add('active');
             option.querySelector('input').checked = true;
+            selectedNetwork = option.dataset.network;
+            addressPattern = option.dataset.pattern;
+            document.getElementById('addressInput').value = '';
             document.getElementById('addressInput').focus();
+            updateAddressHint();
         });
     });
 
     // Auto-select recommended (BEP20) on page load
     document.querySelector('[data-network="BEP20"]').click();
+    
+    function updateAddressHint() {
+        const hint = document.getElementById('addressHint');
+        if (!selectedNetwork) {
+            hint.textContent = '';
+            return;
+        }
+        
+        const hints = {
+            'BEP20': '✓ BEP20 address starts with 0x (42 characters)',
+            'USDC_BEP20': '✓ BEP20 address starts with 0x (42 characters)',
+            'TRC20': '✓ TRC20 address starts with T (34 characters)',
+            'BNB_BSC': '✓ BSC address starts with 0x (42 characters)'
+        };
+        
+        hint.textContent = hints[selectedNetwork] || '';
+        hint.style.color = '#94a3b8';
+    }
+    
+    function validateAddress() {
+        const input = document.getElementById('addressInput');
+        const hint = document.getElementById('addressHint');
+        const address = input.value.trim();
+        
+        if (!address || !addressPattern) {
+            input.style.borderColor = 'rgba(56,189,248,0.15)';
+            updateAddressHint();
+            return true;
+        }
+        
+        const regex = new RegExp(addressPattern);
+        const isValid = regex.test(address);
+        
+        if (isValid) {
+            input.style.borderColor = '#22c55e';
+            hint.textContent = '✓ Valid address format';
+            hint.style.color = '#22c55e';
+        } else {
+            input.style.borderColor = '#ef4444';
+            hint.textContent = '✗ Invalid address format for ' + selectedNetwork;
+            hint.style.color = '#ef4444';
+        }
+        
+        return isValid;
+    }
 
     // Real-time validation
     const amountInput = document.querySelector('input[name="amount"]');
@@ -617,27 +729,77 @@
             return;
         }
         
-        // Mark as verified and enable submit
-        isVerified = true;
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-        submitBtn.style.cursor = 'pointer';
-        
-        // Lock the code input and button
-        emailInput.disabled = true;
-        emailInput.style.opacity = '0.7';
+        // Disable button while verifying
         btn.disabled = true;
-        btn.style.opacity = '0.5';
-        btn.textContent = '✓ Verified';
+        btn.style.opacity = '0.6';
+        btn.textContent = 'Verifying...';
         
-        Swal.fire({
-            title: 'Verified!',
-            text: 'You can now confirm your withdrawal',
-            icon: 'success',
-            confirmButtonColor: '#22c55e',
-            background: '#020617',
-            color: '#e5e7eb',
-            timer: 2000
+        // Verify code with server
+        fetch('{{ route("withdraw.verify-code") }}', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                code: emailInput.value
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Mark as verified and enable submit
+                isVerified = true;
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.style.cursor = 'pointer';
+                
+                // Lock the code input and button
+                emailInput.disabled = true;
+                emailInput.style.opacity = '0.7';
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.textContent = '✓ Verified';
+                
+                Swal.fire({
+                    title: 'Verified!',
+                    text: 'You can now confirm your withdrawal',
+                    icon: 'success',
+                    confirmButtonColor: '#22c55e',
+                    background: '#020617',
+                    color: '#e5e7eb',
+                    timer: 2000
+                });
+            } else {
+                // Re-enable button for retry
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.textContent = 'Verify';
+                
+                Swal.fire({
+                    title: 'Verification Failed',
+                    text: data.message || 'Invalid or expired code',
+                    icon: 'error',
+                    confirmButtonColor: '#ef4444',
+                    background: '#020617',
+                    color: '#e5e7eb'
+                });
+            }
+        })
+        .catch(err => {
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            btn.textContent = 'Verify';
+            
+            Swal.fire({
+                title: 'Error',
+                text: 'Network error. Please try again.',
+                icon: 'error',
+                confirmButtonColor: '#ef4444',
+                background: '#020617',
+                color: '#e5e7eb'
+            });
         });
     }
 </script>

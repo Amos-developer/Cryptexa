@@ -118,7 +118,7 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; margin-right: 8px; vertical-align: middle;">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
-            <strong>Note:</strong> Commissions are earned from plan activations by members at each level. Active members are those with balance > 0.
+            <strong>Note:</strong> Commissions are earned from deposits made by members at each level. Active members are those who have made at least one deposit.
         </div>
     </div>
 
@@ -206,15 +206,19 @@
             @else
             <div class="members-list">
                 @foreach($level['users'] as $user)
-                <div class="member-item {{ $user->balance > 0 ? 'active' : 'inactive' }}">
+                @php
+                $hasDeposit = DB::table('deposits')->where('user_id', $user->id)->where('status', 'completed')->exists();
+                $totalDeposits = DB::table('deposits')->where('user_id', $user->id)->where('status', 'completed')->sum('amount');
+                @endphp
+                <div class="member-item {{ $hasDeposit ? 'active' : 'inactive' }}">
                     <div class="member-info">
                         <div class="member-code">{{ $user->referral_code }}</div>
                         <div class="member-joined">Joined {{ $user->created_at->diffForHumans() }}</div>
                     </div>
                     <div class="member-balance">
-                        <div class="balance-value">${{ number_format($user->balance, 2) }}</div>
+                        <div class="balance-value">${{ number_format($totalDeposits, 2) }}</div>
                         <div class="balance-status">
-                            @if($user->balance > 0)
+                            @if($hasDeposit)
                             <span class="badge active">Active</span>
                             @else
                             <span class="badge inactive">Inactive</span>

@@ -6,6 +6,7 @@ use App\Models\ComputePlan;      // Keep model for now
 use App\Models\ComputeOrder;
 use App\Models\User;
 use App\Models\Notification;
+use App\Models\ReferralEarning;
 use Illuminate\Support\Facades\DB;
 
 class ComputeController extends Controller
