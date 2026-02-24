@@ -154,16 +154,16 @@ class DepositController extends Controller
                 ]);
             }
 
-            // If payment is now completed, credit user and pay referrals
+            // If payment is now completed, dispatch processing job
             if ($mappedStatus === 'completed' && $oldStatus !== 'completed') {
-                $this->processDepositPayment($deposit);
+                \App\Jobs\ProcessDepositPayment::dispatch($deposit->id);
 
                 return response()->json([
                     'status' => 'completed',
                     'provider_status' => $providerStatus,
                     'message' => 'Payment confirmed! Balance updated.',
                     'balance' => $deposit->user->fresh()->balance,
-                    'received' => $deposit->amount,
+                    'received' => $deposit->pay_amount ?? $deposit->amount,
                 ]);
             }
         }
@@ -172,36 +172,5 @@ class DepositController extends Controller
             'status' => $deposit->status,
             'message' => 'Still waiting for payment...',
         ]);
-    }
-
-    /**
-     * Process deposit payment: Credit user + Pay referrals
-     */
-    private function processDepositPayment(Deposit $deposit)
-    {
-        // Dispatch queued, idempotent processing job
-        \App\Jobs\ProcessDepositPayment::dispatch($deposit->id);
-    }
-
-    /**
-     * Pay referral bonuses to all levels
-     */
-    private function payReferralBonuses($user, $amount)
-    {
-        // 6-level referral structure
-        $levels = [0.16, 0.08, 0.04, 0.02, 0.01, 0.005];
-
-        $referrer = $user->referrer;
-
-        foreach ($levels as $rate) {
-            if (!$referrer) break;
-
-            $bonus = round($amount * $rate, 2);
-
-            $referrer->increment('balance', $bonus);
-            $referrer->increment('referral_earnings', $bonus);
-
-            $referrer = $referrer->referrer;
-        }
     }
 }

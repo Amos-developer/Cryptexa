@@ -20,7 +20,7 @@ return [
 
     'nowpayments' => [
         'key' => env('NOWPAYMENTS_API_KEY'),
-        'webhook_secret' => env('NOWPAYMENTS_IPN_SECRET'),
+        'ipn_secret' => env('NOWPAYMENTS_IPN_SECRET'),
         'url' => env('NOWPAYMENTS_BASE_URL', 'https://api.nowpayments.io/v1'),
     ],
 

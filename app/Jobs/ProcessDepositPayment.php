@@ -40,8 +40,15 @@ class ProcessDepositPayment implements ShouldQueue
                 return;
             }
 
-            // Credit user
-            $deposit->user->increment('balance', $deposit->amount);
+            // Credit user EXACT amount deposited (use pay_amount if available, otherwise amount)
+            $creditAmount = $deposit->pay_amount ?? $deposit->amount;
+            $deposit->user->increment('balance', $creditAmount);
+            
+            logger()->info('ProcessDepositPayment: credited user', [
+                'user_id' => $deposit->user_id,
+                'amount' => $creditAmount,
+                'deposit_id' => $deposit->id,
+            ]);
 
             // Pay referral commissions (3 levels)
             $commissions = [
@@ -54,7 +61,8 @@ class ProcessDepositPayment implements ShouldQueue
             $level = 1;
 
             while ($referrer && $level <= 3) {
-                $commission = round($deposit->amount * $commissions[$level], 2);
+                // Calculate commission on actual deposited amount
+                $commission = round($creditAmount * $commissions[$level], 2);
 
                 // Credit commission instantly
                 $referrer->increment('balance', $commission);
