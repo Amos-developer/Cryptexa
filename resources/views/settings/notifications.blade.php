@@ -65,12 +65,13 @@
                     background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
                     border: 1px solid rgba(255,255,255,0.06);
                     border-radius: 12px;
+                    gap: 12px;
                 ">
-                    <div style="flex: 1;">
+                    <div style="flex: 1; min-width: 0;">
                         <div style="color: #e5e7eb; font-weight: 700; font-size: 15px; margin-bottom: 4px;">{{ $item['label'] }}</div>
-                        <div style="color: #64748b; font-size: 13px;">{{ $item['desc'] }}</div>
+                        <div style="color: #64748b; font-size: 13px; line-height: 1.4;">{{ $item['desc'] }}</div>
                     </div>
-                    <label class="toggle-switch" style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer;">
+                    <label class="toggle-switch" style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer; flex-shrink: 0;">
                         <input type="checkbox" {{ $item['enabled'] ? 'checked' : '' }} onchange="toggleNotification(this, '{{ strtolower(str_replace(' ', '_', $item['label'])) }}')"
                             style="opacity: 0; width: 0; height: 0;">
                         <span class="slider" style="
@@ -107,9 +108,21 @@
 <style>
     @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+    
     @media (max-width: 768px) {
-        .pt-80 { padding-top: 80px !important; }
-        h1[style*="font-size: 28px"] { font-size: 24px !important; }
+        .header { padding: 10px 12px !important; }
+        .pt-80 { padding-top: 70px !important; }
+        .pb-80 { padding-bottom: 70px !important; }
+        .tf-container { padding: 0 16px !important; }
+        h1 { font-size: 22px !important; }
+        h3 { font-size: 13px !important; }
+    }
+    
+    @media (max-width: 480px) {
+        .header { padding: 8px 12px !important; }
+        .pt-80 { padding-top: 65px !important; }
+        h1 { font-size: 20px !important; }
     }
 </style>
 

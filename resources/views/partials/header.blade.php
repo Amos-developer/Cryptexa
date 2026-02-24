@@ -183,10 +183,12 @@
                 <div style="text-align: left; color: #e5e7eb; max-height: 400px; overflow-y: auto;">
                     ${notificationsHtml}
                 </div>
+                <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(56,189,248,0.2);">
+                    <a href="{{ route('notifications') }}" style="color: #38bdf8; text-decoration: none; font-size: 13px; font-weight: 600;">View All Notifications →</a>
+                </div>
             `,
-            icon: 'info',
-            confirmButtonColor: '#38bdf8',
-            confirmButtonText: 'Mark all as read',
+            showConfirmButton: false,
+            showCloseButton: true,
             background: '#020617',
             color: '#e5e7eb',
             customClass: {

@@ -39,7 +39,7 @@
 
 <!-- MAIN CONTENT -->
 <div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%); min-height: 100vh;">
-    <div class="tf-container">
+    <div class="tf-container" style="max-width: 600px; margin: 0 auto;">
 
         @forelse($notifications as $notification)
         <div class="notification-item" data-id="{{ $notification->id }}" 
@@ -86,11 +86,11 @@
                     @endif
                 </div>
 
-                <div style="flex: 1;">
-                    <h4 style="color: #e5e7eb; font-weight: 700; font-size: 14px; margin: 0 0 4px 0;">
+                <div style="flex: 1; min-width: 0;">
+                    <h4 style="color: #e5e7eb; font-weight: 700; font-size: 14px; margin: 0 0 4px 0; word-wrap: break-word;">
                         {{ $notification->title }}
                     </h4>
-                    <p style="color: #94a3b8; font-size: 13px; margin: 0 0 6px 0; line-height: 1.5;">
+                    <p style="color: #94a3b8; font-size: 13px; margin: 0 0 6px 0; line-height: 1.5; word-wrap: break-word;">
                         {{ $notification->message }}
                     </p>
                     <span style="color: #64748b; font-size: 11px;">
@@ -109,6 +109,22 @@
 
     </div>
 </div>
+
+<style>
+    @media (max-width: 768px) {
+        .header { padding: 10px 12px !important; }
+        .pt-80 { padding-top: 70px !important; }
+        .pb-80 { padding-bottom: 70px !important; }
+        .tf-container { padding: 0 16px !important; }
+        .notification-item { padding: 14px !important; }
+    }
+    
+    @media (max-width: 480px) {
+        .header { padding: 8px 12px !important; }
+        .pt-80 { padding-top: 65px !important; }
+        .notification-item { padding: 12px !important; margin-bottom: 10px !important; }
+    }
+</style>
 
 <script>
 async function markAsRead(id) {
