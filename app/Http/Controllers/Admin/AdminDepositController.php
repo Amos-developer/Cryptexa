@@ -40,19 +40,9 @@ class AdminDepositController extends Controller
         
         $deposit = Deposit::create($validated);
         
-        // If status is completed, update user balance and send email
+        // If status is completed, process deposit immediately (balance + referral commissions)
         if ($deposit->status === 'completed') {
-            $user = User::find($deposit->user_id);
-            $user->balance += $deposit->amount;
-            $user->save();
-            
-            try {
-                Mail::send('emails.deposit-success', ['deposit' => $deposit, 'user' => $user], function($message) use ($user) {
-                    $message->to($user->email)->subject('Deposit Successful');
-                });
-            } catch (\Exception $e) {
-                \Log::error('Failed to send deposit email: ' . $e->getMessage());
-            }
+            \App\Jobs\ProcessDepositPayment::dispatchSync($deposit->id);
         }
         
         return redirect()->route('admin.deposits.index')->with('success', 'Deposit created successfully');
@@ -82,43 +72,18 @@ class AdminDepositController extends Controller
         ]);
         
         $oldStatus = $deposit->status;
-        $oldAmount = $deposit->amount;
-        $oldUserId = $deposit->user_id;
+        $wasProcessed = $deposit->processed_at !== null;
+        
+        // Reset processed_at if status changes from completed
+        if ($oldStatus === 'completed' && $validated['status'] !== 'completed') {
+            $deposit->processed_at = null;
+        }
         
         $deposit->update($validated);
         
-        // Handle balance changes
-        if ($oldStatus !== 'completed' && $deposit->status === 'completed') {
-            // Status changed to completed - add to balance
-            $user = User::find($deposit->user_id);
-            $user->balance += $deposit->amount;
-            $user->save();
-            
-            try {
-                Mail::send('emails.deposit-success', ['deposit' => $deposit, 'user' => $user], function($message) use ($user) {
-                    $message->to($user->email)->subject('Deposit Successful');
-                });
-            } catch (\Exception $e) {
-                \Log::error('Failed to send deposit email: ' . $e->getMessage());
-            }
-        } elseif ($oldStatus === 'completed' && $deposit->status !== 'completed') {
-            // Status changed from completed - remove from balance
-            $user = User::find($oldUserId);
-            $user->balance -= $oldAmount;
-            $user->save();
-        } elseif ($oldStatus === 'completed' && $deposit->status === 'completed') {
-            // Both completed but amount or user changed
-            if ($oldUserId !== $deposit->user_id || $oldAmount !== $deposit->amount) {
-                // Remove from old user
-                $oldUser = User::find($oldUserId);
-                $oldUser->balance -= $oldAmount;
-                $oldUser->save();
-                
-                // Add to new user
-                $newUser = User::find($deposit->user_id);
-                $newUser->balance += $deposit->amount;
-                $newUser->save();
-            }
+        // If status changed to completed and not yet processed, process immediately
+        if ($deposit->status === 'completed' && !$wasProcessed) {
+            \App\Jobs\ProcessDepositPayment::dispatchSync($deposit->id);
         }
         
         return redirect()->route('admin.deposits.index')->with('success', 'Deposit updated successfully');

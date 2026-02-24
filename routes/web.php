@@ -201,8 +201,18 @@ Route::middleware(['auth', 'admin'])
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::resource('users', UserController::class);
         Route::get('/deposits', [AdminDepositController::class, 'index'])->name('deposits.index');
-        Route::resource('withdrawals', AdminWithdrawalController::class)->only(['index']);
-
+        Route::get('/deposits/create', [AdminDepositController::class, 'create'])->name('deposits.create');
+        Route::post('/deposits', [AdminDepositController::class, 'store'])->name('deposits.store');
+        Route::get('/deposits/{deposit}/edit', [AdminDepositController::class, 'edit'])->name('deposits.edit');
+        Route::put('/deposits/{deposit}', [AdminDepositController::class, 'update'])->name('deposits.update');
+        
+        Route::get('/withdrawals', [AdminWithdrawalController::class, 'index'])->name('withdrawals.index');
+        Route::get('/withdrawals/create', [AdminWithdrawalController::class, 'create'])->name('withdrawals.create');
+        Route::post('/withdrawals', [AdminWithdrawalController::class, 'store'])->name('withdrawals.store');
+        Route::get('/withdrawals/{withdrawal}', [AdminWithdrawalController::class, 'show'])->name('withdrawals.show');
+        Route::get('/withdrawals/{withdrawal}/edit', [AdminWithdrawalController::class, 'edit'])->name('withdrawals.edit');
+        Route::put('/withdrawals/{withdrawal}', [AdminWithdrawalController::class, 'update'])->name('withdrawals.update');
+        
         Route::post('/withdrawals/{withdrawal}/approve', [AdminWithdrawalController::class, 'approve'])->name('withdrawals.approve');
         Route::post('/withdrawals/{withdrawal}/reject', [AdminWithdrawalController::class, 'reject'])->name('withdrawals.reject');
         Route::post('/withdrawals/{withdrawal}/complete', [AdminWithdrawalController::class, 'complete'])->name('withdrawals.complete');

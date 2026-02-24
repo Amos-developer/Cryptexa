@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Withdrawal;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,10 +19,54 @@ class AdminWithdrawalController extends Controller
         return view('admin.withdrawals.index', compact('withdrawals'));
     }
     
+    public function create()
+    {
+        $users = User::orderBy('username')->get();
+        return view('admin.withdrawals.create', compact('users'));
+    }
+    
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'amount' => 'required|numeric|min:0.01',
+            'currency' => 'required|string',
+            'address' => 'required|string',
+            'status' => 'required|in:pending,approved,completed,rejected',
+            'txid' => 'nullable|string',
+        ]);
+        
+        Withdrawal::create($validated);
+        
+        return redirect()->route('admin.withdrawals.index')->with('success', 'Withdrawal created successfully');
+    }
+    
     public function show(Withdrawal $withdrawal)
     {
         $withdrawal->load('user');
         return view('admin.withdrawals.show', compact('withdrawal'));
+    }
+    
+    public function edit(Withdrawal $withdrawal)
+    {
+        $users = User::orderBy('username')->get();
+        return view('admin.withdrawals.edit', compact('withdrawal', 'users'));
+    }
+    
+    public function update(Request $request, Withdrawal $withdrawal)
+    {
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'amount' => 'required|numeric|min:0.01',
+            'currency' => 'required|string',
+            'address' => 'required|string',
+            'status' => 'required|in:pending,approved,completed,rejected',
+            'txid' => 'nullable|string',
+        ]);
+        
+        $withdrawal->update($validated);
+        
+        return redirect()->route('admin.withdrawals.index')->with('success', 'Withdrawal updated successfully');
     }
 
     public function approve(Withdrawal $withdrawal)
