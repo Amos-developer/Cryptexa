@@ -70,9 +70,10 @@
                         <div style="color: #e5e7eb; font-weight: 700; font-size: 15px; margin-bottom: 4px;">{{ $item['label'] }}</div>
                         <div style="color: #64748b; font-size: 13px;">{{ $item['desc'] }}</div>
                     </div>
-                    <label style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer;">
-                        <input type="checkbox" {{ $item['enabled'] ? 'checked' : '' }} style="opacity: 0; width: 0; height: 0;">
-                        <span style="
+                    <label class="toggle-switch" style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer;">
+                        <input type="checkbox" {{ $item['enabled'] ? 'checked' : '' }} onchange="toggleNotification(this, '{{ strtolower(str_replace(' ', '_', $item['label'])) }}')"
+                            style="opacity: 0; width: 0; height: 0;">
+                        <span class="slider" style="
                             position: absolute;
                             top: 0;
                             left: 0;
@@ -82,7 +83,7 @@
                             border-radius: 26px;
                             transition: 0.3s;
                         ">
-                            <span style="
+                            <span class="slider-button" style="
                                 position: absolute;
                                 content: '';
                                 height: 20px;
@@ -111,5 +112,43 @@
         h1[style*="font-size: 28px"] { font-size: 24px !important; }
     }
 </style>
+
+<script>
+function toggleNotification(checkbox, type) {
+    const label = checkbox.closest('.toggle-switch');
+    const slider = label.querySelector('.slider');
+    const button = label.querySelector('.slider-button');
+    
+    if (checkbox.checked) {
+        slider.style.background = '#22c55e';
+        button.style.left = '25px';
+    } else {
+        slider.style.background = '#334155';
+        button.style.left = '3px';
+    }
+    
+    // Save preference (you can add API call here)
+    console.log(`Notification ${type}: ${checkbox.checked ? 'enabled' : 'disabled'}`);
+    
+    // Show feedback
+    const feedback = document.createElement('div');
+    feedback.textContent = checkbox.checked ? '✓ Enabled' : '✗ Disabled';
+    feedback.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: ${checkbox.checked ? '#22c55e' : '#ef4444'};
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+    `;
+    document.body.appendChild(feedback);
+    setTimeout(() => feedback.remove(), 2000);
+}
+</script>
 
 @endsection

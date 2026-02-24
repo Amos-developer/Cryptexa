@@ -86,6 +86,13 @@
     ],
     [
     'icon' => 'bell',
+    'title' => 'View Notifications',
+    'desc' => 'See all your notifications',
+    'color' => '#38bdf8',
+    'link' => route('notifications')
+    ],
+    [
+    'icon' => 'bell',
     'title' => 'Notifications',
     'desc' => 'Manage notification settings',
     'color' => '#22c55e',

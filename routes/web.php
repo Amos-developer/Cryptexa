@@ -54,6 +54,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/account/password', fn() => view('password'))->name('account.password');
     Route::post('/account/password', [AuthController::class, 'updatePassword'])->name('account.password.update');
     Route::get('/about', fn() => view('about'))->name('about');
+    Route::get('/notifications', function() {
+        $notifications = \App\Models\Notification::where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('notifications', compact('notifications'));
+    })->name('notifications');
 
     // Two-Factor Authentication routes
     Route::get('/account/two-factor', [TwoFactorController::class, 'show'])->name('two-factor.show');
@@ -202,3 +208,7 @@ require __DIR__ . '/admin.php';
 // Public NOWPayments IPN (webhook) - must be reachable by NOWPayments (no auth/CSRF)
 Route::post('/nowpayments/ipn', [\App\Http\Controllers\NowPaymentsWebhookController::class, 'handle'])
     ->name('nowpayments.ipn');
+
+// Automation endpoint for localhost (remove in production)
+Route::get('/automation/run', [\App\Http\Controllers\AutomationController::class, 'runAll'])
+    ->name('automation.run');

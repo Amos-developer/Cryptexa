@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cryptexa Automation Monitor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+            color: #e5e7eb;
+            padding: 40px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+        h1 {
+            color: #38bdf8;
+            margin: 0 0 10px 0;
+        }
+        .status {
+            padding: 15px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        .log {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        .log-entry {
+            padding: 8px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+            margin-bottom: 5px;
+        }
+        .success { color: #22c55e; }
+        .error { color: #ef4444; }
+        .info { color: #38bdf8; }
+        button {
+            background: linear-gradient(135deg, #38bdf8, #22d3ee);
+            color: #020617;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Cryptexa Automation Monitor</h1>
+        <p style="color: #94a3b8; margin: 0 0 20px 0;">Localhost automation system running every 60 seconds</p>
+        
+        <div class="status">
+            <strong>Status:</strong> <span id="status" class="success">Running</span><br>
+            <strong>Last Run:</strong> <span id="lastRun">Never</span><br>
+            <strong>Next Run:</strong> <span id="nextRun">In 60s</span><br>
+            <strong>Total Runs:</strong> <span id="totalRuns">0</span>
+        </div>
+
+        <div style="margin: 20px 0;">
+            <button onclick="runNow()">▶️ Run Now</button>
+            <button onclick="toggleAuto()" id="toggleBtn">⏸️ Pause Auto-Run</button>
+            <button onclick="clearLogs()">🗑️ Clear Logs</button>
+        </div>
+
+        <h3>📋 Activity Log</h3>
+        <div class="log" id="log"></div>
+    </div>
+
+    <script>
+        let autoRunEnabled = true;
+        let totalRuns = 0;
+        let countdown = 60;
+        let intervalId;
+        let countdownId;
+
+        function addLog(message, type = 'info') {
+            const log = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
+            log.insertBefore(entry, log.firstChild);
+            
+            // Keep only last 50 entries
+            while (log.children.length > 50) {
+                log.removeChild(log.lastChild);
+            }
+        }
+
+        async function runAutomation() {
+            try {
+                addLog('🚀 Running automation tasks...', 'info');
+                
+                const response = await fetch('/automation/run');
+                const data = await response.json();
+                
+                if (data.success) {
+                    totalRuns++;
+                    document.getElementById('totalRuns').textContent = totalRuns;
+                    document.getElementById('lastRun').textContent = new Date().toLocaleTimeString();
+                    
+                    addLog(`✅ Automation completed successfully`, 'success');
+                    addLog(`   - Pools completed: ${data.results.pool_completion.completed}`, 'success');
+                    addLog(`   - Compound processed: ${data.results.compound_interest.processed}`, 'success');
+                    addLog(`   - Deposits checked: ${data.results.deposit_check.checked}`, 'success');
+                    addLog(`   - Withdrawals reminded: ${data.results.withdrawal_reminders.reminded}`, 'success');
+                    addLog(`   - Database cleaned: ${data.results.database_cleanup.cleaned}`, 'success');
+                } else {
+                    addLog('❌ Automation failed', 'error');
+                }
+            } catch (error) {
+                addLog(`❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        function runNow() {
+            clearInterval(intervalId);
+            clearInterval(countdownId);
+            countdown = 60;
+            runAutomation();
+            if (autoRunEnabled) {
+                startAutoRun();
+            }
+        }
+
+        function toggleAuto() {
+            autoRunEnabled = !autoRunEnabled;
+            const btn = document.getElementById('toggleBtn');
+            const status = document.getElementById('status');
+            
+            if (autoRunEnabled) {
+                btn.textContent = '⏸️ Pause Auto-Run';
+                status.textContent = 'Running';
+                status.className = 'success';
+                startAutoRun();
+                addLog('▶️ Auto-run enabled', 'info');
+            } else {
+                btn.textContent = '▶️ Resume Auto-Run';
+                status.textContent = 'Paused';
+                status.className = 'error';
+                clearInterval(intervalId);
+                clearInterval(countdownId);
+                addLog('⏸️ Auto-run paused', 'info');
+            }
+        }
+
+        function clearLogs() {
+            document.getElementById('log').innerHTML = '';
+            addLog('🗑️ Logs cleared', 'info');
+        }
+
+        function startAutoRun() {
+            countdown = 60;
+            
+            intervalId = setInterval(() => {
+                runAutomation();
+                countdown = 60;
+            }, 60000);
+
+            countdownId = setInterval(() => {
+                countdown--;
+                document.getElementById('nextRun').textContent = `In ${countdown}s`;
+                if (countdown <= 0) countdown = 60;
+            }, 1000);
+        }
+
+        // Start on page load
+        addLog('🎯 Automation monitor started', 'success');
+        runAutomation();
+        startAutoRun();
+    </script>
+</body>
+</html>
