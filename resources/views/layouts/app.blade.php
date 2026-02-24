@@ -10,10 +10,11 @@
     <!-- PWA -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <meta name="theme-color" content="#38bdf8">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Cryptexa">
-    <link rel="apple-touch-icon" href="{{ asset('images/icon-192.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo/48.png') }}">
 
     <!-- Fonts -->
     <link rel="stylesheet" href="{{ asset('fonts/fonts.css') }}">
@@ -76,7 +77,7 @@
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js')
             .then(reg => console.log('Service Worker registered'))
-            .catch(err => console.log('Service Worker registration failed'));
+            .catch(err => console.log('Service Worker registration failed:', err));
     }
     </script>
 

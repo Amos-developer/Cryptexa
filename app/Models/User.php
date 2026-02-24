@@ -32,6 +32,8 @@ class User extends Authenticatable
         'referred_by',
         'verification_code',
         'verification_expires_at',
+        'email_verification_code',
+        'email_verification_expires_at',
         'email_verified_at',
         'two_factor_secret',
         'two_factor_recovery_codes',

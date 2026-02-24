@@ -24,6 +24,8 @@ return new class extends Migration
             $table->unsignedBigInteger('referred_by')->nullable();
             $table->string('verification_code')->nullable();
             $table->timestamp('verification_expires_at')->nullable();
+            $table->string('email_verification_code')->nullable();
+            $table->timestamp('email_verification_expires_at')->nullable();
             $table->text('two_factor_secret')->nullable();
             $table->text('two_factor_recovery_codes')->nullable();
             $table->boolean('two_factor_enabled')->default(false);

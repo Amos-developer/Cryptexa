@@ -139,6 +139,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('withdraw.send-code')
         ->middleware('auth');
 
+    Route::post('/withdraw/verify-code', [WithdrawalController::class, 'verifyCode'])
+        ->name('withdraw.verify-code')
+        ->middleware('auth');
+
     Route::get('/withdraw/history', [WithdrawalController::class, 'history'])
         ->name('withdraw.history')
         ->middleware('auth');

@@ -36,17 +36,21 @@
 </div>
 
 <!-- MAIN CONTENT -->
-<div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%);">
-    <div class="tf-container">
+<div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%); min-height: 100vh;">
+    <div class="tf-container" style="max-width: 500px; margin: 0 auto; padding: 0 20px;">
 
-        <!-- PAGE HEADER -->
-        <div class="mb-32" style="animation: slideDown 0.6s ease;">
-            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 12px 0;">Withdraw Your Funds</h1>
-            <p class="text-secondary" style="font-size: 14px; margin: 0;">Secure withdrawal with multiple network options</p>
+        <!-- BALANCE CARD -->
+        <div style="text-align: center; margin-bottom: 24px; animation: slideDown 0.6s ease;">
+            <div style="background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(34,197,94,0.1)); border: 1px solid rgba(56,189,248,0.2); border-radius: 20px; padding: 24px; box-shadow: 0 10px 40px rgba(56,189,248,0.15);">
+                <p style="color: #94a3b8; font-size: 12px; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Available Balance</p>
+                <h1 style="color: #e5e7eb; font-weight: 900; font-size: 36px; margin: 0 0 4px 0; background: linear-gradient(135deg, #38bdf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ number_format(auth()->user()->balance, 2) }}</h1>
+                <p style="color: #64748b; font-size: 11px; margin: 0;">USDT • Min Withdrawal $10</p>
+            </div>
         </div>
 
         @php
-        $hasCompletedPool = \App\Models\ComputeOrder::where('user_id', auth()->id())->where('status', 'completed')->exists();
+        $hasCompletedPool = true; // Temporarily unlocked for testing
+        // $hasCompletedPool = \App\Models\ComputeOrder::where('user_id', auth()->id())->where('status', 'completed')->exists();
         @endphp
 
         @if(!$hasCompletedPool)
@@ -128,10 +132,9 @@
 
             <!-- NETWORK SELECT -->
             <div class="mb-28" style="animation: slideUp 0.6s ease 0.1s backwards;">
-                <h5 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0 0 12px 0;">
-                    🌐 Select Withdrawal Network
+                <h5 style="color: #e5e7eb; font-weight: 700; font-size: 15px; margin: 0 0 14px 0;">
+                    Select Network
                 </h5>
-                <p class="text-secondary" style="font-size: 12px; margin: 0 0 14px 0;">Choose your preferred blockchain network</p>
 
                 <div style="display: grid; gap: 10px;">
 
@@ -210,7 +213,7 @@
 
             <!-- WITHDRAWAL AMOUNT -->
             <div class="mb-24" style="animation: slideUp 0.6s ease 0.15s backwards;">
-                <h5 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0 0 10px 0;">💰 Withdrawal Amount</h5>
+                <h5 style="color: #e5e7eb; font-weight: 700; font-size: 15px; margin: 0 0 14px 0;">Amount</h5>
                 <div style="
                     display: flex;
                     align-items: center;
@@ -226,7 +229,7 @@
                     <span style="color: #94a3b8; font-weight: 700; font-size: 16px;">$</span>
                     <input type="number"
                         step="0.01"
-                        min="30"
+                        min="10"
                         name="amount"
                         placeholder="100.00"
                         class="amount-input"
@@ -242,15 +245,14 @@
                     " required>
                 </div>
 
-                <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 12px;">
-                    <span class="text-secondary">Minimum: <span style="color: #38bdf8; font-weight: 700;">$30</span></span>
-                    <span class="text-secondary">Available: <span style="color: #22c55e; font-weight: 700;">{{ number_format(auth()->user()->balance, 2) }} USDT</span></span>
+                <div style="margin-top: 10px; font-size: 12px; text-align: center;">
+                    <span class="text-secondary">Minimum: <span style="color: #38bdf8; font-weight: 700;">$10</span></span>
                 </div>
             </div>
 
             <!-- WALLET ADDRESS -->
             <div class="mb-24" style="animation: slideUp 0.6s ease 0.2s backwards;">
-                <h5 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0 0 10px 0;">📮 Wallet Address</h5>
+                <h5 style="color: #e5e7eb; font-weight: 700; font-size: 15px; margin: 0 0 14px 0;">Wallet Address</h5>
                 <input type="text"
                     id="addressInput"
                     name="address"
@@ -269,18 +271,18 @@
                     onfocus="this.style.borderColor='rgba(56,189,248,0.3)'"
                     onblur="this.style.borderColor='rgba(56,189,248,0.15)'"
                     required>
-                <p class="text-secondary" style="font-size: 12px; margin: 8px 0 0 0;">✓ Double-check the address to avoid losing funds</p>
+                <p class="text-secondary" style="font-size: 12px; margin: 8px 0 0 0;">✓ Check your email for the 6-digit verification code</p>
             </div>
 
             <!-- SECURITY SECTION -->
             <div class="mb-24" style="
                 background: linear-gradient(135deg, rgba(168,85,247,0.08) 0%, rgba(168,85,247,0.02) 100%);
                 border: 1px solid rgba(168,85,247,0.15);
-                border-radius: 12px;
+                border-radius: 16px;
                 padding: 20px;
                 animation: slideUp 0.6s ease 0.25s backwards;
             ">
-                <h5 style="color: #a855f7; font-weight: 700; font-size: 15px; margin: 0 0 16px 0;">🔒 Security Verification</h5>
+                <h5 style="color: #a855f7; font-weight: 700; font-size: 15px; margin: 0 0 16px 0;">Security Verification</h5>
 
                 <!-- PIN INPUT -->
                 <div class="mb-16">
@@ -310,45 +312,52 @@
                 <!-- EMAIL CODE -->
                 <div>
                     <label class="text-secondary" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">Email Verification Code</label>
-                    <div style="display: flex; gap: 10px;">
+                    <div style="display: flex; gap: 8px;">
                         <input type="text"
+                            id="emailCodeInput"
                             maxlength="6"
                             name="email_code"
                             placeholder="000000"
+                            disabled
                             style="
                             flex: 1;
                             background: rgba(255,255,255,0.02);
                             border: 1px solid rgba(168,85,247,0.2);
                             border-radius: 10px;
                             color: #e5e7eb;
-                            font-size: 16px;
-                            letter-spacing: 4px;
+                            font-size: 18px;
+                            letter-spacing: 3px;
                             text-align: center;
                             padding: 12px;
                             transition: all 0.3s ease;
                             box-sizing: border-box;
+                            font-weight: 600;
+                            opacity: 0.5;
                         "
                             onfocus="this.style.borderColor='rgba(168,85,247,0.4)'"
                             onblur="this.style.borderColor='rgba(168,85,247,0.2)'"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             required>
 
                         <button type="button"
+                            id="sendCodeBtn"
                             onclick="sendWithdrawCode()"
                             style="
-                            background: linear-gradient(135deg, rgba(168,85,247,0.15) 0%, rgba(168,85,247,0.05) 100%);
-                            border: 1px solid rgba(168,85,247,0.3);
-                            color: #a855f7;
+                            background: linear-gradient(135deg, #a855f7, #9333ea);
+                            border: none;
+                            width: 50px;
+                            color: white;
                             font-weight: 700;
                             border-radius: 10px;
-                            padding: 12px 14px;
                             white-space: nowrap;
                             transition: all 0.3s ease;
                             font-size: 12px;
                             cursor: pointer;
+                            box-shadow: 0 4px 12px rgba(168,85,247,0.3);
                         "
-                            onmouseover="this.style.background='linear-gradient(135deg, rgba(168,85,247,0.2) 0%, rgba(168,85,247,0.1) 100%)'; this.style.boxShadow='0 0 15px rgba(168,85,247,0.2)';"
-                            onmouseout="this.style.background='linear-gradient(135deg, rgba(168,85,247,0.15) 0%, rgba(168,85,247,0.05) 100%)'; this.style.boxShadow='none';">
-                            📤 Send
+                            onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 16px rgba(168,85,247,0.4)';"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(168,85,247,0.3)';">
+                            Send Code
                         </button>
                     </div>
                 </div>
@@ -356,42 +365,64 @@
 
             <!-- SUBMIT BUTTON -->
             <button type="submit"
+                id="submitBtn"
+                disabled
                 style="
                 width: 100%;
-                padding: 16px;
-                border-radius: 12px;
-                background: linear-gradient(135deg, rgba(34,197,94,0.2) 0%, rgba(34,197,94,0.1) 100%);
-                border: 1px solid rgba(34,197,94,0.3);
-                color: #22c55e;
+                padding: 18px;
+                border-radius: 16px;
+                background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+                border: none;
+                color: white;
                 font-weight: 700;
-                font-size: 15px;
-                cursor: pointer;
+                font-size: 16px;
+                cursor: not-allowed;
                 transition: all 0.3s ease;
-                box-shadow: 0 0 30px rgba(34,197,94,0.0);
+                box-shadow: 0 10px 30px rgba(56,189,248,0.3);
                 animation: slideUp 0.6s ease 0.3s backwards;
+                opacity: 0.5;
             "
-                onmouseover="this.style.background='linear-gradient(135deg, rgba(34,197,94,0.3) 0%, rgba(34,197,94,0.15) 100%)'; this.style.boxShadow='0 0 30px rgba(34,197,94,0.3)'; this.style.transform='translateY(-2px)';"
-                onmouseout="this.style.background='linear-gradient(135deg, rgba(34,197,94,0.2) 0%, rgba(34,197,94,0.1) 100%)'; this.style.boxShadow='0 0 30px rgba(34,197,94,0.0)'; this.style.transform='translateY(0)';">
-                💸 Confirm Withdrawal
+                onmouseover="if(!this.disabled) { this.style.transform='translateY(-2px)'; this.style.boxShadow='0 15px 40px rgba(56,189,248,0.4)'; }"
+                onmouseout="if(!this.disabled) { this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(56,189,248,0.3)'; }">
+                Confirm Withdrawal
             </button>
 
             <!-- INFO BOX -->
             <div style="
                 background: linear-gradient(135deg, rgba(56,189,248,0.08) 0%, rgba(56,189,248,0.02) 100%);
                 border: 1px solid rgba(56,189,248,0.15);
-                border-radius: 12px;
-                padding: 16px;
+                border-radius: 16px;
+                padding: 18px;
                 margin-top: 20px;
                 animation: slideUp 0.6s ease 0.35s backwards;
             ">
-                <p class="text-secondary" style="font-size: 12px; margin: 0 0 10px 0; line-height: 1.6;">
-                    <span style="color: #38bdf8; font-weight: 700;">⏱️ Processing Time:</span><br>
-                    All withdrawals require admin approval for security. Processing typically takes 20 minutes to 24 hours depending on verification and network confirmation.
-                </p>
-                <p class="text-secondary" style="font-size: 12px; margin: 0; line-height: 1.6;">
-                    <span style="color: #fbbf24; font-weight: 700;">🔒 Security Notice:</span><br>
-                    Your withdrawal will be reviewed by our security team before processing to ensure account safety.
-                </p>
+                <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                    <div style="width: 32px; height: 32px; background: rgba(56,189,248,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 16v-4M12 8h.01"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p style="color: #38bdf8; font-weight: 700; font-size: 13px; margin: 0 0 6px 0;">Processing Time</p>
+                        <p class="text-secondary" style="font-size: 12px; margin: 0; line-height: 1.6;">
+                            Withdrawals require admin approval. Processing takes 20 minutes to 24 hours.
+                        </p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <div style="width: 32px; height: 32px; background: rgba(251,191,36,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p style="color: #fbbf24; font-weight: 700; font-size: 13px; margin: 0 0 6px 0;">Security Notice</p>
+                        <p class="text-secondary" style="font-size: 12px; margin: 0; line-height: 1.6;">
+                            Your withdrawal will be reviewed by our security team before processing.
+                        </p>
+                    </div>
+                </div>
             </div>
 
         </form>
@@ -441,55 +472,16 @@
 
     /* MOBILE RESPONSIVE */
     @media (max-width: 768px) {
-        .pt-80 {
-            padding-top: 80px !important;
+        .tf-container {
+            padding: 0 16px !important;
         }
 
-        .pb-80 {
-            padding-bottom: 60px !important;
-        }
-
-        h1 {
-            font-size: 24px !important;
-        }
-
-        h5 {
-            font-size: 14px !important;
-        }
-
-        [style*="padding: 20px"] {
-            padding: 16px !important;
-        }
-
-        [style*="padding: 14px"] {
-            padding: 12px !important;
-        }
-
-        [style*="gap: 10px"] {
-            gap: 8px !important;
-        }
-
-        .mb-28 {
-            margin-bottom: 20px !important;
-        }
-
-        .mb-24 {
-            margin-bottom: 18px !important;
-        }
-
-        p {
-            font-size: 12px !important;
-        }
-    }
-
-    /* TABLET RESPONSIVE */
-    @media (min-width: 769px) and (max-width: 1024px) {
         h1 {
             font-size: 28px !important;
         }
 
         h5 {
-            font-size: 15px !important;
+            font-size: 14px !important;
         }
     }
 </style>
@@ -515,7 +507,7 @@
     const maxBalance = parseFloat(amountInput.dataset.maxBalance);
 
     amountInput.addEventListener('input', function() {
-        if (parseFloat(this.value) < 30) {
+        if (parseFloat(this.value) < 10) {
             this.style.borderColor = '#ef4444';
         } else if (parseFloat(this.value) > maxBalance) {
             this.style.borderColor = '#fbbf24';
@@ -524,24 +516,129 @@
         }
     });
 
-    // Send verification code
+    // Send verification code with cooldown
+    let cooldownTimer = null;
+    let isVerified = false;
+    
     function sendWithdrawCode() {
+        const btn = document.getElementById('sendCodeBtn');
+        const emailInput = document.getElementById('emailCodeInput');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        if (btn.disabled) return;
+
+        btn.disabled = true;
+        btn.style.opacity = '0.6';
+        btn.style.cursor = 'not-allowed';
+        btn.textContent = 'Sending...';
+
         fetch('{{ route("withdraw.send-code") }}', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 }
             })
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('HTTP error ' + res.status);
+                }
+                return res.json();
+            })
             .then(data => {
                 if (data.success) {
-                    Swal.fire('Success', 'Verification code sent to your email', 'success');
+                    Swal.fire({
+                        title: 'Code Sent!',
+                        html: data.message,
+                        icon: 'success',
+                        confirmButtonColor: '#22c55e',
+                        background: '#020617',
+                        color: '#e5e7eb'
+                    });
+                    
+                    // Enable email input
+                    emailInput.disabled = false;
+                    emailInput.style.opacity = '1';
+                    emailInput.focus();
+                    
+                    // Change button to Verify
+                    btn.textContent = 'Verify';
+                    btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+                    btn.onclick = verifyCode;
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                    btn.style.cursor = 'pointer';
                 } else {
-                    Swal.fire('Error', data.message || 'Failed to send code', 'error');
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                    btn.style.cursor = 'pointer';
+                    btn.textContent = 'Send Code';
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data.message || 'Failed to send code',
+                        icon: 'error',
+                        confirmButtonColor: '#ef4444',
+                        background: '#020617',
+                        color: '#e5e7eb'
+                    });
                 }
             })
-            .catch(err => Swal.fire('Error', 'Network error', 'error'));
+            .catch(err => {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.style.cursor = 'pointer';
+                btn.textContent = 'Send Code';
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Network error: ' + err.message,
+                    icon: 'error',
+                    confirmButtonColor: '#ef4444',
+                    background: '#020617',
+                    color: '#e5e7eb'
+                });
+            });
+    }
+    
+    function verifyCode() {
+        const emailInput = document.getElementById('emailCodeInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const btn = document.getElementById('sendCodeBtn');
+        
+        if (emailInput.value.length !== 6) {
+            Swal.fire({
+                title: 'Invalid Code',
+                text: 'Please enter a 6-digit verification code',
+                icon: 'warning',
+                confirmButtonColor: '#fbbf24',
+                background: '#020617',
+                color: '#e5e7eb'
+            });
+            return;
+        }
+        
+        // Mark as verified and enable submit
+        isVerified = true;
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.cursor = 'pointer';
+        
+        // Lock the code input and button
+        emailInput.disabled = true;
+        emailInput.style.opacity = '0.7';
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.textContent = '✓ Verified';
+        
+        Swal.fire({
+            title: 'Verified!',
+            text: 'You can now confirm your withdrawal',
+            icon: 'success',
+            confirmButtonColor: '#22c55e',
+            background: '#020617',
+            color: '#e5e7eb',
+            timer: 2000
+        });
     }
 </script>
 

@@ -40,7 +40,7 @@ class WithdrawalController extends Controller
         $request->validate([
             'network'     => 'required|in:BEP20,TRC20,ERC20',
             'address'     => 'required|string|min:20|max:120',
-            'amount'      => 'required|numeric|min:30',
+            'amount'      => 'required|numeric|min:10',
             'pin'         => 'required|digits:4',
             'email_code'  => 'required|digits:6',
         ]);
@@ -109,23 +109,74 @@ class WithdrawalController extends Controller
      */
     public function sendCode()
     {
+        try {
+            $user = auth()->user();
+
+            // Generate 6-digit code
+            $code = random_int(100000, 999999);
+
+            // Store in database (expires in 10 minutes)
+            $user->update([
+                'email_verification_code' => $code,
+                'email_verification_expires_at' => now()->addMinutes(10),
+            ]);
+
+            // Send email with code
+            try {
+                \Mail::send('emails.withdrawal-verification', [
+                    'code' => $code,
+                    'url' => route('withdraw')
+                ], function ($message) use ($user) {
+                    $message->to($user->email)
+                        ->subject('Withdrawal Verification Code - Cryptexa');
+                });
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Verification code sent to ' . substr($user->email, 0, 3) . '***@' . explode('@', $user->email)[1]
+                ]);
+            } catch (\Exception $e) {
+                \Log::error('Failed to send email: ' . $e->getMessage());
+                
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to send verification code. Please try again or contact support.'
+                ]);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Send code error: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred. Please try again.'
+            ], 500);
+        }
+    }
+
+    /**
+     * Verify email code
+     */
+    public function verifyCode(Request $request)
+    {
         $user = auth()->user();
-
-        // Generate 6-digit code
-        $code = random_int(100000, 999999);
-
-        // Store in database (expires in 10 minutes)
-        $user->update([
-            'email_verification_code' => $code,
-            'email_verification_expires_at' => now()->addMinutes(10),
+        
+        $request->validate([
+            'code' => 'required|digits:6'
         ]);
 
-        // TODO: Send email with code (implement Mail::send)
-        // Mail::send('emails.verification-code', ['code' => $code], function ($mail) use ($user) {
-        //     $mail->to($user->email)->subject('Withdrawal Verification Code');
-        // });
+        if (
+            $user->email_verification_code !== $request->code ||
+            now()->gt($user->email_verification_expires_at)
+        ) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid or expired verification code'
+            ]);
+        }
 
-        return back()->with('success', 'Verification code sent to your email.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Code verified successfully'
+        ]);
     }
 
     /**
