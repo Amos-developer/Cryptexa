@@ -69,6 +69,13 @@
       <h2>${{ number_format($totalWithdrawals, 2) }}</h2>
     </div>
   </div>
+  <div class="stat-box">
+    <div class="stat-icon purple"><i class="fa fa-hourglass-half"></i></div>
+    <div class="stat-info">
+      <h4>Pending Withdrawals</h4>
+      <h2>${{ number_format($totalPendingWithdrawals, 2) }}</h2>
+    </div>
+  </div>
 </div>
 
 <div class="dash-grid">

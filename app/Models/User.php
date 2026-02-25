@@ -81,6 +81,11 @@ class User extends Authenticatable
         return $this->hasMany(ReferralEarning::class);
     }
 
+    public function deposits()
+    {
+        return $this->hasMany(Deposit::class);
+    }
+
     protected static function booted()
     {
         static::creating(function ($user) {

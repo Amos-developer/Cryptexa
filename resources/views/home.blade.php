@@ -34,30 +34,51 @@
     <div class="quick-actions">
         <a href="{{ route('choose.cryptocurrency') }}" class="action-card">
             <div class="action-icon">
-                <img src="{{ asset('images/icons/deposit.svg') }}" alt="Deposit" style="width: 24px; height: 24px;">
+                <img src="{{ asset('images/icons/deposit.svg') }}" alt="Deposit">
             </div>
             <div class="action-label">Deposit</div>
         </a>
 
         <a href="{{ route('withdraw') }}" class="action-card">
             <div class="action-icon">
-                <img src="{{ asset('images/icons/withdraw.svg') }}" alt="Withdraw" style="width: 24px; height: 24px;">
+                <img src="{{ asset('images/icons/withdraw.svg') }}" alt="Withdraw">
             </div>
             <div class="action-label">Withdraw</div>
         </a>
 
         <a href="{{ route('checkin') }}" class="action-card">
             <div class="action-icon">
-                <img src="{{ asset('images/icons/checkin.svg') }}" alt="Check-in" style="width: 20px; height: 20px;">
+                <img src="{{ asset('images/icons/checkin.svg') }}" alt="Check-in">
             </div>
             <div class="action-label">Check-in</div>
         </a>
 
         <a href="{{ route('luckybox') }}" class="action-card">
             <div class="action-icon">
-                <img src="{{ asset('images/icons/luckybox.svg') }}" alt="Lucky Box" style="width: 20px; height: 20px;">
+                <img src="{{ asset('images/icons/luckybox.svg') }}" alt="Lucky Box">
             </div>
             <div class="action-label">Lucky Box</div>
+        </a>
+
+        <a href="{{ route('weekly-salary') }}" class="action-card">
+            <div class="action-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                    <path d="M7 15h0M12 15h0M17 15h0M7 11h10M7 7h10"/>
+                </svg>
+            </div>
+            <div class="action-label">Weekly Salary</div>
+        </a>
+
+        <a href="{{ route('leaderboard') }}" class="action-card">
+            <div class="action-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
+            </div>
+            <div class="action-label">Leaders Rank</div>
         </a>
     </div>
 

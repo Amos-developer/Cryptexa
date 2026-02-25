@@ -18,6 +18,7 @@ class AdminDashboardController extends Controller
             'totalDeposits' => Deposit::where('status', 'completed')->sum('amount'),
             'totalWithdrawals' => Withdrawal::whereIn('status', ['completed', 'approved'])->sum('amount'),
             'totalPendingDeposits' => Deposit::whereIn('status', ['pending', 'confirming', 'waiting'])->sum('amount'),
+            'totalPendingWithdrawals' => Withdrawal::where('status', 'pending')->sum('amount'),
             'newUsersToday' => User::whereDate('created_at', today())->count(),
             'completedDeposits' => Deposit::where('status', 'completed')->count(),
             'pendingDeposits' => Deposit::whereIn('status', ['pending', 'confirming'])->count(),

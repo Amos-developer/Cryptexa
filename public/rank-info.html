@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptexa Leadership Ranks - Complete Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0d1726 100%);
+            color: #e5e7eb;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.05));
+            border: 1px solid rgba(56,189,248,0.3);
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 { font-size: 32px; color: #38bdf8; margin-bottom: 10px; }
+        .header p { color: #94a3b8; font-size: 16px; }
+        
+        .section {
+            background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.9));
+            border: 1px solid rgba(56,189,248,0.15);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            color: #38bdf8;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section h3 {
+            color: #e5e7eb;
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+        }
+        
+        .rank-card {
+            background: linear-gradient(135deg, rgba(56,189,248,0.12), rgba(56,189,248,0.05));
+            border: 1px solid rgba(56,189,248,0.25);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .rank-card.junior { background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(34,197,94,0.05)); border-color: rgba(34,197,94,0.25); }
+        .rank-card.elite { background: linear-gradient(135deg, rgba(56,189,248,0.12), rgba(56,189,248,0.05)); border-color: rgba(56,189,248,0.25); }
+        .rank-card.legendary { background: linear-gradient(135deg, rgba(245,158,11,0.12), rgba(245,158,11,0.05)); border-color: rgba(245,158,11,0.25); }
+        .rank-card.grand { background: linear-gradient(135deg, rgba(168,85,247,0.12), rgba(168,85,247,0.05)); border-color: rgba(168,85,247,0.25); }
+        
+        .rank-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .rank-icon { font-size: 40px; }
+        .rank-title { flex: 1; }
+        .rank-title h4 { font-size: 20px; margin-bottom: 5px; }
+        .rank-title p { color: #94a3b8; font-size: 14px; }
+        
+        .rank-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .detail-item {
+            background: rgba(0,0,0,0.2);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .detail-label { color: #64748b; font-size: 12px; margin-bottom: 5px; }
+        .detail-value { color: #e5e7eb; font-size: 18px; font-weight: 700; }
+        
+        .commission-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .commission-table th,
+        .commission-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(56,189,248,0.1);
+        }
+        .commission-table th {
+            background: rgba(56,189,248,0.1);
+            color: #38bdf8;
+            font-weight: 700;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(251,191,36,0.05));
+            border: 1px solid rgba(251,191,36,0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .highlight-box strong { color: #fbbf24; }
+        
+        .info-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .info-list li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .info-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #22c55e;
+            font-weight: 700;
+        }
+        
+        .example-box {
+            background: rgba(168,85,247,0.1);
+            border: 1px solid rgba(168,85,247,0.25);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .example-box h4 { color: #a855f7; margin-bottom: 10px; }
+        
+        @media print {
+            body { background: white; color: black; }
+            .section { border: 1px solid #ddd; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Header -->
+        <div class="header">
+            <h1>🏆 Cryptexa Leadership Ranks</h1>
+            <p>Complete Guide to Ranks, Bonuses & Weekly Salaries</p>
+        </div>
+
+        <!-- Overview -->
+        <div class="section">
+            <h2>📊 System Overview</h2>
+            <p style="color: #94a3b8; margin-bottom: 15px;">
+                Cryptexa's Leadership Rank system rewards you for building an active team. Ranks are based on the number of <strong style="color: #22c55e;">active members</strong> (users who have made at least one completed deposit) across your 3-level referral network.
+            </p>
+            <div class="highlight-box">
+                <strong>Active Member = </strong> Any referral (Level 1, 2, or 3) who has made at least one successful deposit
+            </div>
+        </div>
+
+        <!-- Rank Requirements -->
+        <div class="section">
+            <h2>🎯 Rank Requirements & Rewards</h2>
+            
+            <!-- Junior Leader -->
+            <div class="rank-card junior">
+                <div class="rank-header">
+                    <div class="rank-icon">🌟</div>
+                    <div class="rank-title">
+                        <h4 style="color: #22c55e;">Junior Leader</h4>
+                        <p>Entry Level Rank</p>
+                    </div>
+                </div>
+                <div class="rank-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Required</div>
+                        <div class="detail-value" style="color: #22c55e;">3 Active</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">One-Time Bonus</div>
+                        <div class="detail-value" style="color: #22c55e;">$5</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Weekly Salary</div>
+                        <div class="detail-value" style="color: #64748b;">None</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Elite Leader -->
+            <div class="rank-card elite">
+                <div class="rank-header">
+                    <div class="rank-icon">💎</div>
+                    <div class="rank-title">
+                        <h4 style="color: #38bdf8;">Elite Leader (Pro)</h4>
+                        <p>Professional Level</p>
+                    </div>
+                </div>
+                <div class="rank-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Required</div>
+                        <div class="detail-value" style="color: #38bdf8;">10 Active</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">One-Time Bonus</div>
+                        <div class="detail-value" style="color: #38bdf8;">$20</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Weekly Salary</div>
+                        <div class="detail-value" style="color: #22c55e;">$10/week</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legendary Leader -->
+            <div class="rank-card legendary">
+                <div class="rank-header">
+                    <div class="rank-icon">⭐</div>
+                    <div class="rank-title">
+                        <h4 style="color: #f59e0b;">Legendary Leader</h4>
+                        <p>Advanced Level</p>
+                    </div>
+                </div>
+                <div class="rank-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Required</div>
+                        <div class="detail-value" style="color: #f59e0b;">30 Active</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">One-Time Bonus</div>
+                        <div class="detail-value" style="color: #f59e0b;">$50</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Weekly Salary</div>
+                        <div class="detail-value" style="color: #22c55e;">$25/week</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grand Leader -->
+            <div class="rank-card grand">
+                <div class="rank-header">
+                    <div class="rank-icon">👑</div>
+                    <div class="rank-title">
+                        <h4 style="color: #a855f7;">Grand Leader</h4>
+                        <p>Master Level</p>
+                    </div>
+                </div>
+                <div class="rank-details">
+                    <div class="detail-item">
+                        <div class="detail-label">Required</div>
+                        <div class="detail-value" style="color: #a855f7;">100 Active</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">One-Time Bonus</div>
+                        <div class="detail-value" style="color: #a855f7;">$150</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Weekly Salary</div>
+                        <div class="detail-value" style="color: #22c55e;">$50/week</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Commission Structure -->
+        <div class="section">
+            <h2>💰 Referral Commission Structure</h2>
+            <p style="color: #94a3b8; margin-bottom: 15px;">
+                Earn commissions from deposits made by your referrals across 3 levels:
+            </p>
+            <table class="commission-table">
+                <thead>
+                    <tr>
+                        <th>Level</th>
+                        <th>Description</th>
+                        <th>Commission Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Level 1</strong></td>
+                        <td>Direct Referrals</td>
+                        <td><strong style="color: #22c55e;">2%</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Level 2</strong></td>
+                        <td>Referrals of your referrals</td>
+                        <td><strong style="color: #22c55e;">1%</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Level 3</strong></td>
+                        <td>Third generation referrals</td>
+                        <td><strong style="color: #22c55e;">0.5%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- How It Works -->
+        <div class="section">
+            <h2>🔄 How It Works</h2>
+            
+            <h3>1. Build Your Team</h3>
+            <ul class="info-list">
+                <li>Share your referral link with others</li>
+                <li>When they register and make deposits, they become active members</li>
+                <li>Active members count across all 3 levels (Level 1 + Level 2 + Level 3)</li>
+            </ul>
+
+            <h3>2. Reach Rank Requirements</h3>
+            <ul class="info-list">
+                <li>Your rank is automatically calculated based on total active members</li>
+                <li>Once you reach the requirement, you instantly qualify for that rank</li>
+                <li>Ranks are permanent - you never lose a rank once achieved</li>
+            </ul>
+
+            <h3>3. Receive Rewards</h3>
+            <ul class="info-list">
+                <li><strong>One-Time Bonus:</strong> Paid immediately when you reach a new rank (paid once per rank)</li>
+                <li><strong>Weekly Salary:</strong> Paid every Monday for Elite Leaders and above</li>
+                <li><strong>Referral Commissions:</strong> Earned continuously from all deposits</li>
+            </ul>
+        </div>
+
+        <!-- Example Calculation -->
+        <div class="section">
+            <h2>📈 Example Calculation</h2>
+            
+            <div class="example-box">
+                <h4>Scenario: You have 15 active members</h4>
+                <p style="color: #94a3b8; margin: 10px 0;">
+                    • 6 active members in Level 1<br>
+                    • 7 active members in Level 2<br>
+                    • 2 active members in Level 3<br>
+                    <strong style="color: #e5e7eb;">Total: 15 active members</strong>
+                </p>
+                <p style="color: #38bdf8; font-weight: 700; margin-top: 15px;">
+                    ✓ You qualify for Elite Leader rank!
+                </p>
+                <p style="color: #94a3b8; margin-top: 10px;">
+                    <strong>You receive:</strong><br>
+                    • $5 bonus (Junior Leader - already claimed)<br>
+                    • $20 bonus (Elite Leader - one-time)<br>
+                    • $10 every Monday (weekly salary)<br>
+                    • Plus ongoing 2%, 1%, 0.5% commissions from all deposits
+                </p>
+            </div>
+
+            <div class="example-box">
+                <h4>Monthly Income Potential (Elite Leader)</h4>
+                <p style="color: #94a3b8;">
+                    • Weekly Salary: $10 × 4 weeks = <strong style="color: #22c55e;">$40/month</strong><br>
+                    • Referral Commissions: Variable based on team deposits<br>
+                    • Example: If your team deposits $5,000/month total<br>
+                    &nbsp;&nbsp;→ You earn approximately <strong style="color: #22c55e;">$50-100/month</strong> in commissions<br>
+                    <strong style="color: #e5e7eb; margin-top: 10px; display: block;">
+                    Total Potential: $90-140/month + one-time bonuses
+                    </strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Important Notes -->
+        <div class="section">
+            <h2>⚠️ Important Information</h2>
+            <ul class="info-list">
+                <li><strong>Active Member Definition:</strong> A user who has made at least one completed deposit</li>
+                <li><strong>One-Time Bonuses:</strong> Paid only once per rank when you first achieve it</li>
+                <li><strong>Weekly Salary:</strong> Only Elite Leaders and above receive weekly salary</li>
+                <li><strong>Payment Schedule:</strong> Weekly salaries are paid every Monday automatically</li>
+                <li><strong>Rank Permanence:</strong> Once you achieve a rank, you keep it forever</li>
+                <li><strong>Commission Timing:</strong> Commissions are credited when deposits are completed</li>
+                <li><strong>No Downgrade:</strong> Your rank never decreases, even if active members become inactive</li>
+            </ul>
+        </div>
+
+        <!-- FAQ -->
+        <div class="section">
+            <h2>❓ Frequently Asked Questions</h2>
+            
+            <h3>Q: How do I track my active members?</h3>
+            <p style="color: #94a3b8; margin-bottom: 15px;">
+                Visit your Team page to see all your referrals and their status. Active members are marked with a green "Active" badge.
+            </p>
+
+            <h3>Q: When do I receive my rank bonus?</h3>
+            <p style="color: #94a3b8; margin-bottom: 15px;">
+                Rank bonuses are credited to your balance immediately when you reach the required number of active members.
+            </p>
+
+            <h3>Q: Can I lose my rank?</h3>
+            <p style="color: #94a3b8; margin-bottom: 15px;">
+                No! Once you achieve a rank, it's permanent. You'll continue receiving weekly salary even if some members become inactive.
+            </p>
+
+            <h3>Q: How is weekly salary paid?</h3>
+            <p style="color: #94a3b8; margin-bottom: 15px;">
+                Weekly salaries are automatically credited to your balance every Monday. No action required from you.
+            </p>
+
+            <h3>Q: Do Level 2 and Level 3 members count toward my rank?</h3>
+            <p style="color: #94a3b8; margin-bottom: 15px;">
+                Yes! All active members across all 3 levels count toward your total active member count for rank qualification.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; padding: 30px; color: #64748b; font-size: 14px;">
+            <p>© 2024 Cryptexa. All rights reserved.</p>
+            <p style="margin-top: 10px;">For support, contact us through the app.</p>
+        </div>
+
+    </div>
+</body>
+</html>

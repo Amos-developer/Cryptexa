@@ -47,6 +47,12 @@ Route::middleware('auth')->get('/invites', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/team', [\App\Http\Controllers\ReferralController::class, 'index'])
         ->name('team');
+    Route::get('/weekly-salary', [\App\Http\Controllers\ReferralController::class, 'weeklySalary'])
+        ->name('weekly-salary');
+    Route::get('/leaderboard', [\App\Http\Controllers\ReferralController::class, 'leaderboard'])
+        ->name('leaderboard');
+    Route::get('/rank-guide', fn() => view('referral.rank-guide'))
+        ->name('rank-guide');
 });
 
 Route::middleware('auth')->group(function () {
