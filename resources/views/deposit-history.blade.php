@@ -18,23 +18,97 @@
 
 <div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%); min-height: 100vh;">
     <div class="tf-container">
-        <div style="margin-bottom: 24px; animation: slideDown 0.6s ease;">
+        <!-- <div style="margin-bottom: 24px; animation: slideDown 0.6s ease;">
             <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 8px 0;">Deposit History</h1>
             <p style="color: #94a3b8; font-size: 14px; margin: 0;">View all your deposit transactions</p>
-        </div>
+        </div> -->
 
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; animation: slideUp 0.6s ease 0.1s backwards;">
-            <div style="background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(56,189,248,0.02)); border: 1px solid rgba(56,189,248,0.2); border-radius: 12px; padding: 16px; text-align: center;">
-                <div style="color: #38bdf8; font-weight: 900; font-size: 24px; margin-bottom: 4px;">${{ number_format($deposits->where('status', 'completed')->sum('amount'), 2) }}</div>
-                <div style="color: #94a3b8; font-size: 12px;">Total Deposited</div>
+        <!-- Portfolio Overview Card -->
+        <div class="portfolio-overview" style="
+            background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(34,197,94,0.05));
+            border: 1px solid rgba(56,189,248,0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            animation: slideUp 0.6s ease 0.1s backwards;
+            box-shadow: 0 8px 32px rgba(56,189,248,0.1);
+        ">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                <div style="
+                    width: 48px;
+                    height: 48px;
+                    background: linear-gradient(135deg, #22c55e, #16a34a);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 4px 16px rgba(34,197,94,0.4);
+                ">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
+                        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
+                        <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Deposit History</h3>
+                    <p style="color: #94a3b8; font-size: 12px; margin: 0;">Your deposit analytics</p>
+                </div>
             </div>
-            <div style="background: linear-gradient(135deg, rgba(34,197,94,0.08), rgba(34,197,94,0.02)); border: 1px solid rgba(34,197,94,0.2); border-radius: 12px; padding: 16px; text-align: center;">
-                <div style="color: #22c55e; font-weight: 900; font-size: 24px; margin-bottom: 4px;">{{ $deposits->count() }}</div>
-                <div style="color: #94a3b8; font-size: 12px;">Transactions</div>
-            </div>
-            <div style="background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(168,85,247,0.02)); border: 1px solid rgba(168,85,247,0.2); border-radius: 12px; padding: 16px; text-align: center;">
-                <div style="color: #a855f7; font-weight: 900; font-size: 24px; margin-bottom: 4px;">${{ $deposits->count() > 0 ? number_format($deposits->where('status', 'completed')->avg('amount'), 2) : '0.00' }}</div>
-                <div style="color: #94a3b8; font-size: 12px;">Average</div>
+            
+            <div class="stats-grid" style="display: grid; gap: 12px;">
+                <div style="
+                    background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.05));
+                    border: 1px solid rgba(56,189,248,0.3);
+                    border-radius: 12px;
+                    padding: 16px;
+                ">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                        <span style="color: #94a3b8; font-size: 12px; font-weight: 600;">Total Deposited</span>
+                    </div>
+                    <div style="color: #38bdf8; font-weight: 900; font-size: 28px;">${{ number_format($deposits->where('status', 'completed')->sum('amount'), 2) }}</div>
+                    <div style="color: #64748b; font-size: 11px; margin-top: 4px;">Completed deposits</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="
+                        background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05));
+                        border: 1px solid rgba(34,197,94,0.3);
+                        border-radius: 12px;
+                        padding: 16px;
+                    ">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                                <path d="M3 3v18h18"/>
+                                <path d="m19 9-5 5-4-4-3 3"/>
+                            </svg>
+                            <span style="color: #94a3b8; font-size: 11px; font-weight: 600;">Transactions</span>
+                        </div>
+                        <div style="color: #22c55e; font-weight: 900; font-size: 24px;">{{ $deposits->count() }}</div>
+                        <div style="color: #64748b; font-size: 10px; margin-top: 4px;">Total deposits</div>
+                    </div>
+                    
+                    <div style="
+                        background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.05));
+                        border: 1px solid rgba(168,85,247,0.3);
+                        border-radius: 12px;
+                        padding: 16px;
+                    ">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <span style="color: #94a3b8; font-size: 11px; font-weight: 600;">Pending Amount</span>
+                        </div>
+                        <div style="color: #a855f7; font-weight: 900; font-size: 24px;">${{ number_format($deposits->whereIn('status', ['pending', 'confirming', 'waiting'])->sum('amount'), 2) }}</div>
+                        <div style="color: #64748b; font-size: 10px; margin-top: 4px;">Awaiting confirmation</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -96,11 +170,29 @@
     @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes slideIn { from { opacity: 0; transform: translateX(-15px); } to { opacity: 1; transform: translateX(0); } }
+    
+    /* Mobile-first responsive design */
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    @media (min-width: 640px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
     @media (max-width: 768px) {
         .pt-80 { padding-top: 80px !important; }
-        h1[style*="font-size: 28px"] { font-size: 24px !important; }
-        [style*="grid-template-columns: repeat(3, 1fr)"] { grid-template-columns: 1fr !important; gap: 8px !important; }
-        [style*="font-size: 24px"] { font-size: 20px !important; }
+        h1[style*="font-size: 28px"] { font-size: 22px !important; }
+        .portfolio-overview { padding: 16px !important; }
+        .portfolio-overview [style*="font-size: 28px"] { font-size: 24px !important; }
+        .portfolio-overview [style*="font-size: 24px"] { font-size: 20px !important; }
+    }
+    
+    @media (max-width: 480px) {
+        .portfolio-overview [style*="font-size: 28px"] { font-size: 22px !important; }
+        .portfolio-overview [style*="font-size: 24px"] { font-size: 18px !important; }
     }
 </style>
 
