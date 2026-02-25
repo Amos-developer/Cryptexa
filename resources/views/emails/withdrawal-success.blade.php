@@ -26,8 +26,16 @@
 
                             <table width="100%" cellpadding="0" cellspacing="0" style="background: #f9fafb; border-radius: 12px; padding: 20px; margin: 20px 0;">
                                 <tr>
-                                    <td style="padding: 8px 0; color: #6b7280; font-size: 14px;">Amount:</td>
+                                    <td style="padding: 8px 0; color: #6b7280; font-size: 14px;">Amount Withdrawn:</td>
                                     <td align="right" style="padding: 8px 0; color: #1f2937; font-size: 16px; font-weight: 700;">${{ number_format($withdrawal->amount, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px 0; color: #6b7280; font-size: 14px;">Withdrawal Fee (8%):</td>
+                                    <td align="right" style="padding: 8px 0; color: #ef4444; font-size: 14px; font-weight: 600;">-${{ number_format($withdrawal->amount * 0.08, 2) }}</td>
+                                </tr>
+                                <tr style="border-top: 2px solid #e5e7eb;">
+                                    <td style="padding: 12px 0 8px 0; color: #22c55e; font-size: 15px; font-weight: 700;">Amount Received:</td>
+                                    <td align="right" style="padding: 12px 0 8px 0; color: #22c55e; font-size: 18px; font-weight: 900;">${{ number_format($withdrawal->amount * 0.92, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 8px 0; color: #6b7280; font-size: 14px;">Network:</td>
