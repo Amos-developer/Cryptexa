@@ -11,7 +11,10 @@ class ComputeOrder extends Model
         'user_id',
         'compute_plan_id',
         'amount',
+        'investment_amount',
         'expected_profit',
+        'daily_profit_percent',
+        'last_compound_at',
         'started_at',
         'ends_at',
         'status',
@@ -21,6 +24,7 @@ class ComputeOrder extends Model
     protected $casts = [
         'started_at' => 'datetime',
         'ends_at'    => 'datetime',
+        'last_compound_at' => 'datetime',
         'is_paid'    => 'boolean',
     ];
 
