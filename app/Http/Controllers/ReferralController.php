@@ -93,11 +93,22 @@ class ReferralController extends Controller
         // Get rank info
         $rankInfo = $rankBonusService->getRankInfo($user);
         
-        $totalReferrals = User::where('referred_by', $user->id)->where('role', '!=', 'admin')->count();
-        $activeReferrals = User::where('referred_by', $user->id)
-            ->where('role', '!=', 'admin')
-            ->whereHas('deposits', fn($q) => $q->where('status', 'completed'))
-            ->count();
+        // Get all 3 levels of referrals
+        $level1 = User::where('referred_by', $user->id)->where('role', '!=', 'admin')->get();
+        $level2 = User::whereIn('referred_by', $level1->pluck('id'))->where('role', '!=', 'admin')->get();
+        $level3 = User::whereIn('referred_by', $level2->pluck('id'))->where('role', '!=', 'admin')->get();
+        
+        // Total referrals across all 3 levels
+        $totalReferrals = $level1->count() + $level2->count() + $level3->count();
+        
+        // Active referrals across all 3 levels (users with completed deposits)
+        $activeReferrals = $level1->filter(
+            fn($u) => DB::table('deposits')->where('user_id', $u->id)->where('status', 'completed')->exists()
+        )->count() + $level2->filter(
+            fn($u) => DB::table('deposits')->where('user_id', $u->id)->where('status', 'completed')->exists()
+        )->count() + $level3->filter(
+            fn($u) => DB::table('deposits')->where('user_id', $u->id)->where('status', 'completed')->exists()
+        )->count();
         
         $rankName = $rankInfo['name'];
         $weeklySalary = $rankInfo['weekly_salary'];

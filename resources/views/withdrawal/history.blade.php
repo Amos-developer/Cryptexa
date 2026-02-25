@@ -18,24 +18,99 @@
 
 <div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%); min-height: 100vh;">
     <div class="tf-container">
-        <div style="margin-bottom: 24px; animation: slideDown 0.6s ease;">
-            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 8px 0;">Withdrawal History</h1>
-            <p style="color: #94a3b8; font-size: 14px; margin: 0;">View all your withdrawal transactions</p>
+        <div style="margin-bottom: 10px; animation: slideDown 0.6s ease;">
+            <!-- <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 8px 0;">Withdrawal History</h1>
+            <p style="color: #94a3b8; font-size: 14px; margin: 0;">View all your withdrawal transactions</p> -->
         </div>
 
         @if(!$withdrawals->isEmpty())
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; animation: slideUp 0.6s ease 0.1s backwards;">
-            <div style="background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(56,189,248,0.02)); border: 1px solid rgba(56,189,248,0.2); border-radius: 12px; padding: 16px; text-align: center;">
-                <div style="color: #38bdf8; font-weight: 900; font-size: 24px; margin-bottom: 4px;">${{ number_format($withdrawals->where('status', 'approved')->sum('amount'), 2) }}</div>
-                <div style="color: #94a3b8; font-size: 12px;">Total Withdrawn</div>
+        <!-- Portfolio Overview Card -->
+        <div class="portfolio-overview" style="
+            background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(168,85,247,0.05));
+            border: 1px solid rgba(56,189,248,0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            animation: slideUp 0.6s ease 0.1s backwards;
+            box-shadow: 0 8px 32px rgba(56,189,248,0.1);
+        ">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                <div style="
+                    width: 48px;
+                    height: 48px;
+                    background: linear-gradient(135deg, #38bdf8, #a855f7);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 4px 16px rgba(56,189,248,0.4);
+                ">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
+                        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
+                        <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Withdrawal Portfolio</h3>
+                    <p style="color: #94a3b8; font-size: 12px; margin: 0;">Your withdrawal analytics</p>
+                </div>
             </div>
-            <div style="background: linear-gradient(135deg, rgba(34,197,94,0.08), rgba(34,197,94,0.02)); border: 1px solid rgba(34,197,94,0.2); border-radius: 12px; padding: 16px; text-align: center;">
-                <div style="color: #22c55e; font-weight: 900; font-size: 24px; margin-bottom: 4px;">{{ $withdrawals->count() }}</div>
-                <div style="color: #94a3b8; font-size: 12px;">Transactions</div>
-            </div>
-            <div style="background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(168,85,247,0.02)); border: 1px solid rgba(168,85,247,0.2); border-radius: 12px; padding: 16px; text-align: center;">
-                <div style="color: #a855f7; font-weight: 900; font-size: 24px; margin-bottom: 4px;">${{ $withdrawals->count() > 0 ? number_format($withdrawals->where('status', 'approved')->avg('amount'), 2) : '0.00' }}</div>
-                <div style="color: #94a3b8; font-size: 12px;">Average</div>
+            
+            <div class="stats-grid" style="display: grid; gap: 12px;">
+                <div style="
+                    background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.05));
+                    border: 1px solid rgba(56,189,248,0.3);
+                    border-radius: 12px;
+                    padding: 16px;
+                ">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"/>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                        <span style="color: #94a3b8; font-size: 12px; font-weight: 600;">Total Withdrawn</span>
+                    </div>
+                    <div style="color: #38bdf8; font-weight: 900; font-size: 28px;">${{ number_format($withdrawals->whereIn('status', ['approved', 'completed'])->sum('amount'), 2) }}</div>
+                    <div style="color: #64748b; font-size: 11px; margin-top: 4px;">Completed withdrawals</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="
+                        background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05));
+                        border: 1px solid rgba(34,197,94,0.3);
+                        border-radius: 12px;
+                        padding: 16px;
+                    ">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                                <path d="M3 3v18h18"/>
+                                <path d="m19 9-5 5-4-4-3 3"/>
+                            </svg>
+                            <span style="color: #94a3b8; font-size: 11px; font-weight: 600;">Transactions</span>
+                        </div>
+                        <div style="color: #22c55e; font-weight: 900; font-size: 24px;">{{ $withdrawals->count() }}</div>
+                        <div style="color: #64748b; font-size: 10px; margin-top: 4px;">Total requests</div>
+                    </div>
+                    
+                    <div style="
+                        background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.05));
+                        border: 1px solid rgba(168,85,247,0.3);
+                        border-radius: 12px;
+                        padding: 16px;
+                    ">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                                <path d="M16 11l5 5M21 11l-5 5"/>
+                            </svg>
+                            <span style="color: #94a3b8; font-size: 11px; font-weight: 600;">Amount Received</span>
+                        </div>
+                        <div style="color: #a855f7; font-weight: 900; font-size: 24px;">${{ $withdrawals->count() > 0 ? number_format($withdrawals->whereIn('status', ['approved', 'completed'])->sum('amount') * 0.92, 2) : '0.00' }}</div>
+                        <div style="color: #64748b; font-size: 10px; margin-top: 4px;">After 8% fee</div>
+                    </div>
+                </div>
             </div>
         </div>
         @endif
@@ -61,16 +136,30 @@
                         <div style="color: #e5e7eb; font-weight: 700; font-size: 18px; margin-bottom: 4px;">${{ number_format($withdrawal->amount, 2) }}</div>
                         <div style="color: #64748b; font-size: 13px;">Withdrawal Request</div>
                     </div>
-                    @if($withdrawal->status === 'approved')
-                    <div style="background: rgba(34,197,94,0.2); color: #22c55e; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">Approved</div>
-                    @elseif($withdrawal->status === 'pending')
-                    <div style="background: rgba(251,191,36,0.2); color: #fbbf24; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">Pending</div>
-                    @else
-                    <div style="background: rgba(239,68,68,0.2); color: #ef4444; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">{{ ucfirst($withdrawal->status) }}</div>
-                    @endif
+                    @php
+                        $statusColors = [
+                            'completed' => ['bg' => 'rgba(34,197,94,0.2)', 'text' => '#22c55e', 'label' => 'Completed'],
+                            'approved' => ['bg' => 'rgba(34,197,94,0.2)', 'text' => '#22c55e', 'label' => 'Completed'],
+                            'pending' => ['bg' => 'rgba(251,191,36,0.2)', 'text' => '#fbbf24', 'label' => 'Pending'],
+                        ];
+                        $status = $statusColors[$withdrawal->status] ?? ['bg' => 'rgba(239,68,68,0.2)', 'text' => '#ef4444', 'label' => ucfirst($withdrawal->status)];
+                    @endphp
+                    <div style="background: {{ $status['bg'] }}; color: {{ $status['text'] }}; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">{{ $status['label'] }}</div>
                 </div>
                 <div style="display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);">
                     <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #64748b; font-size: 13px;">Amount Withdrawn</span>
+                        <span style="color: #e5e7eb; font-size: 13px; font-weight: 600;">${{ number_format($withdrawal->amount, 2) }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #64748b; font-size: 13px;">Withdrawal Fee (8%)</span>
+                        <span style="color: #ef4444; font-size: 13px; font-weight: 600;">-${{ number_format($withdrawal->amount * 0.08, 2) }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06);">
+                        <span style="color: #38bdf8; font-size: 13px; font-weight: 600;">Amount Received</span>
+                        <span style="color: #22c55e; font-size: 14px; font-weight: 700;">${{ number_format($withdrawal->amount * 0.92, 2) }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 8px;">
                         <span style="color: #64748b; font-size: 13px;">Requested</span>
                         <span style="color: #94a3b8; font-size: 13px;">{{ $withdrawal->created_at->format('M d, Y') }}</span>
                     </div>
@@ -99,11 +188,29 @@
     @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes slideIn { from { opacity: 0; transform: translateX(-15px); } to { opacity: 1; transform: translateX(0); } }
+    
+    /* Mobile-first responsive design */
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    @media (min-width: 640px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
     @media (max-width: 768px) {
         .pt-80 { padding-top: 80px !important; }
-        h1[style*="font-size: 28px"] { font-size: 24px !important; }
-        [style*="grid-template-columns: repeat(3, 1fr)"] { grid-template-columns: 1fr !important; gap: 8px !important; }
-        [style*="font-size: 24px"] { font-size: 20px !important; }
+        h1[style*="font-size: 28px"] { font-size: 22px !important; }
+        .portfolio-overview { padding: 16px !important; }
+        .portfolio-overview [style*="font-size: 28px"] { font-size: 24px !important; }
+        .portfolio-overview [style*="font-size: 24px"] { font-size: 20px !important; }
+    }
+    
+    @media (max-width: 480px) {
+        .portfolio-overview [style*="font-size: 28px"] { font-size: 22px !important; }
+        .portfolio-overview [style*="font-size: 24px"] { font-size: 18px !important; }
     }
 </style>
 

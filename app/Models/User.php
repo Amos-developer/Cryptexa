@@ -40,6 +40,10 @@ class User extends Authenticatable
         'two_factor_recovery_codes',
         'two_factor_enabled',
         'two_factor_confirmed_at',
+        'junior_leader_bonus_paid',
+        'elite_leader_bonus_paid',
+        'legendary_leader_bonus_paid',
+        'grand_leader_bonus_paid',
     ];
 
     /**
