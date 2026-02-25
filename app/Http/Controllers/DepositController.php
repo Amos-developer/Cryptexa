@@ -36,23 +36,36 @@ class DepositController extends Controller
             'status'   => 'pending',
         ]);
 
-        // ✅ Correct argument order
-        $payment = $nowPayments->createPayment(
-            $deposit->id,
-            $request->currency
-        );
+        try {
+            // ✅ Correct argument order
+            $payment = $nowPayments->createPayment(
+                $deposit->id,
+                $request->currency
+            );
 
-        if (empty($payment['payment_id'])) {
-            logger()->error('NOWPayments create failed', $payment);
+            if (empty($payment['payment_id'])) {
+                logger()->error('NOWPayments create failed', $payment);
+                $deposit->delete();
+                
+                $errorMsg = $payment['message'] ?? 'Unable to create payment. Please try again or contact support.';
+                
+                return redirect()->route('choose.cryptocurrency')
+                    ->with('error', $errorMsg);
+            }
+
+            $deposit->update([
+                'payment_id' => $payment['payment_id'],
+            ]);
+
+            return redirect()->route('deposit.qr', $deposit->id);
+            
+        } catch (\Exception $e) {
+            logger()->error('Payment creation exception: ' . $e->getMessage());
             $deposit->delete();
-            return back()->with('error', 'Unable to create payment.');
+            
+            return redirect()->route('choose.cryptocurrency')
+                ->with('error', 'Payment service temporarily unavailable. Please try again later.');
         }
-
-        $deposit->update([
-            'payment_id' => $payment['payment_id'],
-        ]);
-
-        return redirect()->route('deposit.qr', $deposit->id);
     }
 
     /**

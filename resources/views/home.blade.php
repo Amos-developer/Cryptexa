@@ -9,12 +9,12 @@
 <div class="dashboard-container">
 
     <!-- Top Header -->
-    <div class="dashboard-top">
+    <!-- <div class="dashboard-top">
         <div class="dashboard-brand">Cryptexa</div>
         <div class="dashboard-menu">
             <img src="{{ asset('images/icons/settings.svg') }}" alt="Settings" style="width: 18px; height: 18px;">
         </div>
-    </div>
+    </div> -->
 
     <!-- Balance Section -->
     <div class="balance-section">

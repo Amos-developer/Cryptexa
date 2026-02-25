@@ -10,27 +10,56 @@ class NowPaymentsService
 
     public function createPayment(int $orderId, string $payCurrency): array
     {
+        $apiKey = config('services.nowpayments.api_key');
+        
+        if (empty($apiKey)) {
+            logger()->error('NOWPayments API key not configured');
+            return ['error' => 'Payment service not configured'];
+        }
+        
         $response = Http::withHeaders([
-            'x-api-key' => config('services.nowpayments.key'),
+            'x-api-key' => $apiKey,
             'Content-Type' => 'application/json',
         ])->post("{$this->baseUrl}/payment", [
-            'price_amount'      => 50, // minimum deposit
+            'price_amount'      => 50,
             'price_currency'    => 'usd',
             'pay_currency'      => $payCurrency,
             'order_id'          => (string) $orderId,
             'order_description' => 'User Deposit',
         ]);
 
-        return $response->json();
+        if ($response->failed()) {
+            logger()->error('NOWPayments API error', [
+                'status' => $response->status(),
+                'body' => $response->body()
+            ]);
+        }
+
+        return $response->json() ?? [];
     }
 
     public function getPaymentStatus(string $paymentId): array
     {
+        $apiKey = config('services.nowpayments.api_key');
+        
+        if (empty($apiKey)) {
+            logger()->error('NOWPayments API key not configured');
+            return [];
+        }
+        
         $response = Http::withHeaders([
-            'x-api-key' => config('services.nowpayments.key'),
+            'x-api-key' => $apiKey,
         ])->get("{$this->baseUrl}/payment/{$paymentId}");
 
-        return $response->json();
+        if ($response->failed()) {
+            logger()->error('NOWPayments status check failed', [
+                'payment_id' => $paymentId,
+                'status' => $response->status(),
+                'body' => $response->body()
+            ]);
+        }
+
+        return $response->json() ?? [];
     }
 
     /**
