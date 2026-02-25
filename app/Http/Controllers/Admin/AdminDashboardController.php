@@ -15,9 +15,11 @@ class AdminDashboardController extends Controller
         return view('admin.dashboard.index', [
             'totalUsers' => User::where('role', '!=', 'admin')->count(),
             'totalPools' => ComputePlan::count(),
-            'totalDeposits' => Deposit::where('status', 'completed')->sum('amount'),
+            'totalDeposits' => Deposit::where('status', 'completed')->sum('pay_amount'),
             'totalWithdrawals' => Withdrawal::whereIn('status', ['completed', 'approved'])->sum('amount'),
-            'totalPendingDeposits' => Deposit::whereIn('status', ['pending', 'confirming', 'waiting'])->sum('amount'),
+            'totalPendingDeposits' => Deposit::whereIn('status', ['pending', 'confirming', 'waiting'])
+                ->selectRaw('SUM(COALESCE(pay_amount, amount)) as total')
+                ->value('total') ?? 0,
             'totalPendingWithdrawals' => Withdrawal::where('status', 'pending')->sum('amount'),
             'newUsersToday' => User::where('role', '!=', 'admin')->whereDate('created_at', today())->count(),
             'completedDeposits' => Deposit::where('status', 'completed')->count(),

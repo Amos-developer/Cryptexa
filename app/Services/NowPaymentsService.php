@@ -26,6 +26,7 @@ class NowPaymentsService
             'pay_currency'      => $payCurrency,
             'order_id'          => (string) $orderId,
             'order_description' => 'User Deposit',
+            'ipn_callback_url'  => url('/nowpayments/ipn'),
         ]);
 
         if ($response->failed()) {

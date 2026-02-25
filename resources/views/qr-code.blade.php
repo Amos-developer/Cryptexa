@@ -180,24 +180,30 @@
             ">
                 <p style="color: #22c55e; font-size: 13px; font-weight: 600; margin: 0 0 8px 0; display: flex; align-items: center;">
                     <span id="statusIcon" style="margin-right: 8px; font-size: 16px;">⏳</span>
-                    <span id="statusText">Waiting for payment confirmation...</span>
+                    <span id="statusText">Checking payment status...</span>
                 </p>
-                <div id="progressBar" style="
-                    width: 100%;
-                    height: 4px;
-                    background: rgba(34,197,94,0.2);
-                    border-radius: 2px;
-                    overflow: hidden;
-                ">
-                    <div style="
-                        height: 100%;
-                        background: linear-gradient(90deg, #22c55e, #10b981);
-                        width: 30%;
-                        animation: loading 2s infinite;
-                    "></div>
-                </div>
             </div>
         </div>
+
+        <!-- MANUAL CHECK BUTTON -->
+        <button id="checkPaymentBtn" onclick="checkPaymentStatus()" style="
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(56,189,248,0.3);
+        "
+        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(56,189,248,0.4)';"
+        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(56,189,248,0.3)';">
+            🔄 Check Payment Status
+        </button>
 
         <!-- INFO BOXES -->
         <div style="
@@ -398,29 +404,21 @@
     }
 </script>
 
-<!-- PAYMENT STATUS POLLING -->
+<!-- PAYMENT STATUS CHECK -->
 <script>
-    let isPolling = false;
-    let checkCount = 0;
-    const maxChecks = 120; // 10 minutes with 5-second intervals
+    function checkPaymentStatus() {
+        const btn = document.getElementById('checkPaymentBtn');
+        const statusSection = document.getElementById('statusSection');
+        const statusIcon = document.getElementById('statusIcon');
+        const statusText = document.getElementById('statusText');
 
-    function startPaymentStatusPolling() {
-        // Only start polling if address is loaded
-        const addressText = document.getElementById('walletAddress')?.innerText || '';
-        if (addressText.includes('Waiting') || !addressText) {
-            // Address not loaded yet, wait and try again
-            setTimeout(startPaymentStatusPolling, 5000);
-            return;
-        }
+        // Disable button and show loading
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Checking...';
+        statusSection.style.display = 'block';
+        statusIcon.innerHTML = '🔄';
+        statusText.innerHTML = 'Checking payment status...';
 
-        if (isPolling || checkCount >= maxChecks) return;
-
-        isPolling = true;
-
-        // Show status section
-        document.getElementById('statusSection').style.display = 'block';
-
-        // Fetch payment status
         fetch('{{ route("deposit.check-status", $deposit->id) }}', {
                 method: 'GET',
                 headers: {
@@ -430,110 +428,72 @@
             })
             .then(response => response.json())
             .then(data => {
-                checkCount++;
+                const status = data.provider_status || data.status || '';
 
-                const provider = data.provider_status || data.status || '';
+                if (status === 'finished' || status === 'completed' || data.status === 'completed') {
+                    // Payment confirmed
+                    statusIcon.innerHTML = '✅';
+                    statusText.innerHTML = `Payment Confirmed! Received ${data.received || data.amount}`;
 
-                // Treat provider 'finished' or our internal 'completed' as success
-                if (provider === 'finished' || provider === 'completed' || data.status === 'completed') {
-                    updatePaymentStatus('finished', data);
-                    stopPolling();
-                } else if (provider === 'confirming' || provider === 'waiting' || data.status === 'confirming' || data.status === 'pending') {
-                    // Still waiting
-                    updatePaymentStatus('waiting', data);
-                    scheduleNextCheck();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Payment Received!',
+                        text: 'Your balance has been updated',
+                        timer: 2000,
+                        showConfirmButton: false,
+                        background: '#020617',
+                        color: '#e5e7eb'
+                    }).then(() => {
+                        window.location.href = '{{ route("home") }}';
+                    });
+                } else if (status === 'confirming') {
+                    // Payment detected, confirming
+                    statusIcon.innerHTML = '⏳';
+                    statusText.innerHTML = 'Payment detected! Waiting for blockchain confirmation...';
+                    btn.disabled = false;
+                    btn.innerHTML = '🔄 Check Again';
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Payment Detected',
+                        text: 'Waiting for blockchain confirmation. Check again in a few minutes.',
+                        background: '#020617',
+                        color: '#e5e7eb',
+                        confirmButtonColor: '#38bdf8'
+                    });
                 } else {
-                    // Payment not found yet or other status
-                    updatePaymentStatus('checking', data);
-                    scheduleNextCheck();
+                    // No payment yet
+                    statusIcon.innerHTML = '⚠️';
+                    statusText.innerHTML = 'No payment detected yet. Please send payment to the address above.';
+                    btn.disabled = false;
+                    btn.innerHTML = '🔄 Check Payment Status';
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'No Payment Yet',
+                        text: 'Please send payment to the address above, then check again.',
+                        background: '#020617',
+                        color: '#e5e7eb',
+                        confirmButtonColor: '#fbbf24'
+                    });
                 }
             })
             .catch(error => {
-                console.error('Error checking payment status:', error);
-                updatePaymentStatus('error', {
-                    message: 'Connection error, retrying...'
-                });
-                scheduleNextCheck();
-            })
-            .finally(() => {
-                isPolling = false;
-            });
-    }
-
-    function scheduleNextCheck() {
-        if (checkCount < maxChecks) {
-            setTimeout(startPaymentStatusPolling, 5000); // Check every 5 seconds
-        } else {
-            updatePaymentStatus('timeout', {
-                message: 'Payment not detected. Please check manually or contact support.'
-            });
-        }
-    }
-
-    function updatePaymentStatus(status, data) {
-        const statusIcon = document.getElementById('statusIcon');
-        const statusText = document.getElementById('statusText');
-
-        switch (status) {
-            case 'finished':
-                statusIcon.innerHTML = '✅';
-                statusText.innerHTML = `Payment Confirmed! Received ${data.received || data.amount} ${data.currency || ''}`;
-
-                // Show success message
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Payment Received!',
-                    text: 'Your balance has been updated and referral bonuses distributed',
-                    timer: 2000,
-                    showConfirmButton: false,
-                    background: '#020617',
-                    color: '#e5e7eb'
-                }).then(() => {
-                    // Redirect to success page or reload
-                    window.location.href = '{{ route("home") }}';
-                });
-                break;
-
-            case 'confirming':
-            case 'waiting':
-                statusIcon.innerHTML = '⏳';
-                statusText.innerHTML = 'Confirming payment... (Attempt ' + checkCount + ')';
-                break;
-
-            case 'checking':
-                statusIcon.innerHTML = '🔄';
-                statusText.innerHTML = 'Checking payment status... (Attempt ' + checkCount + ')';
-                break;
-
-            case 'error':
-                statusIcon.innerHTML = '⚠️';
-                statusText.innerHTML = data.message || 'Connection error, retrying...';
-                break;
-
-            case 'timeout':
+                console.error('Error:', error);
                 statusIcon.innerHTML = '❌';
-                statusText.innerHTML = data.message || 'Payment check timeout';
-                break;
-        }
-    }
+                statusText.innerHTML = 'Error checking status. Please try again.';
+                btn.disabled = false;
+                btn.innerHTML = '🔄 Check Payment Status';
 
-    function stopPolling() {
-        isPolling = false;
-        checkCount = maxChecks; // Stop any future checks
-    }
-
-    // Start polling when page loads (after a brief delay to allow address loading)
-    document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(startPaymentStatusPolling, 2000);
-    });
-
-    // Also start polling immediately in case DOM is already loaded
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(startPaymentStatusPolling, 2000);
-        });
-    } else {
-        setTimeout(startPaymentStatusPolling, 2000);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Connection Error',
+                    text: 'Please check your internet connection and try again.',
+                    background: '#020617',
+                    color: '#e5e7eb',
+                    confirmButtonColor: '#ef4444'
+                });
+            });
     }
 </script>
 
