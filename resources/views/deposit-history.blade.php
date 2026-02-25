@@ -5,16 +5,15 @@
 
 @section('content')
 
-<div class="header fixed-top d-flex justify-content-between align-items-center px-16"
-    style="background: linear-gradient(135deg, #020617, #0f172a); border-bottom: 1px solid rgba(56,189,248,0.2); backdrop-filter: blur(10px); z-index: 100; padding: 12px 16px;">
-    <a href="{{ route('account.settings') }}"
-        style="width: 36px; height: 36px; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;"
-        onmouseover="this.style.background='rgba(56,189,248,0.15)'; this.style.borderColor='rgba(56,189,248,0.4)';"
-        onmouseout="this.style.background='rgba(56,189,248,0.1)'; this.style.borderColor='rgba(56,189,248,0.2)';">
-        <i class="icon-left-btn" style="color: #38bdf8; font-size: 18px;"></i>
+<link rel="stylesheet" href="{{ asset('css/team.css') }}">
+
+<!-- HEADER BAR -->
+<div class="team-header">
+    <a href="{{ route('account.settings') }}" class="back-btn">
+        <i class="icon-left-btn"></i>
     </a>
-    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Deposit History</h6>
-    <span style="width: 36px;"></span>
+    <h6 class="header-title">Deposit History</h6>
+    <span class="placeholder"></span>
 </div>
 
 <div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%); min-height: 100vh;">

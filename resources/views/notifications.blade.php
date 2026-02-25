@@ -6,40 +6,28 @@
 
 @section('content')
 
+<link rel="stylesheet" href="{{ asset('css/team.css') }}">
+
 <!-- HEADER BAR -->
-<div class="header fixed-top d-flex justify-content-between align-items-center px-16"
-    style="
-        background: linear-gradient(135deg, #020617, #0f172a);
-        border-bottom: 1px solid rgba(56,189,248,0.2);
-        backdrop-filter: blur(10px);
-        z-index: 100;
-        padding: 12px 16px;
-    ">
-    <a href="{{ url()->previous() }}"
-        style="
-            width: 36px;
-            height: 36px;
-            background: rgba(56,189,248,0.1);
-            border: 1px solid rgba(56,189,248,0.2);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        "
-        onmouseover="this.style.background='rgba(56,189,248,0.15)'; this.style.borderColor='rgba(56,189,248,0.4)';"
-        onmouseout="this.style.background='rgba(56,189,248,0.1)'; this.style.borderColor='rgba(56,189,248,0.2)';">
-        <i class="icon-left-btn" style="color: #38bdf8; font-size: 18px;"></i>
+<div class="team-header">
+    <a href="{{ url()->previous() }}" class="back-btn">
+        <i class="icon-left-btn"></i>
     </a>
-    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Notifications</h6>
-    <button onclick="markAllRead()" style="background: none; border: none; color: #38bdf8; font-size: 12px; cursor: pointer; font-weight: 600;">
-        Mark all read
-    </button>
+    <h6 class="header-title">Notifications</h6>
+    <span class="placeholder"></span>
 </div>
 
 <!-- MAIN CONTENT -->
 <div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%); min-height: 100vh;">
     <div class="tf-container" style="max-width: 600px; margin: 0 auto;">
+
+        @if($notifications->isNotEmpty())
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+            <button onclick="markAllRead()" style="background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.2); color: #38bdf8; font-size: 13px; cursor: pointer; font-weight: 600; padding: 8px 16px; border-radius: 8px; transition: all 0.3s ease;" onmouseover="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.08)'; this.style.borderColor='rgba(56,189,248,0.3)'" onmouseout="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05))'; this.style.borderColor='rgba(56,189,248,0.2)'">
+                ✓ Mark all as read
+            </button>
+        </div>
+        @endif
 
         @forelse($notifications as $notification)
         <div class="notification-item" data-id="{{ $notification->id }}" 

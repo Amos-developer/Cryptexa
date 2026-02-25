@@ -13,7 +13,9 @@ class ProcessComputeOrders extends Command
 
     public function handle()
     {
-        DB::transaction(function () {
+        $processedCount = 0;
+        
+        DB::transaction(function () use (&$processedCount) {
 
             $orders = ComputeOrder::where('status', 'running')
                 ->where('ends_at', '<=', now())
@@ -21,9 +23,12 @@ class ProcessComputeOrders extends Command
                 ->lockForUpdate()
                 ->get();
 
+            $this->info("Found {$orders->count()} orders to process");
+
             foreach ($orders as $order) {
 
                 $user = $order->user;
+                $balanceBefore = $user->balance;
 
                 // Capital + profit
                 $totalReturn = $order->amount + $order->expected_profit;
@@ -36,10 +41,17 @@ class ProcessComputeOrders extends Command
                     'status'  => 'completed',
                     'is_paid' => true,
                 ]);
+                
+                $processedCount++;
+                $this->info("✅ Order #{$order->id}: Credited \${$totalReturn} to User #{$user->id} (Balance: \${$balanceBefore} → \${$user->fresh()->balance})");
             }
         });
 
-        $this->info('✅ Compute orders processed successfully.');
+        if ($processedCount > 0) {
+            $this->info("✅ Processed {$processedCount} orders successfully.");
+        } else {
+            $this->info('ℹ️  No orders to process.');
+        }
 
         return Command::SUCCESS;
     }

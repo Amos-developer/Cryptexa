@@ -130,7 +130,7 @@ class ReferralController extends Controller
         $leaderboard = User::where('role', '!=', 'admin')
             ->withCount(['deposits' => fn($q) => $q->where('status', 'completed')])
             ->orderByDesc('referral_earnings')
-            ->take(50)
+            ->take(5)
             ->get();
         
         $userRank = User::where('role', '!=', 'admin')

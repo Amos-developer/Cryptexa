@@ -37,6 +37,7 @@ class AutomationController extends Controller
         
         $orders = ComputeOrder::where('status', 'running')
             ->where('ends_at', '<=', now())
+            ->where('is_paid', false)
             ->get();
 
         foreach ($orders as $order) {

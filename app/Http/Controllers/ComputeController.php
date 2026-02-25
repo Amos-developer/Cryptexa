@@ -33,10 +33,22 @@ class ComputeController extends Controller
 
             $user->decrement('balance', $plan->price);
 
-            // Random daily percentage within range (as percentage, not decimal)
+            // 80% chance for higher profit (upper 80% of range), 20% for lower profit
+            $random = mt_rand(1, 100);
+            
+            if ($random <= 80) {
+                // 80% chance: Get profit from upper 80% of the range
+                $rangeStart = $plan->min_profit + (($plan->max_profit - $plan->min_profit) * 0.2);
+                $rangeEnd = $plan->max_profit;
+            } else {
+                // 20% chance: Get profit from lower 20% of the range
+                $rangeStart = $plan->min_profit;
+                $rangeEnd = $plan->min_profit + (($plan->max_profit - $plan->min_profit) * 0.2);
+            }
+            
             $dailyPercent = mt_rand(
-                $plan->min_profit * 10,
-                $plan->max_profit * 10
+                $rangeStart * 10,
+                $rangeEnd * 10
             ) / 10;
 
             $principal = $plan->price;
@@ -85,18 +97,17 @@ class ComputeController extends Controller
 
     public function track()
     {
+        // Process any completed orders for this user
         $completingOrders = ComputeOrder::where('user_id', auth()->id())
             ->where('status', 'running')
             ->where('ends_at', '<=', now())
+            ->where('is_paid', false)
             ->get();
 
         foreach ($completingOrders as $order) {
             DB::transaction(function () use ($order) {
-
                 $totalReturn = $order->amount + $order->expected_profit;
-
                 $order->user->increment('balance', $totalReturn);
-
                 $order->update([
                     'status' => 'completed',
                     'is_paid' => true,

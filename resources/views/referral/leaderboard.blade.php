@@ -5,90 +5,96 @@
 
 @section('content')
 <style>
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-.rank-card { animation: fadeInUp 0.5s ease; }
-.podium-item { animation: fadeInUp 0.6s ease; }
-.leader-item { animation: fadeInUp 0.4s ease; }
-.trophy-icon { animation: pulse 2s infinite; }
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+    }
+
+    .rank-card {
+        animation: fadeInUp 0.5s ease;
+    }
+
+    .podium-item {
+        animation: fadeInUp 0.6s ease;
+    }
+
+    .leader-item {
+        animation: fadeInUp 0.4s ease;
+    }
+
+    .trophy-icon {
+        animation: pulse 2s infinite;
+    }
 </style>
 
 <div style="min-height: 100vh; background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0d1726 100%); padding: 16px; padding-bottom: 80px;">
     <div style="max-width: 480px; margin: 0 auto;">
-        
-        <!-- Header -->
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding: 8px 0;">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <a href="{{ route('home') }}" style="width: 44px; height: 44px; background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.25); border-radius: 14px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(56,189,248,0.1);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(56,189,248,0.2)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(56,189,248,0.1)'">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                </a>
-                <div>
-                    <h1 style="color: #e5e7eb; font-size: 24px; font-weight: 800; margin: 0; letter-spacing: -0.5px;">Leaders Rank</h1>
-                    <p style="color: #64748b; font-size: 12px; margin: 4px 0 0 0; font-weight: 500;">Top Performers Leaderboard</p>
-                </div>
-            </div>
-            <div class="trophy-icon" style="width: 44px; height: 44px; background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(251,191,36,0.05)); border: 1px solid rgba(251,191,36,0.25); border-radius: 14px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(251,191,36,0.2);">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
-                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
-                    <path d="M4 22h16"/>
-                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
-                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
-                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
-                </svg>
-            </div>
+
+        <link rel="stylesheet" href="{{ asset('css/team.css') }}">
+
+        <!-- HEADER BAR -->
+        <div class="team-header">
+            <a href="{{ route('home') }}" class="back-btn">
+                <i class="icon-left-btn"></i>
+            </a>
+            <h6 class="header-title">Leaders Rank</h6>
+            <span class="placeholder"></span>
         </div>
 
         <!-- Your Rank Card -->
         @php
-        $earnings = auth()->user()->referral_earnings ?? 0;
-        if ($earnings >= 300) {
-            $rankName = 'Grand Leader';
-            $rankColor = '#a855f7';
-            $rankBg = 'rgba(168,85,247,0.15)';
-            $rankBorder = 'rgba(168,85,247,0.3)';
-            $rankIcon = '👑';
-        } elseif ($earnings >= 180) {
-            $rankName = 'Legendary Leader';
-            $rankColor = '#f59e0b';
-            $rankBg = 'rgba(245,158,11,0.15)';
-            $rankBorder = 'rgba(245,158,11,0.3)';
-            $rankIcon = '⭐';
-        } elseif ($earnings >= 50) {
-            $rankName = 'Elite Leader';
-            $rankColor = '#38bdf8';
-            $rankBg = 'rgba(56,189,248,0.15)';
-            $rankBorder = 'rgba(56,189,248,0.3)';
-            $rankIcon = '💎';
-        } elseif ($earnings >= 10) {
-            $rankName = 'Junior Leader';
-            $rankColor = '#22c55e';
-            $rankBg = 'rgba(34,197,94,0.15)';
-            $rankBorder = 'rgba(34,197,94,0.3)';
-            $rankIcon = '🌟';
+        if ($activeMembers >= 100) {
+        $rankName = 'Grand Leader';
+        $rankColor = '#a855f7';
+        $rankBg = 'rgba(168,85,247,0.15)';
+        $rankBorder = 'rgba(168,85,247,0.3)';
+        } elseif ($activeMembers >= 30) {
+        $rankName = 'Legendary Leader';
+        $rankColor = '#f59e0b';
+        $rankBg = 'rgba(245,158,11,0.15)';
+        $rankBorder = 'rgba(245,158,11,0.3)';
+        } elseif ($activeMembers >= 10) {
+        $rankName = 'Elite Leader';
+        $rankColor = '#38bdf8';
+        $rankBg = 'rgba(56,189,248,0.15)';
+        $rankBorder = 'rgba(56,189,248,0.3)';
+        } elseif ($activeMembers >= 3) {
+        $rankName = 'Junior Leader';
+        $rankColor = '#22c55e';
+        $rankBg = 'rgba(34,197,94,0.15)';
+        $rankBorder = 'rgba(34,197,94,0.3)';
         } else {
-            $rankName = 'No Rank';
-            $rankColor = '#64748b';
-            $rankBg = 'rgba(100,116,139,0.15)';
-            $rankBorder = 'rgba(100,116,139,0.3)';
-            $rankIcon = '📊';
+        $rankName = 'No Rank';
+        $rankColor = '#64748b';
+        $rankBg = 'rgba(100,116,139,0.15)';
+        $rankBorder = 'rgba(100,116,139,0.3)';
         }
         @endphp
-        <div class="rank-card" style="background: linear-gradient(135deg, {{ $rankBg }}, {{ str_replace('0.15', '0.05', $rankBg) }}); border: 1px solid {{ $rankBorder }}; border-radius: 20px; padding: 24px; margin-bottom: 20px; text-align: center; box-shadow: 0 8px 24px {{ str_replace('0.3', '0.15', $rankBorder) }}; position: relative; overflow: hidden;">
+        <div class="rank-card" style=" margin-top: 50px; background: linear-gradient(135deg, {{ $rankBg }}, {{ str_replace('0.15', '0.05', $rankBg) }}); border: 1px solid {{ $rankBorder }}; border-radius: 20px; padding: 24px; margin-bottom: 20px; text-align: center; box-shadow: 0 8px 24px {{ str_replace('0.3', '0.15', $rankBorder) }}; position: relative; overflow: hidden;">
             <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: radial-gradient(circle, {{ str_replace('0.15', '0.1', $rankBg) }}, transparent); pointer-events: none;"></div>
-            <div style="font-size: 48px; margin-bottom: 8px;">{{ $rankIcon }}</div>
             <p style="color: #94a3b8; font-size: 13px; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Your Current Rank</p>
             <h2 style="color: {{ $rankColor }}; font-size: 32px; font-weight: 900; margin: 0 0 8px 0; letter-spacing: -0.5px;">{{ $rankName }}</h2>
-            <p style="color: #e5e7eb; font-size: 24px; font-weight: 700; margin: 0;">${{ number_format($earnings, 2) }}</p>
-            <p style="color: #64748b; font-size: 11px; margin: 4px 0 0 0;">Total Earnings</p>
+            <p style="color: #22c55e; font-size: 24px; font-weight: 700; margin: 0;">{{ $activeMembers }}</p>
+            <p style="color: #64748b; font-size: 11px; margin: 4px 0 0 0;">Active Members</p>
         </div>
 
         <!-- Rank Tiers -->
@@ -96,10 +102,10 @@
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                     </svg>
                     <h3 style="color: #e5e7eb; font-size: 16px; font-weight: 700; margin: 0;">Rank Requirements & Bonuses</h3>
                 </div>
@@ -207,38 +213,54 @@
             <div style="padding: 18px 20px; border-bottom: 1px solid rgba(56,189,248,0.1); background: rgba(56,189,248,0.05);">
                 <h3 style="color: #e5e7eb; font-size: 16px; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 8px;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                        <circle cx="9" cy="7" r="4"/>
-                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                        <circle cx="9" cy="7" r="4" />
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                     </svg>
-                    Top 50 Leaders
+                    Top 5 Leaders
                 </h3>
             </div>
             <div style="max-height: 500px; overflow-y: auto;">
                 @foreach($leaderboard as $index => $user)
                 @php
-                $userEarnings = $user->referral_earnings ?? 0;
-                if ($userEarnings >= 300) {
-                    $badge = 'Grand';
-                    $badgeColor = '#a855f7';
-                    $badgeIcon = '👑';
-                } elseif ($userEarnings >= 180) {
-                    $badge = 'Legendary';
-                    $badgeColor = '#f59e0b';
-                    $badgeIcon = '⭐';
-                } elseif ($userEarnings >= 50) {
-                    $badge = 'Elite';
-                    $badgeColor = '#38bdf8';
-                    $badgeIcon = '💎';
-                } elseif ($userEarnings >= 10) {
-                    $badge = 'Junior';
-                    $badgeColor = '#22c55e';
-                    $badgeIcon = '🌟';
+                // Calculate active members for this user
+                $level1Ids = \App\Models\User::where('referred_by', $user->id)->where('role', '!=', 'admin')->pluck('id');
+                $level1Active = \App\Models\User::where('referred_by', $user->id)
+                ->where('role', '!=', 'admin')
+                ->whereHas('deposits', fn($q) => $q->where('status', 'completed'))
+                ->count();
+                $level2Active = \App\Models\User::whereIn('referred_by', $level1Ids)
+                ->where('role', '!=', 'admin')
+                ->whereHas('deposits', fn($q) => $q->where('status', 'completed'))
+                ->count();
+                $level2Ids = \App\Models\User::whereIn('referred_by', $level1Ids)->where('role', '!=', 'admin')->pluck('id');
+                $level3Active = \App\Models\User::whereIn('referred_by', $level2Ids)
+                ->where('role', '!=', 'admin')
+                ->whereHas('deposits', fn($q) => $q->where('status', 'completed'))
+                ->count();
+                $userActiveMembers = $level1Active + $level2Active + $level3Active;
+
+                if ($userActiveMembers >= 100) {
+                $badge = 'Grand';
+                $badgeColor = '#a855f7';
+                $badgeIcon = '👑';
+                } elseif ($userActiveMembers >= 30) {
+                $badge = 'Legendary';
+                $badgeColor = '#f59e0b';
+                $badgeIcon = '⭐';
+                } elseif ($userActiveMembers >= 10) {
+                $badge = 'Elite';
+                $badgeColor = '#38bdf8';
+                $badgeIcon = '💎';
+                } elseif ($userActiveMembers >= 3) {
+                $badge = 'Junior';
+                $badgeColor = '#22c55e';
+                $badgeIcon = '🌟';
                 } else {
-                    $badge = '';
-                    $badgeColor = '#64748b';
-                    $badgeIcon = '';
+                $badge = '';
+                $badgeColor = '#64748b';
+                $badgeIcon = '';
                 }
                 @endphp
                 <div class="leader-item" style="display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid rgba(56,189,248,0.05); {{ $user->id === auth()->id() ? 'background: linear-gradient(90deg, rgba(56,189,248,0.15), rgba(56,189,248,0.05));' : '' }} transition: all 0.3s ease; animation-delay: {{ $index * 0.05 }}s;" onmouseover="this.style.background='rgba(56,189,248,0.08)'" onmouseout="this.style.background='{{ $user->id === auth()->id() ? 'linear-gradient(90deg, rgba(56,189,248,0.15), rgba(56,189,248,0.05))' : 'transparent' }}'">
@@ -251,11 +273,11 @@
                             <span>{{ $badge }} Leader</span>
                         </p>
                         @else
-                        <p style="color: #64748b; font-size: 11px; margin: 0;">{{ $user->deposits_count }} deposits</p>
+                        <p style="color: #64748b; font-size: 11px; margin: 0;">{{ $userActiveMembers }} active members</p>
                         @endif
                     </div>
                     <div style="text-align: right;">
-                        <p style="color: #22c55e; font-size: 15px; font-weight: 800; margin: 0;">${{ number_format($userEarnings, 0) }}</p>
+                        <p style="color: #22c55e; font-size: 15px; font-weight: 800; margin: 0;">${{ number_format($user->referral_earnings ?? 0, 0) }}</p>
                     </div>
                 </div>
                 @endforeach
