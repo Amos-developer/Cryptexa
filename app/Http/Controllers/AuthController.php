@@ -25,7 +25,6 @@ class AuthController extends Controller
         $request->validate([
             'username' => 'required|string|max:255|unique:users,username|regex:/^[a-zA-Z0-9_]+$/',
             'email' => 'required|email|unique:users,email',
-            'phone' => 'required',
             'password' => 'required|min:6|confirmed',
             'ref' => 'required|digits:8|exists:users,referral_code',
         ]);
@@ -49,7 +48,6 @@ class AuthController extends Controller
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'phone' => $request->phone,
             'password' => Hash::make($request->password),
             'verification_code' => $code,
             'verification_expires_at' => Carbon::now()->addMinutes(10),

@@ -6,114 +6,53 @@
     <title>Email Verification</title>
 </head>
 
-<body style="
-    margin:0;
-    padding:0;
-    background-color:#020617;
-    font-family:Arial, Helvetica, sans-serif;
-    color:#e5e7eb;
-">
-
-    <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background: #f3f4f6;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background: #f3f4f6; padding: 40px 20px;">
         <tr>
-            <td align="center" style="padding:40px 12px;">
-
-                <!-- CARD -->
-                <table width="100%" cellpadding="0" cellspacing="0" role="presentation"
-                    style="
-                    max-width:480px;
-                    background:linear-gradient(180deg,#020617,#0f172a);
-                    border-radius:16px;
-                    border:1px solid rgba(56,189,248,.25);
-                    box-shadow:0 20px 40px rgba(56,189,248,.25);
-                ">
-
-                    <!-- HEADER -->
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    
                     <tr>
-                        <td style="padding:28px 24px 12px;text-align:center;">
-                            <h2 style="
-                            margin:0;
-                            font-size:22px;
-                            font-weight:600;
-                            color:#ffffff;
-                        ">
-                                Email Verification
-                            </h2>
-                            <p style="
-                            margin:8px 0 0;
-                            font-size:14px;
-                            color:#94a3b8;
-                        ">
-                                Secure access to your account
-                            </p>
+                        <td style="background: linear-gradient(135deg, #38bdf8, #0ea5e9); padding: 40px 30px; text-align: center;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">📧</div>
+                            <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 900;">Email Verification</h1>
+                            <p style="margin: 10px 0 0 0; color: rgba(255,255,255,0.9); font-size: 14px;">Secure access to your account</p>
                         </td>
                     </tr>
 
-                    <!-- BODY -->
                     <tr>
-                        <td style="padding:24px;text-align:center;">
-
-                            <p style="
-                            margin:0 0 16px;
-                            font-size:15px;
-                            line-height:1.6;
-                            color:#cbd5f5;
-                        ">
+                        <td style="padding: 40px 30px;">
+                            <p style="margin: 0 0 20px 0; color: #6b7280; font-size: 15px; line-height: 1.6;">
                                 Use the verification code below to confirm your email address.
                             </p>
 
-                            <!-- CODE BOX -->
-                            <div style="
-                            display:inline-block;
-                            padding:16px 28px;
-                            background:#020617;
-                            border-radius:12px;
-                            border:1px solid rgba(56,189,248,.4);
-                            margin:12px 0 20px;
-                        ">
-                                <span style="
-                                font-size:28px;
-                                font-weight:700;
-                                letter-spacing:6px;
-                                color:#38bdf8;
-                            ">
-                                    {{ $code }}
-                                </span>
-                            </div>
+                            <table width="100%" cellpadding="0" cellspacing="0" style="background: #f9fafb; border-radius: 12px; padding: 20px; margin: 20px 0;">
+                                <tr>
+                                    <td align="center" style="padding: 20px 0;">
+                                        <p style="margin: 0 0 10px 0; color: #6b7280; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Verification Code</p>
+                                        <h1 style="margin: 0; color: #38bdf8; font-size: 48px; font-weight: 900; letter-spacing: 8px;">{{ $code }}</h1>
+                                    </td>
+                                </tr>
+                            </table>
 
-                            <p style="
-                            margin:0;
-                            font-size:13px;
-                            color:#94a3b8;
-                        ">
-                                This code will expire in <strong>10 minutes</strong>.
+                            <p style="margin: 0; color: #6b7280; font-size: 14px; line-height: 1.6;">
+                                This code will expire in <strong style="color: #ef4444;">10 minutes</strong>.
                             </p>
-
                         </td>
                     </tr>
 
-                    <!-- FOOTER -->
                     <tr>
-                        <td style="
-                        padding:16px 24px 24px;
-                        text-align:center;
-                        border-top:1px solid rgba(56,189,248,.15);
-                    ">
-                            <p style="
-                            margin:0;
-                            font-size:12px;
-                            color:#64748b;
-                            line-height:1.6;
-                        ">
-                                If you did not request this verification, you can safely ignore this email.<br>
+                        <td style="background: #f9fafb; padding: 30px; text-align: center; border-top: 1px solid #e5e7eb;">
+                            <p style="margin: 0 0 10px 0; color: #9ca3af; font-size: 12px;">
+                                If you did not request this verification, you can safely ignore this email.
+                            </p>
+                            <p style="margin: 0; color: #9ca3af; font-size: 12px;">
                                 © {{ date('Y') }} Cryptexa. All rights reserved.
                             </p>
                         </td>
                     </tr>
 
                 </table>
-                <!-- END CARD -->
-
             </td>
         </tr>
     </table>

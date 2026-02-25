@@ -41,6 +41,15 @@ class WithdrawalController extends Controller
             return back()->with('error', 'You must complete at least one liquidity pool before withdrawing. Please activate a pool and wait for it to finish.');
         }
 
+        // Check if user has already withdrawn today
+        $todayWithdrawal = Withdrawal::where('user_id', $user->id)
+            ->whereDate('created_at', today())
+            ->exists();
+
+        if ($todayWithdrawal) {
+            return back()->with('error', 'You can only make one withdrawal per day. Please try again tomorrow.');
+        }
+
         // 1️⃣ Validate
         $request->validate([
             'network'     => 'required|in:BEP20,USDC_BEP20,TRC20,BNB_BSC',

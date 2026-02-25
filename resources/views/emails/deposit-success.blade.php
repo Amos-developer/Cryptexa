@@ -12,7 +12,7 @@
                 <table width="600" cellpadding="0" cellspacing="0" style="background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                     
                     <tr>
-                        <td style="background: linear-gradient(135deg, #38bdf8, #0ea5e9); padding: 40px 30px; text-align: center;">
+                        <td style="background: linear-gradient(135deg, #22c55e, #16a34a); padding: 40px 30px; text-align: center;">
                             <div style="font-size: 48px; margin-bottom: 10px;">✓</div>
                             <h1 style="margin: 0; color: white; font-size: 28px; font-weight: 900;">Deposit Confirmed</h1>
                         </td>

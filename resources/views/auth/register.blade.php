@@ -566,20 +566,6 @@
                         @endif
                     </div>
 
-                    <!-- Phone Field -->
-                    <div class="form-group">
-                        <label class="form-label">Phone Number</label>
-                        <input
-                            type="tel"
-                            name="phone"
-                            value="{{ old('phone') }}"
-                            class="form-input{{ $errors->has('phone') ? ' is-invalid' : '' }}"
-                            placeholder="(Optional) Enter your phone number">
-                        @if($errors->has('phone'))
-                        <span class="input-error">{{ $errors->first('phone') }}</span>
-                        @endif
-                    </div>
-
                     <!-- Referral Code Field -->
                     @php
                     $refCode = request('ref') ?? old('ref');

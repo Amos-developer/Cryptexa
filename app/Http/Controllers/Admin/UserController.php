@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $query = User::withCount('referrals');
+        $query = User::where('role', '!=', 'admin')->withCount('referrals');
         
         if ($request->filled('search')) {
             $search = $request->search;

@@ -457,6 +457,20 @@
                 animation: slideUp 0.6s ease 0.35s backwards;
             ">
                 <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                    <div style="width: 32px; height: 32px; background: rgba(239,68,68,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 8v4M12 16h.01"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p style="color: #ef4444; font-weight: 700; font-size: 13px; margin: 0 0 6px 0;">Withdrawal Limit</p>
+                        <p class="text-secondary" style="font-size: 12px; margin: 0; line-height: 1.6;">
+                            You can only make <strong style="color: #ef4444;">one withdrawal per day</strong>. Please plan your withdrawals accordingly.
+                        </p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px; margin-bottom: 12px;">
                     <div style="width: 32px; height: 32px; background: rgba(56,189,248,0.15); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
                             <circle cx="12" cy="12" r="10"/>
