@@ -85,7 +85,7 @@
                 ">
                     <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">⏱️ Duration</p>
                     <h3 style="color: #e5e7eb; font-size: 24px; font-weight: 900; margin: 0;">
-                        {{ $plan->duration_minutes }} <span style="font-size: 14px; color: #94a3b8;">min</span>
+                        {{ $plan->duration_minutes }} min <span style="font-size: 14px; color: #94a3b8;">({{ $plan->duration_minutes / 1440 }} Days)</span>
                     </h3>
                 </div>
 
