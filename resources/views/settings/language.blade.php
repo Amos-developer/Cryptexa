@@ -26,52 +26,53 @@
 
         @php
         $languages = [
-            ['name' => 'English', 'code' => 'en', 'flag' => '🇺🇸', 'active' => true],
+            ['name' => 'English', 'code' => 'en', 'flag' => '🇬🇧', 'active' => true],
             ['name' => 'Español', 'code' => 'es', 'flag' => '🇪🇸', 'active' => false],
-            ['name' => '中文', 'code' => 'zh', 'flag' => '🇨🇳', 'active' => false],
-            ['name' => '日本語', 'code' => 'ja', 'flag' => '🇯🇵', 'active' => false],
             ['name' => 'Français', 'code' => 'fr', 'flag' => '🇫🇷', 'active' => false],
             ['name' => 'Deutsch', 'code' => 'de', 'flag' => '🇩🇪', 'active' => false],
+            ['name' => '中文', 'code' => 'zh', 'flag' => '🇨🇳', 'active' => false],
+            ['name' => '日本語', 'code' => 'ja', 'flag' => '🇯🇵', 'active' => false],
+            ['name' => '한국어', 'code' => 'ko', 'flag' => '🇰🇷', 'active' => false],
             ['name' => 'Português', 'code' => 'pt', 'flag' => '🇵🇹', 'active' => false],
             ['name' => 'Русский', 'code' => 'ru', 'flag' => '🇷🇺', 'active' => false],
             ['name' => 'العربية', 'code' => 'ar', 'flag' => '🇸🇦', 'active' => false],
             ['name' => 'हिन्दी', 'code' => 'hi', 'flag' => '🇮🇳', 'active' => false],
             ['name' => 'Italiano', 'code' => 'it', 'flag' => '🇮🇹', 'active' => false],
-            ['name' => '한국어', 'code' => 'ko', 'flag' => '🇰🇷', 'active' => false],
-            ['name' => 'Türkçe', 'code' => 'tr', 'flag' => '🇹🇷', 'active' => false],
             ['name' => 'Nederlands', 'code' => 'nl', 'flag' => '🇳🇱', 'active' => false],
+            ['name' => 'Türkçe', 'code' => 'tr', 'flag' => '🇹🇷', 'active' => false],
             ['name' => 'Polski', 'code' => 'pl', 'flag' => '🇵🇱', 'active' => false],
             ['name' => 'Tiếng Việt', 'code' => 'vi', 'flag' => '🇻🇳', 'active' => false],
             ['name' => 'ไทย', 'code' => 'th', 'flag' => '🇹🇭', 'active' => false],
             ['name' => 'Bahasa Indonesia', 'code' => 'id', 'flag' => '🇮🇩', 'active' => false],
+            ['name' => 'Bahasa Melayu', 'code' => 'ms', 'flag' => '🇲🇾', 'active' => false],
+            ['name' => 'Svenska', 'code' => 'sv', 'flag' => '🇸🇪', 'active' => false],
         ];
         @endphp
 
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; animation: slideUp 0.6s ease 0.1s backwards;">
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; animation: slideUp 0.6s ease 0.1s backwards;">
             @foreach($languages as $index => $lang)
             <button onclick="selectLanguage('{{ $lang['code'] }}')" style="
                 display: flex;
                 align-items: center;
-                gap: 12px;
-                padding: 16px;
-                background: {{ $lang['active'] ? 'linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.05))' : 'linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02))' }};
-                border: 1px solid {{ $lang['active'] ? 'rgba(56,189,248,0.3)' : 'rgba(255,255,255,0.06)' }};
-                border-radius: 12px;
+                gap: 10px;
+                padding: 12px;
+                background: {{ $lang['active'] ? 'linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.05))' : 'linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05))' }};
+                border: 1px solid {{ $lang['active'] ? 'rgba(56,189,248,0.3)' : 'rgba(56,189,248,0.2)' }};
+                border-radius: 8px;
                 cursor: pointer;
                 transition: all 0.3s ease;
                 animation: slideIn 0.5s ease {{ 0.05 * $index }}s backwards;
                 position: relative;
             "
-                onmouseover="this.style.borderColor='rgba(56,189,248,0.3)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(56,189,248,0.15)';"
-                onmouseout="this.style.borderColor='{{ $lang['active'] ? 'rgba(56,189,248,0.3)' : 'rgba(255,255,255,0.06)' }}'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
-                <span style="font-size: 28px;">{{ $lang['flag'] }}</span>
+                onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(56,189,248,0.15)';"
+                onmouseout="this.style.borderColor='{{ $lang['active'] ? 'rgba(56,189,248,0.3)' : 'rgba(56,189,248,0.2)' }}'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                <span style="font-size: 20px;">{{ $lang['flag'] }}</span>
                 <div style="text-align: left; flex: 1;">
-                    <div style="color: #e5e7eb; font-weight: 700; font-size: 14px;">{{ $lang['name'] }}</div>
-                    <div style="color: #64748b; font-size: 11px;">{{ strtoupper($lang['code']) }}</div>
+                    <div style="color: #e5e7eb; font-weight: 600; font-size: 13px;">{{ $lang['name'] }}</div>
                 </div>
                 @if($lang['active'])
-                <div style="position: absolute; top: 8px; right: 8px; width: 20px; height: 20px; background: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                <div style="width: 18px; height: 18px; background: #22c55e; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
                         <path d="M20 6L9 17l-5-5"/>
                     </svg>
                 </div>
