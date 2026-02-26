@@ -11,8 +11,7 @@ class ComputePlan extends Model
         'name',
         'type',
         'price',
-        'min_profit',
-        'max_profit',
+        'daily_profit',
         'duration_minutes'
     ];
     

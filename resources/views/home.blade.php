@@ -194,11 +194,11 @@
                         </div>
                         <div style="background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; padding: 10px; text-align: center;">
                             <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">Daily Return</p>
-                            <p style="color: #22c55e; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format($plan->min_profit, 1) }}%–{{ number_format($plan->max_profit, 1) }}%</p>
+                            <p style="color: #22c55e; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format($plan->daily_profit, 1) }}%</p>
                         </div>
                         <div style="background: rgba(168,85,247,0.05); border: 1px solid rgba(168,85,247,0.15); border-radius: 8px; padding: 10px; text-align: center;">
                             <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">Total ROI</p>
-                            <p style="color: #a855f7; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format((pow(1 + ($plan->max_profit / 100), $days) - 1) * 100, 1) }}%</p>
+                            <p style="color: #a855f7; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format((pow(1 + ($plan->daily_profit / 100), $days) - 1) * 100, 1) }}%</p>
                         </div>
                     </div>
                     

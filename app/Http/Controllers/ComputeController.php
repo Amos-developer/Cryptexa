@@ -33,23 +33,8 @@ class ComputeController extends Controller
 
             $user->decrement('balance', $plan->price);
 
-            // 80% chance for higher profit (upper 80% of range), 20% for lower profit
-            $random = mt_rand(1, 100);
-            
-            if ($random <= 80) {
-                // 80% chance: Get profit from upper 80% of the range
-                $rangeStart = $plan->min_profit + (($plan->max_profit - $plan->min_profit) * 0.2);
-                $rangeEnd = $plan->max_profit;
-            } else {
-                // 20% chance: Get profit from lower 20% of the range
-                $rangeStart = $plan->min_profit;
-                $rangeEnd = $plan->min_profit + (($plan->max_profit - $plan->min_profit) * 0.2);
-            }
-            
-            $dailyPercent = mt_rand(
-                $rangeStart * 10,
-                $rangeEnd * 10
-            ) / 10;
+            // Use fixed daily percentage
+            $dailyPercent = $plan->daily_profit;
 
             $principal = $plan->price;
             $days = $plan->duration_minutes / 1440;

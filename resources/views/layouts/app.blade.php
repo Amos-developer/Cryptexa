@@ -73,6 +73,13 @@
     // Clear theme from localStorage to reset to default dark mode
     localStorage.removeItem('theme');
     
+    // Auto-reload on CSRF token expiration
+    window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('419')) {
+            location.reload();
+        }
+    });
+    
     // Register Service Worker for PWA
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js')

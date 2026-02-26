@@ -89,6 +89,7 @@ class RankBonusService
     {
         $activeMembers = $this->getActiveMembers($user);
         
+        // Check actual active members first
         if ($activeMembers >= 100) {
             return ['name' => 'Grand Leader', 'weekly_salary' => 50, 'active_members' => $activeMembers];
         } elseif ($activeMembers >= 30) {
@@ -97,8 +98,19 @@ class RankBonusService
             return ['name' => 'Elite Leader', 'weekly_salary' => 10, 'active_members' => $activeMembers];
         } elseif ($activeMembers >= 3) {
             return ['name' => 'Junior Leader', 'weekly_salary' => 0, 'active_members' => $activeMembers];
-        } else {
-            return ['name' => 'No Rank', 'weekly_salary' => 0, 'active_members' => $activeMembers];
         }
+        
+        // If no active members but bonus was paid, show last achieved rank (no salary)
+        if ($user->grand_leader_bonus_paid) {
+            return ['name' => 'Grand Leader (Inactive)', 'weekly_salary' => 0, 'active_members' => $activeMembers];
+        } elseif ($user->legendary_leader_bonus_paid) {
+            return ['name' => 'Legendary Leader (Inactive)', 'weekly_salary' => 0, 'active_members' => $activeMembers];
+        } elseif ($user->elite_leader_bonus_paid) {
+            return ['name' => 'Elite Leader (Inactive)', 'weekly_salary' => 0, 'active_members' => $activeMembers];
+        } elseif ($user->junior_leader_bonus_paid) {
+            return ['name' => 'Junior Leader (Inactive)', 'weekly_salary' => 0, 'active_members' => $activeMembers];
+        }
+        
+        return ['name' => 'No Rank', 'weekly_salary' => 0, 'active_members' => $activeMembers];
     }
 }

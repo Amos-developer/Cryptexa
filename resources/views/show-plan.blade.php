@@ -98,9 +98,9 @@
                 border-radius: 12px;
                 padding: 16px;
             ">
-                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">📈 Daily Return Range</p>
+                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">📈 Daily Return (Fixed)</p>
                 <h3 style="color: #22c55e; font-size: 28px; font-weight: 900; margin: 0;">
-                    {{ number_format($plan->min_profit, 1) }}% – {{ number_format($plan->max_profit, 1) }}%
+                    {{ number_format($plan->daily_profit, 1) }}%
                 </h3>
                 <p style="color: #86efac; font-size: 12px; margin: 8px 0 0 0;">
                     Daily compounding returns on your investment
