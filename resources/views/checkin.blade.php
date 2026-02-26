@@ -113,11 +113,15 @@
                     $checkIn = $checkIns->first(function($item) use ($date) {
                         return $item->check_in_date->isSameDay($date);
                     });
+                    $isFutureDate = $date->isFuture();
+                    $isSkipped = !$checkIn && !$isFutureDate && $date->lt(\Carbon\Carbon::today());
                 @endphp
-                <div class="day-card {{ $checkIn ? 'checked' : '' }}">
+                <div class="day-card {{ $checkIn ? 'checked' : ($isSkipped ? 'skipped' : '') }}">
                     <div class="day-number">{{ $date->format('D') }}</div>
                     @if($checkIn)
                         <div class="day-reward">${{ number_format($checkIn->reward, 2) }}</div>
+                    @elseif($isSkipped)
+                        <div class="day-skipped">❌</div>
                     @endif
                 </div>
             @endfor
