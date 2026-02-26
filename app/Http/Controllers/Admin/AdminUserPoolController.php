@@ -14,11 +14,12 @@ class AdminUserPoolController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
-        $totalActive = ComputeOrder::where('status', 'running')->count();
-        $totalInactive = ComputeOrder::where('status', 'completed')->count();
+        $totalRunning = ComputeOrder::where('status', 'running')->count();
+        $totalCompleted = ComputeOrder::where('status', 'completed')->count();
         $totalRevenue = ComputeOrder::where('status', 'completed')->sum('expected_profit');
+        $totalInvested = ComputeOrder::sum('amount');
 
-        return view('admin.user-pools.index', compact('userPools', 'totalActive', 'totalInactive', 'totalRevenue'));
+        return view('admin.user-pools.index', compact('userPools', 'totalRunning', 'totalCompleted', 'totalRevenue', 'totalInvested'));
     }
 
     public function show($id)

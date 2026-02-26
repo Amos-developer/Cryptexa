@@ -89,23 +89,12 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label">📉 Min Profit <span class="required">*</span></label>
+          <label class="form-label">📈 Daily Profit (%) <span class="required">*</span></label>
           <div class="input-group">
-            <span class="input-prefix">$</span>
-            <input type="number" step="0.01" min="0" name="min_profit" class="form-input @error('min_profit') error @enderror" value="{{ old('min_profit', $pool->min_profit) }}" required>
+            <span class="input-prefix">%</span>
+            <input type="number" step="0.01" min="0" max="100" name="daily_profit" class="form-input @error('daily_profit') error @enderror" value="{{ old('daily_profit', $pool->daily_profit) }}" required>
           </div>
-          @error('min_profit')
-            <span class="error-message">{{ $message }}</span>
-          @enderror
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">📈 Max Profit <span class="required">*</span></label>
-          <div class="input-group">
-            <span class="input-prefix">$</span>
-            <input type="number" step="0.01" min="0" name="max_profit" class="form-input @error('max_profit') error @enderror" value="{{ old('max_profit', $pool->max_profit) }}" required>
-          </div>
-          @error('max_profit')
+          @error('daily_profit')
             <span class="error-message">{{ $message }}</span>
           @enderror
         </div>

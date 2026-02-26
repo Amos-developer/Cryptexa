@@ -25,8 +25,7 @@ class AdminPoolController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|string',
             'price' => 'required|numeric|min:0',
-            'min_profit' => 'required|numeric|min:0',
-            'max_profit' => 'required|numeric|min:0',
+            'daily_profit' => 'required|numeric|min:0|max:100',
             'duration_minutes' => 'required|integer|min:1',
         ]);
         
@@ -51,8 +50,7 @@ class AdminPoolController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|string',
             'price' => 'required|numeric|min:0',
-            'min_profit' => 'required|numeric|min:0',
-            'max_profit' => 'required|numeric|min:0',
+            'daily_profit' => 'required|numeric|min:0|max:100',
             'duration_minutes' => 'required|integer|min:1',
         ]);
         

@@ -50,12 +50,8 @@
         <div class="info-value" style="color:#059669">${{ number_format($pool->price, 2) }}</div>
       </div>
       <div class="info-item">
-        <div class="info-label">📉 Min Profit</div>
-        <div class="info-value">${{ number_format($pool->min_profit, 2) }}</div>
-      </div>
-      <div class="info-item">
-        <div class="info-label">📈 Max Profit</div>
-        <div class="info-value" style="color:#dc2626">${{ number_format($pool->max_profit, 2) }}</div>
+        <div class="info-label">📈 Daily Profit</div>
+        <div class="info-value" style="color:#dc2626">{{ number_format($pool->daily_profit, 2) }}%</div>
       </div>
       <div class="info-item">
         <div class="info-label">⏱️ Duration</div>
@@ -63,11 +59,11 @@
       </div>
       <div class="info-item">
         <div class="info-label">📅 Created At</div>
-        <div class="info-value" style="font-size:16px">{{ $pool->created_at->format('M d, Y H:i') }}</div>
+        <div class="info-value" style="font-size:16px">{{ $pool->created_at ? $pool->created_at->format('M d, Y H:i') : '-' }}</div>
       </div>
       <div class="info-item">
         <div class="info-label">🕐 Updated At</div>
-        <div class="info-value" style="font-size:16px">{{ $pool->updated_at->format('M d, Y H:i') }}</div>
+        <div class="info-value" style="font-size:16px">{{ $pool->updated_at ? $pool->updated_at->format('M d, Y H:i') : '-' }}</div>
       </div>
     </div>
 

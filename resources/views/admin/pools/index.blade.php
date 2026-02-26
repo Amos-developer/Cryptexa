@@ -73,8 +73,8 @@
       <div class="stat-box">
         <div class="stat-icon red"><i class="fa fa-chart-line"></i></div>
         <div class="stat-info">
-          <h4>Avg Profit</h4>
-          <h2>${{ number_format($pools->avg('max_profit'), 2) }}</h2>
+          <h4>Avg Daily Profit</h4>
+          <h2>{{ number_format($pools->avg('daily_profit'), 2) }}%</h2>
         </div>
       </div>
     </div>
@@ -93,8 +93,7 @@
             <th>Name</th>
             <th>Type</th>
             <th>Price</th>
-            <th>Min Profit</th>
-            <th>Max Profit</th>
+            <th>Daily Profit</th>
             <th>Duration</th>
             <th>Actions</th>
           </tr>
@@ -106,8 +105,7 @@
             <td data-label="Name" style="font-weight:700;color:#667eea">{{ $pool->name }}</td>
             <td data-label="Type"><code style="background:#f1f5f9;padding:4px 8px;border-radius:6px;font-size:12px">{{ strtoupper($pool->type) }}</code></td>
             <td data-label="Price" style="font-weight:700;color:#059669">${{ number_format($pool->price, 2) }}</td>
-            <td data-label="Min Profit" style="color:#64748b">${{ number_format($pool->min_profit, 2) }}</td>
-            <td data-label="Max Profit" style="font-weight:700;color:#dc2626">${{ number_format($pool->max_profit, 2) }}</td>
+            <td data-label="Daily Profit" style="font-weight:700;color:#dc2626">{{ number_format($pool->daily_profit, 2) }}%</td>
             <td data-label="Duration">{{ $pool->duration_minutes }} min</td>
             <td data-label="Actions">
               <a href="{{ route('admin.pools.show', $pool) }}" class="action-btn view" title="View">👁️</a>
@@ -121,7 +119,7 @@
           </tr>
           @empty
           <tr>
-            <td colspan="8" class="empty-state">
+            <td colspan="7" class="empty-state">
               <div class="empty-icon">🏊</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Pools Found</div>
               <div style="font-size:14px">Create your first compute pool</div>

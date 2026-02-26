@@ -22,6 +22,7 @@
 .modern-table tbody tr:hover{background:#f8fafc}
 .status-badge{display:inline-block;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600}
 .status-active{background:#d1fae5;color:#065f46}
+.status-completed{background:#d1fae5;color:#065f46}
 .status-inactive{background:#fee2e2;color:#991b1b}
 .action-btn{width:36px;height:36px;border-radius:8px;border:none;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;justify-content:center;margin:0 2px}
 .action-btn.view{background:#dbeafe;color:#1e40af}
@@ -51,27 +52,36 @@
 
 <div class="container-fluid" style="padding:20px">
   <div class="row">
-    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
       <div class="stat-box">
         <div class="stat-icon green"><i class="fa fa-play-circle"></i></div>
         <div class="stat-info">
           <h4>Active Pools</h4>
-          <h2>{{ number_format($totalActive) }}</h2>
+          <h2>{{ number_format($totalRunning) }}</h2>
         </div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
       <div class="stat-box">
-        <div class="stat-icon red"><i class="fa fa-stop-circle"></i></div>
+        <div class="stat-icon blue"><i class="fa fa-check-circle"></i></div>
         <div class="stat-info">
-          <h4>Inactive Pools</h4>
-          <h2>{{ number_format($totalInactive) }}</h2>
+          <h4>Completed Pools</h4>
+          <h2>{{ number_format($totalCompleted) }}</h2>
         </div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
       <div class="stat-box">
-        <div class="stat-icon blue"><i class="fa fa-dollar"></i></div>
+        <div class="stat-icon red"><i class="fa fa-coins"></i></div>
+        <div class="stat-info">
+          <h4>Total Invested</h4>
+          <h2>${{ number_format($totalInvested, 2) }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+      <div class="stat-box">
+        <div class="stat-icon red"><i class="fa fa-dollar"></i></div>
         <div class="stat-info">
           <h4>Total Revenue</h4>
           <h2>${{ number_format($totalRevenue, 2) }}</h2>
@@ -114,7 +124,7 @@
               @if($userPool->status == 'running')
                 <span class="status-badge status-active">✓ Running</span>
               @else
-                <span class="status-badge status-inactive">✗ Completed</span>
+                <span class="status-badge status-completed">✓ Completed</span>
               @endif
             </td>
             <td data-label="Profit Earned" style="font-weight:700;color:#059669">${{ number_format($userPool->expected_profit ?? 0, 2) }}</td>
