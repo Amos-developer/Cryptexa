@@ -32,7 +32,7 @@
                     line-height: 1.2;
                     display: block;
                 ">
-                    &#64;{{ auth()->user()->username }}
+                    {{ auth()->user()->username }}
                 </strong>
 
                 <small style="
@@ -54,13 +54,14 @@
             <div style="position: relative;">
                 <button onclick="toggleLanguageSelector()"
                     style="
-                        width: 40px;
-                        height: 40px;
+                        width: 36px;
+                        min-width: 36px;
+                        height: 36px;
+                        padding: 0;
                         background: linear-gradient(135deg, rgba(56,189,248,0.1) 0%, rgba(56,189,248,0.05) 100%);
                         border: 1px solid rgba(56,189,248,0.2);
                         border-radius: 8px;
                         color: #38bdf8;
-                        font-size: 20px;
                         cursor: pointer;
                         transition: all 0.3s ease;
                         display: flex;
@@ -69,31 +70,31 @@
                     "
                     onmouseover="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0.1) 100%)'; this.style.borderColor='rgba(56,189,248,0.4)'; this.style.boxShadow='0 0 15px rgba(56,189,248,0.2)';"
                     onmouseout="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1) 0%, rgba(56,189,248,0.05) 100%)'; this.style.borderColor='rgba(56,189,248,0.2)'; this.style.boxShadow='none';">
-                    🌍
+                    <img src="{{ asset('images/icons/globe.svg') }}" alt="Language" style="width: 18px; height: 18px; filter: brightness(0) saturate(100%) invert(70%) sepia(51%) saturate(2878%) hue-rotate(169deg) brightness(101%) contrast(101%);">
                 </button>
             </div>
 
-            <!-- SETTINGS -->
-            <a href="{{ route('account.settings') }}"
+            <!-- SUPPORT -->
+            <button onclick="openSupport()"
                 style="
-                    width: 40px;
-                    height: 40px;
-                    background: linear-gradient(135deg, rgba(168,85,247,0.1) 0%, rgba(168,85,247,0.05) 100%);
-                    border: 1px solid rgba(168,85,247,0.2);
+                    width: 36px;
+                    min-width: 36px;
+                    height: 36px;
+                    padding: 0;
+                    background: linear-gradient(135deg, rgba(34,197,94,0.1) 0%, rgba(34,197,94,0.05) 100%);
+                    border: 1px solid rgba(34,197,94,0.2);
                     border-radius: 8px;
-                    color: #a855f7;
-                    font-size: 18px;
+                    color: #22c55e;
                     cursor: pointer;
                     transition: all 0.3s ease;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    text-decoration: none;
                 "
-                onmouseover="this.style.background='linear-gradient(135deg, rgba(168,85,247,0.15) 0%, rgba(168,85,247,0.1) 100%)'; this.style.borderColor='rgba(168,85,247,0.4)'; this.style.boxShadow='0 0 15px rgba(168,85,247,0.2)';"
-                onmouseout="this.style.background='linear-gradient(135deg, rgba(168,85,247,0.1) 0%, rgba(168,85,247,0.05) 100%)'; this.style.borderColor='rgba(168,85,247,0.2)'; this.style.boxShadow='none';">
-                <img src="{{ asset('images/icons/account.svg') }}" alt="Account" style="width: 20px; height: 20px;">
-            </a>
+                onmouseover="this.style.background='linear-gradient(135deg, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.1) 100%)'; this.style.borderColor='rgba(34,197,94,0.4)'; this.style.boxShadow='0 0 15px rgba(34,197,94,0.2)';"
+                onmouseout="this.style.background='linear-gradient(135deg, rgba(34,197,94,0.1) 0%, rgba(34,197,94,0.05) 100%)'; this.style.borderColor='rgba(34,197,94,0.2)'; this.style.boxShadow='none';">
+                <img src="{{ asset('images/icons/support.svg') }}" alt="Support" style="width: 18px; height: 18px; filter: brightness(0) saturate(100%) invert(70%) sepia(98%) saturate(459%) hue-rotate(76deg) brightness(98%) contrast(91%);">
+            </button>
 
         </div>
 
@@ -212,6 +213,45 @@
         });
         // Here you can add actual language change logic
         console.log('Language changed to:', lang);
+    }
+
+    function openSupport() {
+        Swal.fire({
+            title: '💬 Support Center',
+            html: `
+                <div style="display: grid; gap: 12px; text-align: left;">
+                    <a href="https://t.me/cryptexa_support" target="_blank" style="padding: 14px; background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; color: #e5e7eb; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 12px;" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.1))'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05)'">
+                        <span style="font-size: 24px;">📱</span>
+                        <div style="text-align: left;">
+                            <div style="font-weight: 700; font-size: 14px; color: #38bdf8;">Telegram Support</div>
+                            <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Fast response • 24/7 available</div>
+                        </div>
+                    </a>
+                    <a href="mailto:support@cryptexa.com" style="padding: 14px; background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(34,197,94,0.05)); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; color: #e5e7eb; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 12px;" onmouseover="this.style.borderColor='rgba(34,197,94,0.4)'; this.style.background='linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.1))'" onmouseout="this.style.borderColor='rgba(34,197,94,0.2)'; this.style.background='linear-gradient(135deg, rgba(34,197,94,0.1), rgba(34,197,94,0.05)'">
+                        <span style="font-size: 24px;">✉️</span>
+                        <div style="text-align: left;">
+                            <div style="font-weight: 700; font-size: 14px; color: #22c55e;">Email Support</div>
+                            <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">support@cryptexa.com</div>
+                        </div>
+                    </a>
+                    <button onclick="Swal.close(); Swal.fire({title: 'Coming Soon', text: 'Live chat will be available soon!', icon: 'info', background: '#020617', color: '#e5e7eb'});" style="padding: 14px; background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(168,85,247,0.05)); border: 1px solid rgba(168,85,247,0.2); border-radius: 10px; color: #e5e7eb; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 12px;" onmouseover="this.style.borderColor='rgba(168,85,247,0.4)'; this.style.background='linear-gradient(135deg, rgba(168,85,247,0.15), rgba(168,85,247,0.1))'" onmouseout="this.style.borderColor='rgba(168,85,247,0.2)'; this.style.background='linear-gradient(135deg, rgba(168,85,247,0.1), rgba(168,85,247,0.05)'">
+                        <span style="font-size: 24px;">💬</span>
+                        <div style="text-align: left;">
+                            <div style="font-weight: 700; font-size: 14px; color: #a855f7;">Live Chat</div>
+                            <div style="font-size: 11px; color: #94a3b8; margin-top: 2px;">Coming soon</div>
+                        </div>
+                    </button>
+                </div>
+            `,
+            showConfirmButton: false,
+            showCloseButton: true,
+            background: '#020617',
+            color: '#e5e7eb',
+            customClass: {
+                popup: 'swal-dark-popup'
+            },
+            width: '450px'
+        });
     }
 </script>
 
