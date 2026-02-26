@@ -32,7 +32,7 @@
                     line-height: 1.2;
                     display: block;
                 ">
-                    {{ auth()->user()->name }}
+                    &#64;{{ auth()->user()->username }}
                 </strong>
 
                 <small style="
@@ -41,7 +41,7 @@
                     display: block;
                     margin-top: 2px;
                 ">
-                    {{ auth()->user()->email }}
+                    ID: {{ auth()->user()->account_id }}
                 </small>
             </div>
 
