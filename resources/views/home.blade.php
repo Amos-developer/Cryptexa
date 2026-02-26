@@ -187,19 +187,28 @@
                     </div>
                     
                     <!-- Stats Grid -->
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px;">
                         <div style="background: rgba(56,189,248,0.05); border: 1px solid rgba(56,189,248,0.15); border-radius: 8px; padding: 10px; text-align: center;">
-                            <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">Min Investment</p>
-                            <p style="color: #38bdf8; font-weight: 700; font-size: 15px; margin: 0;">${{ number_format($plan->price, 0) }}</p>
+                            <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">Investment Range</p>
+                            <p style="color: #38bdf8; font-weight: 700; font-size: 15px; margin: 0;">
+                                ${{ number_format($plan->price, 0) }} - 
+                                @if($plan->max_investment)
+                                    ${{ number_format($plan->max_investment, 0) }}
+                                @else
+                                    <span style="font-size: 13px;">∞</span>
+                                @endif
+                            </p>
                         </div>
                         <div style="background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; padding: 10px; text-align: center;">
                             <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">Daily Return</p>
                             <p style="color: #22c55e; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format($plan->daily_profit, 1) }}%</p>
                         </div>
-                        <div style="background: rgba(168,85,247,0.05); border: 1px solid rgba(168,85,247,0.15); border-radius: 8px; padding: 10px; text-align: center;">
-                            <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">Total ROI</p>
-                            <p style="color: #a855f7; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format((pow(1 + ($plan->daily_profit / 100), $days) - 1) * 100, 1) }}%</p>
-                        </div>
+                    </div>
+                    
+                    <!-- Total ROI -->
+                    <div style="background: rgba(251,191,36,0.05); border: 1px solid rgba(251,191,36,0.15); border-radius: 8px; padding: 10px; text-align: center; margin-bottom: 12px;">
+                        <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">Total ROI</p>
+                        <p style="color: #fbbf24; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format((pow(1 + ($plan->daily_profit / 100), $days) - 1) * 100, 1) }}%</p>
                     </div>
                     
                     <!-- Progress Bar -->

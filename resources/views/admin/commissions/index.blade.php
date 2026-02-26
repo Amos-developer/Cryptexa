@@ -25,6 +25,11 @@
 .level-1{background:#dbeafe;color:#1e40af}
 .level-2{background:#d1fae5;color:#065f46}
 .level-3{background:#fef3c7;color:#92400e}
+.action-btn{width:36px;height:36px;border-radius:8px;border:none;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;justify-content:center;margin:0 2px}
+.action-btn.edit{background:#fef3c7;color:#92400e}
+.action-btn.edit:hover{background:#fde68a}
+.action-btn.delete{background:#fee2e2;color:#991b1b}
+.action-btn.delete:hover{background:#fecaca}
 .pagination-wrapper{padding:20px 24px;display:flex;justify-content:center}
 .pagination{display:flex;gap:8px;list-style:none;padding:0;margin:0}
 .pagination li a,.pagination li span{display:block;padding:8px 14px;border-radius:8px;font-size:14px;font-weight:600;transition:all .3s}
@@ -88,6 +93,7 @@
             <th>Level</th>
             <th>Amount</th>
             <th>Date</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -101,10 +107,18 @@
             </td>
             <td style="font-weight:700;color:#059669">${{ number_format($commission->amount, 2) }}</td>
             <td style="color:#64748b">{{ $commission->created_at->format('M d, Y H:i') }}</td>
+            <td>
+              <a href="{{ route('admin.commissions.edit', $commission) }}" class="action-btn edit" title="Edit">✏️</a>
+              <form action="{{ route('admin.commissions.destroy', $commission) }}" method="POST" style="display:inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="action-btn delete" title="Delete" onclick="return confirm('Delete this commission?')">🗑️</button>
+              </form>
+            </td>
           </tr>
           @empty
           <tr>
-            <td colspan="6" style="text-align:center;padding:60px 20px;color:#94a3b8">
+            <td colspan="7" style="text-align:center;padding:60px 20px;color:#94a3b8">
               <div style="font-size:64px;margin-bottom:16px;opacity:.5">💰</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Commissions Found</div>
             </td>

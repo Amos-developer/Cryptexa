@@ -24,4 +24,32 @@ class CommissionController extends Controller
         
         return view('admin.commissions.index', compact('commissions', 'totalCommissions', 'level1Total', 'level2Total', 'level3Total'));
     }
+
+    public function edit($id)
+    {
+        $commission = ReferralEarning::with(['user', 'referrer'])->findOrFail($id);
+        return view('admin.commissions.edit', compact('commission'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $commission = ReferralEarning::findOrFail($id);
+        
+        $request->validate([
+            'amount' => 'required|numeric|min:0',
+            'level' => 'required|integer|min:1|max:3',
+        ]);
+        
+        $commission->update($request->only(['amount', 'level']));
+        
+        return redirect()->route('admin.commissions.index')->with('success', 'Commission updated successfully');
+    }
+
+    public function destroy($id)
+    {
+        $commission = ReferralEarning::findOrFail($id);
+        $commission->delete();
+        
+        return redirect()->route('admin.commissions.index')->with('success', 'Commission deleted successfully');
+    }
 }

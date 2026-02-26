@@ -27,6 +27,11 @@
 .rank-elite{background:#d1fae5;color:#065f46}
 .rank-legendary{background:#fef3c7;color:#92400e}
 .rank-grand{background:#fee2e2;color:#991b1b}
+.action-btn{width:36px;height:36px;border-radius:8px;border:none;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;justify-content:center;margin:0 2px}
+.action-btn.edit{background:#fef3c7;color:#92400e}
+.action-btn.edit:hover{background:#fde68a}
+.action-btn.delete{background:#fee2e2;color:#991b1b}
+.action-btn.delete:hover{background:#fecaca}
 .pagination-wrapper{padding:20px 24px;display:flex;justify-content:center}
 .pagination{display:flex;gap:8px;list-style:none;padding:0;margin:0}
 .pagination li a,.pagination li span{display:block;padding:8px 14px;border-radius:8px;font-size:14px;font-weight:600;transition:all .3s}
@@ -90,6 +95,7 @@
             <th>Elite ($20)</th>
             <th>Legendary ($50)</th>
             <th>Grand ($150)</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -101,10 +107,18 @@
             <td>{{ $user->elite_leader_bonus_paid ? '✅' : '❌' }}</td>
             <td>{{ $user->legendary_leader_bonus_paid ? '✅' : '❌' }}</td>
             <td>{{ $user->grand_leader_bonus_paid ? '✅' : '❌' }}</td>
+            <td>
+              <a href="{{ route('admin.rank-bonuses.edit', $user) }}" class="action-btn edit" title="Edit">✏️</a>
+              <form action="{{ route('admin.rank-bonuses.destroy', $user) }}" method="POST" style="display:inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="action-btn delete" title="Reset" onclick="return confirm('Reset all bonuses for this user?')">🗑️</button>
+              </form>
+            </td>
           </tr>
           @empty
           <tr>
-            <td colspan="6" style="text-align:center;padding:60px 20px;color:#94a3b8">
+            <td colspan="7" style="text-align:center;padding:60px 20px;color:#94a3b8">
               <div style="font-size:64px;margin-bottom:16px;opacity:.5">🏆</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Rank Bonuses Paid</div>
             </td>

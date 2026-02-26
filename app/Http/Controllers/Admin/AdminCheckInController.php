@@ -17,4 +17,32 @@ class AdminCheckInController extends Controller
         
         return view('admin.checkins.index', compact('checkIns', 'totalCheckIns', 'totalRewards', 'todayCheckIns', 'avgStreak'));
     }
+
+    public function edit($id)
+    {
+        $checkIn = CheckIn::with('user')->findOrFail($id);
+        return view('admin.checkins.edit', compact('checkIn'));
+    }
+
+    public function update(\Illuminate\Http\Request $request, $id)
+    {
+        $checkIn = CheckIn::findOrFail($id);
+        
+        $request->validate([
+            'streak' => 'required|integer|min:1',
+            'reward' => 'required|numeric|min:0',
+        ]);
+        
+        $checkIn->update($request->only(['streak', 'reward']));
+        
+        return redirect()->route('admin.checkins.index')->with('success', 'Check-in updated successfully');
+    }
+
+    public function destroy($id)
+    {
+        $checkIn = CheckIn::findOrFail($id);
+        $checkIn->delete();
+        
+        return redirect()->route('admin.checkins.index')->with('success', 'Check-in deleted successfully');
+    }
 }

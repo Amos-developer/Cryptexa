@@ -89,6 +89,17 @@
         </div>
 
         <div class="form-group">
+          <label class="form-label">💰 Max Investment</label>
+          <div class="input-group">
+            <span class="input-prefix">$</span>
+            <input type="number" step="0.01" min="0" name="max_investment" class="form-input @error('max_investment') error @enderror" value="{{ old('max_investment', $pool->max_investment) }}" placeholder="Leave empty for unlimited">
+          </div>
+          @error('max_investment')
+            <span class="error-message">{{ $message }}</span>
+          @enderror
+        </div>
+
+        <div class="form-group">
           <label class="form-label">📈 Daily Profit (%) <span class="required">*</span></label>
           <div class="input-group">
             <span class="input-prefix">%</span>

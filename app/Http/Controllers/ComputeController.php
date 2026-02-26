@@ -7,14 +7,27 @@ use App\Models\ComputeOrder;
 use App\Models\User;
 use App\Models\Notification;
 use App\Models\ReferralEarning;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ComputeController extends Controller
 {
-    public function activatePool(int $id)
+    public function activatePool(Request $request, int $id)
     {
         $user = auth()->user();
         $plan = ComputePlan::findOrFail($id);
+
+        // Validate amount
+        $request->validate([
+            'amount' => [
+                'required',
+                'numeric',
+                'min:' . $plan->price,
+                $plan->max_investment ? 'max:' . $plan->max_investment : ''
+            ],
+        ]);
+
+        $amount = $request->input('amount');
 
         // Check if user has any running orders
         $hasRunningOrder = ComputeOrder::where('user_id', $user->id)
@@ -25,18 +38,18 @@ class ComputeController extends Controller
             return back()->with('error', 'You already have an active pool. Please wait until it completes before activating another.');
         }
 
-        if ($user->balance < $plan->price) {
+        if ($user->balance < $amount) {
             return back()->with('error', 'Insufficient balance.');
         }
 
-        DB::transaction(function () use ($user, $plan) {
+        DB::transaction(function () use ($user, $plan, $amount) {
 
-            $user->decrement('balance', $plan->price);
+            $user->decrement('balance', $amount);
 
             // Use fixed daily percentage
             $dailyPercent = $plan->daily_profit;
 
-            $principal = $plan->price;
+            $principal = $amount;
             $days = $plan->duration_minutes / 1440;
 
             // Calculate expected profit with compound interest (convert percentage to decimal)

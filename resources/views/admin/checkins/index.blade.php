@@ -14,6 +14,11 @@
 .stat-icon.purple{background:linear-gradient(135deg,#fa709a,#fee140)}
 .stat-info h4{margin:0;font-size:14px;color:#888;font-weight:400}
 .stat-info h2{margin:5px 0 0;font-size:28px;font-weight:700;color:#333}
+.action-btn{width:36px;height:36px;border-radius:8px;border:none;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;justify-content:center;margin:0 2px}
+.action-btn.edit{background:#fef3c7;color:#92400e}
+.action-btn.edit:hover{background:#fde68a}
+.action-btn.delete{background:#fee2e2;color:#991b1b}
+.action-btn.delete:hover{background:#fecaca}
 .table-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-top:24px}
 .table-header{padding:20px 24px;border-bottom:2px solid #f1f5f9}
 .table-title{font-size:20px;font-weight:700;color:#1e293b}
@@ -83,6 +88,7 @@
             <th>Streak</th>
             <th>Reward</th>
             <th>Date</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -93,10 +99,18 @@
             <td><span style="color:#f59e0b">🔥 {{ $checkIn->streak }} days</span></td>
             <td style="font-weight:700;color:#059669">${{ number_format($checkIn->reward, 2) }}</td>
             <td style="color:#64748b">{{ $checkIn->check_in_date->format('M d, Y') }}</td>
+            <td>
+              <a href="{{ route('admin.checkins.edit', $checkIn) }}" class="action-btn edit" title="Edit">✏️</a>
+              <form action="{{ route('admin.checkins.destroy', $checkIn) }}" method="POST" style="display:inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="action-btn delete" title="Delete" onclick="return confirm('Delete this check-in?')">🗑️</button>
+              </form>
+            </td>
           </tr>
           @empty
           <tr>
-            <td colspan="5" style="text-align:center;padding:60px 20px;color:#94a3b8">
+            <td colspan="6" style="text-align:center;padding:60px 20px;color:#94a3b8">
               <div style="font-size:64px;margin-bottom:16px;opacity:.5">✅</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Check-ins Found</div>
             </td>
