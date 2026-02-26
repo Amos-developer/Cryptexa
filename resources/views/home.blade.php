@@ -32,7 +32,7 @@
 
     <!-- Quick Actions -->
     <div class="quick-actions">
-        <a href="{{ route('choose.cryptocurrency') }}" class="action-card">
+        <a href="{{ route('select.network') }}" class="action-card">
             <div class="action-icon">
                 <img src="{{ asset('images/icons/deposit.svg') }}" alt="Deposit">
             </div>

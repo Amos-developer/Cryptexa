@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Leaderboard')
-@section('hide-header', 'true')
+@section('hide-header', true)
 
 @section('content')
 <style>

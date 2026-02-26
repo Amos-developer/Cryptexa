@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
 @section('title', 'Leadership Ranks Guide')
-@section('hide-header', 'true')
+@section('hide-header', true)
 
 @section('content')
+
+<link rel="stylesheet" href="{{ asset('css/team.css') }}">
+
 <style>
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -14,21 +17,17 @@
 <div style="min-height: 100vh; background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0d1726 100%); padding: 16px; padding-bottom: 80px;">
     <div style="max-width: 800px; margin: 0 auto;">
         
-        <!-- Header -->
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;">
-            <a href="{{ url()->previous() }}" style="width: 44px; height: 44px; background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.25); border-radius: 14px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(56,189,248,0.1);" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
-                </svg>
+        <!-- HEADER BAR -->
+        <div class="team-header">
+            <a href="{{ url()->previous() }}" class="back-btn">
+                <i class="icon-left-btn"></i>
             </a>
-            <div>
-                <h1 style="color: #e5e7eb; font-size: 24px; font-weight: 800; margin: 0; letter-spacing: -0.5px;">Leadership Ranks Guide</h1>
-                <p style="color: #64748b; font-size: 12px; margin: 4px 0 0 0; font-weight: 500;">Complete Information</p>
-            </div>
+            <h6 class="header-title">Leadership Ranks Guide</h6>
+            <span class="placeholder"></span>
         </div>
 
         <!-- Hero Section -->
-        <div class="section" style="background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.3); border-radius: 20px; padding: 30px 20px; margin-bottom: 20px; text-align: center; box-shadow: 0 8px 24px rgba(56,189,248,0.15);">
+        <div class="section" style="background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.3); border-radius: 20px; padding: 30px 20px; margin-top: 50px; margin-bottom: 20px; text-align: center; box-shadow: 0 8px 24px rgba(56,189,248,0.15);">
             <div style="font-size: 48px; margin-bottom: 12px;">🏆</div>
             <h2 style="color: #38bdf8; font-size: 28px; font-weight: 900; margin: 0 0 10px 0;">Cryptexa Leadership Ranks</h2>
             <p style="color: #94a3b8; font-size: 14px; margin: 0;">Build your team, earn rewards, and climb the ranks</p>
@@ -47,7 +46,7 @@
                 Ranks are based on <strong style="color: #22c55e;">active members</strong> in your 3-level referral network. An active member is anyone who has made at least one completed deposit.
             </p>
             <div style="background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.25); border-radius: 12px; padding: 16px;">
-                <p style="color: #fbbf24; font-size: 13px; font-weight: 700; margin: 0 0 8px 0;">Active Member = User with ≥1 Completed Deposit</p>
+                <p style="color: #fbbf24; font-size: 13px; font-weight: 700; margin: 0 0 8px 0;">Active Member = Member with ≥1 Completed Deposit</p>
                 <p style="color: #94a3b8; font-size: 12px; margin: 0;">Counts across Level 1 + Level 2 + Level 3</p>
             </div>
         </div>

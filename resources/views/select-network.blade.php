@@ -5,33 +5,15 @@
 
 @section('content')
 
+<link rel="stylesheet" href="{{ asset('css/team.css') }}">
+
 <!-- HEADER BAR -->
-<div class="header fixed-top d-flex justify-content-between align-items-center px-16"
-    style="
-        background: linear-gradient(135deg, #020617, #0f172a);
-        border-bottom: 1px solid rgba(56,189,248,0.2);
-        backdrop-filter: blur(10px);
-        z-index: 100;
-        padding: 12px 16px;
-    ">
-    <a href="{{ url()->previous() }}"
-        style="
-            width: 36px;
-            height: 36px;
-            background: rgba(56,189,248,0.1);
-            border: 1px solid rgba(56,189,248,0.2);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        "
-        onmouseover="this.style.background='rgba(56,189,248,0.15)'; this.style.borderColor='rgba(56,189,248,0.4)';"
-        onmouseout="this.style.background='rgba(56,189,248,0.1)'; this.style.borderColor='rgba(56,189,248,0.2)';">
-        <i class="icon-left-btn" style="color: #38bdf8; font-size: 18px;"></i>
+<div class="team-header">
+    <a href="{{ url()->previous() }}" class="back-btn">
+        <i class="icon-left-btn"></i>
     </a>
-    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Select Network</h6>
-    <span style="width: 36px;"></span>
+    <h6 class="header-title">Select Network</h6>
+    <span class="placeholder"></span>
 </div>
 
 <!-- MAIN CONTENT -->
@@ -40,13 +22,13 @@
 
         <!-- PAGE HEADER -->
         <div style="text-align: center; margin-bottom: 32px; animation: slideDown 0.6s ease;">
-            <div style="width: 60px; height: 60px; margin: 0 auto 16px; background: linear-gradient(135deg, #38bdf8, #0ea5e9); border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(56,189,248,0.3);">
+            <!-- <div style="width: 60px; height: 60px; margin: 0 auto 16px; background: linear-gradient(135deg, #38bdf8, #0ea5e9); border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(56,189,248,0.3);">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                     <circle cx="12" cy="12" r="10"/>
                     <path d="M12 6v6l4 2"/>
                 </svg>
-            </div>
-            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 8px 0; background: linear-gradient(135deg, #38bdf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Select Network</h1>
+            </div> -->
+            <!-- <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 8px 0; background: linear-gradient(135deg, #38bdf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Select Network</h1> -->
             <p style="color: #94a3b8; font-size: 14px; margin: 0 0 12px 0;">Choose your preferred blockchain network</p>
             <div style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); border-radius: 10px; padding: 10px 16px; display: inline-block;">
                 <span style="color: #22c55e; font-size: 12px; font-weight: 600;">✓ Auto-Credited • Min Deposit $50 • Min Withdrawal $10</span>

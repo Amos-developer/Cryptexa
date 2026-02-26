@@ -40,8 +40,35 @@ class ProcessDepositPayment implements ShouldQueue
                 return;
             }
 
-            // Credit user EXACT amount deposited (use pay_amount if available, otherwise amount)
+            // Validate minimum deposit amount ($50)
             $creditAmount = $deposit->pay_amount ?? $deposit->amount;
+            if ($creditAmount < 50) {
+                logger()->warning('ProcessDepositPayment: amount below minimum', [
+                    'deposit_id' => $deposit->id,
+                    'amount' => $creditAmount,
+                    'minimum' => 50,
+                ]);
+                
+                // Mark as failed due to insufficient amount
+                $deposit->update([
+                    'status' => 'failed',
+                    'processed_at' => now(),
+                ]);
+                
+                // Notify user
+                Notification::create([
+                    'user_id' => $deposit->user_id,
+                    'type' => 'deposit_failed',
+                    'title' => 'Deposit Below Minimum',
+                    'message' => "Your deposit of $" . number_format($creditAmount, 2) . " was rejected. Minimum deposit is $50. Please contact support for refund.",
+                    'icon_type' => 'error',
+                    'is_read' => false,
+                ]);
+                
+                return;
+            }
+
+            // Credit user EXACT amount deposited
             $deposit->user->increment('balance', $creditAmount);
             
             logger()->info('ProcessDepositPayment: credited user', [

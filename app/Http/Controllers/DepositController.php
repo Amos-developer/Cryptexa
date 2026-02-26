@@ -49,7 +49,7 @@ class DepositController extends Controller
                 
                 $errorMsg = $payment['message'] ?? 'Unable to create payment. Please try again or contact support.';
                 
-                return redirect()->route('choose.cryptocurrency')
+                return redirect()->route('select.network')
                     ->with('error', $errorMsg);
             }
 
@@ -63,7 +63,7 @@ class DepositController extends Controller
             logger()->error('Payment creation exception: ' . $e->getMessage());
             $deposit->delete();
             
-            return redirect()->route('choose.cryptocurrency')
+            return redirect()->route('select.network')
                 ->with('error', 'Payment service temporarily unavailable. Please try again later.');
         }
     }

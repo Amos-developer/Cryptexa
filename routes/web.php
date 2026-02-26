@@ -109,9 +109,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [HomeController::class, 'home'])->name('home');
 
     Route::get(
-        '/choose-cryptocurrency',
+        '/select-network',
         [ChooseCryptocurrency::class, 'chooseCryptocurrency']
-    )->name('choose.cryptocurrency');
+    )->name('select.network');
 
     Route::post('/deposit', [DepositController::class, 'store'])
         ->name('deposit.store');
