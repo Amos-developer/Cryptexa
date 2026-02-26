@@ -13,5 +13,14 @@ class ReferralEarning extends Model
         'level',
         'type',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'from_user_id');
+    }
+
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
-   

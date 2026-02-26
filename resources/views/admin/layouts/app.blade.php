@@ -72,29 +72,7 @@
   </div>
 
   <div class="sidebar">
-    <ul class="sidebar-menu">
-      <li class="header">MAIN NAVIGATION</li>
-      <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-        <a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a>
-      </li>
-      <li class="header">MANAGEMENT</li>
-      <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-        <a href="{{ route('admin.users.index') }}"><i class="fa fa-users"></i> Users</a>
-      </li>
-      <li class="header">TRANSACTIONS</li>
-      <li class="{{ request()->routeIs('admin.deposits.*') ? 'active' : '' }}">
-        <a href="{{ route('admin.deposits.index') }}"><i class="fa fa-arrow-down"></i> Deposits</a>
-      </li>
-      <li class="{{ request()->routeIs('admin.withdrawals.*') ? 'active' : '' }}">
-        <a href="{{ route('admin.withdrawals.index') }}"><i class="fa fa-arrow-up"></i> Withdrawals</a>
-      </li>
-      <li class="{{ request()->routeIs('admin.pools.*') ? 'active' : '' }}">
-        <a href="{{ route('admin.pools.index') }}"><i class="fa fa-database"></i> Pools</a>
-      </li>
-      <li class="{{ request()->routeIs('admin.user-pools.*') ? 'active' : '' }}">
-        <a href="{{ route('admin.user-pools.index') }}"><i class="fa fa-server"></i> User Pools</a>
-      </li>
-    </ul>
+    @include('admin.layouts.sidebar')
   </div>
 
   <div class="content">

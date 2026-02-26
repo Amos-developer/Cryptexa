@@ -222,6 +222,11 @@ Route::middleware(['auth', 'admin'])
         Route::resource('pools', \App\Http\Controllers\Admin\AdminPoolController::class);
         Route::resource('user-pools', \App\Http\Controllers\Admin\AdminUserPoolController::class);
         
+        Route::get('/commissions', [\App\Http\Controllers\Admin\CommissionController::class, 'index'])->name('commissions.index');
+        Route::get('/rank-bonuses', [\App\Http\Controllers\Admin\RankBonusController::class, 'index'])->name('rank-bonuses.index');
+        Route::get('/checkins', [\App\Http\Controllers\Admin\AdminCheckInController::class, 'index'])->name('checkins.index');
+        Route::get('/lucky-boxes', [\App\Http\Controllers\Admin\LuckyBoxController::class, 'index'])->name('lucky-boxes.index');
+        
         Route::post('/withdrawals/{withdrawal}/approve', [AdminWithdrawalController::class, 'approve'])->name('withdrawals.approve');
         Route::post('/withdrawals/{withdrawal}/reject', [AdminWithdrawalController::class, 'reject'])->name('withdrawals.reject');
         Route::post('/withdrawals/{withdrawal}/complete', [AdminWithdrawalController::class, 'complete'])->name('withdrawals.complete');
