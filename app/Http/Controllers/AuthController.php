@@ -15,6 +15,8 @@ class AuthController extends Controller
     // Register logic
     public function showRegister()
     {
+        $locale = request()->cookie('locale', session('locale', 'en'));
+        app()->setLocale($locale);
         return view('auth.register');
     }
 
@@ -53,6 +55,7 @@ class AuthController extends Controller
             'verification_expires_at' => Carbon::now()->addMinutes(10),
             'referral_code' => $myReferralCode,
             'referred_by' => $referrer?->id,
+            'language' => $request->cookie('locale', 'en'),
 
             // Register bonus
             'balance' => 3.00,
@@ -106,6 +109,8 @@ class AuthController extends Controller
     // Login logic
     public function showLogin()
     {
+        $locale = request()->cookie('locale', session('locale', 'en'));
+        app()->setLocale($locale);
         return view('auth.login');
     }
     public function login(Request $request)
@@ -129,6 +134,11 @@ class AuthController extends Controller
             if (!$user->email_verified_at) {
                 Auth::logout();
                 return back()->withErrors(['username' => 'Verify your email first']);
+            }
+            
+            // Save cookie language to database if different from current
+            if ($request->cookie('locale') && $user->language !== $request->cookie('locale')) {
+                $user->update(['language' => $request->cookie('locale')]);
             }
 
             // Check if user has 2FA enabled

@@ -547,7 +547,7 @@
 
                     <!-- Username Field -->
                     <div class="form-group">
-                        <label class="form-label">Username<span class="required">*</span></label>
+                        <label class="form-label">{{ __t('username') }}<span class="required">*</span></label>
                         <input
                             type="text"
                             name="username"
@@ -562,7 +562,7 @@
 
                     <!-- Email Field -->
                     <div class="form-group">
-                        <label class="form-label">Email Address<span class="required">*</span></label>
+                        <label class="form-label">{{ __t('email') }}<span class="required">*</span></label>
                         <input
                             type="email"
                             name="email"
@@ -580,7 +580,7 @@
                     $refCode = request('ref') ?? old('ref');
                     @endphp
                     <div class="form-group">
-                        <label class="form-label">Referral Code<span class="required">*</span></label>
+                        <label class="form-label">{{ __t('referral_code') }}<span class="required">*</span></label>
                         <input
                             type="text"
                             name="ref"
@@ -602,7 +602,7 @@
 
                     <!-- Password Field -->
                     <div class="form-group">
-                        <label class="form-label">Password<span class="required">*</span></label>
+                        <label class="form-label">{{ __t('password') }}<span class="required">*</span></label>
                         <div class="input-group">
                             <input
                                 type="password"
@@ -623,7 +623,7 @@
 
                     <!-- Confirm Password Field -->
                     <div class="form-group">
-                        <label class="form-label">Confirm Password<span class="required">*</span></label>
+                        <label class="form-label">{{ __t('confirm_password') }}<span class="required">*</span></label>
                         <div class="input-group">
                             <input
                                 type="password"
@@ -652,13 +652,13 @@
 
                     <!-- Register Button -->
                     <button type="submit" class="btn-register" id="registerBtn">
-                        Create Account
+                        {{ __t('create_account') }}
                     </button>
 
                     <!-- Login Link -->
                     <div class="login-link">
-                        Already have an account?
-                        <a href="{{ route('login') }}">Sign in</a>
+                        {{ __t('already_have_account') }}
+                        <a href="{{ route('login') }}">{{ __t('sign_in') }}</a>
                     </div>
                 </form>
             </div>

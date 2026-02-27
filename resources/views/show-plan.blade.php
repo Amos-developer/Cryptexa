@@ -63,14 +63,14 @@
                     </h3>
                 </div>
 
-                <!-- DURATION -->
+                <!-- {{ __t('duration') }} -->
                 <div style="
                     background: rgba(255,255,255,0.02);
                     padding: 16px;
                     border-radius: 12px;
                     border: 1px solid rgba(56,189,248,0.2);
                 ">
-                    <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">⏱️ Duration</p>
+                    <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">⏱️ {{ __t('duration') }}</p>
                     <h3 style="color: #e5e7eb; font-size: 24px; font-weight: 900; margin: 0;">
                         {{ $plan->duration_minutes }} min <span style="font-size: 14px; color: #94a3b8;">({{ $plan->duration_minutes / 1440 }} Days)</span>
                     </h3>
@@ -85,7 +85,7 @@
                 border-radius: 12px;
                 padding: 16px;
             ">
-                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">📈 Daily Return (Fixed)</p>
+                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">📈 {{ __t('daily_return') }} (Fixed)</p>
                 <h3 style="color: #22c55e; font-size: 28px; font-weight: 900; margin: 0;">
                     {{ number_format($plan->daily_profit, 1) }}%
                 </h3>
@@ -96,7 +96,7 @@
 
         </div>
 
-        <!-- INVESTMENT AMOUNT INPUT -->
+        <!-- {{ __t('enter_amount') }} INPUT -->
         <form method="POST" action="{{ route('pools.activate', $plan->id) }}" id="activationForm" style="animation: slideUp 0.6s ease 0.2s backwards;">
             @csrf
             
@@ -147,7 +147,7 @@
                     text-transform: uppercase;
                     letter-spacing: 0.5px;
                     margin-bottom: 12px;
-                ">💵 Investment Amount (USDT)</label>
+                ">💵 {{ __t('enter_amount') }} (USDT)</label>
                 
                 <div style="position: relative;">
                     <!-- <span style="
@@ -311,7 +311,7 @@
                     </div>
                     <div style="height: 1px; background: rgba(34,197,94,0.2); margin: 4px 0;"></div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="color: #94a3b8; font-size: 13px; font-weight: 600;">Total Return</span>
+                        <span style="color: #94a3b8; font-size: 13px; font-weight: 600;">{{ __t('expected_return') }}</span>
                         <span id="totalDisplay" style="color: #22c55e; font-weight: 900; font-size: 18px;">$0.00</span>
                     </div>
                 </div>
@@ -334,7 +334,7 @@
                 "
                 onmouseover="this.style.background='linear-gradient(135deg, rgba(34,197,94,0.3) 0%, rgba(34,197,94,0.15) 100%)'; this.style.boxShadow='0 0 30px rgba(34,197,94,0.3)';"
                 onmouseout="this.style.background='linear-gradient(135deg, rgba(34,197,94,0.2) 0%, rgba(34,197,94,0.1) 100%)'; this.style.boxShadow='0 0 30px rgba(34,197,94,0.0)';">
-                🚀 Activate Pool
+                🚀 {{ __t('activate_pool') }}
             </button>
         </form>
 

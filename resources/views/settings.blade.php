@@ -14,7 +14,7 @@
             <path d="M19 12H5M12 19l-7-7 7-7" />
         </svg>
     </a>
-    <h6 class="header-title">Settings</h6>
+    <h6 class="header-title">{{ __t('settings') }}</h6>
     <span class="placeholder"></span>
 </div>
 
@@ -38,111 +38,111 @@
     @php
     $sections = [
     [
-    'title' => 'Security & Access',
+    'title' => __t('security_access'),
     'icon' => '🔐',
     'items' => [
     [
     'icon' => 'lock',
-    'title' => 'Password',
-    'desc' => 'Change your login password',
+    'title' => __t('password'),
+    'desc' => __t('change_login_password'),
     'color' => '#ec4899',
     'link' => route('account.password')
     ],
     [
     'icon' => 'shield',
-    'title' => 'Two-Factor Auth',
-    'desc' => auth()->user()->two_factor_enabled ? '✓ Enabled - Click to manage' : 'Add extra security layer',
+    'title' => __t('two_factor_auth'),
+    'desc' => auth()->user()->two_factor_enabled ? '✓ ' . __t('enabled') . ' - Click to manage' : __t('add_extra_security'),
     'color' => auth()->user()->two_factor_enabled ? '#10b981' : '#06b6d4',
     'link' => route('two-factor.show'),
-    'badge' => auth()->user()->two_factor_enabled ? 'ENABLED' : null
+    'badge' => auth()->user()->two_factor_enabled ? strtoupper(__t('enabled')) : null
     ],
     [
     'icon' => 'key',
-    'title' => 'Withdrawal PIN',
-    'desc' => auth()->user()->withdrawal_pin ? 'Change your withdrawal PIN' : 'Create a withdrawal PIN',
+    'title' => __t('withdrawal_pin'),
+    'desc' => auth()->user()->withdrawal_pin ? __t('change_withdrawal_pin') : __t('create_withdrawal_pin'),
     'color' => '#f59e0b',
     'link' => auth()->user()->withdrawal_pin ? route('withdrawal-pin.change') : route('withdrawal-pin.set')
     ],
     [
     'icon' => 'credit-card',
-    'title' => 'Withdrawal Method',
-    'desc' => 'Set or bind your withdrawal address',
+    'title' => __t('withdrawal_method'),
+    'desc' => __t('set_withdrawal_address'),
     'color' => '#22c55e',
     'link' => route('withdrawal-method')
     ]
     ]
     ],
     [
-    'title' => 'Preferences',
+    'title' => __t('preferences'),
     'icon' => '⚙️',
     'items' => [
-    [
-    'icon' => 'globe',
-    'title' => 'Language',
-    'desc' => 'Choose your preferred language',
-    'color' => '#3b82f6',
-    'link' => route('settings.language'),
-    'action' => 'language'
-    ],
+    // [
+    // 'icon' => 'globe',
+    // 'title' => __t('language'),
+    // 'desc' => __t('choose_language'),
+    // 'color' => '#3b82f6',
+    // 'link' => route('settings.language'),
+    // 'action' => 'language'
+    // ],
     [
     'icon' => 'bell',
-    'title' => 'View Notifications',
-    'desc' => 'See all your notifications',
+    'title' => __t('view_notifications'),
+    'desc' => __t('see_all_notifications'),
     'color' => '#38bdf8',
     'link' => route('notifications')
     ],
     [
     'icon' => 'bell',
-    'title' => 'Notifications',
-    'desc' => 'Manage notification settings',
+    'title' => __t('notifications'),
+    'desc' => __t('manage_notifications'),
     'color' => '#22c55e',
     'link' => route('settings.notifications')
     ]
     ]
     ],
     [
-    'title' => 'Transaction Management',
+    'title' => __t('transaction_management'),
     'icon' => '📊',
     'items' => [
     [
     'icon' => 'download',
-    'title' => 'Deposit History',
-    'desc' => 'View all your deposits',
+    'title' => __t('deposit_history'),
+    'desc' => __t('view_all_deposits'),
     'color' => '#10b981',
     'link' => route('deposit.history')
     ],
     [
     'icon' => 'upload',
-    'title' => 'Withdrawal History',
-    'desc' => 'View all your withdrawals',
+    'title' => __t('withdrawal_history'),
+    'desc' => __t('view_all_withdrawals'),
     'color' => '#f59e0b',
     'link' => route('withdraw.history')
     ]
     ]
     ],
     [
-    'title' => 'System Information',
+    'title' => __t('system_information'),
     'icon' => '📱',
     'items' => [
     [
     'icon' => 'clock',
-    'title' => 'System Time',
+    'title' => __t('system_time'),
     'desc' => now()->timezone(config('app.timezone'))->format('Y-m-d H:i:s'),
     'color' => '#38bdf8',
     'link' => route('settings.system-time')
     ],
     [
     'icon' => 'download',
-    'title' => 'Download App',
-    'desc' => 'Get Android APK',
+    'title' => __t('download_app'),
+    'desc' => __t('get_android_apk'),
     'color' => '#10b981',
     'link' => asset('downloads/cryptexa.apk'),
     'action' => 'download-apk'
     ],
     [
     'icon' => 'info',
-    'title' => 'About Cryptexa',
-    'desc' => 'Company information',
+    'title' => __t('about_cryptexa'),
+    'desc' => __t('company_information'),
     'color' => '#94a3b8',
     'link' => route('about')
     ]
@@ -285,7 +285,7 @@
                     <polyline points="16 17 21 12 16 7"></polyline>
                     <line x1="21" y1="12" x2="9" y2="12"></line>
                 </svg>
-                <span>Logout</span>
+                <span>{{ __t('logout') }}</span>
             </button>
         </form>
     </div>
@@ -296,7 +296,7 @@
 <div id="languageModal" class="modal hidden">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Select Language</h3>
+            <h3>{{ __t('select_language') }}</h3>
             <button class="modal-close" onclick="closeLanguageModal()">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="18" y1="6" x2="6" y2="18"></line>

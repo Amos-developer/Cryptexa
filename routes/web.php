@@ -66,7 +66,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/account', fn() => view('settings'))->name('account.settings');
+    Route::get('/account', function() {
+        app()->setLocale(session('locale', config('app.locale')));
+        return view('settings');
+    })->name('account.settings');
     Route::get('/account/password', fn() => view('password'))->name('account.password');
     Route::post('/account/password', [AuthController::class, 'updatePassword'])->name('account.password.update');
     Route::get('/about', fn() => view('about'))->name('about');

@@ -20,6 +20,9 @@ class LanguageController extends Controller
         if (auth()->check()) {
             auth()->user()->update(['language' => $language]);
         }
+        
+        // Save to cookie for 1 year (persists after logout)
+        cookie()->queue('locale', $language, 525600);
 
         return response()->json([
             'success' => true,

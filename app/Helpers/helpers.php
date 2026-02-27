@@ -13,6 +13,16 @@ if (!function_exists('__t')) {
             'ja' => 'japanese',
             'ko' => 'korean',
             'pt' => 'portuguese',
+            'ru' => 'russian',
+            'ar' => 'arabic',
+            'hi' => 'hindi',
+            'it' => 'italian',
+            'nl' => 'dutch',
+            'tr' => 'turkish',
+            'pl' => 'polish',
+            'vi' => 'vietnamese',
+            'th' => 'thai',
+            'id' => 'indonesian',
         ];
         
         $file = $fileMap[$locale] ?? 'english';

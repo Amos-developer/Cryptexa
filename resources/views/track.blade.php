@@ -12,7 +12,7 @@
     <a href="{{ url()->previous() }}" class="back-btn">
         <i class="icon-left-btn"></i>
     </a>
-    <h6 class="header-title">My Pools</h6>
+    <h6 class="header-title">{{ __t('my_pools') }}</h6>
     <span class="placeholder"></span>
 </div>
 
@@ -22,8 +22,8 @@
 
         <!-- PAGE HEADER -->
         <div class="mb-24" style="animation: slideDown 0.6s ease;">
-            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 8px 0;">Order History</h1>
-            <p class="text-secondary" style="font-size: 14px; margin: 0;">Track your active and completed compute orders</p>
+            <!-- <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 8px 0;">{{ __t('my_pools') }}</h1> -->
+            <p class="text-secondary" style="font-size: 14px; margin: 0;">{{ __t('track_orders') }}</p>
         </div>
 
         <!-- TABS -->
@@ -48,7 +48,7 @@
                 "
                 onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.2) 0%, rgba(56,189,248,0.1) 100%)';"
                 onmouseout="this.style.borderColor='rgba(56,189,248,0.2)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0.05) 100%)';">
-                🚀 Active Orders
+                🚀 {{ __t('active_orders') }}
             </button>
 
             <button class="tab-btn" onclick="showTab('completed')"
@@ -66,7 +66,7 @@
                 "
                 onmouseover="this.style.borderColor='rgba(255,255,255,0.12)'; this.style.background='rgba(255,255,255,0.04)';"
                 onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.background='rgba(255,255,255,0.02)';">
-                ✓ Completed Orders
+                ✓ {{ __t('completed_orders') }}
             </button>
         </div>
 
@@ -119,7 +119,7 @@
                 ">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
                         <span style="font-size: 18px;">🎯</span>
-                        <p style="color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0; letter-spacing: 0.5px;">Pool Ends On</p>
+                        <p style="color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0; letter-spacing: 0.5px;">{{ __t('pool_ends_on') }}</p>
                     </div>
                     <p style="color: #38bdf8; font-size: 15px; font-weight: 800; margin: 0 0 4px 0;">
                         {{ $order->ends_at->format('l, F j, Y') }}
@@ -228,7 +228,7 @@
                 font-size: 14px;
             ">
                 <p style="font-size: 32px; margin: 0 0 8px 0;">📭</p>
-                <p style="margin: 0;">No active orders at the moment</p>
+                <p style="margin: 0;">{{ __t('no_active_orders') }}</p>
             </div>
             @endforelse
 
@@ -264,7 +264,7 @@
                         font-size: 11px;
                         font-weight: 700;
                     ">
-                        ✓ COMPLETED
+                        ✓ {{ __t('completed') }}
                     </span>
                 </div>
 
@@ -286,7 +286,7 @@
                         border-radius: 10px;
                         border: 1px solid rgba(34,197,94,0.2);
                     ">
-                        <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; margin: 0 0 4px 0;">Profit</p>
+                        <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; margin: 0 0 4px 0;">{{ __t('profit') }}</p>
                         <p style="color: #22c55e; font-size: 13px; font-weight: 700; margin: 0;">+${{ number_format($order->expected_profit, 2) }}</p>
                     </div>
                 </div>
@@ -317,7 +317,7 @@
                 font-size: 14px;
             ">
                 <p style="font-size: 32px; margin: 0 0 8px 0;">📭</p>
-                <p style="margin: 0;">No completed orders yet</p>
+                <p style="margin: 0;">{{ __t('no_completed_orders') }}</p>
             </div>
             @endforelse
 

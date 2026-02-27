@@ -6,14 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\ComputePlan;
 use App\Models\ComputeOrder;
 use App\Models\User;
+use App\Http\Controllers\Traits\SetsLocale;
 
 
 class HomeController extends Controller
 {
+    use SetsLocale;
+    
     public function home(){
-        if (auth()->check() && auth()->user()->language) {
-            app()->setLocale(auth()->user()->language);
-        }
+        $this->setLocale();
         
         $plans = ComputePlan::all();
         $orders = ComputeOrder::with('computePlan')
@@ -27,7 +28,7 @@ class HomeController extends Controller
 
     public function showComputePlan(ComputePlan $plan)
     {
-
+        $this->setLocale();
         return view('show-plan', compact('plan'));
     }
 }

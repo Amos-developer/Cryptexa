@@ -37,7 +37,7 @@
             <div class="logo-section">
                 <!-- <div class="logo-icon">💎</div> -->
                 <h1>CRYPTEXA</h1>
-                <p>Welcome back to your crypto dashboard</p>
+                <p>{{ __t('welcome_back') }}</p>
             </div>
 
             <!-- Login Card -->
@@ -70,13 +70,13 @@
 
                     <!-- Username Field -->
                     <div class="form-group">
-                        <label class="form-label">Username</label>
+                        <label class="form-label">{{ __t('username') }}</label>
                         <input
                             type="text"
                             name="username"
                             value="{{ old('username') }}"
                             class="form-input{{ $errors->has('username') ? ' is-invalid' : '' }}"
-                            placeholder="Enter your username"
+                            placeholder="{{ __t('username') }}"
                             required
                             autocomplete="username">
                         @if($errors->has('username'))
@@ -86,13 +86,13 @@
 
                     <!-- Password Field -->
                     <div class="form-group">
-                        <label class="form-label">Password</label>
+                        <label class="form-label">{{ __t('password') }}</label>
                         <div class="input-group">
                             <input
                                 type="password"
                                 name="password"
                                 class="form-input{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                placeholder="Enter your password"
+                                placeholder="{{ __t('password') }}"
                                 required
                                 autocomplete="current-password"
                                 id="passwordInput">
@@ -107,22 +107,22 @@
 
                     <!-- Forgot Password Link -->
                     <div class="forgot-remember">
-                        <a href="/forgot-password" class="forgot-link">Forgot password?</a>
+                        <a href="/forgot-password" class="forgot-link">{{ __t('forgot_password') }}</a>
                         <label style="color: rgba(226, 232, 240, 0.6); font-weight: 500; display: flex; align-items: center; gap: 6px; cursor: pointer;">
                             <input type="checkbox" name="remember" style="cursor: pointer; accent-color: #38bdf8;">
-                            Remember me
+                            {{ __t('remember_me') }}
                         </label>
                     </div>
 
                     <!-- Login Button -->
                     <button type="submit" class="btn-login" id="loginBtn">
-                        Sign In
+                        {{ __t('sign_in') }}
                     </button>
 
                     <!-- Sign Up Link -->
                     <div class="signup-link">
-                        Don't have an account?
-                        <a href="{{ route('register') }}">Create one</a>
+                        {{ __t('dont_have_account') }}
+                        <a href="{{ route('register') }}">{{ __t('create_one') }}</a>
                     </div>
                 </form>
             </div>

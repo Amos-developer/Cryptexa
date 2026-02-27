@@ -7,11 +7,15 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Services\RankBonusService;
+use App\Http\Controllers\Traits\SetsLocale;
 
 class ReferralController extends Controller
 {
+    use SetsLocale;
+    
     public function index()
     {
+        $this->setLocale();
         $user = auth()->user();
 
         // Check and pay rank bonuses

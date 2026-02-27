@@ -9,11 +9,15 @@ use App\Models\Notification;
 use App\Models\ReferralEarning;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Traits\SetsLocale;
 
 class ComputeController extends Controller
 {
+    use SetsLocale;
+    
     public function activatePool(Request $request, int $id)
     {
+        $this->setLocale();
         $user = auth()->user();
         $plan = ComputePlan::findOrFail($id);
 
@@ -95,6 +99,7 @@ class ComputeController extends Controller
 
     public function track()
     {
+        $this->setLocale();
         // Process any completed orders for this user
         $completingOrders = ComputeOrder::where('user_id', auth()->id())
             ->where('status', 'running')

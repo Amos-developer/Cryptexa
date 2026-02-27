@@ -3,11 +3,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Traits\SetsLocale;
 
 class AccountController extends Controller
 {
+    use SetsLocale;
+
     public function index()
     {
+        $this->setLocale();
         return view('account');
     }
 
