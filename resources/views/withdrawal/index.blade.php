@@ -12,7 +12,7 @@
     <a href="{{ url()->previous() }}" class="back-btn">
         <i class="icon-left-btn"></i>
     </a>
-    <h6 class="header-title">Withdraw Funds</h6>
+    <h6 class="header-title">{{ __t('withdraw_funds') }}</h6>
     <span class="placeholder"></span>
 </div>
 
@@ -23,9 +23,9 @@
         <!-- BALANCE CARD -->
         <div style="text-align: center; margin-bottom: 24px; animation: slideDown 0.6s ease;">
             <div style="background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(34,197,94,0.1)); border: 1px solid rgba(56,189,248,0.2); border-radius: 20px; padding: 24px; box-shadow: 0 10px 40px rgba(56,189,248,0.15);">
-                <p style="color: #94a3b8; font-size: 12px; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Available Balance</p>
+                <p style="color: #94a3b8; font-size: 12px; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">{{ __t('available_balance') }}</p>
                 <h1 style="color: #e5e7eb; font-weight: 900; font-size: 36px; margin: 0 0 4px 0; background: linear-gradient(135deg, #38bdf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ number_format(auth()->user()->balance, 2) }}</h1>
-                <p style="color: #64748b; font-size: 11px; margin: 0;">USDT • Min Withdrawal $10</p>
+                <p style="color: #64748b; font-size: 11px; margin: 0;">USDT • {{ __t('min_withdrawal') }} $10</p>
             </div>
         </div>
 
@@ -46,10 +46,9 @@
         ">
             <div style="text-align: center;">
                 <div style="font-size: 48px; margin-bottom: 16px;">🔐</div>
-                <h3 style="color: #ef4444; font-weight: 700; font-size: 20px; margin: 0 0 12px 0;">Withdrawal PIN Required</h3>
+                <h3 style="color: #ef4444; font-weight: 700; font-size: 20px; margin: 0 0 12px 0;">{{ __t('withdrawal_pin_required') }}</h3>
                 <p style="color: #e5e7eb; font-size: 14px; line-height: 1.6; margin: 0 0 20px 0;">
-                    You must set up a 4-digit withdrawal PIN before you can withdraw funds.
-                    This adds an extra layer of security to your account.
+                    {{ __t('set_withdrawal_pin_msg') }}
                 </p>
                 <a href="{{ route('withdrawal-pin.set') }}" style="
                     display: inline-block;
@@ -64,7 +63,7 @@
                 "
                 onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 25px rgba(239,68,68,0.3)';"
                 onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
-                    🔒 Set Withdrawal PIN
+                    🔒 {{ __t('set_withdrawal_pin') }}
                 </a>
             </div>
         </div>
@@ -82,10 +81,9 @@
         ">
             <div style="text-align: center;">
                 <div style="font-size: 48px; margin-bottom: 16px;">🔒</div>
-                <h3 style="color: #fbbf24; font-weight: 700; font-size: 20px; margin: 0 0 12px 0;">Withdrawal Locked</h3>
+                <h3 style="color: #fbbf24; font-weight: 700; font-size: 20px; margin: 0 0 12px 0;">{{ __t('withdrawal_locked') }}</h3>
                 <p style="color: #e5e7eb; font-size: 14px; line-height: 1.6; margin: 0 0 20px 0;">
-                    To unlock withdrawals, you must first activate and complete at least one liquidity pool.
-                    This ensures platform security and prevents abuse.
+                    {{ __t('withdrawal_locked_msg') }}
                 </p>
                 <a href="{{ route('home') }}" style="
                     display: inline-block;
@@ -100,7 +98,7 @@
                 "
                 onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 10px 25px rgba(251,191,36,0.3)';"
                 onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
-                    🚀 Activate Your First Pool
+                    🚀 {{ __t('activate_first_pool') }}
                 </a>
             </div>
         </div>
@@ -150,7 +148,7 @@
             <!-- NETWORK SELECT -->
             <div class="mb-28" style="animation: slideUp 0.6s ease 0.1s backwards;">
                 <h5 style="color: #e5e7eb; font-weight: 700; font-size: 15px; margin: 0 0 14px 0;">
-                    Select Network
+                    {{ __t('select_network') }}
                 </h5>
 
                 <div style="display: grid; gap: 10px;">
@@ -253,7 +251,7 @@
 
             <!-- WITHDRAWAL AMOUNT -->
             <div class="mb-24" style="animation: slideUp 0.6s ease 0.15s backwards;">
-                <h5 style="color: #e5e7eb; font-weight: 700; font-size: 15px; margin: 0 0 14px 0;">Amount</h5>
+                <h5 style="color: #e5e7eb; font-weight: 700; font-size: 15px; margin: 0 0 14px 0;">{{ __t('amount') }}</h5>
                 <div style="
                     display: flex;
                     align-items: center;
@@ -286,17 +284,17 @@
                 </div>
 
                 <div style="margin-top: 10px; font-size: 12px; text-align: center;">
-                    <span class="text-secondary">Minimum: <span style="color: #38bdf8; font-weight: 700;">$10</span></span>
+                    <span class="text-secondary">{{ __t('minimum') }}: <span style="color: #38bdf8; font-weight: 700;">$10</span></span>
                 </div>
             </div>
 
             <!-- WALLET ADDRESS -->
             <div class="mb-24" style="animation: slideUp 0.6s ease 0.2s backwards;">
-                <h5 style="color: #e5e7eb; font-weight: 700; font-size: 15px; margin: 0 0 14px 0;">Wallet Address</h5>
+                <h5 style="color: #e5e7eb; font-weight: 700; font-size: 15px; margin: 0 0 14px 0;">{{ __t('wallet_address') }}</h5>
                 <input type="text"
                     id="addressInput"
                     name="address"
-                    placeholder="Paste your wallet address here..."
+                    placeholder="{{ __t('paste_wallet_address') }}"
                     style="
                     width: 100%;
                     background: linear-gradient(135deg, rgba(56,189,248,0.08) 0%, rgba(56,189,248,0.02) 100%);
@@ -323,11 +321,11 @@
                 padding: 20px;
                 animation: slideUp 0.6s ease 0.25s backwards;
             ">
-                <h5 style="color: #a855f7; font-weight: 700; font-size: 15px; margin: 0 0 16px 0;">Security Verification</h5>
+                <h5 style="color: #a855f7; font-weight: 700; font-size: 15px; margin: 0 0 16px 0;">{{ __t('security_verification') }}</h5>
 
                 <!-- PIN INPUT -->
                 <div class="mb-16">
-                    <label class="text-secondary" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">Withdrawal PIN</label>
+                    <label class="text-secondary" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">{{ __t('withdrawal_pin') }}</label>
                     <input type="password"
                         maxlength="4"
                         name="pin"
@@ -352,7 +350,7 @@
 
                 <!-- EMAIL CODE -->
                 <div>
-                    <label class="text-secondary" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">Email Verification Code</label>
+                    <label class="text-secondary" style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">{{ __t('email_verification_code') }}</label>
                     <div style="display: flex; gap: 8px;">
                         <input type="text"
                             id="emailCodeInput"
@@ -398,7 +396,7 @@
                         "
                             onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 16px rgba(168,85,247,0.4)';"
                             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(168,85,247,0.3)';">
-                            Send Code
+                            {{ __t('send_code') }}
                         </button>
                     </div>
                 </div>
@@ -425,7 +423,7 @@
             "
                 onmouseover="if(!this.disabled) { this.style.transform='translateY(-2px)'; this.style.boxShadow='0 15px 40px rgba(56,189,248,0.4)'; }"
                 onmouseout="if(!this.disabled) { this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(56,189,248,0.3)'; }">
-                Confirm Withdrawal
+                {{ __t('confirm_withdrawal') }}
             </button>
 
             <!-- INFO BOX -->
@@ -445,9 +443,9 @@
                         </svg>
                     </div>
                     <div>
-                        <p style="color: #ef4444; font-weight: 700; font-size: 13px; margin: 0 0 6px 0;">Withdrawal Limit</p>
+                        <p style="color: #ef4444; font-weight: 700; font-size: 13px; margin: 0 0 6px 0;">{{ __t('withdrawal_limit') }}</p>
                         <p class="text-secondary" style="font-size: 12px; margin: 0; line-height: 1.6;">
-                            You can only make <strong style="color: #ef4444;">one withdrawal per day</strong>. Please plan your withdrawals accordingly.
+                            {{ __t('one_withdrawal_per_day') }}
                         </p>
                     </div>
                 </div>
@@ -459,9 +457,9 @@
                         </svg>
                     </div>
                     <div>
-                        <p style="color: #38bdf8; font-weight: 700; font-size: 13px; margin: 0 0 6px 0;">Processing Time</p>
+                        <p style="color: #38bdf8; font-weight: 700; font-size: 13px; margin: 0 0 6px 0;">{{ __t('processing_time') }}</p>
                         <p class="text-secondary" style="font-size: 12px; margin: 0; line-height: 1.6;">
-                            Withdrawals require admin approval. Processing takes 20 minutes to 24 hours.
+                            {{ __t('withdrawals_require_approval') }}
                         </p>
                     </div>
                 </div>
@@ -472,9 +470,9 @@
                         </svg>
                     </div>
                     <div>
-                        <p style="color: #fbbf24; font-weight: 700; font-size: 13px; margin: 0 0 6px 0;">Security Notice</p>
+                        <p style="color: #fbbf24; font-weight: 700; font-size: 13px; margin: 0 0 6px 0;">{{ __t('security_notice') }}</p>
                         <p class="text-secondary" style="font-size: 12px; margin: 0; line-height: 1.6;">
-                            Your withdrawal will be reviewed by our security team before processing.
+                            {{ __t('withdrawal_security_review') }}
                         </p>
                     </div>
                 </div>

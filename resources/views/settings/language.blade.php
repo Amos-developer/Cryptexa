@@ -13,15 +13,15 @@
         onmouseout="this.style.background='rgba(56,189,248,0.1)'; this.style.borderColor='rgba(56,189,248,0.2)';">
         <i class="icon-left-btn" style="color: #38bdf8; font-size: 18px;"></i>
     </a>
-    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Language</h6>
+    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">{{ __t('language') }}</h6>
     <span style="width: 36px;"></span>
 </div>
 
 <div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%); min-height: 100vh; padding-bottom: 100px;">
     <div class="tf-container">
         <div style="margin-bottom: 24px; animation: slideDown 0.6s ease;">
-            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 8px 0;">Choose Language</h1>
-            <p style="color: #94a3b8; font-size: 14px; margin: 0;">Select your preferred language</p>
+            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 8px 0;">{{ __t('choose_language') }}</h1>
+            <p style="color: #94a3b8; font-size: 14px; margin: 0;">{{ __t('select_preferred_language') }}</p>
         </div>
 
         @php
@@ -98,17 +98,29 @@
 
 <script>
 function selectLanguage(code) {
-    // Show loading state
     const btn = event.currentTarget;
     btn.style.opacity = '0.6';
     btn.style.pointerEvents = 'none';
     
-    // Simulate language change (implement actual logic here)
-    setTimeout(() => {
-        alert('Language changed to: ' + code.toUpperCase());
+    fetch('/language/change', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ language: code })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
         btn.style.opacity = '1';
         btn.style.pointerEvents = 'auto';
-    }, 500);
+    });
 }
 </script>
 

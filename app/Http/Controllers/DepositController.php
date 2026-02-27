@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Deposit;
 use App\Services\NowPaymentsService;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Traits\SetsLocale;
 
 class DepositController extends Controller
 {
+    use SetsLocale;
     /**
      * STEP 1: Create deposit + payment
      */
@@ -73,6 +75,8 @@ class DepositController extends Controller
      */
     public function showQrCode(Deposit $deposit, NowPaymentsService $nowPayments)
     {
+        $this->setLocale();
+        
         abort_if($deposit->user_id !== auth()->id(), 403);
         abort_if(!in_array($deposit->status, ['pending', 'confirming']), 404);
 

@@ -12,7 +12,7 @@
     <a href="{{ url()->previous() }}" class="back-btn">
         <i class="icon-left-btn"></i>
     </a>
-    <h6 class="header-title">Deposit Address</h6>
+    <h6 class="header-title">{{ __t('deposit_address') }}</h6>
     <span class="placeholder"></span>
 </div>
 
@@ -23,10 +23,10 @@
         <!-- PAGE HEADER -->
         <div class="text-center mb-32" style="animation: slideDown 0.6s ease;">
             <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 12px 0;">
-                📱 Scan & Send
+                📱 {{ __t('scan_and_send') }}
             </h1>
             <p class="text-secondary" style="font-size: 14px; margin: 0;">
-                Scan the QR code with your wallet to send funds
+                {{ __t('scan_qr_wallet') }}
             </p>
         </div>
 
@@ -71,7 +71,7 @@
             ">
                 <div style="color: #94a3b8; font-size: 14px; text-align: center;">
                     <div style="font-size: 24px; margin-bottom: 8px;">⏳</div>
-                    Generating address…
+                    {{ __t('generating_address') }}
                 </div>
             </div>
             @endif
@@ -89,7 +89,7 @@
             animation: slideUp 0.6s ease 0.2s backwards;
         ">
             <label style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 10px;">
-                💳 Deposit Address
+                💳 {{ __t('deposit_address') }}
             </label>
 
             <div style="
@@ -108,7 +108,7 @@
                         font-family: 'Courier New', monospace;
                         line-height: 1.6;
                     ">
-                    {{ $deposit->pay_address ?? 'Waiting for deposit address…' }}
+                    {{ $deposit->pay_address ?? __t('generating_address') }}
                 </p>
             </div>
 
@@ -129,7 +129,7 @@
                 "
                 onmouseover="this.style.background='linear-gradient(135deg, rgba(34,197,94,0.2) 0%, rgba(34,197,94,0.1) 100%)'; this.style.boxShadow='0 0 20px rgba(34,197,94,0.2)';"
                 onmouseout="this.style.background='linear-gradient(135deg, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.05) 100%)'; this.style.boxShadow='none';">
-                ✓ Copy Address
+                ✓ {{ __t('copy_address') }}
             </button>
             @else
             <button type="button"
@@ -145,7 +145,7 @@
                     cursor: not-allowed;
                 "
                 disabled>
-                ⏳ Copy Address
+                ⏳ {{ __t('copy_address') }}
             </button>
             @endif
         </div>
@@ -162,7 +162,7 @@
             ">
                 <p style="color: #22c55e; font-size: 13px; font-weight: 600; margin: 0 0 8px 0; display: flex; align-items: center;">
                     <span id="statusIcon" style="margin-right: 8px; font-size: 16px;">⏳</span>
-                    <span id="statusText">Checking payment status...</span>
+                    <span id="statusText">{{ __t('checking') }}</span>
                 </p>
             </div>
         </div>
@@ -184,7 +184,7 @@
         "
         onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(56,189,248,0.4)';"
         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(56,189,248,0.3)';">
-            🔄 Check Payment Status
+            🔄 {{ __t('check_payment_status') }}
         </button>
 
         <!-- DEPOSIT RULES -->
@@ -201,44 +201,44 @@
                     <circle cx="12" cy="12" r="10"/>
                     <path d="M12 16v-4M12 8h.01"/>
                 </svg>
-                <h3 style="color: #38bdf8; font-size: 15px; font-weight: 700; margin: 0;">Important Deposit Rules</h3>
+                <h3 style="color: #38bdf8; font-size: 15px; font-weight: 700; margin: 0;">{{ __t('important_deposit_rules') }}</h3>
             </div>
             <div style="display: grid; gap: 10px;">
                 <div style="display: flex; gap: 10px;">
                     <span style="color: #ef4444; font-size: 16px; flex-shrink: 0;">❌</span>
                     <p style="color: #94a3b8; font-size: 12px; margin: 0; line-height: 1.6;">
-                        <strong style="color: #e5e7eb;">Below $50 = Lost Funds:</strong> Deposits under $50 will be rejected and cannot be refunded
+                        <strong style="color: #e5e7eb;">{{ __t('below_min_lost_funds') }}:</strong> {{ __t('deposits_under_rejected') }}
                     </p>
                 </div>
                 <div style="display: flex; gap: 10px;">
                     <span style="color: #22c55e; font-size: 16px; flex-shrink: 0;">✓</span>
                     <p style="color: #94a3b8; font-size: 12px; margin: 0; line-height: 1.6;">
-                        <strong style="color: #e5e7eb;">Minimum Deposit:</strong> $50 USD equivalent (strictly enforced)
+                        <strong style="color: #e5e7eb;">{{ __t('minimum_deposit') }}:</strong> {{ __t('usd_equivalent') }}
                     </p>
                 </div>
                 <div style="display: flex; gap: 10px;">
                     <span style="color: #fbbf24; font-size: 16px; flex-shrink: 0;">⚠️</span>
                     <p style="color: #94a3b8; font-size: 12px; margin: 0; line-height: 1.6;">
-                        <strong style="color: #e5e7eb;">Exact Address:</strong> Send funds ONLY to the address shown above. Wrong address = lost funds
+                        <strong style="color: #e5e7eb;">{{ __t('exact_address') }}:</strong> {{ __t('send_only_address') }}
                     </p>
                 </div>
 
                 <div style="display: flex; gap: 10px;">
                     <span style="color: #a855f7; font-size: 16px; flex-shrink: 0;">⏱️</span>
                     <p style="color: #94a3b8; font-size: 12px; margin: 0; line-height: 1.6;">
-                        <strong style="color: #e5e7eb;">Processing Time:</strong> Few minutes after blockchain confirmation
+                        <strong style="color: #e5e7eb;">{{ __t('processing_time') }}:</strong> {{ __t('few_minutes_confirmation') }}
                     </p>
                 </div>
                 <div style="display: flex; gap: 10px;">
                     <span style="color: #22c55e; font-size: 16px; flex-shrink: 0;">🤖</span>
                     <p style="color: #94a3b8; font-size: 12px; margin: 0; line-height: 1.6;">
-                        <strong style="color: #e5e7eb;">Auto-Credit:</strong> Funds automatically added to your balance after confirmation
+                        <strong style="color: #e5e7eb;">{{ __t('auto_credit') }}:</strong> {{ __t('funds_auto_added') }}
                     </p>
                 </div>
                 <div style="display: flex; gap: 10px;">
                     <span style="color: #ef4444; font-size: 16px; flex-shrink: 0;">❌</span>
                     <p style="color: #94a3b8; font-size: 12px; margin: 0; line-height: 1.6;">
-                        <strong style="color: #e5e7eb;">No Refunds:</strong> Double-check address and network before sending
+                        <strong style="color: #e5e7eb;">{{ __t('no_refunds') }}:</strong> {{ __t('double_check_address') }}
                     </p>
                 </div>
             </div>
@@ -387,8 +387,8 @@
                     // Show success message
                     Swal.fire({
                         icon: 'success',
-                        title: 'Address Ready',
-                        text: 'Your deposit address has been generated',
+                        title: '{{ __t('deposit_address') }}',
+                        text: '{{ __t('generating_address') }}',
                         timer: 2000,
                         showConfirmButton: false,
                         background: '#020617',
@@ -402,8 +402,8 @@
                     // Max retries reached
                     Swal.fire({
                         icon: 'error',
-                        title: 'Address Generation Timeout',
-                        text: 'Please reload the page to try again',
+                        title: '{{ __t('connection_error') }}',
+                        text: '{{ __t('check_internet') }}',
                         background: '#020617',
                         color: '#e5e7eb',
                         confirmButtonColor: '#ef4444'
@@ -433,8 +433,8 @@
 
         Swal.fire({
             icon: 'success',
-            title: 'Copied',
-            text: 'Deposit address copied to clipboard',
+            title: '{{ __t('copied') }}',
+            text: '{{ __t('copy_address') }}',
             timer: 1500,
             showConfirmButton: false,
             background: '#020617',
@@ -453,10 +453,10 @@
 
         // Disable button and show loading
         btn.disabled = true;
-        btn.innerHTML = '⏳ Checking...';
+        btn.innerHTML = '⏳ {{ __t('checking') }}';
         statusSection.style.display = 'block';
         statusIcon.innerHTML = '🔄';
-        statusText.innerHTML = 'Checking payment status...';
+        statusText.innerHTML = '{{ __t('checking') }}';
 
         fetch('{{ route("deposit.check-status", $deposit->id) }}', {
                 method: 'GET',
@@ -472,12 +472,12 @@
                 if (status === 'finished' || status === 'completed' || data.status === 'completed') {
                     // Payment confirmed
                     statusIcon.innerHTML = '✅';
-                    statusText.innerHTML = `Payment Confirmed! Received ${data.received || data.amount}`;
+                    statusText.innerHTML = `{{ __t('payment_confirmed') }}! {{ __t('payment_received') }}`;
 
                     Swal.fire({
                         icon: 'success',
-                        title: 'Payment Received!',
-                        text: 'Your balance has been updated',
+                        title: '{{ __t('payment_received') }}',
+                        text: '{{ __t('balance_updated') }}',
                         timer: 2000,
                         showConfirmButton: false,
                         background: '#020617',
@@ -488,14 +488,14 @@
                 } else if (status === 'confirming') {
                     // Payment detected, confirming
                     statusIcon.innerHTML = '⏳';
-                    statusText.innerHTML = 'Payment detected! Waiting for blockchain confirmation...';
+                    statusText.innerHTML = '{{ __t('payment_detected') }}';
                     btn.disabled = false;
-                    btn.innerHTML = '🔄 Check Again';
+                    btn.innerHTML = '🔄 {{ __t('check_again') }}';
 
                     Swal.fire({
                         icon: 'info',
-                        title: 'Payment Detected',
-                        text: 'Waiting for blockchain confirmation. Check again in a few minutes.',
+                        title: '{{ __t('payment_detected') }}',
+                        text: '{{ __t('check_again') }}',
                         background: '#020617',
                         color: '#e5e7eb',
                         confirmButtonColor: '#38bdf8'
@@ -503,14 +503,14 @@
                 } else {
                     // No payment yet
                     statusIcon.innerHTML = '⚠️';
-                    statusText.innerHTML = 'No payment detected yet. Please send payment to the address above.';
+                    statusText.innerHTML = '{{ __t('no_payment_detected') }}';
                     btn.disabled = false;
-                    btn.innerHTML = '🔄 Check Payment Status';
+                    btn.innerHTML = '🔄 {{ __t('check_payment_status') }}';
 
                     Swal.fire({
                         icon: 'warning',
-                        title: 'No Payment Yet',
-                        text: 'Please send payment to the address above, then check again.',
+                        title: '{{ __t('no_payment_yet') }}',
+                        text: '{{ __t('send_payment_first') }}',
                         background: '#020617',
                         color: '#e5e7eb',
                         confirmButtonColor: '#fbbf24'
@@ -520,14 +520,14 @@
             .catch(error => {
                 console.error('Error:', error);
                 statusIcon.innerHTML = '❌';
-                statusText.innerHTML = 'Error checking status. Please try again.';
+                statusText.innerHTML = '{{ __t('connection_error') }}';
                 btn.disabled = false;
-                btn.innerHTML = '🔄 Check Payment Status';
+                btn.innerHTML = '🔄 {{ __t('check_payment_status') }}';
 
                 Swal.fire({
                     icon: 'error',
-                    title: 'Connection Error',
-                    text: 'Please check your internet connection and try again.',
+                    title: '{{ __t('connection_error') }}',
+                    text: '{{ __t('check_internet') }}',
                     background: '#020617',
                     color: '#e5e7eb',
                     confirmButtonColor: '#ef4444'

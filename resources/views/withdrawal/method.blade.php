@@ -13,7 +13,7 @@
             <path d="M19 12H5M12 19l-7-7 7-7" />
         </svg>
     </a>
-    <h6 class="header-title">Withdrawal Method</h6>
+    <h6 class="header-title">{{ __t('withdrawal_method') }}</h6>
     <span class="placeholder"></span>
 </div>
 
@@ -24,8 +24,8 @@
         $currentNetwork = auth()->user()->withdrawal_network;
     @endphp
 
-    <h1 class="page-title">{{ $hasAddress ? 'Change' : 'Set' }} Withdrawal Address</h1>
-    <p class="page-subtitle">{{ $hasAddress ? 'Update your wallet address' : 'Select network and bind your wallet address' }}</p>
+    <h1 class="page-title">{{ $hasAddress ? __t('change') : __t('set') }} {{ __t('withdrawal_address') }}</h1>
+    <p class="page-subtitle">{{ $hasAddress ? __t('update_wallet_address') : __t('select_network_bind_address') }}</p>
 
     @if($hasAddress)
     <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 16px; padding: 20px; margin-bottom: 24px;">
@@ -36,7 +36,7 @@
                 </svg>
             </div>
             <div>
-                <div style="color: var(--text-light); font-weight: 700; font-size: 14px;">Current Withdrawal Address</div>
+                <div style="color: var(--text-light); font-weight: 700; font-size: 14px;">{{ __t('current_withdrawal_address') }}</div>
                 <div style="color: var(--text-muted); font-size: 12px; text-transform: uppercase;">{{ strtoupper($currentNetwork) }}</div>
             </div>
         </div>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="network-name">USDT</div>
                 <div class="network-type">BEP20 (BSC)</div>
-                <span class="network-badge">Recommended</span>
+                <span class="network-badge">{{ __t('recommended') }}</span>
             </div>
 
             <div class="network-card" data-network="usdcbsc" data-name="USDC (BEP20)">
@@ -87,7 +87,7 @@
                 </div>
                 <div class="network-name">USDC</div>
                 <div class="network-type">BEP20 (BSC)</div>
-                <span class="network-badge" style="background: rgba(37, 99, 235, 0.15); color: #2563eb;">Fast</span>
+                <span class="network-badge" style="background: rgba(37, 99, 235, 0.15); color: #2563eb;">{{ __t('fast') }}</span>
             </div>
 
             <div class="network-card" data-network="usdttrc20" data-name="USDT (TRC20)">
@@ -99,7 +99,7 @@
                 </div>
                 <div class="network-name">USDT</div>
                 <div class="network-type">TRC20 (Tron)</div>
-                <span class="network-badge" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">Alternative</span>
+                <span class="network-badge" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">{{ __t('alternative') }}</span>
             </div>
 
             <div class="network-card" data-network="bnbbsc" data-name="BNB (BSC)">
@@ -111,37 +111,37 @@
                 </div>
                 <div class="network-name">BNB</div>
                 <div class="network-type">BSC Network</div>
-                <span class="network-badge" style="background: rgba(124, 58, 237, 0.15); color: #7c3aed;">Native</span>
+                <span class="network-badge" style="background: rgba(124, 58, 237, 0.15); color: #7c3aed;">{{ __t('native') }}</span>
             </div>
         </div>
 
         <input type="hidden" name="network" id="selectedNetwork">
 
         <div class="address-section" id="addressSection">
-            <label class="input-label">Wallet Address</label>
+            <label class="input-label">{{ __t('wallet_address') }}</label>
             <div class="input-wrapper">
                 <input 
                     type="text" 
                     name="address" 
                     id="walletAddress"
                     class="address-input" 
-                    placeholder="Enter your wallet address"
+                    placeholder="{{ __t('enter_wallet_address') }}"
                     required>
             </div>
             <p style="color: var(--text-muted); font-size: 12px; margin-top: 8px;">
-                Network: <span id="selectedNetworkName" style="color: var(--primary); font-weight: 600;"></span>
+                {{ __t('network') }}: <span id="selectedNetworkName" style="color: var(--primary); font-weight: 600;"></span>
             </p>
         </div>
 
         <button type="submit" class="save-btn" id="saveBtn" disabled>
-            {{ $hasAddress ? 'Update' : 'Save' }} Withdrawal Address
+            {{ $hasAddress ? __t('update') : __t('save') }} {{ __t('withdrawal_address') }}
         </button>
     </form>
 
     <div class="info-box" style="margin-top: 24px;">
         <div class="info-icon">!</div>
         <div class="info-text">
-            <strong style="color: #a855f7;">Important:</strong> Ensure your wallet address matches the selected network to avoid loss of funds. Double-check before saving.
+            <strong style="color: #a855f7;">{{ __t('important') }}:</strong> {{ __t('ensure_address_matches_network') }}
         </div>
     </div>
 

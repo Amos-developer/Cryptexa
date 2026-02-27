@@ -12,7 +12,7 @@
     <a href="{{ url()->previous() }}" class="back-btn">
         <i class="icon-left-btn"></i>
     </a>
-    <h6 class="header-title">Select Network</h6>
+    <h6 class="header-title">{{ __t('select_network') }}</h6>
     <span class="placeholder"></span>
 </div>
 
@@ -29,9 +29,9 @@
                 </svg>
             </div> -->
             <!-- <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 8px 0; background: linear-gradient(135deg, #38bdf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Select Network</h1> -->
-            <p style="color: #94a3b8; font-size: 14px; margin: 0 0 12px 0;">Choose your preferred blockchain network</p>
+            <p style="color: #94a3b8; font-size: 14px; margin: 0 0 12px 0;">{{ __t('choose_network') }}</p>
             <div style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); border-radius: 10px; padding: 10px 16px; display: inline-block;">
-                <span style="color: #22c55e; font-size: 12px; font-weight: 600;">✓ Auto-Credited • Min Deposit $50 • Min Withdrawal $10</span>
+                <span style="color: #22c55e; font-size: 12px; font-weight: 600;">✓ {{ __t('auto_credited') }} • {{ __t('min_deposit') }} $50 • {{ __t('min_withdrawal') }} $10</span>
             </div>
         </div>
 
@@ -42,10 +42,10 @@
 
             @php
             $coins = [
-            ['name'=>'USDT','symbol'=>'BEP20','network'=>'Binance Smart Chain','currency'=>'usdtbsc','badge'=>'Recommended','color'=>'#26A17B','svg'=>'<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#26A17B"/><path d="M27 19.8V16.8h-6v3h-4.8V22.8h4.8v7.8h-4.8V33.6h4.8v3h6v-3h4.8v-3H27v-7.8h4.8v-3H27z" fill="white"/></svg>','fee'=>'~$0.20','time'=>'1-3 min'],
-            ['name'=>'USDC','symbol'=>'BEP20','network'=>'Binance Smart Chain','currency'=>'usdcbsc','badge'=>'Fast','color'=>'#2775CA','svg'=>'<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#2775CA"/><circle cx="24" cy="24" r="10" stroke="white" stroke-width="2" fill="none"/><circle cx="24" cy="24" r="5" fill="white"/></svg>','fee'=>'~$0.20','time'=>'1-3 min'],
-            ['name'=>'USDT','symbol'=>'TRC20','network'=>'Tron Network','currency'=>'usdttrc20','badge'=>'Secure','color'=>'#EB0029','svg'=>'<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#EB0029"/><path d="M27 19.8V16.8h-6v3h-4.8V22.8h4.8v7.8h-4.8V33.6h4.8v3h6v-3h4.8v-3H27v-7.8h4.8v-3H27z" fill="white"/></svg>','fee'=>'~$1.00','time'=>'2-5 min'],
-            ['name'=>'BNB','symbol'=>'BSC','network'=>'Binance Coin','currency'=>'bnbbsc','badge'=>'Native','color'=>'#F3BA2F','svg'=>'<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#F3BA2F"/><path d="M24 14.4l-3 3L24 20.4l3-3-3-3zm-6 6l-3 3 3 3 3-3-3-3zm12 0l-3 3 3 3 3-3-3-3zm-6 6l-3 3 3 3 3-3-3-3z" fill="white"/></svg>','fee'=>'~$0.15','time'=>'1-2 min'],
+            ['name'=>'USDT','symbol'=>'BEP20','network'=>'Binance Smart Chain','currency'=>'usdtbsc','badge'=>__t('recommended'),'color'=>'#26A17B','svg'=>'<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#26A17B"/><path d="M27 19.8V16.8h-6v3h-4.8V22.8h4.8v7.8h-4.8V33.6h4.8v3h6v-3h4.8v-3H27v-7.8h4.8v-3H27z" fill="white"/></svg>','fee'=>'~$0.20','time'=>'1-3 min'],
+            ['name'=>'USDC','symbol'=>'BEP20','network'=>'Binance Smart Chain','currency'=>'usdcbsc','badge'=>__t('fast'),'color'=>'#2775CA','svg'=>'<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#2775CA"/><circle cx="24" cy="24" r="10" stroke="white" stroke-width="2" fill="none"/><circle cx="24" cy="24" r="5" fill="white"/></svg>','fee'=>'~$0.20','time'=>'1-3 min'],
+            ['name'=>'USDT','symbol'=>'TRC20','network'=>'Tron Network','currency'=>'usdttrc20','badge'=>__t('secure'),'color'=>'#EB0029','svg'=>'<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#EB0029"/><path d="M27 19.8V16.8h-6v3h-4.8V22.8h4.8v7.8h-4.8V33.6h4.8v3h6v-3h4.8v-3H27v-7.8h4.8v-3H27z" fill="white"/></svg>','fee'=>'~$1.00','time'=>'2-5 min'],
+            ['name'=>'BNB','symbol'=>'BSC','network'=>'Binance Coin','currency'=>'bnbbsc','badge'=>__t('native'),'color'=>'#F3BA2F','svg'=>'<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#F3BA2F"/><path d="M24 14.4l-3 3L24 20.4l3-3-3-3zm-6 6l-3 3 3 3 3-3-3-3zm12 0l-3 3 3 3 3-3-3-3zm-6 6l-3 3 3 3 3-3-3-3z" fill="white"/></svg>','fee'=>'~$0.15','time'=>'1-2 min'],
             ];
             @endphp
 
@@ -114,8 +114,8 @@
                     </svg>
                 </div>
                 <div>
-                    <div style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin-bottom: 2px;">Bank-Grade Security</div>
-                    <div style="color: #64748b; font-size: 11px;">All transactions are encrypted & verified</div>
+                    <div style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin-bottom: 2px;">{{ __t('bank_grade_security') }}</div>
+                    <div style="color: #64748b; font-size: 11px;">{{ __t('all_transactions_encrypted') }}</div>
                 </div>
             </div>
             
@@ -126,16 +126,16 @@
                     </svg>
                 </div>
                 <div>
-                    <div style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin-bottom: 2px;">Instant Processing</div>
-                    <div style="color: #64748b; font-size: 11px;">Deposits automatically credited to your account</div>
+                    <div style="color: #e5e7eb; font-weight: 600; font-size: 13px; margin-bottom: 2px;">{{ __t('instant_processing') }}</div>
+                    <div style="color: #64748b; font-size: 11px;">{{ __t('deposits_auto_credited') }}</div>
                 </div>
             </div>
         </div>
 
         <!-- SECURITY BADGE -->
         <div style="text-align: center; padding: 16px; background: rgba(168,85,247,0.05); border: 1px solid rgba(168,85,247,0.15); border-radius: 12px; animation: slideUp 0.6s ease 0.5s backwards;">
-            <div style="color: #a855f7; font-weight: 600; font-size: 12px; margin-bottom: 4px;">🔐 Trusted by 10,000+ Users</div>
-            <div style="color: #64748b; font-size: 11px;">Audited & secured by industry standards</div>
+            <div style="color: #a855f7; font-weight: 600; font-size: 12px; margin-bottom: 4px;">🔐 {{ __t('trusted_by_users') }}</div>
+            <div style="color: #64748b; font-size: 11px;">{{ __t('audited_secured') }}</div>
         </div>
 
     </div>

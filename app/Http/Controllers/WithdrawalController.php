@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Traits\SetsLocale;
 
 class WithdrawalController extends Controller
 {
+    use SetsLocale;
 
     public function index()
     {
+        $this->setLocale();
         $user = auth()->user();
         $withdrawals = Withdrawal::where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
@@ -201,6 +204,7 @@ class WithdrawalController extends Controller
      */
     public function history()
     {
+        $this->setLocale();
         $user = auth()->user();
         $withdrawals = Withdrawal::where('user_id', $user->id)
             ->orderBy('created_at', 'desc')

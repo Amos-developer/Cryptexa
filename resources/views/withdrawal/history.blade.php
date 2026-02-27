@@ -12,7 +12,7 @@
     <a href="{{ route('account.settings') }}" class="back-btn">
         <i class="icon-left-btn"></i>
     </a>
-    <h6 class="header-title">Withdrawal History</h6>
+    <h6 class="header-title">{{ __t('withdrawal_history') }}</h6>
     <span class="placeholder"></span>
 </div>
 
@@ -52,8 +52,8 @@
                     </svg>
                 </div>
                 <div>
-                    <h3 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Withdrawal Portfolio</h3>
-                    <p style="color: #94a3b8; font-size: 12px; margin: 0;">Your withdrawal analytics</p>
+                    <h3 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">{{ __t('withdrawal_portfolio') }}</h3>
+                    <p style="color: #94a3b8; font-size: 12px; margin: 0;">{{ __t('your_withdrawal_analytics') }}</p>
                 </div>
             </div>
             
@@ -69,10 +69,10 @@
                             <line x1="12" y1="1" x2="12" y2="23"/>
                             <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
                         </svg>
-                        <span style="color: #94a3b8; font-size: 12px; font-weight: 600;">Total Withdrawn</span>
+                        <span style="color: #94a3b8; font-size: 12px; font-weight: 600;">{{ __t('total_withdrawn') }}</span>
                     </div>
                     <div style="color: #38bdf8; font-weight: 900; font-size: 28px;">${{ number_format($withdrawals->whereIn('status', ['approved', 'completed'])->sum('amount'), 2) }}</div>
-                    <div style="color: #64748b; font-size: 11px; margin-top: 4px;">Completed withdrawals</div>
+                    <div style="color: #64748b; font-size: 11px; margin-top: 4px;">{{ __t('completed_withdrawals') }}</div>
                 </div>
                 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
@@ -87,10 +87,10 @@
                                 <path d="M3 3v18h18"/>
                                 <path d="m19 9-5 5-4-4-3 3"/>
                             </svg>
-                            <span style="color: #94a3b8; font-size: 11px; font-weight: 600;">Transactions</span>
+                            <span style="color: #94a3b8; font-size: 11px; font-weight: 600;">{{ __t('transactions') }}</span>
                         </div>
                         <div style="color: #22c55e; font-weight: 900; font-size: 24px;">{{ $withdrawals->count() }}</div>
-                        <div style="color: #64748b; font-size: 10px; margin-top: 4px;">Total requests</div>
+                        <div style="color: #64748b; font-size: 10px; margin-top: 4px;">{{ __t('total_requests') }}</div>
                     </div>
                     
                     <div style="
@@ -105,10 +105,10 @@
                                 <circle cx="12" cy="7" r="4"/>
                                 <path d="M16 11l5 5M21 11l-5 5"/>
                             </svg>
-                            <span style="color: #94a3b8; font-size: 11px; font-weight: 600;">Amount Received</span>
+                            <span style="color: #94a3b8; font-size: 11px; font-weight: 600;">{{ __t('amount_received') }}</span>
                         </div>
                         <div style="color: #a855f7; font-weight: 900; font-size: 24px;">${{ $withdrawals->count() > 0 ? number_format($withdrawals->whereIn('status', ['approved', 'completed'])->sum('amount') * 0.92, 2) : '0.00' }}</div>
-                        <div style="color: #64748b; font-size: 10px; margin-top: 4px;">After 8% fee</div>
+                        <div style="color: #64748b; font-size: 10px; margin-top: 4px;">{{ __t('after_8_fee') }}</div>
                     </div>
                 </div>
             </div>
@@ -118,8 +118,8 @@
         @if($withdrawals->isEmpty())
         <div style="text-align: center; padding: 60px 20px; color: #94a3b8;">
             <div style="font-size: 48px; margin-bottom: 16px;">💸</div>
-            <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">No Withdrawals Yet</div>
-            <div style="font-size: 14px;">Your withdrawal history will appear here</div>
+            <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">{{ __t('no_withdrawals_yet') }}</div>
+            <div style="font-size: 14px;">{{ __t('withdrawal_history_appear_here') }}</div>
         </div>
         @else
         <div style="display: grid; gap: 12px; animation: slideUp 0.6s ease 0.2s backwards;">
@@ -134,13 +134,13 @@
                 <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
                     <div>
                         <div style="color: #e5e7eb; font-weight: 700; font-size: 18px; margin-bottom: 4px;">${{ number_format($withdrawal->amount, 2) }}</div>
-                        <div style="color: #64748b; font-size: 13px;">Withdrawal Request</div>
+                        <div style="color: #64748b; font-size: 13px;">{{ __t('withdrawal_request') }}</div>
                     </div>
                     @php
                         $statusColors = [
-                            'completed' => ['bg' => 'rgba(34,197,94,0.2)', 'text' => '#22c55e', 'label' => 'Completed'],
-                            'approved' => ['bg' => 'rgba(34,197,94,0.2)', 'text' => '#22c55e', 'label' => 'Completed'],
-                            'pending' => ['bg' => 'rgba(251,191,36,0.2)', 'text' => '#fbbf24', 'label' => 'Pending'],
+                            'completed' => ['bg' => 'rgba(34,197,94,0.2)', 'text' => '#22c55e', 'label' => __t('completed')],
+                            'approved' => ['bg' => 'rgba(34,197,94,0.2)', 'text' => '#22c55e', 'label' => __t('completed')],
+                            'pending' => ['bg' => 'rgba(251,191,36,0.2)', 'text' => '#fbbf24', 'label' => __t('pending')],
                         ];
                         $status = $statusColors[$withdrawal->status] ?? ['bg' => 'rgba(239,68,68,0.2)', 'text' => '#ef4444', 'label' => ucfirst($withdrawal->status)];
                     @endphp
@@ -148,23 +148,23 @@
                 </div>
                 <div style="display: grid; gap: 8px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06);">
                     <div style="display: flex; justify-content: space-between;">
-                        <span style="color: #64748b; font-size: 13px;">Amount Withdrawn</span>
+                        <span style="color: #64748b; font-size: 13px;">{{ __t('amount_withdrawn') }}</span>
                         <span style="color: #e5e7eb; font-size: 13px; font-weight: 600;">${{ number_format($withdrawal->amount, 2) }}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between;">
-                        <span style="color: #64748b; font-size: 13px;">Withdrawal Fee (8%)</span>
+                        <span style="color: #64748b; font-size: 13px;">{{ __t('withdrawal_fee_8') }}</span>
                         <span style="color: #ef4444; font-size: 13px; font-weight: 600;">-${{ number_format($withdrawal->amount * 0.08, 2) }}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.06);">
-                        <span style="color: #38bdf8; font-size: 13px; font-weight: 600;">Amount Received</span>
+                        <span style="color: #38bdf8; font-size: 13px; font-weight: 600;">{{ __t('amount_received') }}</span>
                         <span style="color: #22c55e; font-size: 14px; font-weight: 700;">${{ number_format($withdrawal->amount * 0.92, 2) }}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-top: 8px;">
-                        <span style="color: #64748b; font-size: 13px;">Requested</span>
+                        <span style="color: #64748b; font-size: 13px;">{{ __t('requested') }}</span>
                         <span style="color: #94a3b8; font-size: 13px;">{{ $withdrawal->created_at->format('M d, Y') }}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between;">
-                        <span style="color: #64748b; font-size: 13px;">Time</span>
+                        <span style="color: #64748b; font-size: 13px;">{{ __t('time') }}</span>
                         <span style="color: #94a3b8; font-size: 13px;">{{ $withdrawal->created_at->format('h:i A') }}</span>
                     </div>
                 </div>
@@ -175,10 +175,10 @@
 
         <div style="background: linear-gradient(135deg, rgba(56,189,248,0.05), rgba(56,189,248,0.02)); border: 1px solid rgba(56,189,248,0.15); border-radius: 12px; padding: 16px; margin-top: 24px; text-align: center; animation: slideUp 0.6s ease 0.6s backwards;">
             <p style="color: #94a3b8; font-size: 13px; margin: 0 0 8px 0;">
-                <span style="color: #38bdf8; font-weight: 600;">⏱️ Processing Time:</span> All withdrawals require admin approval. Processing takes 20 minutes to 24 hours.
+                <span style="color: #38bdf8; font-weight: 600;">⏱️ {{ __t('processing_time') }}:</span> {{ __t('withdrawal_processing_msg') }}
             </p>
             <p style="color: #94a3b8; font-size: 13px; margin: 0;">
-                <span style="color: #fbbf24; font-weight: 600;">🔒 Security:</span> Your withdrawal is reviewed by our security team before processing.
+                <span style="color: #fbbf24; font-weight: 600;">🔒 {{ __t('security') }}:</span> {{ __t('withdrawal_security_msg') }}
             </p>
         </div>
     </div>

@@ -11,12 +11,19 @@ class SetLocale
 {
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check()) {
-            $locale = auth()->user()->language ?? 'en';
+        if (auth()->check() && auth()->user()->language) {
+            $locale = auth()->user()->language;
             App::setLocale($locale);
+            Session::put('locale', $locale);
+        } elseif (Session::has('locale')) {
+            $locale = Session::get('locale');
+            App::setLocale($locale);
+        } elseif ($request->hasCookie('locale')) {
+            $locale = $request->cookie('locale');
+            App::setLocale($locale);
+            Session::put('locale', $locale);
         } else {
-            $locale = Session::get('locale', 'en');
-            App::setLocale($locale);
+            App::setLocale('en');
         }
         
         return $next($request);
