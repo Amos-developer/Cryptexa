@@ -13,6 +13,7 @@ return [
     'track' => 'Seguimiento',
     'settings' => 'Configuración',
     'logout' => 'Cerrar Sesión',
+    'account' => 'Cuenta',
     
     // Balance Section
     'total_balance' => 'Saldo Total de la Cuenta',
