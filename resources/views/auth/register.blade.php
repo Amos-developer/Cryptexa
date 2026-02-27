@@ -723,15 +723,39 @@
         }
 
         function changeLanguage(lang) {
-            localStorage.setItem('language', lang);
-            Swal.fire({
-                icon: 'success',
-                title: 'Language Changed!',
-                text: 'Language preference saved',
-                background: 'linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.95) 100%)',
-                color: '#e5e7eb',
-                timer: 1500,
-                showConfirmButton: false
+            fetch('/language/change', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ language: lang })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Language Changed!',
+                        text: 'Language preference saved',
+                        background: 'linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.95) 100%)',
+                        color: '#e5e7eb',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to change language',
+                    background: 'linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.95) 100%)',
+                    color: '#e5e7eb'
+                });
             });
         }
     </script>

@@ -8,7 +8,7 @@
                 <span class="nav-icon">
                     <img src="{{ asset('images/icons/home.svg') }}" alt="Home">
                 </span>
-                <span class="nav-text">Home</span>
+                <span class="nav-text">{{ __t('home') }}</span>
             </a>
         </li>
 
@@ -19,7 +19,7 @@
                 <span class="nav-icon">
                     <img src="{{ asset('images/icons/track.svg') }}" alt="Track">
                 </span>
-                <span class="nav-text">Track</span>
+                <span class="nav-text">{{ __t('track') }}</span>
             </a>
         </li>
 
@@ -30,7 +30,7 @@
                 <span class="nav-icon">
                     <img src="{{ asset('images/icons/team.svg') }}" alt="Team">
                 </span>
-                <span class="nav-text">Team</span>
+                <span class="nav-text">{{ __t('team') }}</span>
             </a>
         </li>
 
@@ -41,7 +41,7 @@
                 <span class="nav-icon">
                     <img src="{{ asset('images/icons/account.svg') }}" alt="Account">
                 </span>
-                <span class="nav-text">Account</span>
+                <span class="nav-text">{{ __t('account') }}</span>
             </a>
         </li>
 

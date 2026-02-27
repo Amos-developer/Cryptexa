@@ -11,6 +11,10 @@ use App\Models\User;
 class HomeController extends Controller
 {
     public function home(){
+        if (auth()->check() && auth()->user()->language) {
+            app()->setLocale(auth()->user()->language);
+        }
+        
         $plans = ComputePlan::all();
         $orders = ComputeOrder::with('computePlan')
             ->where('user_id', auth()->id())

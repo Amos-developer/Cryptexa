@@ -23,7 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'require.2fa.pending' => \App\Http\Middleware\RequireTwoFactorPending::class,
         ]);
         
-        $middleware->web(append: [
+        $middleware->web(prepend: [
             \App\Http\Middleware\SetLocale::class,
         ]);
     })

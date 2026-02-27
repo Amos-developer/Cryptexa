@@ -18,11 +18,11 @@
 
     <!-- Balance Section -->
     <div class="balance-section">
-        <p class="balance-label">Total Account Balance</p>
+        <p class="balance-label">{{ __t('total_balance') }}</p>
         <div class="balance-amount">${{ number_format(auth()->user()->balance, 2) }}</div>
         <div class="balance-change">
             <span class="balance-change-positive">
-                Active Liquidity Allocation
+                {{ __t('active_liquidity') }}
             </span>
         </div>
         <div class="balance-chart">
@@ -36,28 +36,28 @@
             <div class="action-icon">
                 <img src="{{ asset('images/icons/deposit.svg') }}" alt="Deposit">
             </div>
-            <div class="action-label">Deposit</div>
+            <div class="action-label">{{ __t('deposit') }}</div>
         </a>
 
         <a href="{{ route('withdraw') }}" class="action-card">
             <div class="action-icon">
                 <img src="{{ asset('images/icons/withdraw.svg') }}" alt="Withdraw">
             </div>
-            <div class="action-label">Withdraw</div>
+            <div class="action-label">{{ __t('withdraw') }}</div>
         </a>
 
         <a href="{{ route('checkin') }}" class="action-card">
             <div class="action-icon">
                 <img src="{{ asset('images/icons/checkin.svg') }}" alt="Check-in">
             </div>
-            <div class="action-label">Check-in</div>
+            <div class="action-label">{{ __t('checkin') }}</div>
         </a>
 
         <a href="{{ route('luckybox') }}" class="action-card">
             <div class="action-icon">
                 <img src="{{ asset('images/icons/luckybox.svg') }}" alt="Lucky Box">
             </div>
-            <div class="action-label">Lucky Box</div>
+            <div class="action-label">{{ __t('lucky_box') }}</div>
         </a>
 
         <a href="{{ route('weekly-salary') }}" class="action-card">
@@ -67,7 +67,7 @@
                     <path d="M7 15h0M12 15h0M17 15h0M7 11h10M7 7h10"/>
                 </svg>
             </div>
-            <div class="action-label">Weekly Salary</div>
+            <div class="action-label">{{ __t('weekly_salary') }}</div>
         </a>
 
         <a href="{{ route('leaderboard') }}" class="action-card">
@@ -78,7 +78,7 @@
                     <path d="M2 12l10 5 10-5"/>
                 </svg>
             </div>
-            <div class="action-label">Leaders Rank</div>
+            <div class="action-label">{{ __t('leaders_rank') }}</div>
         </a>
     </div>
 
@@ -88,7 +88,7 @@
             <div class="portfolio-icon">
                 <img src="{{ asset('images/icons/analytics.svg') }}" alt="Analytics" style="width: 16px; height: 16px;">
             </div>
-            <p class="portfolio-text">Liquidity Portfolio Overview</p>
+            <p class="portfolio-text">{{ __t('liquidity_portfolio_overview') }}</p>
         </div>
     </div>
 
@@ -103,9 +103,9 @@
                         <path d="M2 17l10 5 10-5"/>
                         <path d="M2 12l10 5 10-5"/>
                     </svg>
-                    Liquidity Growth Pools
+                    {{ __t('liquidity_pools') }}
                 </span>
-                <span style="color: #38bdf8; font-size: 12px; font-weight: 600;">{{ count($plans) }} Active</span>
+                <span style="color: #38bdf8; font-size: 12px; font-weight: 600;">{{ count($plans) }} {{ __t('active') }}</span>
             </div>
 
             <div style="display: grid; gap: 16px;">
@@ -159,7 +159,7 @@
                                             <circle cx="12" cy="12" r="10"/>
                                             <polyline points="12 6 12 12 16 14"/>
                                         </svg>
-                                        {{ $days }} Day{{ $days > 1 ? 's' : '' }}
+                                        {{ $days }} {{ $days > 1 ? __t('days') : __t('day') }}
                                     </span>
                                     <span style="color: #64748b;">•</span>
                                     <span>{{ $plan->type }}</span>
@@ -173,7 +173,7 @@
                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                             </svg>
-                            <span style="color: #fbbf24; font-size: 10px; font-weight: 600;">LOCKED</span>
+                            <span style="color: #fbbf24; font-size: 10px; font-weight: 600;">{{ __t('locked') }}</span>
                         </div>
                         @else
                         <div style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); border-radius: 20px;">
@@ -181,7 +181,7 @@
                                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                                 <polyline points="22 4 12 14.01 9 11.01"/>
                             </svg>
-                            <span style="color: #22c55e; font-size: 10px; font-weight: 600;">AVAILABLE</span>
+                            <span style="color: #22c55e; font-size: 10px; font-weight: 600;">{{ __t('available') }}</span>
                         </div>
                         @endif
                     </div>
@@ -189,7 +189,7 @@
                     <!-- Stats Grid -->
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px;">
                         <div style="background: rgba(56,189,248,0.05); border: 1px solid rgba(56,189,248,0.15); border-radius: 8px; padding: 10px; text-align: center;">
-                            <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">Investment Range</p>
+                            <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">{{ __t('investment_range') }}</p>
                             <p style="color: #38bdf8; font-weight: 700; font-size: 15px; margin: 0;">
                                 ${{ number_format($plan->price, 0) }} - 
                                 @if($plan->max_investment)
@@ -200,21 +200,21 @@
                             </p>
                         </div>
                         <div style="background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; padding: 10px; text-align: center;">
-                            <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">Daily Return</p>
+                            <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">{{ __t('daily_return') }}</p>
                             <p style="color: #22c55e; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format($plan->daily_profit, 1) }}%</p>
                         </div>
                     </div>
                     
                     <!-- Total ROI -->
                     <div style="background: rgba(251,191,36,0.05); border: 1px solid rgba(251,191,36,0.15); border-radius: 8px; padding: 10px; text-align: center; margin-bottom: 12px;">
-                        <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">Total ROI</p>
+                        <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">{{ __t('total_roi') }}</p>
                         <p style="color: #fbbf24; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format((pow(1 + ($plan->daily_profit / 100), $days) - 1) * 100, 1) }}%</p>
                     </div>
                     
                     <!-- Progress Bar -->
                     <div style="margin-bottom: 10px;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                            <span style="color: #94a3b8; font-size: 11px;">Pool Capacity</span>
+                            <span style="color: #94a3b8; font-size: 11px;">{{ __t('pool_capacity') }}</span>
                             <span style="color: #38bdf8; font-size: 11px; font-weight: 600;">{{ rand(60, 95) }}%</span>
                         </div>
                         <div style="height: 5px; background: rgba(56,189,248,0.1); border-radius: 3px; overflow: hidden;">
@@ -231,18 +231,18 @@
                                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                             </svg>
-                            <span style="color: #64748b; font-size: 11px;">{{ rand(100, 500) }}+ investors</span>
+                            <span style="color: #64748b; font-size: 11px;">{{ rand(100, 500) }}+ {{ __t('investors') }}</span>
                         </div>
                         @if(!$isLocked)
                         <div style="display: flex; align-items: center; gap: 5px; color: #38bdf8; font-weight: 600; font-size: 13px;">
-                            <span>View Details</span>
+                            <span>{{ __t('view_details') }}</span>
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="9 18 15 12 9 6"/>
                             </svg>
                         </div>
                         @else
                         <div style="display: flex; align-items: center; gap: 5px; color: #64748b; font-weight: 600; font-size: 13px;">
-                            <span>Insufficient Balance</span>
+                            <span>{{ __t('insufficient_balance') }}</span>
                         </div>
                         @endif
                     </div>

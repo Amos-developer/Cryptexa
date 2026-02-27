@@ -202,17 +202,54 @@
 
     function changeLanguage(lang) {
         Swal.close();
-        Swal.fire({
-            title: 'Language Changed',
-            text: `Language set to ${lang.toUpperCase()}`,
-            icon: 'success',
-            timer: 1500,
-            showConfirmButton: false,
-            background: '#020617',
-            color: '#e5e7eb'
+        
+        const csrfToken = document.querySelector('meta[name="csrf-token"]');
+        if (!csrfToken) {
+            console.error('CSRF token not found');
+            Swal.fire({
+                title: 'Error',
+                text: 'Security token missing. Please refresh the page.',
+                icon: 'error',
+                background: '#020617',
+                color: '#e5e7eb'
+            });
+            return;
+        }
+        
+        fetch('/language/change', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken.content
+            },
+            body: JSON.stringify({ language: lang })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    title: 'Language Changed!',
+                    text: 'Language preference saved',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false,
+                    background: '#020617',
+                    color: '#e5e7eb'
+                }).then(() => {
+                    window.location.reload();
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'Failed to change language',
+                icon: 'error',
+                background: '#020617',
+                color: '#e5e7eb'
+            });
         });
-        // Here you can add actual language change logic
-        console.log('Language changed to:', lang);
     }
 
     function openSupport() {
