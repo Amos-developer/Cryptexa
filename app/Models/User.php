@@ -26,6 +26,7 @@ class User extends Authenticatable
         'role',
         'password',
         'account_id',
+        'language',
         'withdrawal_pin',
         'withdrawal_network',
         'withdrawal_address',

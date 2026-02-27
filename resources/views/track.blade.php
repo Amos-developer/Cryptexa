@@ -75,33 +75,58 @@
 
             @forelse($activeOrders as $order)
             <div style="
-                background: linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(251,191,36,0.02) 100%);
-                border: 1px solid rgba(251,191,36,0.15);
-                border-radius: 14px;
-                padding: 18px;
-                box-shadow: 0 10px 30px rgba(251,191,36,0.05), inset 0 0 20px rgba(251,191,36,0.03);
+                background: linear-gradient(135deg, rgba(251,191,36,0.1) 0%, rgba(251,191,36,0.03) 100%);
+                border: 1px solid rgba(251,191,36,0.2);
+                border-radius: 16px;
+                padding: 20px;
+                box-shadow: 0 8px 32px rgba(251,191,36,0.08);
                 backdrop-filter: blur(10px);
-                margin-bottom: 14px;
+                margin-bottom: 16px;
                 transition: all 0.3s ease;
             "
-                onmouseover="this.style.borderColor='rgba(251,191,36,0.3)'; this.style.boxShadow='0 10px 30px rgba(251,191,36,0.1), inset 0 0 20px rgba(251,191,36,0.05)';"
-                onmouseout="this.style.borderColor='rgba(251,191,36,0.15)'; this.style.boxShadow='0 10px 30px rgba(251,191,36,0.05), inset 0 0 20px rgba(251,191,36,0.03)';">
+                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 12px 40px rgba(251,191,36,0.15)';"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 32px rgba(251,191,36,0.08)';">
 
                 <!-- HEADER -->
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                    <h4 style="color: #e5e7eb; font-weight: 700; font-size: 15px; margin: 0;">
-                        {{ optional($order->computePlan)->name ?? 'Compute Plan' }}
-                    </h4>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+                    <div>
+                        <h4 style="color: #e5e7eb; font-weight: 800; font-size: 16px; margin: 0 0 4px 0;">
+                            {{ optional($order->computePlan)->name ?? 'Compute Plan' }}
+                        </h4>
+                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">Order #{{ $order->id }}</p>
+                    </div>
                     <span style="
-                        background: rgba(251,191,36,0.2);
+                        background: linear-gradient(135deg, rgba(251,191,36,0.25) 0%, rgba(251,191,36,0.15) 100%);
                         color: #fbbf24;
-                        padding: 6px 12px;
+                        padding: 8px 14px;
                         border-radius: 999px;
                         font-size: 11px;
-                        font-weight: 700;
+                        font-weight: 800;
+                        border: 1px solid rgba(251,191,36,0.3);
+                        white-space: nowrap;
                     ">
-                        ⚡ RUNNING
+                        ⚡ ACTIVE
                     </span>
+                </div>
+
+                <!-- END DATE/TIME CARD -->
+                <div style="
+                    background: linear-gradient(135deg, rgba(56,189,248,0.12) 0%, rgba(56,189,248,0.04) 100%);
+                    border: 1px solid rgba(56,189,248,0.25);
+                    border-radius: 12px;
+                    padding: 14px;
+                    margin-bottom: 16px;
+                ">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                        <span style="font-size: 18px;">🎯</span>
+                        <p style="color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0; letter-spacing: 0.5px;">Pool Ends On</p>
+                    </div>
+                    <p style="color: #38bdf8; font-size: 15px; font-weight: 800; margin: 0 0 4px 0;">
+                        {{ $order->ends_at->format('l, F j, Y') }}
+                    </p>
+                    <p style="color: #38bdf8; font-size: 13px; font-weight: 600; margin: 0;">
+                        {{ $order->ends_at->format('g:i A') }} ({{ $order->ends_at->timezone->getName() }})
+                    </p>
                 </div>
 
                 <!-- COUNTDOWN TIMER -->
@@ -109,46 +134,23 @@
                 $remaining = max(0, now()->diffInSeconds($order->ends_at, false));
                 @endphp
 
-                <div class="countdown"
-                    data-remaining="{{ $remaining }}"
-                    style="
-                        color: #fbbf24;
-                        font-size: 20px;
-                        font-weight: 900;
-                        margin-bottom: 14px;
-                    ">
-                </div>
-
-                <!-- STATS GRID -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px;">
-                    <div style="
-                        background: rgba(255,255,255,0.02);
-                        padding: 10px;
-                        border-radius: 10px;
-                        border: 1px solid rgba(251,191,36,0.2);
-                    ">
-                        <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; margin: 0 0 4px 0;">Capital</p>
-                        <p style="color: #e5e7eb; font-size: 13px; font-weight: 700; margin: 0;">${{ number_format($order->amount, 2) }}</p>
-                    </div>
-
-                    <div style="
-                        background: rgba(255,255,255,0.02);
-                        padding: 10px;
-                        border-radius: 10px;
-                        border: 1px solid rgba(251,191,36,0.2);
-                    ">
-                        <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; margin: 0 0 4px 0;">Current</p>
-                        <p style="color: #22c55e; font-size: 13px; font-weight: 700; margin: 0;">+${{ number_format($order->amount - $order->investment_amount, 2) }}</p>
-                    </div>
-
-                    <div style="
-                        background: rgba(255,255,255,0.02);
-                        padding: 10px;
-                        border-radius: 10px;
-                        border: 1px solid rgba(251,191,36,0.2);
-                    ">
-                        <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; margin: 0 0 4px 0;">Expected</p>
-                        <p style="color: #22c55e; font-size: 13px; font-weight: 700; margin: 0;">+${{ number_format($order->expected_profit, 2) }}</p>
+                <div style="
+                    background: rgba(0,0,0,0.3);
+                    border-radius: 12px;
+                    padding: 16px;
+                    text-align: center;
+                    margin-bottom: 16px;
+                    border: 1px solid rgba(251,191,36,0.2);
+                ">
+                    <p style="color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0 0 8px 0; letter-spacing: 0.5px;">Time Remaining</p>
+                    <div class="countdown"
+                        data-remaining="{{ $remaining }}"
+                        style="
+                            color: #fbbf24;
+                            font-size: 22px;
+                            font-weight: 900;
+                            letter-spacing: 1px;
+                        ">
                     </div>
                 </div>
 
@@ -158,19 +160,63 @@
                 $elapsed = $order->created_at->diffInSeconds(now());
                 $progress = min(100, ($elapsed / $totalDuration) * 100);
                 @endphp
-                <div style="
-                    width: 100%;
-                    height: 6px;
-                    background: rgba(255,255,255,0.1);
-                    border-radius: 999px;
-                    overflow: hidden;
-                ">
+                <div style="margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="color: #94a3b8; font-size: 11px; font-weight: 600;">Progress</span>
+                        <span style="color: #fbbf24; font-size: 11px; font-weight: 700;">{{ number_format($progress, 1) }}%</span>
+                    </div>
                     <div style="
-                        width: {{ $progress }}%;
-                        height: 100%;
-                        background: linear-gradient(90deg, #fbbf24, #f59e0b);
-                        transition: width 1s linear;
-                    "></div>
+                        width: 100%;
+                        height: 8px;
+                        background: rgba(255,255,255,0.08);
+                        border-radius: 999px;
+                        overflow: hidden;
+                        border: 1px solid rgba(255,255,255,0.1);
+                    ">
+                        <div style="
+                            width: {{ $progress }}%;
+                            height: 100%;
+                            background: linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24);
+                            background-size: 200% 100%;
+                            animation: shimmer 2s infinite;
+                            transition: width 1s ease;
+                        "></div>
+                    </div>
+                </div>
+
+                <!-- STATS GRID -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                    <div style="
+                        background: rgba(0,0,0,0.3);
+                        padding: 12px;
+                        border-radius: 10px;
+                        border: 1px solid rgba(255,255,255,0.1);
+                    ">
+                        <p style="color: #94a3b8; font-size: 10px; font-weight: 700; text-transform: uppercase; margin: 0 0 6px 0; letter-spacing: 0.5px;">💰 Capital</p>
+                        <p style="color: #e5e7eb; font-size: 16px; font-weight: 800; margin: 0;">${{ number_format($order->amount, 2) }}</p>
+                    </div>
+
+                    <div style="
+                        background: rgba(0,0,0,0.3);
+                        padding: 12px;
+                        border-radius: 10px;
+                        border: 1px solid rgba(34,197,94,0.3);
+                    ">
+                        <p style="color: #94a3b8; font-size: 10px; font-weight: 700; text-transform: uppercase; margin: 0 0 6px 0; letter-spacing: 0.5px;">📈 Expected</p>
+                        <p style="color: #22c55e; font-size: 16px; font-weight: 800; margin: 0;">+${{ number_format($order->expected_profit, 2) }}</p>
+                    </div>
+                </div>
+
+                <!-- TOTAL RETURN -->
+                <div style="
+                    background: linear-gradient(135deg, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.05) 100%);
+                    border: 1px solid rgba(34,197,94,0.3);
+                    padding: 14px;
+                    border-radius: 10px;
+                    text-align: center;
+                ">
+                    <p style="color: #94a3b8; font-size: 10px; font-weight: 700; text-transform: uppercase; margin: 0 0 6px 0; letter-spacing: 0.5px;">🎁 Total Return</p>
+                    <p style="color: #22c55e; font-size: 20px; font-weight: 900; margin: 0;">${{ number_format($order->amount + $order->expected_profit, 2) }}</p>
                 </div>
 
             </div>
@@ -306,6 +352,15 @@
         }
     }
 
+    @keyframes shimmer {
+        0% {
+            background-position: 200% 0;
+        }
+        100% {
+            background-position: -200% 0;
+        }
+    }
+
     /* MOBILE RESPONSIVE */
     @media (max-width: 768px) {
         .pt-80 {
@@ -313,37 +368,15 @@
         }
 
         .pb-80 {
-            padding-bottom: 60px !important;
+            padding-bottom: 80px !important;
         }
 
         h1 {
-            font-size: 24px !important;
-        }
-
-        h4 {
-            font-size: 13px !important;
-        }
-
-        [style*="flex: 1"] {
-            flex: 1 !important;
-            font-size: 12px !important;
-            padding: 10px !important;
-        }
-
-        [style*="padding: 18px"] {
-            padding: 14px !important;
-        }
-
-        [style*="gap: 12px"] {
-            gap: 10px !important;
+            font-size: 26px !important;
         }
 
         .countdown {
             font-size: 18px !important;
-        }
-
-        p {
-            font-size: 12px !important;
         }
     }
 
@@ -407,11 +440,12 @@
                 return;
             }
 
-            let h = Math.floor(seconds / 3600);
+            let d = Math.floor(seconds / 86400);
+            let h = Math.floor((seconds % 86400) / 3600);
             let m = Math.floor((seconds % 3600) / 60);
             let s = seconds % 60;
 
-            el.innerText = `${h}h ${m}m ${s}s remaining`;
+            el.innerText = d > 0 ? `${d}d ${h}h ${m}m ${s}s remaining` : `${h}h ${m}m ${s}s remaining`;
             seconds--;
         }
 

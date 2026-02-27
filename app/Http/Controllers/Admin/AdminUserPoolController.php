@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ComputeOrder;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 
 class AdminUserPoolController extends Controller
@@ -45,12 +46,21 @@ class AdminUserPoolController extends Controller
 
         // If status is being changed to completed, credit user
         if ($request->status == 'completed' && $userPool->status == 'running') {
-            $totalReturn = $userPool->amount + $userPool->expected_profit;
+            $totalReturn = $userPool->amount + ($request->expected_profit ?? $userPool->expected_profit);
             $userPool->user->increment('balance', $totalReturn);
             $userPool->update([
                 'status' => 'completed',
                 'is_paid' => true,
                 'expected_profit' => $request->expected_profit ?? $userPool->expected_profit,
+            ]);
+            
+            Notification::create([
+                'user_id' => $userPool->user_id,
+                'type' => 'pool_completed',
+                'title' => 'Pool Completed',
+                'message' => "Your {$userPool->computePlan->name} pool has completed! Total return: $" . number_format($totalReturn, 2),
+                'icon_type' => 'success',
+                'is_read' => false,
             ]);
         } else {
             $userPool->update($request->only(['status', 'expected_profit']));

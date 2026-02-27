@@ -22,6 +22,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'require.2fa.pending' => \App\Http\Middleware\RequireTwoFactorPending::class,
         ]);
+        
+        $middleware->web(append: [
+            \App\Http\Middleware\SetLocale::class,
+        ]);
     })
 
     ->withMiddleware(function (Middleware $middleware): void {

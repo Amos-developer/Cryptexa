@@ -110,6 +110,15 @@ class ComputeController extends Controller
                     'status' => 'completed',
                     'is_paid' => true,
                 ]);
+                
+                Notification::create([
+                    'user_id' => $order->user_id,
+                    'type' => 'pool_completed',
+                    'title' => 'Pool Completed',
+                    'message' => "Your pool has completed! Total return: $" . number_format($totalReturn, 2),
+                    'icon_type' => 'success',
+                    'is_read' => false,
+                ]);
             });
         }
 

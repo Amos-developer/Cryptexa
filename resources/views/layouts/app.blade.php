@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Cryptexa">
-    <link rel="apple-touch-icon" href="{{ asset('images/logo/48.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo/logo.png') }}">
 
     <!-- Fonts -->
     <link rel="stylesheet" href="{{ asset('fonts/fonts.css') }}">
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/light-theme.css') }}">
 
-    <link rel="shortcut icon" href="{{ asset('images/logo/48.png') }}">
+    <link rel="shortcut icon" href="{{ asset('images/logo/logo.png') }}">
 </head>
 
 <body>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ChooseCryptocurrency;
 use App\Http\Controllers\DepositController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\CheckInController;
 use App\Http\Controllers\LuckyBoxController;
 use App\Http\Controllers\WithdrawalMethodController;
+use App\Http\Controllers\LanguageController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes (Guest)
@@ -32,6 +34,11 @@ Route::post('/verify', [AuthController::class, 'verify'])->name('verify.post');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('forgot.password');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('forgot.password.post');
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('reset.password');
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('reset.password.post');
+
 Route::middleware('require.2fa.pending')->group(function () {
     Route::get('/two-factor/login', [TwoFactorController::class, 'showLoginVerification'])->name('two-factor.login');
     Route::post('/two-factor/login/verify', [TwoFactorController::class, 'verifyLogin'])->name('two-factor.login.verify');
@@ -39,6 +46,9 @@ Route::middleware('require.2fa.pending')->group(function () {
 
 Route::post('/verify/resend', [AuthController::class, 'resend'])
     ->name('verify.resend');
+
+// Language change route (accessible to all)
+Route::post('/language/change', [LanguageController::class, 'change'])->name('language.change');
 
 Route::middleware('auth')->get('/invites', function () {
     return view('invites');
@@ -221,6 +231,22 @@ Route::middleware(['auth', 'admin'])
         
         Route::resource('pools', \App\Http\Controllers\Admin\AdminPoolController::class);
         Route::resource('user-pools', \App\Http\Controllers\Admin\AdminUserPoolController::class);
+        
+        Route::get('/settings', [\App\Http\Controllers\Admin\AdminSettingsController::class, 'index'])->name('settings.index');
+        Route::put('/settings', [\App\Http\Controllers\Admin\AdminSettingsController::class, 'update'])->name('settings.update');
+        
+        Route::get('/rewards', [\App\Http\Controllers\Admin\RewardsController::class, 'index'])->name('rewards.index');
+        Route::delete('/rewards/commission/{id}', [\App\Http\Controllers\Admin\RewardsController::class, 'destroyCommission'])->name('rewards.commission.destroy');
+        Route::delete('/rewards/checkin/{id}', [\App\Http\Controllers\Admin\RewardsController::class, 'destroyCheckin'])->name('rewards.checkin.destroy');
+        Route::delete('/rewards/luckybox/{id}', [\App\Http\Controllers\Admin\RewardsController::class, 'destroyLuckyBox'])->name('rewards.luckybox.destroy');
+        
+        Route::get('/profile', [\App\Http\Controllers\Admin\AdminProfileController::class, 'index'])->name('profile.index');
+        Route::put('/profile', [\App\Http\Controllers\Admin\AdminProfileController::class, 'update'])->name('profile.update');
+        
+        Route::get('/admins', [\App\Http\Controllers\Admin\AdminManagementController::class, 'index'])->name('admins.index');
+        Route::get('/admins/create', [\App\Http\Controllers\Admin\AdminManagementController::class, 'create'])->name('admins.create');
+        Route::post('/admins', [\App\Http\Controllers\Admin\AdminManagementController::class, 'store'])->name('admins.store');
+        Route::delete('/admins/{admin}', [\App\Http\Controllers\Admin\AdminManagementController::class, 'destroy'])->name('admins.destroy');
         
         Route::resource('commissions', \App\Http\Controllers\Admin\CommissionController::class)->except(['create', 'store']);
         Route::resource('rank-bonuses', \App\Http\Controllers\Admin\RankBonusController::class)->except(['create', 'store']);

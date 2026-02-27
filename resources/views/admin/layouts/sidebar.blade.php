@@ -63,9 +63,14 @@
 
   <!-- REWARDS -->
   <li class="header">🎁 REWARDS</li>
+  <li class="{{ request()->routeIs('admin.rewards.*') ? 'active' : '' }}">
+    <a href="{{ route('admin.rewards.index') }}">
+      <i class="fa fa-gift"></i> <span>Overview</span>
+    </a>
+  </li>
   <li class="{{ request()->routeIs('admin.commissions.*') ? 'active' : '' }}">
     <a href="{{ route('admin.commissions.index') }}">
-      <i class="fa fa-percent"></i> <span>Commissions</span>
+      <i class="fa fa-dollar"></i> <span>Commissions</span>
     </a>
   </li>
   <li class="{{ request()->routeIs('admin.rank-bonuses.*') ? 'active' : '' }}">
@@ -73,9 +78,6 @@
       <i class="fa fa-trophy"></i> <span>Rank Bonuses</span>
     </a>
   </li>
-
-  <!-- ENGAGEMENT -->
-  <li class="header">🎮 ENGAGEMENT</li>
   <li class="{{ request()->routeIs('admin.checkins.*') ? 'active' : '' }}">
     <a href="{{ route('admin.checkins.index') }}">
       <i class="fa fa-check-circle"></i> <span>Check-ins</span>
@@ -83,7 +85,15 @@
   </li>
   <li class="{{ request()->routeIs('admin.lucky-boxes.*') ? 'active' : '' }}">
     <a href="{{ route('admin.lucky-boxes.index') }}">
-      <i class="fa fa-gift"></i> <span>Lucky Boxes</span>
+      <i class="fa fa-cube"></i> <span>Lucky Boxes</span>
+    </a>
+  </li>
+
+  <!-- SETTINGS -->
+  <li class="header">⚙️ SYSTEM</li>
+  <li class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+    <a href="{{ route('admin.settings.index') }}">
+      <i class="fa fa-cog"></i> <span>Settings</span>
     </a>
   </li>
 </ul>
