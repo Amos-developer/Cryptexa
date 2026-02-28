@@ -27,6 +27,13 @@ if (!function_exists('__t')) {
         
         $file = $fileMap[$locale] ?? 'english';
         
-        return __($file . '.' . $key, $replace);
+        $translation = trans($file . '.' . $key, $replace, $locale);
+        
+        // If translation not found, return the key
+        if ($translation === $file . '.' . $key) {
+            return $key;
+        }
+        
+        return $translation;
     }
 }

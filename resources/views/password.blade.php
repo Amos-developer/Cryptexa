@@ -7,14 +7,22 @@
 
 @section('content')
 
+@php
+    // Force set locale from user language
+    if (auth()->check() && auth()->user()->language) {
+        app()->setLocale(auth()->user()->language);
+    }
+@endphp
+
 <!-- HEADER BAR -->
-<div class="header fixed-top d-flex justify-content-between align-items-center px-16"
+<div class="header fixed-top d-flex justify-content-between align-items-center"
     style="
+        height: 56px;
         background: linear-gradient(135deg, #020617, #0f172a);
         border-bottom: 1px solid rgba(56,189,248,0.2);
         backdrop-filter: blur(10px);
         z-index: 100;
-        padding: 12px 16px;
+        padding: 0 16px;
     ">
     <a href="{{ url()->previous() }}"
         style="
@@ -26,24 +34,29 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            color: #38bdf8;
+            cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
         "
         onmouseover="this.style.background='rgba(56,189,248,0.15)'; this.style.borderColor='rgba(56,189,248,0.4)';"
         onmouseout="this.style.background='rgba(56,189,248,0.1)'; this.style.borderColor='rgba(56,189,248,0.2)';">
-        <i class="icon-left-btn" style="color: #38bdf8; font-size: 18px;"></i>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
     </a>
-    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Change Password</h6>
+    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">{{ __t('change_password') }}</h6>
     <span style="width: 36px;"></span>
 </div>
 
 <!-- MAIN CONTENT -->
-<div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%);">
+<div class="pt-80 pb-80" style="margin-top:60px; background: linear-gradient(135deg, #020617 0%, #0f172a 100%);">
     <div class="tf-container">
 
         <!-- PAGE HEADER -->
         <div class="mb-32" style="animation: slideDown 0.6s ease;">
-            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 12px 0;">Update Password</h1>
-            <p class="text-secondary" style="font-size: 14px; margin: 0;">Keep your account secure by changing your password regularly</p>
+            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 12px 0;">{{ __t('update_password') }}</h1>
+            <p class="text-secondary" style="font-size: 14px; margin: 0;">{{ __t('keep_account_secure') }}</p>
         </div>
 
         <!-- PASSWORD FORM CARD -->
@@ -63,11 +76,11 @@
                 <!-- CURRENT PASSWORD -->
                 <div class="mb-20">
                     <label style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">
-                        🔓 Current Password
+                        🔓 {{ __t('current_password') }}
                     </label>
                     <input type="password"
                         name="current_password"
-                        placeholder="Enter your current password"
+                        placeholder="{{ __t('enter_current_password') }}"
                         required
                         style="
                             width: 100%;
@@ -89,11 +102,11 @@
                 <!-- NEW PASSWORD -->
                 <div class="mb-20">
                     <label style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">
-                        🔐 New Password
+                        🔐 {{ __t('new_password') }}
                     </label>
                     <input type="password"
                         name="password"
-                        placeholder="Enter your new password"
+                        placeholder="{{ __t('enter_new_password') }}"
                         required
                         style="
                             width: 100%;
@@ -115,11 +128,11 @@
                 <!-- CONFIRM PASSWORD -->
                 <div class="mb-24">
                     <label style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">
-                        ✓ Confirm Password
+                        ✓ {{ __t('confirm_password') }}
                     </label>
                     <input type="password"
                         name="password_confirmation"
-                        placeholder="Confirm your new password"
+                        placeholder="{{ __t('confirm_new_password') }}"
                         required
                         style="
                             width: 100%;
@@ -142,6 +155,7 @@
                 <button type="submit"
                     style="
                         width: 100%;
+                        margin-top: 12px;
                         padding: 14px;
                         border-radius: 12px;
                         background: linear-gradient(135deg, rgba(56,189,248,0.2) 0%, rgba(56,189,248,0.1) 100%);
@@ -154,7 +168,7 @@
                     "
                     onmouseover="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.3) 0%, rgba(56,189,248,0.15) 100%)'; this.style.boxShadow='0 0 20px rgba(56,189,248,0.2)';"
                     onmouseout="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.2) 0%, rgba(56,189,248,0.1) 100%)'; this.style.boxShadow='none';">
-                    🔒 Update Password
+                    🔒 {{ __t('update_password_btn') }}
                 </button>
 
             </form>
@@ -172,12 +186,12 @@
             margin-top: 24px;
             animation: slideUp 0.6s ease 0.2s backwards;
         ">
-            <h6 style="color: #22c55e; font-weight: 700; font-size: 14px; margin: 0 0 12px 0;">💡 Password Security Tips</h6>
+            <h6 style="color: #22c55e; font-weight: 700; font-size: 14px; margin: 0 0 12px 0;">💡 {{ __t('password_security_tips') }}</h6>
             <ul style="color: #94a3b8; font-size: 12px; padding-left: 16px; margin: 0; line-height: 1.8;">
-                <li>Use at least 8 characters with uppercase, lowercase, and numbers</li>
-                <li>Never share your password with anyone, including support staff</li>
-                <li>Avoid using personal information or common words</li>
-                <li>Change your password regularly for enhanced security</li>
+                <li>{{ __t('password_tip_1') }}</li>
+                <li>{{ __t('password_tip_2') }}</li>
+                <li>{{ __t('password_tip_3') }}</li>
+                <li>{{ __t('password_tip_4') }}</li>
             </ul>
         </div>
 
@@ -244,7 +258,7 @@
 
                 // Disable button
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = '⏳ Updating...';
+                submitBtn.innerHTML = '⏳ {{ __t('updating') }}';
 
                 fetch(this.action, {
                         method: 'POST',
@@ -262,9 +276,9 @@
                             // Show success alert
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Password Updated!',
-                                text: 'Your password has been changed successfully.',
-                                confirmButtonText: 'OK',
+                                title: '{{ __t('password_updated') }}',
+                                text: '{{ __t('password_changed_successfully') }}',
+                                confirmButtonText: '{{ __t('ok') }}',
                                 confirmButtonColor: '#38bdf8',
                                 allowOutsideClick: false,
                                 allowEscapeKey: false,
@@ -281,13 +295,13 @@
                     })
                     .catch(error => {
                         // Show error alert
-                        const errors = error.message || 'An error occurred. Please try again.';
+                        const errors = error.message || '{{ __t('error_occurred_try_again') }}';
 
                         Swal.fire({
                             icon: 'error',
-                            title: 'Update Failed',
+                            title: '{{ __t('update_failed') }}',
                             text: errors,
-                            confirmButtonText: 'OK',
+                            confirmButtonText: '{{ __t('ok') }}',
                             confirmButtonColor: '#ef4444',
                             allowOutsideClick: false,
                             allowEscapeKey: false,

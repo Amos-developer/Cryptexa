@@ -7,6 +7,15 @@
 
 @section('content')
 
+@php
+    // Force set locale from user language
+    if (auth()->check() && auth()->user()->language) {
+        app()->setLocale(auth()->user()->language);
+    }
+@endphp
+
+<!-- DEBUG: Locale={{ app()->getLocale() }} | User Lang={{ auth()->user()->language }} | Test={{ __('spanish.withdrawal_method') }} -->
+
 <div class="withdrawal-header">
     <a href="{{ route('account.settings') }}" class="back-btn">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

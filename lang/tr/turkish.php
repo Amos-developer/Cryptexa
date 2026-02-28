@@ -276,7 +276,7 @@ return [
     'password_tip_1' => 'Büyük harf, küçük harf ve sayılarla en az 8 karakter kullanın',
     'password_tip_2' => 'Şifrenizi destek personeli de dahil olmak üzere kimseyle paylaşmayın',
     'password_tip_3' => 'Kişisel bilgiler veya yaygın kelimeler kullanmaktan kaçının',
-    'password_tip_4' => 'Gelişmiş güvenlik için şifrenizi düzgün aralıklarla değiştirin',
+    'password_tip_4' => 'Gelmiş güvenlik için şifrenizi düzgün aralıklarla değiştirin',
     'updating' => 'Güncelleniyor...',
     'password_updated' => 'Şifre Güncellendi!',
     'password_changed_successfully' => 'Şifreniz başarıyla değiştirildi.',
