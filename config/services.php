@@ -20,6 +20,7 @@ return [
 
     'nowpayments' => [
         'api_key' => env('NOWPAYMENTS_API_KEY'),
+        'jwt_token' => env('NOWPAYMENTS_JWT_TOKEN'),
         'ipn_secret' => env('NOWPAYMENTS_IPN_SECRET'),
         'url' => env('NOWPAYMENTS_BASE_URL', 'https://api.nowpayments.io/v1'),
     ],

@@ -80,8 +80,8 @@
       <div class="stat-box">
         <div class="stat-icon green"><i class="fa fa-check"></i></div>
         <div class="stat-info">
-          <h4>Approved</h4>
-          <h2>${{ number_format($approvedWithdrawals, 2) }}</h2>
+          <h4>Completed</h4>
+          <h2>${{ number_format($completedWithdrawals, 2) }}</h2>
         </div>
       </div>
     </div>
@@ -144,16 +144,11 @@
             <td data-label="Actions">
               <a href="{{ route('admin.withdrawals.show', $withdrawal) }}" class="action-btn view" title="View">👁️</a>
               @if($withdrawal->status == 'pending')
-                <form action="{{ route('admin.withdrawals.approve', $withdrawal) }}" method="POST" style="display:inline">
-                  @csrf
-                  <button type="submit" class="action-btn approve" title="Approve" onclick="return confirm('Approve this withdrawal?')">✓</button>
-                </form>
+                <button onclick="showApproveModal({{ $withdrawal->id }})" class="action-btn approve" title="Approve">✓</button>
                 <form action="{{ route('admin.withdrawals.reject', $withdrawal) }}" method="POST" style="display:inline">
                   @csrf
                   <button type="submit" class="action-btn reject" title="Reject" onclick="return confirm('Reject and refund?')">✗</button>
                 </form>
-              @elseif($withdrawal->status == 'approved')
-                <button onclick="showCompleteModal({{ $withdrawal->id }})" class="action-btn complete" title="Complete">🏁</button>
               @endif
             </td>
           </tr>
@@ -195,30 +190,32 @@
   </div>
 </div>
 
-<div id="completeModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
+<div id="approveModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:9999;align-items:center;justify-content:center">
   <div style="background:#fff;border-radius:16px;padding:32px;max-width:500px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.3)">
-    <h3 style="font-size:24px;font-weight:700;color:#1e293b;margin-bottom:24px">🏁 Complete Withdrawal</h3>
-    <form id="completeForm" method="POST">
+    <h3 style="font-size:24px;font-weight:700;color:#1e293b;margin-bottom:16px">✓ Approve Withdrawal</h3>
+    <p style="color:#64748b;margin-bottom:24px;font-size:14px">After sending funds via Binance, enter the transaction ID below to complete the withdrawal.</p>
+    <form id="approveForm" method="POST">
       @csrf
       <div style="margin-bottom:20px">
-        <label style="display:block;font-size:13px;font-weight:600;color:#64748b;margin-bottom:8px">TRANSACTION ID (TXID)</label>
-        <input type="text" name="txid" required style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:15px">
+        <label style="display:block;font-size:13px;font-weight:600;color:#64748b;margin-bottom:8px">TRANSACTION ID (TXID) *</label>
+        <input type="text" name="txid" required placeholder="Enter Binance transaction hash" style="width:100%;padding:12px 16px;border:2px solid #e2e8f0;border-radius:10px;font-size:15px">
+        <small style="color:#94a3b8;font-size:12px;margin-top:4px;display:block">Example: 0x1234...abcd</small>
       </div>
       <div style="display:flex;gap:12px">
-        <button type="button" onclick="closeCompleteModal()" style="flex:1;padding:14px;border:none;border-radius:10px;font-weight:600;background:#f1f5f9;color:#64748b;cursor:pointer">Cancel</button>
-        <button type="submit" style="flex:1;padding:14px;border:none;border-radius:10px;font-weight:600;background:linear-gradient(135deg,#11998e,#38ef7d);color:#fff;cursor:pointer">Complete</button>
+        <button type="button" onclick="closeApproveModal()" style="flex:1;padding:14px;border:none;border-radius:10px;font-weight:600;background:#f1f5f9;color:#64748b;cursor:pointer">Cancel</button>
+        <button type="submit" style="flex:1;padding:14px;border:none;border-radius:10px;font-weight:600;background:linear-gradient(135deg,#11998e,#38ef7d);color:#fff;cursor:pointer">Approve & Complete</button>
       </div>
     </form>
   </div>
 </div>
 
 <script>
-function showCompleteModal(id) {
-  document.getElementById('completeForm').action = '/admin/withdrawals/' + id + '/complete';
-  document.getElementById('completeModal').style.display = 'flex';
+function showApproveModal(id) {
+  document.getElementById('approveForm').action = '/admin/withdrawals/' + id + '/approve';
+  document.getElementById('approveModal').style.display = 'flex';
 }
-function closeCompleteModal() {
-  document.getElementById('completeModal').style.display = 'none';
+function closeApproveModal() {
+  document.getElementById('approveModal').style.display = 'none';
 }
 </script>
 @endsection

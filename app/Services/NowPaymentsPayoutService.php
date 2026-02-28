@@ -8,11 +8,13 @@ use Illuminate\Support\Facades\Log;
 class NowPaymentsPayoutService
 {
     protected $apiKey;
+    protected $jwtToken;
     protected $baseUrl = 'https://api.nowpayments.io/v1';
 
     public function __construct()
     {
         $this->apiKey = config('services.nowpayments.api_key');
+        $this->jwtToken = config('services.nowpayments.jwt_token');
     }
 
     /**
@@ -21,8 +23,16 @@ class NowPaymentsPayoutService
     public function createPayout($address, $amount, $currency = 'usdtbep20')
     {
         try {
+            if (empty($this->jwtToken)) {
+                Log::error('NOWPayments JWT token not configured');
+                return [
+                    'success' => false,
+                    'error' => 'JWT token not configured. Please add NOWPAYMENTS_JWT_TOKEN to .env'
+                ];
+            }
+
             $response = Http::withHeaders([
-                'x-api-key' => $this->apiKey,
+                'Authorization' => 'Bearer ' . $this->jwtToken,
                 'Content-Type' => 'application/json',
             ])->post("{$this->baseUrl}/payout", [
                 'withdrawals' => [
@@ -30,7 +40,7 @@ class NowPaymentsPayoutService
                         'address' => $address,
                         'currency' => strtolower($currency),
                         'amount' => $amount,
-                        'ipn_callback_url' => route('nowpayments.ipn'),
+                        'ipn_callback_url' => route('nowpayments.payout.webhook'),
                     ]
                 ]
             ]);
@@ -52,7 +62,7 @@ class NowPaymentsPayoutService
 
             return [
                 'success' => false,
-                'error' => $response->json()['message'] ?? 'Payout failed'
+                'error' => $response->json()['message'] ?? $response->body()
             ];
 
         } catch (\Exception $e) {
@@ -71,7 +81,7 @@ class NowPaymentsPayoutService
     {
         try {
             $response = Http::withHeaders([
-                'x-api-key' => $this->apiKey,
+                'Authorization' => 'Bearer ' . $this->jwtToken,
             ])->get("{$this->baseUrl}/payout/{$payoutId}");
 
             if ($response->successful()) {

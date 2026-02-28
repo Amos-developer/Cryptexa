@@ -18,16 +18,16 @@ class AdminWithdrawalController extends Controller
             ->paginate(20);
 
         // Calculate stats from all withdrawals
-        $totalWithdrawals = Withdrawal::whereIn('status', ['completed', 'approved'])->sum('amount');
+        $totalWithdrawals = Withdrawal::where('status', 'completed')->sum('amount');
         $pendingWithdrawals = Withdrawal::where('status', 'pending')->sum('amount');
-        $approvedWithdrawals = Withdrawal::where('status', 'approved')->sum('amount');
+        $completedWithdrawals = Withdrawal::where('status', 'completed')->sum('amount');
         $totalRequests = Withdrawal::count();
 
         return view('admin.withdrawals.index', compact(
             'withdrawals',
             'totalWithdrawals',
             'pendingWithdrawals',
-            'approvedWithdrawals',
+            'completedWithdrawals',
             'totalRequests'
         ));
     }
@@ -82,38 +82,40 @@ class AdminWithdrawalController extends Controller
         return redirect()->route('admin.withdrawals.index')->with('success', 'Withdrawal updated successfully');
     }
 
-    public function approve(Withdrawal $withdrawal)
+    public function approve(Request $request, Withdrawal $withdrawal)
     {
         if ($withdrawal->status !== 'pending') return back();
 
+        $request->validate([
+            'txid' => 'required|string|min:10',
+        ]);
+
+        $withdrawal->update([
+            'status' => 'completed',
+            'txid' => $request->txid,
+        ]);
+
+        // Create in-app notification
+        \App\Models\Notification::create([
+            'user_id' => $withdrawal->user_id,
+            'type' => 'withdrawal_completed',
+            'title' => 'Withdrawal Completed',
+            'message' => 'Your withdrawal of $' . number_format($withdrawal->amount, 2) . ' has been completed. Transaction ID: ' . $request->txid,
+            'icon_type' => 'success',
+            'is_read' => false,
+        ]);
+
+        // Send email notification
         try {
-            // Extract network from currency (e.g., USDT_BEP20 -> BEP20)
-            $network = str_replace('USDT_', '', $withdrawal->currency);
-            $currency = NowPaymentsPayoutService::mapCurrency($network);
-
-            // Create payout via NOWPayments
-            $payoutService = new NowPaymentsPayoutService();
-            $result = $payoutService->createPayout(
-                $withdrawal->address,
-                $withdrawal->amount,
-                $currency
-            );
-
-            if ($result['success']) {
-                $withdrawal->update([
-                    'status' => 'approved',
-                    'payout_id' => $result['id'] ?? null,
-                ]);
-
-                return back()->with('success', 'Withdrawal approved and payout initiated via NOWPayments');
-            } else {
-                return back()->with('error', 'Payout failed: ' . ($result['error'] ?? 'Unknown error'));
-            }
-
+            \Mail::send('emails.withdrawal-success', ['withdrawal' => $withdrawal], function ($message) use ($withdrawal) {
+                $message->to($withdrawal->user->email)
+                    ->subject('Withdrawal Completed - Cryptexa');
+            });
         } catch (\Exception $e) {
-            \Log::error('Withdrawal approval error: ' . $e->getMessage());
-            return back()->with('error', 'Failed to process payout: ' . $e->getMessage());
+            \Log::error('Failed to send withdrawal email: ' . $e->getMessage());
         }
+
+        return back()->with('success', 'Withdrawal approved and marked as completed');
     }
 
     public function reject(Withdrawal $withdrawal)
@@ -134,23 +136,7 @@ class AdminWithdrawalController extends Controller
 
     public function complete(Request $request, Withdrawal $withdrawal)
     {
-        if ($withdrawal->status !== 'approved') return back();
-
-        $withdrawal->update([
-            'status' => 'completed',
-            'txid' => $request->txid,
-        ]);
-        
-        // Send email notification
-        try {
-            \Mail::send('emails.withdrawal-success', ['withdrawal' => $withdrawal], function ($message) use ($withdrawal) {
-                $message->to($withdrawal->user->email)
-                    ->subject('Withdrawal Completed - Cryptexa');
-            });
-        } catch (\Exception $e) {
-            \Log::error('Failed to send withdrawal email: ' . $e->getMessage());
-        }
-
-        return back()->with('success', 'Withdrawal marked as completed');
+        // This method is no longer needed since approve now completes the withdrawal
+        return back()->with('info', 'Withdrawal is already completed');
     }
 }
