@@ -348,4 +348,27 @@ return [
     'account_no_longer_protected_2fa' => 'Ihr Konto ist nicht mehr mit 2FA geschützt.',
     'regenerate_qr_code' => 'QR-Code neu generieren',
     'generate_qr_code_button' => 'QR-Code generieren',
+    
+    // Check-in Page
+    'daily_checkin' => 'Tägliches Einchecken',
+    'todays_reward' => 'Heutige Belohnung',
+    'day_streak' => 'Tage-Serie',
+    'check_in_now' => 'Jetzt Einchecken',
+    'already_checked_in' => 'Bereits Eingecheckt',
+    'next_checkin_available_in' => 'Nächstes Einchecken verfügbar in',
+    'current_streak' => 'Aktuelle Serie',
+    'last_7_days' => 'Letzte 7 Tage',
+    'total_earned' => 'Gesamt Verdient',
+
+    // Lucky Box Page
+    'mystery_reward' => 'Mysteriöse Belohnung',
+    'open_box_reveal_prize' => 'Öffne die Box, um deinen Preis zu enthüllen!',
+    'open_lucky_box' => 'Glücksbox Öffnen',
+    'already_opened_today' => 'Heute Bereits Geöffnet',
+    'min_reward' => 'Min. Belohnung',
+    'max_reward' => 'Max. Belohnung',
+    'next_box_available_tomorrow' => 'Nächste Box morgen verfügbar',
+    'congratulations' => 'Glückwunsch!',
+    'claim_reward' => 'Belohnung Einfordern',
+    'opening' => 'Öffnet...',
 ];

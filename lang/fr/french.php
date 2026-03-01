@@ -311,4 +311,14 @@ return [
     'update_failed' => 'Échec de la Mise à Jour',
     'error_occurred_try_again' => 'Une erreur s\'est produite. Veuillez réessayer.',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Enregistrement Quotidien',
+    'todays_reward' => 'Récompense du Jour',
+    'day_streak' => 'Jours Consécutifs',
+    'check_in_now' => 'S\'enregistrer Maintenant',
+    'already_checked_in' => 'Déjà Enregistré',
+    'next_checkin_available_in' => 'Prochain enregistrement disponible dans',
+    'current_streak' => 'Série Actuelle',
+    'last_7_days' => '7 Derniers Jours',
+];

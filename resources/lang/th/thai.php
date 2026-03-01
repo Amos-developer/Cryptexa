@@ -281,5 +281,27 @@ return [
     'update_failed' => 'การอัปเดตล้มเหลว',
     'error_occurred_try_again' => 'เกิดข้อผิดพลาด กรุณาลองอีกครั้ง',
     'ok' => 'ตกลง',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'เช็คอินรายวัน',
+    'todays_reward' => 'รางวัลวันนี้',
+    'day_streak' => 'วันติดต่อกัน',
+    'check_in_now' => 'เช็คอินตอนนี้',
+    'already_checked_in' => 'เช็คอินแล้ว',
+    'next_checkin_available_in' => 'เช็คอินครั้งถัดไปใน',
+    'current_streak' => 'ต่อเนื่องปัจจุบัน',
+    'last_7_days' => '7 วันที่แล้ว',
+    'total_earned' => 'รวมที่ได้รับ',
+
+    // Lucky Box Page
+    'mystery_reward' => 'รางวัลลึกลับ',
+    'open_box_reveal_prize' => 'เปิดกล่องเพื่อเปิดเผยรางวัลของคุณ!',
+    'open_lucky_box' => 'เปิดกล่องโชคดี',
+    'already_opened_today' => 'เปิดแล้ววันนี้',
+    'min_reward' => 'รางวัลขั้นต่ำ',
+    'max_reward' => 'รางวัลสูงสุด',
+    'next_box_available_tomorrow' => 'กล่องถัดไปพร้อมใช้งานพรุ่งนี้',
+    'congratulations' => 'ยินดีด้วย!',
+    'claim_reward' => 'รับรางวัล',
+    'opening' => 'กำลังเปิด...',
 ];

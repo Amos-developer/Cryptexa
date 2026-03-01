@@ -311,5 +311,27 @@ return [
     'update_failed' => 'Update Failed',
     'error_occurred_try_again' => 'An error occurred. Please try again.',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'デイリーチェックイン',
+    'todays_reward' => '今日の報酬',
+    'day_streak' => '日連続',
+    'check_in_now' => '今すぐチェックイン',
+    'already_checked_in' => 'チェックイン済み',
+    'next_checkin_available_in' => '次のチェックイン可能時間',
+    'current_streak' => '現在の連続',
+    'last_7_days' => '過去7日間',
+    'total_earned' => '合計獲得',
+
+    // Lucky Box Page
+    'mystery_reward' => 'ミステリー報酬',
+    'open_box_reveal_prize' => 'ボックスを開けて賞品を明らかにしよう！',
+    'open_lucky_box' => 'ラッキーボックスを開ける',
+    'already_opened_today' => '今日はすでに開封済み',
+    'min_reward' => '最小報酬',
+    'max_reward' => '最大報酬',
+    'next_box_available_tomorrow' => '次のボックスは明日利用可能',
+    'congratulations' => 'おめでとうございます！',
+    'claim_reward' => '報酬を受け取る',
+    'opening' => '開封中...',
 ];

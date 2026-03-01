@@ -310,4 +310,14 @@ return [
     'update_failed' => 'Update Failed',
     'error_occurred_try_again' => 'An error occurred. Please try again.',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Ежедневная Регистрация',
+    'todays_reward' => 'Награда Сегодня',
+    'day_streak' => 'Дней Подряд',
+    'check_in_now' => 'Зарегистрироваться Сейчас',
+    'already_checked_in' => 'Уже Зарегистрирован',
+    'next_checkin_available_in' => 'Следующая регистрация доступна через',
+    'current_streak' => 'Текущая Серия',
+    'last_7_days' => 'Последние 7 Дней',
+];

@@ -312,5 +312,27 @@ return [
     'update_failed' => 'Update Failed',
     'error_occurred_try_again' => 'An error occurred. Please try again.',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => '일일 체크인',
+    'todays_reward' => '오늘의 보상',
+    'day_streak' => '일 연속',
+    'check_in_now' => '지금 체크인',
+    'already_checked_in' => '이미 체크인함',
+    'next_checkin_available_in' => '다음 체크인 가능 시간',
+    'current_streak' => '현재 연속',
+    'last_7_days' => '지난 7일',
+    'total_earned' => '총 획득',
+
+    // Lucky Box Page
+    'mystery_reward' => '미스터리 보상',
+    'open_box_reveal_prize' => '상자를 열어 상품을 확인하세요!',
+    'open_lucky_box' => '행운 상자 열기',
+    'already_opened_today' => '오늘 이미 열음',
+    'min_reward' => '최소 보상',
+    'max_reward' => '최대 보상',
+    'next_box_available_tomorrow' => '다음 상자는 내일 사용 가능',
+    'congratulations' => '축하합니다!',
+    'claim_reward' => '보상 받기',
+    'opening' => '여는 중...',
 ];

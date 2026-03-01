@@ -311,4 +311,14 @@ return [
     'update_failed' => '更新失败',
     'error_occurred_try_again' => '发生错误。请重试。',
     'ok' => '确定',
-    // Two-Factor Authentication];
+    
+    // Check-in Page
+    'daily_checkin' => '每日签到',
+    'todays_reward' => '今日奖励',
+    'day_streak' => '天连续',
+    'check_in_now' => '立即签到',
+    'already_checked_in' => '已签到',
+    'next_checkin_available_in' => '下次签到可用时间',
+    'current_streak' => '当前连续',
+    'last_7_days' => '最近7天',
+];

@@ -310,5 +310,27 @@ return [
     'update_failed' => 'Update Failed',
     'error_occurred_try_again' => 'An error occurred. Please try again.',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Ежедневная Регистрация',
+    'todays_reward' => 'Награда Сегодня',
+    'day_streak' => 'Дней Подряд',
+    'check_in_now' => 'Зарегистрироваться Сейчас',
+    'already_checked_in' => 'Уже Зарегистрирован',
+    'next_checkin_available_in' => 'Следующая регистрация доступна через',
+    'current_streak' => 'Текущая Серия',
+    'last_7_days' => 'Последние 7 Дней',
+    'total_earned' => 'Всего Заработано',
+
+    // Lucky Box Page
+    'mystery_reward' => 'Таинственная Награда',
+    'open_box_reveal_prize' => 'Откройте коробку, чтобы узнать свой приз!',
+    'open_lucky_box' => 'Открыть Счастливую Коробку',
+    'already_opened_today' => 'Уже Открыто Сегодня',
+    'min_reward' => 'Мин Награда',
+    'max_reward' => 'Макс Награда',
+    'next_box_available_tomorrow' => 'Следующая коробка доступна завтра',
+    'congratulations' => 'Поздравляем!',
+    'claim_reward' => 'Получить Награду',
+    'opening' => 'Открывается...',
 ];

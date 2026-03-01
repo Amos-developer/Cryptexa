@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Carbon\Carbon;
 
 class LuckyBoxController extends Controller
 {
     public function index()
     {
+        $locale = auth()->user()->language ?? session('locale') ?? request()->cookie('locale') ?? 'en';
+        App::setLocale($locale);
+        
         $user = auth()->user();
         $today = Carbon::today();
         

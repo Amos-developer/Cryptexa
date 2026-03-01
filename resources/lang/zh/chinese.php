@@ -311,4 +311,27 @@ return [
     'update_failed' => '更新失败',
     'error_occurred_try_again' => '发生错误。请重试。',
     'ok' => '确定',
+    
+    // Check-in Page
+    'daily_checkin' => '每日签到',
+    'todays_reward' => '今日奖励',
+    'day_streak' => '天连续',
+    'check_in_now' => '立即签到',
+    'already_checked_in' => '已签到',
+    'next_checkin_available_in' => '下次签到可用时间',
+    'current_streak' => '当前连续',
+    'last_7_days' => '最近7天',
+    'total_earned' => '总收益',
+
+    // Lucky Box Page
+    'mystery_reward' => '神秘奖励',
+    'open_box_reveal_prize' => '打开盒子揭示您的奖品！',
+    'open_lucky_box' => '打开幸运盒',
+    'already_opened_today' => '今天已打开',
+    'min_reward' => '最小奖励',
+    'max_reward' => '最大奖励',
+    'next_box_available_tomorrow' => '下一个盒子明天可用',
+    'congratulations' => '恭喜！',
+    'claim_reward' => '领取奖励',
+    'opening' => '打开中...',
 ];

@@ -311,4 +311,14 @@ return [
     'update_failed' => 'Update Failed',
     'error_occurred_try_again' => 'An error occurred. Please try again.',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Check-in Diário',
+    'todays_reward' => 'Recompensa de Hoje',
+    'day_streak' => 'Dias Consecutivos',
+    'check_in_now' => 'Fazer Check-in Agora',
+    'already_checked_in' => 'Já Fez Check-in',
+    'next_checkin_available_in' => 'Próximo check-in disponível em',
+    'current_streak' => 'Sequência Atual',
+    'last_7_days' => 'Últimos 7 Dias',
+];

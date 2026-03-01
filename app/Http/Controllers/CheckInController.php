@@ -10,6 +10,13 @@ class CheckInController extends Controller
 {
     public function index()
     {
+        if (auth()->check()) {
+            $user = auth()->user()->fresh();
+            if ($user->language) {
+                app()->setLocale($user->language);
+            }
+        }
+        
         $user = auth()->user();
         $today = Carbon::now()->startOfDay();
         

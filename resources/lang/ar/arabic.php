@@ -281,4 +281,28 @@ return [
     'update_failed' => 'فشل التحديث',
     'error_occurred_try_again' => 'حدث خطأ. يرجى المحاولة مرة أخرى',
     'ok' => 'حسناً',
-    // Two-Factor Authentication];
+    
+ 
+    // Check-in Page
+    'daily_checkin' => 'تسجيل الدخول اليومي',
+    'todays_reward' => 'مكافأة اليوم',
+    'day_streak' => 'سلسلة الأيام',
+    'check_in_now' => 'سجل الدخول الآن',
+    'already_checked_in' => 'تم تسجيل الدخول بالفعل',
+    'next_checkin_available_in' => 'تسجيل الدخول التالي متاح في',
+    'current_streak' => 'السلسلة الحالية',
+    'last_7_days' => 'آخر 7 أيام',
+    'total_earned' => 'إجمالي المكتسب',
+
+    // Lucky Box Page
+    'mystery_reward' => 'مكافأة غامضة',
+    'open_box_reveal_prize' => 'افتح الصندوق لكشف جائزتك!',
+    'open_lucky_box' => 'افتح الصندوق المحظوظ',
+    'already_opened_today' => 'تم الفتح اليوم بالفعل',
+    'min_reward' => 'الحد الأدنى للمكافأة',
+    'max_reward' => 'الحد الأقصى للمكافأة',
+    'next_box_available_tomorrow' => 'الصندوق التالي متاح غدًا',
+    'congratulations' => 'تهانينا!',
+    'claim_reward' => 'استلم المكافأة',
+    'opening' => 'جارٍ الفتح...',
+];

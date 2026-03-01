@@ -274,12 +274,34 @@ return [
     'password_tip_1' => 'Büyük harf, küçük harf ve sayılarla en az 8 karakter kullanın',
     'password_tip_2' => 'Şifrenizi destek personeli de dahil olmak üzere kimseyle paylaşmayın',
     'password_tip_3' => 'Kişisel bilgiler veya yaygın kelimeler kullanmaktan kaçının',
-    'password_tip_4' => 'Gelişmiş güvenlik için şifrenizi düzgün aralıklarla değiştirin',
+    'password_tip_4' => 'Gelmiş güvenlik için şifrenizi düzgün aralıklarla değiştirin',
     'updating' => 'Güncelleniyor...',
     'password_updated' => 'Şifre Güncellendi!',
     'password_changed_successfully' => 'Şifreniz başarıyla değiştirildi.',
     'update_failed' => 'Güncelleme Başarısız',
     'error_occurred_try_again' => 'Bir hata oluştu. Lütfen tekrar deneyin.',
     'ok' => 'Tamam',
-    // Two-Factor Authentication Microsoft Authenticator veya Authy gibi bir kimlik doğrulama uygulaması indirin.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Günlük Giriş',
+    'todays_reward' => 'Bugünün Ödülü',
+    'day_streak' => 'Gün Serisi',
+    'check_in_now' => 'Şimdi Giriş Yap',
+    'already_checked_in' => 'Zaten Giriş Yapıldı',
+    'next_checkin_available_in' => 'Sonraki giriş şu süre içinde mevcut',
+    'current_streak' => 'Mevcut Seri',
+    'last_7_days' => 'Son 7 Gün',
+    'total_earned' => 'Toplam Kazanılan',
+
+    // Lucky Box Page
+    'mystery_reward' => 'Gizemli Ödül',
+    'open_box_reveal_prize' => 'Ödülünüzü ortaya çıkarmak için kutuyu açın!',
+    'open_lucky_box' => 'Şans Kutusunu Aç',
+    'already_opened_today' => 'Bugün Zaten Açıldı',
+    'min_reward' => 'Min Ödül',
+    'max_reward' => 'Maks Ödül',
+    'next_box_available_tomorrow' => 'Sonraki kutu yarın mevcut',
+    'congratulations' => 'Tebrikler!',
+    'claim_reward' => 'Ödülü Talep Et',
+    'opening' => 'Açılıyor...',
 ];

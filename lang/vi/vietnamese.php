@@ -281,4 +281,14 @@ return [
     'update_failed' => 'Cập nhật thất bại',
     'error_occurred_try_again' => 'Đã xảy ra lỗi. Vui lòng thử lại.',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator hoặc Authy trên điện thoại của bạn.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Điểm Danh Hàng Ngày',
+    'todays_reward' => 'Phần Thưởng Hôm Nay',
+    'day_streak' => 'Ngày Liên Tiếp',
+    'check_in_now' => 'Điểm Danh Ngay',
+    'already_checked_in' => 'Đã Điểm Danh',
+    'next_checkin_available_in' => 'Điểm danh tiếp theo có sẵn trong',
+    'current_streak' => 'Chuỗi Hiện Tại',
+    'last_7_days' => '7 Ngày Qua',
+];

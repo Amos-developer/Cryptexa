@@ -281,4 +281,14 @@ return [
     'update_failed' => 'Güncelleme Başarısız',
     'error_occurred_try_again' => 'Bir hata oluştu. Lütfen tekrar deneyin.',
     'ok' => 'Tamam',
-    // Two-Factor Authentication Microsoft Authenticator veya Authy gibi bir kimlik doğrulama uygulaması indirin.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Günlük Giriş',
+    'todays_reward' => 'Bugünün Ödülü',
+    'day_streak' => 'Gün Serisi',
+    'check_in_now' => 'Şimdi Giriş Yap',
+    'already_checked_in' => 'Zaten Giriş Yapıldı',
+    'next_checkin_available_in' => 'Sonraki giriş şu süre içinde mevcut',
+    'current_streak' => 'Mevcut Seri',
+    'last_7_days' => 'Son 7 Gün',
+];

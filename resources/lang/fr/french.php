@@ -311,4 +311,27 @@ return [
     'update_failed' => 'Échec de la Mise à Jour',
     'error_occurred_try_again' => 'Une erreur s\'est produite. Veuillez réessayer.',
     'ok' => 'OK',
+    
+    // Check-in Page
+    'daily_checkin' => 'Enregistrement Quotidien',
+    'todays_reward' => 'Récompense du Jour',
+    'day_streak' => 'Jours Consécutifs',
+    'check_in_now' => 'S\'enregistrer Maintenant',
+    'already_checked_in' => 'Déjà Enregistré',
+    'next_checkin_available_in' => 'Prochain enregistrement disponible dans',
+    'current_streak' => 'Série Actuelle',
+    'last_7_days' => '7 Derniers Jours',
+    'total_earned' => 'Total Gagné',
+
+    // Lucky Box Page
+    'mystery_reward' => 'Récompense Mystère',
+    'open_box_reveal_prize' => 'Ouvrez la boîte pour révéler votre prix!',
+    'open_lucky_box' => 'Ouvrir la Boîte Chance',
+    'already_opened_today' => 'Déjà Ouvert Aujourd\'hui',
+    'min_reward' => 'Récompense Min',
+    'max_reward' => 'Récompense Max',
+    'next_box_available_tomorrow' => 'Prochaine boîte disponible demain',
+    'congratulations' => 'Félicitations!',
+    'claim_reward' => 'Réclamer la Récompense',
+    'opening' => 'Ouverture...',
 ];

@@ -281,4 +281,14 @@ return [
     'update_failed' => 'Pembaruan Gagal',
     'error_occurred_try_again' => 'Terjadi kesalahan. Silakan coba lagi',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Check-in Harian',
+    'todays_reward' => 'Hadiah Hari Ini',
+    'day_streak' => 'Hari Beruntun',
+    'check_in_now' => 'Check-in Sekarang',
+    'already_checked_in' => 'Sudah Check-in',
+    'next_checkin_available_in' => 'Check-in berikutnya tersedia dalam',
+    'current_streak' => 'Beruntun Saat Ini',
+    'last_7_days' => '7 Hari Terakhir',
+];

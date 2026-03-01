@@ -281,5 +281,27 @@ return [
     'update_failed' => 'Update Failed',
     'error_occurred_try_again' => 'An error occurred. Please try again.',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Dagelijkse Check-in',
+    'todays_reward' => 'Beloning van Vandaag',
+    'day_streak' => 'Dagen Streak',
+    'check_in_now' => 'Nu Inchecken',
+    'already_checked_in' => 'Al Ingecheckt',
+    'next_checkin_available_in' => 'Volgende check-in beschikbaar over',
+    'current_streak' => 'Huidige Streak',
+    'last_7_days' => 'Laatste 7 Dagen',
+    'total_earned' => 'Totaal Verdiend',
+
+    // Lucky Box Page
+    'mystery_reward' => 'Mysterieuze Beloning',
+    'open_box_reveal_prize' => 'Open de doos om je prijs te onthullen!',
+    'open_lucky_box' => 'Geluksdoos Openen',
+    'already_opened_today' => 'Vandaag Al Geopend',
+    'min_reward' => 'Min Beloning',
+    'max_reward' => 'Max Beloning',
+    'next_box_available_tomorrow' => 'Volgende doos morgen beschikbaar',
+    'congratulations' => 'Gefeliciteerd!',
+    'claim_reward' => 'Beloning Claimen',
+    'opening' => 'Openen...',
 ];

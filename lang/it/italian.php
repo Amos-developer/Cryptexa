@@ -312,4 +312,14 @@ return [
     'update_failed' => 'Aggiornamento Fallito',
     'error_occurred_try_again' => 'Si è verificato un errore. Riprova',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Check-in Giornaliero',
+    'todays_reward' => 'Ricompensa di Oggi',
+    'day_streak' => 'Giorni Consecutivi',
+    'check_in_now' => 'Effettua Check-in',
+    'already_checked_in' => 'Già Effettuato',
+    'next_checkin_available_in' => 'Prossimo check-in disponibile tra',
+    'current_streak' => 'Serie Attuale',
+    'last_7_days' => 'Ultimi 7 Giorni',
+];

@@ -312,4 +312,14 @@ return [
     'update_failed' => 'Actualización Fallida',
     'error_occurred_try_again' => 'Ocurrió un error. Por favor intenta nuevamente.',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator o Authy en tu teléfono.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Registro Diario',
+    'todays_reward' => 'Recompensa de Hoy',
+    'day_streak' => 'Días Consecutivos',
+    'check_in_now' => 'Registrarse Ahora',
+    'already_checked_in' => 'Ya Registrado',
+    'next_checkin_available_in' => 'Próximo registro disponible en',
+    'current_streak' => 'Racha Actual',
+    'last_7_days' => 'Últimos 7 Días',
+];

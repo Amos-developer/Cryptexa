@@ -281,5 +281,27 @@ return [
     'update_failed' => 'अपडेट विफल',
     'error_occurred_try_again' => 'एक त्रुटि हुई। कृपया पुनः प्रयास करें',
     'ok' => 'ठीक है',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Daily Check-in',
+    'todays_reward' => "Today's Reward",
+    'day_streak' => 'Day Streak',
+    'check_in_now' => 'Check In Now',
+    'already_checked_in' => 'Already Checked In',
+    'next_checkin_available_in' => 'Next check-in available in',
+    'current_streak' => 'Current Streak',
+    'last_7_days' => 'Last 7 Days',
+    'total_earned' => 'कुल अर्जित',
+
+    // Lucky Box Page
+    'mystery_reward' => 'रहस्यमय पुरस्कार',
+    'open_box_reveal_prize' => 'अपना पुरस्कार प्रकट करने के लिए बॉक्स खोलें!',
+    'open_lucky_box' => 'लकी बॉक्स खोलें',
+    'already_opened_today' => 'आज पहले ही खोला गया',
+    'min_reward' => 'न्यूनतम पुरस्कार',
+    'max_reward' => 'अधिकतम पुरस्कार',
+    'next_box_available_tomorrow' => 'अगला बॉक्स कल उपलब्ध',
+    'congratulations' => 'बधाई हो!',
+    'claim_reward' => 'पुरस्कार प्राप्त करें',
+    'opening' => 'खोला जा रहा है...',
 ];

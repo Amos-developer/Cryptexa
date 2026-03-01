@@ -281,5 +281,27 @@ return [
     'update_failed' => 'Cập nhật thất bại',
     'error_occurred_try_again' => 'Đã xảy ra lỗi. Vui lòng thử lại.',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator hoặc Authy trên điện thoại của bạn.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Điểm Danh Hàng Ngày',
+    'todays_reward' => 'Phần Thưởng Hôm Nay',
+    'day_streak' => 'Ngày Liên Tiếp',
+    'check_in_now' => 'Điểm Danh Ngay',
+    'already_checked_in' => 'Đã Điểm Danh',
+    'next_checkin_available_in' => 'Điểm danh tiếp theo có sẵn trong',
+    'current_streak' => 'Chuỗi Hiện Tại',
+    'last_7_days' => '7 Ngày Qua',
+    'total_earned' => 'Tổng Kiếm Được',
+
+    // Lucky Box Page
+    'mystery_reward' => 'Phần Thưởng Bí Ẩn',
+    'open_box_reveal_prize' => 'Mở hộp để tiết lộ giải thưởng của bạn!',
+    'open_lucky_box' => 'Mở Hộp May Mắn',
+    'already_opened_today' => 'Đã Mở Hôm Nay',
+    'min_reward' => 'Phần Thưởng Tối Thiểu',
+    'max_reward' => 'Phần Thưởng Tối Đa',
+    'next_box_available_tomorrow' => 'Hộp tiếp theo có sẵn vào ngày mai',
+    'congratulations' => 'Chúc mừng!',
+    'claim_reward' => 'Nhận Phần Thưởng',
+    'opening' => 'Đang mở...',
 ];

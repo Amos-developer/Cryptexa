@@ -281,5 +281,27 @@ return [
     'update_failed' => 'Update Failed',
     'error_occurred_try_again' => 'An error occurred. Please try again.',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Codzienny Check-in',
+    'todays_reward' => 'Dzisiejsza Nagroda',
+    'day_streak' => 'Dni z Rzędu',
+    'check_in_now' => 'Zarejestruj się Teraz',
+    'already_checked_in' => 'Już Zarejestrowany',
+    'next_checkin_available_in' => 'Następny check-in dostępny za',
+    'current_streak' => 'Obecna Seria',
+    'last_7_days' => 'Ostatnie 7 Dni',
+    'total_earned' => 'Łącznie Zarobione',
+
+    // Lucky Box Page
+    'mystery_reward' => 'Tajemnicza Nagroda',
+    'open_box_reveal_prize' => 'Otwórz pudełko, aby odkryć swoją nagrodę!',
+    'open_lucky_box' => 'Otwórz Szczęśliwe Pudełko',
+    'already_opened_today' => 'Już Otwarte Dzisiaj',
+    'min_reward' => 'Min Nagroda',
+    'max_reward' => 'Maks Nagroda',
+    'next_box_available_tomorrow' => 'Następne pudełko dostępne jutro',
+    'congratulations' => 'Gratulacje!',
+    'claim_reward' => 'Odbierz Nagrodę',
+    'opening' => 'Otwieranie...',
 ];

@@ -281,4 +281,14 @@ return [
     'update_failed' => 'अपडेट विफल',
     'error_occurred_try_again' => 'एक त्रुटि हुई। कृपया पुनः प्रयास करें',
     'ok' => 'ठीक है',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Daily Check-in',
+    'todays_reward' => "Today's Reward",
+    'day_streak' => 'Day Streak',
+    'check_in_now' => 'Check In Now',
+    'already_checked_in' => 'Already Checked In',
+    'next_checkin_available_in' => 'Next check-in available in',
+    'current_streak' => 'Current Streak',
+    'last_7_days' => 'Last 7 Days',
+];

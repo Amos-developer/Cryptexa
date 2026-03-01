@@ -32,6 +32,8 @@
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/light-theme.css') }}">
 
+    @stack('styles')
+
     <link rel="shortcut icon" href="{{ asset('images/logo/logo.png') }}">
 </head>
 

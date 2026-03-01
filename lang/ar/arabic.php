@@ -281,4 +281,15 @@ return [
     'update_failed' => 'فشل التحديث',
     'error_occurred_try_again' => 'حدث خطأ. يرجى المحاولة مرة أخرى',
     'ok' => 'حسناً',
-    // Two-Factor Authentication];
+    
+ 
+    // Check-in Page
+    'daily_checkin' => 'تسجيل الدخول اليومي',
+    'todays_reward' => 'مكافأة اليوم',
+    'day_streak' => 'سلسلة الأيام',
+    'check_in_now' => 'سجل الدخول الآن',
+    'already_checked_in' => 'تم تسجيل الدخول بالفعل',
+    'next_checkin_available_in' => 'تسجيل الدخول التالي متاح في',
+    'current_streak' => 'السلسلة الحالية',
+    'last_7_days' => 'آخر 7 أيام',
+];

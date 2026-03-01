@@ -281,5 +281,27 @@ return [
     'update_failed' => 'Pembaruan Gagal',
     'error_occurred_try_again' => 'Terjadi kesalahan. Silakan coba lagi',
     'ok' => 'OK',
-    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
+    
+    // Check-in Page
+    'daily_checkin' => 'Check-in Harian',
+    'todays_reward' => 'Hadiah Hari Ini',
+    'day_streak' => 'Hari Beruntun',
+    'check_in_now' => 'Check-in Sekarang',
+    'already_checked_in' => 'Sudah Check-in',
+    'next_checkin_available_in' => 'Check-in berikutnya tersedia dalam',
+    'current_streak' => 'Beruntun Saat Ini',
+    'last_7_days' => '7 Hari Terakhir',
+    'total_earned' => 'Total Diperoleh',
+
+    // Lucky Box Page
+    'mystery_reward' => 'Hadiah Misteri',
+    'open_box_reveal_prize' => 'Buka kotak untuk mengungkap hadiah Anda!',
+    'open_lucky_box' => 'Buka Kotak Keberuntungan',
+    'already_opened_today' => 'Sudah Dibuka Hari Ini',
+    'min_reward' => 'Hadiah Min',
+    'max_reward' => 'Hadiah Maks',
+    'next_box_available_tomorrow' => 'Kotak berikutnya tersedia besok',
+    'congratulations' => 'Selamat!',
+    'claim_reward' => 'Klaim Hadiah',
+    'opening' => 'Membuka...',
 ];
