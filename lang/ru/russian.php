@@ -160,9 +160,7 @@ return [
     'settings' => 'Настройки',
     'security_access' => 'Безопасность и доступ',
     'password' => 'Пароль',
-    'change_login_password' => 'Изменить пароль для входа',
-    'two_factor_auth' => 'Двухфакторная аутентификация',
-    'add_extra_security' => 'Добавить дополнительный уровень безопасности',
+    'change_login_password' => 'Изменить пароль для входа',    'add_extra_security' => 'Добавить дополнительный уровень безопасности',
     'enabled' => 'Включено',
     'withdrawal_pin' => 'PIN-код для вывода',
     'create_withdrawal_pin' => 'Создать PIN-код для вывода',
@@ -312,4 +310,4 @@ return [
     'update_failed' => 'Update Failed',
     'error_occurred_try_again' => 'An error occurred. Please try again.',
     'ok' => 'OK',
-];
+    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];

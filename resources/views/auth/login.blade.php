@@ -67,7 +67,6 @@
 
                 <form method="POST" action="{{ route('login.post') }}" id="loginForm">
                     @csrf
-
                     <!-- Username Field -->
                     <div class="form-group">
                         <label class="form-label">{{ __t('username') }}</label>

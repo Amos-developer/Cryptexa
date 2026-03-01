@@ -31,15 +31,13 @@
             <!-- <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 8px 0; background: linear-gradient(135deg, #38bdf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Select Network</h1> -->
             <p style="color: #94a3b8; font-size: 14px; margin: 0 0 12px 0;">{{ __t('choose_network') }}</p>
             <div style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); border-radius: 10px; padding: 10px 16px; display: inline-block;">
-                <span style="color: #22c55e; font-size: 12px; font-weight: 600;">✓ {{ __t('auto_credited') }} • {{ __t('min_deposit') }} $50 • {{ __t('min_withdrawal') }} $10</span>
+                <span style="color: #22c55e; font-size: 12px; font-weight: 600;">✓ {{ __t('auto_credited') }} • {{ __t('min_deposit') }} $50</span>
             </div>
         </div>
 
         <!-- DEPOSIT FORM -->
         <form method="POST" action="{{ route('deposit.store') }}" id="deposit-form">
-
             @csrf
-
             @php
             $coins = [
             ['name'=>'USDT','symbol'=>'BEP20','network'=>'Binance Smart Chain','currency'=>'usdtbsc','badge'=>__t('recommended'),'color'=>'#26A17B','svg'=>'<svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="24" fill="#26A17B"/><path d="M27 19.8V16.8h-6v3h-4.8V22.8h4.8v7.8h-4.8V33.6h4.8v3h6v-3h4.8v-3H27v-7.8h4.8v-3H27z" fill="white"/></svg>','fee'=>'~$0.20','time'=>'1-3 min'],

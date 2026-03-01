@@ -25,7 +25,7 @@ class NowPaymentsService
             'price_currency'    => 'usd',
             'pay_currency'      => $payCurrency,
             'order_id'          => (string) $orderId,
-            'order_description' => 'User Deposit',
+            'order_description' => 'Deposit to CRYPTEXA',
             'ipn_callback_url'  => url('/nowpayments/ipn'),
         ]);
 

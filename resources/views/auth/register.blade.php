@@ -544,7 +544,6 @@
 
                 <form method="POST" action="{{ route('register.post') }}" id="registerForm">
                     @csrf
-
                     <!-- Username Field -->
                     <div class="form-group">
                         <label class="form-label">{{ __t('username') }}<span class="required">*</span></label>

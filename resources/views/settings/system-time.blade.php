@@ -20,7 +20,7 @@
 <div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%); min-height: 100vh;">
     <div class="tf-container">
         <div style="margin-bottom: 24px; animation: slideDown 0.6s ease;">
-            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 8px 0;">System Time</h1>
+            <!-- <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 8px 0;">System Time</h1> -->
             <p style="color: #94a3b8; font-size: 14px; margin: 0;">View current server time and timezone information</p>
         </div>
 

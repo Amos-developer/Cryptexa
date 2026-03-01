@@ -544,7 +544,6 @@
                 <!-- Verification Form -->
                 <form method="POST" action="{{ route('verify.post') }}" id="verifyForm">
                     @csrf
-
                     <!-- OTP Input -->
                     <div class="otp-section">
                         <label class="otp-label">Verification Code</label>

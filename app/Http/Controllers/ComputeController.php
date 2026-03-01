@@ -93,7 +93,7 @@ class ComputeController extends Controller
             ]);
         });
 
-        return redirect()->route('home')
+        return redirect()->route('compute.track')
             ->with('success', 'Liquidity pool activated successfully.');
     }
 

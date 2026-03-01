@@ -160,9 +160,7 @@ return [
     'settings' => 'Impostazioni',
     'security_access' => 'Sicurezza e Accesso',
     'password' => 'Password',
-    'change_login_password' => 'Cambia la tua password di accesso',
-    'two_factor_auth' => 'Autenticazione a Due Fattori',
-    'add_extra_security' => 'Aggiungi un livello di sicurezza extra',
+    'change_login_password' => 'Cambia la tua password di accesso',    'add_extra_security' => 'Aggiungi un livello di sicurezza extra',
     'enabled' => 'Abilitato',
     'withdrawal_pin' => 'PIN di Prelievo',
     'create_withdrawal_pin' => 'Crea un PIN di prelievo',
@@ -314,4 +312,5 @@ return [
     'update_failed' => 'Aggiornamento Fallito',
     'error_occurred_try_again' => 'Si è verificato un errore. Riprova',
     'ok' => 'OK',
+    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
 ];

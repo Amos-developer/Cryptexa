@@ -135,9 +135,7 @@ return [
     'settings' => 'Instellingen',
     'security_access' => 'Beveiliging & Toegang',
     'password' => 'Wachtwoord',
-    'change_login_password' => 'Wijzig je inlogwachtwoord',
-    'two_factor_auth' => 'Twee-Factor Authenticatie',
-    'add_extra_security' => 'Voeg extra beveiligingslaag toe',
+    'change_login_password' => 'Wijzig je inlogwachtwoord',    'add_extra_security' => 'Voeg extra beveiligingslaag toe',
     'enabled' => 'Ingeschakeld',
     'withdrawal_pin' => 'Opname PIN',
     'create_withdrawal_pin' => 'Maak een opname PIN',
@@ -283,4 +281,5 @@ return [
     'update_failed' => 'Update Failed',
     'error_occurred_try_again' => 'An error occurred. Please try again.',
     'ok' => 'OK',
+    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
 ];

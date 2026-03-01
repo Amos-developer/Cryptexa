@@ -135,9 +135,7 @@ return [
     'settings' => 'الإعدادات',
     'security_access' => 'الأمان والوصول',
     'password' => 'كلمة المرور',
-    'change_login_password' => 'تغيير كلمة مرور تسجيل الدخول',
-    'two_factor_auth' => 'المصادقة الثنائية',
-    'add_extra_security' => 'إضافة طبقة أمان إضافية',
+    'change_login_password' => 'تغيير كلمة مرور تسجيل الدخول',    'add_extra_security' => 'إضافة طبقة أمان إضافية',
     'enabled' => 'مفعّل',
     'withdrawal_pin' => 'رمز PIN للسحب',
     'create_withdrawal_pin' => 'إنشاء رمز PIN للسحب',
@@ -283,4 +281,4 @@ return [
     'update_failed' => 'فشل التحديث',
     'error_occurred_try_again' => 'حدث خطأ. يرجى المحاولة مرة أخرى',
     'ok' => 'حسناً',
-];
+    // Two-Factor Authentication];

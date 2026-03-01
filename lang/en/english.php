@@ -160,9 +160,7 @@ return [
     'settings' => 'Settings',
     'security_access' => 'Security & Access',
     'password' => 'Password',
-    'change_login_password' => 'Change your login password',
-    'two_factor_auth' => 'Two-Factor Auth',
-    'add_extra_security' => 'Add extra security layer',
+    'change_login_password' => 'Change your login password',    'add_extra_security' => 'Add extra security layer',
     'enabled' => 'Enabled',
     'withdrawal_pin' => 'Withdrawal PIN',
     'create_withdrawal_pin' => 'Create a withdrawal PIN',
@@ -319,4 +317,4 @@ return [
     'update_failed' => 'Update Failed',
     'error_occurred_try_again' => 'An error occurred. Please try again.',
     'ok' => 'OK',
-];
+    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];

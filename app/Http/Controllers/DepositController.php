@@ -66,7 +66,7 @@ class DepositController extends Controller
             $deposit->delete();
             
             return redirect()->route('select.network')
-                ->with('error', 'Payment service temporarily unavailable. Please try again later.');
+                ->with('error', 'Payment service temporarily unavailable. Please try again later or check your internet connection.');
         }
     }
 

@@ -135,9 +135,7 @@ return [
     'settings' => 'Cài đặt',
     'security_access' => 'Bảo mật & Truy cập',
     'password' => 'Mật khẩu',
-    'change_login_password' => 'Thay đổi mật khẩu đăng nhập của bạn',
-    'two_factor_auth' => 'Xác thực hai yếu tố',
-    'add_extra_security' => 'Thêm lớp bảo mật bổ sung',
+    'change_login_password' => 'Thay đổi mật khẩu đăng nhập của bạn',    'add_extra_security' => 'Thêm lớp bảo mật bổ sung',
     'enabled' => 'Đã bật',
     'withdrawal_pin' => 'Mã PIN rút tiền',
     'create_withdrawal_pin' => 'Tạo mã PIN rút tiền',
@@ -283,4 +281,5 @@ return [
     'update_failed' => 'Cập nhật thất bại',
     'error_occurred_try_again' => 'Đã xảy ra lỗi. Vui lòng thử lại.',
     'ok' => 'OK',
+    // Two-Factor Authentication Microsoft Authenticator hoặc Authy trên điện thoại của bạn.',];
 ];

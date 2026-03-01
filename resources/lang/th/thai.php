@@ -135,9 +135,7 @@ return [
     'settings' => 'การตั้งค่า',
     'security_access' => 'ความปลอดภัยและการเข้าถึง',
     'password' => 'รหัสผ่าน',
-    'change_login_password' => 'เปลี่ยนรหัสผ่านเข้าสู่ระบบของคุณ',
-    'two_factor_auth' => 'การยืนยันตัวตนแบบสองปัจจัย',
-    'add_extra_security' => 'เพิ่มชั้นความปลอดภัยเพิ่มเติม',
+    'change_login_password' => 'เปลี่ยนรหัสผ่านเข้าสู่ระบบของคุณ',    'add_extra_security' => 'เพิ่มชั้นความปลอดภัยเพิ่มเติม',
     'enabled' => 'เปิดใช้งาน',
     'withdrawal_pin' => 'PIN ถอนเงิน',
     'create_withdrawal_pin' => 'สร้าง PIN ถอนเงิน',
@@ -283,4 +281,5 @@ return [
     'update_failed' => 'การอัปเดตล้มเหลว',
     'error_occurred_try_again' => 'เกิดข้อผิดพลาด กรุณาลองอีกครั้ง',
     'ok' => 'ตกลง',
+    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
 ];

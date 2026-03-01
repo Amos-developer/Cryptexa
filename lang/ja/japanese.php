@@ -159,9 +159,7 @@ return [
     'settings' => '設定',
     'security_access' => 'セキュリティとアクセス',
     'password' => 'パスワード',
-    'change_login_password' => 'ログインパスワードを変更',
-    'two_factor_auth' => '二段階認証',
-    'add_extra_security' => '追加のセキュリティレイヤーを追加',
+    'change_login_password' => 'ログインパスワードを変更',    'add_extra_security' => '追加のセキュリティレイヤーを追加',
     'enabled' => '有効',
     'withdrawal_pin' => '出金PIN',
     'create_withdrawal_pin' => '出金PINを作成',
@@ -313,4 +311,4 @@ return [
     'update_failed' => 'Update Failed',
     'error_occurred_try_again' => 'An error occurred. Please try again.',
     'ok' => 'OK',
-];
+    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];

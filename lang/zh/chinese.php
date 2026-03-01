@@ -159,9 +159,7 @@ return [
     'settings' => '设置',
     'security_access' => '安全与访问',
     'password' => '密码',
-    'change_login_password' => '更改您的登录密码',
-    'two_factor_auth' => '双因素认证',
-    'add_extra_security' => '添加额外的安全层',
+    'change_login_password' => '更改您的登录密码',    'add_extra_security' => '添加额外的安全层',
     'enabled' => '已启用',
     'withdrawal_pin' => '提款PIN',
     'create_withdrawal_pin' => '创建提款PIN',
@@ -313,4 +311,4 @@ return [
     'update_failed' => '更新失败',
     'error_occurred_try_again' => '发生错误。请重试。',
     'ok' => '确定',
-];
+    // Two-Factor Authentication];

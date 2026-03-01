@@ -22,7 +22,7 @@
 
         <!-- Hero Section -->
         <div style="text-align: center; margin-bottom: 40px; animation: slideDown 0.6s ease;">
-            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #38bdf8, #0ea5e9); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 20px 60px rgba(56,189,248,0.3); font-size: 40px;">💎</div>
+            <!-- <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #38bdf8, #0ea5e9); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 20px 60px rgba(56,189,248,0.3); font-size: 40px;">💎</div> -->
             <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 12px 0; line-height: 1.2;">
                 Welcome to <span style="background: linear-gradient(135deg, #38bdf8, #0ea5e9); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Cryptexa</span>
             </h1>
@@ -32,7 +32,7 @@
         </div>
 
         <!-- Stats Grid -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; animation: slideUp 0.6s ease 0.1s backwards;">
+        <!-- <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; animation: slideUp 0.6s ease 0.1s backwards;">
             <div style="background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(56,189,248,0.02)); border: 1px solid rgba(56,189,248,0.2); border-radius: 12px; padding: 20px 16px; text-align: center;">
                 <h3 style="color: #38bdf8; font-weight: 900; font-size: 28px; margin: 0 0 4px 0;">{{ number_format(\App\Models\User::count()) }}+</h3>
                 <p style="color: #94a3b8; font-size: 12px; margin: 0;">Active Users</p>
@@ -45,7 +45,7 @@
                 <h3 style="color: #a855f7; font-weight: 900; font-size: 28px; margin: 0 0 4px 0;">24/7</h3>
                 <p style="color: #94a3b8; font-size: 12px; margin: 0;">Support</p>
             </div>
-        </div>
+        </div> -->
 
         <!-- Mission -->
         <div style="background: linear-gradient(135deg, rgba(56,189,248,0.05), rgba(56,189,248,0.02)); border: 1px solid rgba(56,189,248,0.15); border-radius: 16px; padding: 24px; margin-bottom: 20px; animation: slideUp 0.6s ease 0.2s backwards;">

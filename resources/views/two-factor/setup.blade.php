@@ -7,6 +7,13 @@
 
 @section('content')
 
+@php
+    // Force set locale from user language
+    if (auth()->check() && auth()->user()->language) {
+        app()->setLocale(auth()->user()->language);
+    }
+@endphp
+
 <!-- HEADER BAR -->
 <div class="settings-header" style="
     background: linear-gradient(135deg, #020617, #0f172a);
@@ -36,7 +43,7 @@
             <path d="M19 12H5M12 19l-7-7 7-7" />
         </svg>
     </a>
-    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Two-Factor Auth</h6>
+    <h6 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">{{ __t('two_factor_auth') }}</h6>
     <span style="width: 36px;"></span>
 </div>
 
@@ -52,8 +59,8 @@
         @if(auth()->user()->two_factor_enabled)
         <!-- ENABLED STATE -->
         <div style="animation: slideDown 0.6s ease;">
-            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 12px 0;">Two-Factor Auth</h1>
-            <p style="color: #94a3b8; font-size: 14px; margin: 0 0 28px 0;">Your account is protected with 2FA</p>
+            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 12px 0;">{{ __t('two_factor_auth') }}</h1>
+            <p style="color: #94a3b8; font-size: 14px; margin: 0 0 28px 0;">{{ __t('account_protected_2fa') }}</p>
         </div>
 
         <!-- STATUS CARD -->
@@ -71,10 +78,10 @@
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                     <polyline points="22 4 12 14.01 9 11.01"></polyline>
                 </svg>
-                <p style="color: #22c55e; font-weight: 600; margin: 0;">Enabled</p>
+                <p style="color: #22c55e; font-weight: 600; margin: 0;">{{ __t('enabled') }}</p>
             </div>
             <p style="color: #94a3b8; font-size: 13px; margin: 0; line-height: 1.6;">
-                Your account is secured with two-factor authentication. You'll be asked to enter a code from your authenticator app when logging in.
+                {{ __t('account_secured_2fa') }}
             </p>
         </div>
 
@@ -92,14 +99,14 @@
                 transition: all 0.3s ease;
                 margin-bottom: 24px;
             " onmouseover="this.style.background='linear-gradient(135deg, rgba(239,68,68,0.3) 0%, rgba(239,68,68,0.15) 100%)'; this.style.boxShadow='0 0 20px rgba(239,68,68,0.2)';" onmouseout="this.style.background='linear-gradient(135deg, rgba(239,68,68,0.2) 0%, rgba(239,68,68,0.1) 100%)'; this.style.boxShadow='none';">
-            🔓 Disable Two-Factor Authentication
+            🔓 {{ __t('disable_2fa') }}
         </button>
 
         @else
         <!-- DISABLED STATE - SETUP -->
         <div style="animation: slideDown 0.6s ease;">
-            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 12px 0;">Enable Two-Factor Auth</h1>
-            <p style="color: #94a3b8; font-size: 14px; margin: 0 0 28px 0;">Protect your account with an additional security layer</p>
+            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 28px; margin: 0 0 12px 0;">{{ __t('enable_2fa') }}</h1>
+            <p style="color: #94a3b8; font-size: 14px; margin: 0 0 28px 0;">{{ __t('protect_account_extra_security') }}</p>
         </div>
 
         <!-- SETUP STEPS -->
@@ -126,10 +133,10 @@
                             color: #38bdf8;
                             font-weight: 700;
                         ">1</div>
-                    <h3 style="color: #e5e7eb; font-weight: 600; margin: 0;">Install Authenticator App</h3>
+                    <h3 style="color: #e5e7eb; font-weight: 600; margin: 0;">{{ __t('install_authenticator_app') }}</h3>
                 </div>
                 <p style="color: #94a3b8; font-size: 13px; margin: 0; line-height: 1.6; margin-left: 44px;">
-                    Download an authenticator app like Google Authenticator, Microsoft Authenticator, or Authy on your phone.
+                    {{ __t('download_authenticator_app') }}
                 </p>
             </div>
 
@@ -147,7 +154,7 @@
                             color: #38bdf8;
                             font-weight: 700;
                         ">2</div>
-                    <h3 style="color: #e5e7eb; font-weight: 600; margin: 0;">Scan QR Code</h3>
+                    <h3 style="color: #e5e7eb; font-weight: 600; margin: 0;">{{ __t('scan_qr_code') }}</h3>
                 </div>
                 <div style="margin-left: 44px;">
                     <button onclick="generateQRCode()" id="generateBtn" style="
@@ -161,7 +168,7 @@
                             cursor: pointer;
                             transition: all 0.3s ease;
                         " onmouseover="this.style.background='rgba(56,189,248,0.3)'" onmouseout="this.style.background='rgba(56,189,248,0.2)'">
-                        📱 Generate QR Code
+                        📱 {{ __t('generate_qr_code') }}
                     </button>
                     <div id="qrContainer" style="margin-top: 16px;"></div>
                 </div>
@@ -181,11 +188,11 @@
                             color: #38bdf8;
                             font-weight: 700;
                         ">3</div>
-                    <h3 style="color: #e5e7eb; font-weight: 600; margin: 0;">Verify Code</h3>
+                    <h3 style="color: #e5e7eb; font-weight: 600; margin: 0;">{{ __t('verify_code') }}</h3>
                 </div>
                 <div style="margin-left: 44px;">
                     <label style="color: #94a3b8; font-size: 12px; font-weight: 600; display: block; margin-bottom: 8px;">
-                        Enter the 6-digit code from your authenticator app:
+                        {{ __t('enter_6digit_code') }}
                     </label>
                     <input type="text"
                         id="verificationCode"
@@ -221,7 +228,7 @@
                             cursor: pointer;
                             transition: all 0.3s ease;
                         " onmouseover="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.3) 0%, rgba(56,189,248,0.15) 100%)';" onmouseout="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.2) 0%, rgba(56,189,248,0.1) 100%)';">
-                        ✓ Verify & Enable
+                        ✓ {{ __t('verify_enable') }}
                     </button>
                 </div>
             </div>

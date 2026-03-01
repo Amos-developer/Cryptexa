@@ -135,9 +135,7 @@ return [
     'settings' => 'सेटिंग्स',
     'security_access' => 'सुरक्षा और पहुंच',
     'password' => 'पासवर्ड',
-    'change_login_password' => 'अपना लॉगिन पासवर्ड बदलें',
-    'two_factor_auth' => 'दो-कारक प्रमाणीकरण',
-    'add_extra_security' => 'अतिरिक्त सुरक्षा परत जोड़ें',
+    'change_login_password' => 'अपना लॉगिन पासवर्ड बदलें',    'add_extra_security' => 'अतिरिक्त सुरक्षा परत जोड़ें',
     'enabled' => 'सक्षम',
     'withdrawal_pin' => 'निकासी PIN',
     'create_withdrawal_pin' => 'निकासी PIN बनाएं',
@@ -283,4 +281,4 @@ return [
     'update_failed' => 'अपडेट विफल',
     'error_occurred_try_again' => 'एक त्रुटि हुई। कृपया पुनः प्रयास करें',
     'ok' => 'ठीक है',
-];
+    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];

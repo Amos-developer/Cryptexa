@@ -159,9 +159,7 @@ return [
     'settings' => '설정',
     'security_access' => '보안 및 액세스',
     'password' => '비밀번호',
-    'change_login_password' => '로그인 비밀번호 변경',
-    'two_factor_auth' => '이중 인증',
-    'add_extra_security' => '추가 보안 계층 추가',
+    'change_login_password' => '로그인 비밀번호 변경',    'add_extra_security' => '추가 보안 계층 추가',
     'enabled' => '활성화됨',
     'withdrawal_pin' => '출금 PIN',
     'create_withdrawal_pin' => '출금 PIN 생성',
@@ -314,4 +312,5 @@ return [
     'update_failed' => 'Update Failed',
     'error_occurred_try_again' => 'An error occurred. Please try again.',
     'ok' => 'OK',
+    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
 ];

@@ -135,9 +135,7 @@ return [
     'settings' => 'Ayarlar',
     'security_access' => 'Güvenlik ve Erişim',
     'password' => 'Şifre',
-    'change_login_password' => 'Giriş şifrenizi değiştirin',
-    'two_factor_auth' => 'İki Faktörlü Kimlik Doğrulama',
-    'add_extra_security' => 'Ekstra güvenlik katmanı ekle',
+    'change_login_password' => 'Giriş şifrenizi değiştirin',    'add_extra_security' => 'Ekstra güvenlik katmanı ekle',
     'enabled' => 'Etkin',
     'withdrawal_pin' => 'Çekim PIN',
     'create_withdrawal_pin' => 'Çekim PIN oluştur',
@@ -283,4 +281,4 @@ return [
     'update_failed' => 'Güncelleme Başarısız',
     'error_occurred_try_again' => 'Bir hata oluştu. Lütfen tekrar deneyin.',
     'ok' => 'Tamam',
-];
+    // Two-Factor Authentication Microsoft Authenticator veya Authy gibi bir kimlik doğrulama uygulaması indirin.',];

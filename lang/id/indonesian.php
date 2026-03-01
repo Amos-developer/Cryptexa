@@ -135,9 +135,7 @@ return [
     'settings' => 'Pengaturan',
     'security_access' => 'Keamanan & Akses',
     'password' => 'Kata Sandi',
-    'change_login_password' => 'Ubah kata sandi login Anda',
-    'two_factor_auth' => 'Autentikasi Dua Faktor',
-    'add_extra_security' => 'Tambahkan lapisan keamanan ekstra',
+    'change_login_password' => 'Ubah kata sandi login Anda',    'add_extra_security' => 'Tambahkan lapisan keamanan ekstra',
     'enabled' => 'Diaktifkan',
     'withdrawal_pin' => 'PIN Penarikan',
     'create_withdrawal_pin' => 'Buat PIN penarikan',
@@ -283,4 +281,4 @@ return [
     'update_failed' => 'Pembaruan Gagal',
     'error_occurred_try_again' => 'Terjadi kesalahan. Silakan coba lagi',
     'ok' => 'OK',
-];
+    // Two-Factor Authentication Microsoft Authenticator, or Authy on your phone.',];
