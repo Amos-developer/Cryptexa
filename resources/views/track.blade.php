@@ -393,6 +393,7 @@
 </style>
 
 <!-- SCRIPTS -->
+@include('partials.alerts')
 <script>
     function showTab(tab) {
         const activeBtn = event.target;
