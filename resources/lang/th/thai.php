@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'home' => 'หน้าแรก',
@@ -304,4 +304,40 @@ return [
     'congratulations' => 'ยินดีด้วย!',
     'claim_reward' => 'รับรางวัล',
     'opening' => 'กำลังเปิด...',
+    
+    // Two-Factor Authentication
+    'two_factor_auth' => 'การยืนยันตัวตนแบบสองปัจจัย',
+    'enable_2fa' => 'เปิดใช้งานการยืนยันตัวตนแบบสองปัจจัย',
+    'disable_2fa' => 'ปิดใช้งานการยืนยันตัวตนแบบสองปัจจัย',
+    'protect_account_extra_security' => 'ป้องกันบัญชีของคุณด้วยชั้นความปลอดภัยเพิ่มเติม',
+    'account_protected_2fa' => 'บัญชีของคุณตอนนี้ได้รับการป้องกันด้วย 2FA',
+    'account_secured_2fa' => 'บัญชีของคุณได้รับการป้องกันด้วยการยืนยันตัวตนแบบสองปัจจัย คุณจะต้องใช้แอปยืนยันตัวตนเพื่อเข้าสู่ระบบ',
+    'account_no_longer_protected' => 'บัญชีของคุณไม่ได้รับการป้องกันด้วย 2FA อีกต่อไป',
+    'install_authenticator_app' => 'ติดตั้งแอปยืนยันตัวตน',
+    'download_authenticator_app' => 'ดาวน์โหลด Google Authenticator, Authy หรือแอปที่รองรับ TOTP จาก App Store',
+    'scan_qr_code' => 'สแกนรหัส QR',
+    'generate_qr_code' => 'สร้างรหัส QR',
+    'regenerate_qr_code' => 'สร้างรหัส QR ใหม่',
+    'generating' => 'กำลังสร้าง',
+    'cant_scan_enter_manually' => 'สแกนไม่ได้? ป้อนด้วยตัวเอง',
+    'failed_generate_qr' => 'สร้างรหัส QR ไม่สำเร็จ',
+    'verify_code' => 'ยืนยันรหัส',
+    'enter_6digit_code' => 'ป้อนรหัส 6 หลักจากแอปยืนยันตัวตน',
+    'please_enter_6digit_code' => 'โปรดป้อนรหัส 6 หลัก',
+    'verify_enable' => 'ยืนยันและเปิดใช้งาน',
+    'two_factor_enabled' => 'เปิดใช้งานสองปัจจัยแล้ว',
+    'two_factor_disabled' => 'ปิดใช้งานสองปัจจัยแล้ว',
+    'save_recovery_codes' => 'บันทึกรหัสกู้คืนของคุณ',
+    'ok_saved_them' => 'ตกลง ฉันบันทึกแล้ว',
+    'invalid_code' => 'รหัสไม่ถูกต้อง',
+    'error_occurred' => 'เกิดข้อผิดพลาด',
+    'disable_two_factor_auth' => 'ปิดการยืนยันสองปัจจัย',
+    'provide_password_code' => 'คุณจะต้องให้รหัสผ่านและรหัสยืนยัน',
+    'continue' => 'ดำเนินการต่อ',
+    'verify_identity' => 'ยืนยันตัวตนของคุณ',
+    'enter_password' => 'ป้อนรหัสผ่าน',
+    'authenticator_code' => 'รหัสยืนยันตัวตน',
+    'disable' => 'ปิดใช้งาน',
+    'enter_password_and_code' => 'โปรดป้อนทั้งรหัสผ่านและรหัส',
+];
 ];

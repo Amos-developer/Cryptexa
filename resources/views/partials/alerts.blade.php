@@ -33,7 +33,6 @@
 
     };
 
-    // ✅ MUST BE GLOBAL
     function copyAddress() {
         const address = document.getElementById('walletAddress')?.innerText;
 
@@ -47,7 +46,7 @@
 
         document.body.appendChild(tempInput);
         tempInput.select();
-        tempInput.setSelectionRange(0, 99999); // iOS fix
+        tempInput.setSelectionRange(0, 99999);
 
         document.execCommand('copy');
         document.body.removeChild(tempInput);

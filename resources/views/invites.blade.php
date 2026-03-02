@@ -299,7 +299,6 @@
 </div>
 
 <!-- ANIMATIONS & STYLES -->
-<link rel="stylesheet" href="{{ asset('css/$name') }}">
 
 <!-- JS -->
 <script>

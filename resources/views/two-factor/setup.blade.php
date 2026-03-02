@@ -284,7 +284,7 @@
     function generateQRCode() {
         const btn = document.getElementById('generateBtn');
         btn.disabled = true;
-        btn.innerHTML = '⏳ Generating...';
+        btn.innerHTML = '⏳ {{ __t("generating") }}...';
 
         fetch('{{ route("two-factor.generate") }}', {
                 method: 'POST',
@@ -302,24 +302,24 @@
                 <div style="text-align: center;">
                     <img src="${data.qr_code}" alt="QR Code" style="width: 200px; height: 200px; border-radius: 12px; border: 2px solid rgba(56,189,248,0.2);">
                     <p style="color: #94a3b8; font-size: 12px; margin-top: 12px;">
-                        Can't scan? Enter manually:<br>
+                        {{ __t("cant_scan_enter_manually") }}:<br>
                         <code style="color: #38bdf8; font-family: monospace; word-break: break-all;">${data.secret}</code>
                     </p>
                 </div>
             `;
                 btn.disabled = false;
-                btn.innerHTML = '📱 Regenerate QR Code';
+                btn.innerHTML = '📱 {{ __t("regenerate_qr_code") }}';
             })
             .catch(error => {
                 console.error('Error:', error);
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to generate QR code',
+                    title: '{{ __t("error") }}',
+                    text: '{{ __t("failed_generate_qr") }}',
                     confirmButtonColor: '#ef4444'
                 });
                 btn.disabled = false;
-                btn.innerHTML = '📱 Generate QR Code';
+                btn.innerHTML = '📱 {{ __t("generate_qr_code") }}';
             });
     }
 
@@ -328,7 +328,7 @@
         const errorDiv = document.getElementById('codeError');
 
         if (code.length !== 6) {
-            errorDiv.textContent = 'Please enter a 6-digit code';
+            errorDiv.textContent = '{{ __t("please_enter_6digit_code") }}';
             errorDiv.style.display = 'block';
             return;
         }
@@ -349,25 +349,25 @@
                 if (data.success) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Two-Factor Enabled!',
-                        html: `<p>Your account is now protected with 2FA.</p>
+                        title: '{{ __t("two_factor_enabled") }}!',
+                        html: `<p>{{ __t("account_protected_2fa") }}</p>
                            <p style="font-size: 12px; color: #f59e0b; margin-top: 12px;">
-                               <strong>Save your recovery codes:</strong><br>
+                               <strong>{{ __t("save_recovery_codes") }}:</strong><br>
                                ${data.recovery_codes.map(code => `<code style="display: block; background: rgba(0,0,0,0.3); padding: 4px 8px; margin: 4px 0; font-family: monospace;">${code}</code>`).join('')}
                            </p>`,
                         confirmButtonColor: '#38bdf8',
-                        confirmButtonText: 'OK, I\'ve saved them'
+                        confirmButtonText: '{{ __t("ok_saved_them") }}'
                     }).then(() => {
                         window.location.href = '{{ route("account.settings") }}';
                     });
                 } else {
-                    errorDiv.textContent = data.message || 'Invalid code';
+                    errorDiv.textContent = data.message || '{{ __t("invalid_code") }}';
                     errorDiv.style.display = 'block';
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                errorDiv.textContent = 'An error occurred';
+                errorDiv.textContent = '{{ __t("error_occurred") }}';
                 errorDiv.style.display = 'block';
             });
     }
@@ -375,21 +375,21 @@
     function disableTwoFactor() {
         Swal.fire({
             icon: 'warning',
-            title: 'Disable Two-Factor Auth?',
-            text: 'You\'ll need to provide your password and a verification code.',
+            title: '{{ __t("disable_two_factor_auth") }}?',
+            text: '{{ __t("provide_password_code") }}',
             showCancelButton: true,
-            confirmButtonText: 'Continue',
-            cancelButtonText: 'Cancel',
+            confirmButtonText: '{{ __t("continue") }}',
+            cancelButtonText: '{{ __t("cancel") }}',
             confirmButtonColor: '#ef4444'
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire({
-                    title: 'Verify Your Identity',
+                    title: '{{ __t("verify_identity") }}',
                     html: `
                         <div style="text-align: left;">
                             <label style="display: block; margin-bottom: 12px;">
-                                <strong style="color: #e5e7eb;">Password</strong><br>
-                                <input type="password" id="disablePassword" placeholder="Enter your password" style="
+                                <strong style="color: #e5e7eb;">{{ __t("password") }}</strong><br>
+                                <input type="password" id="disablePassword" placeholder="{{ __t("enter_password") }}" style="
                                     width: 100%;
                                     padding: 10px;
                                     border: 1px solid rgba(56,189,248,0.2);
@@ -401,7 +401,7 @@
                                 ">
                             </label>
                             <label style="display: block;">
-                                <strong style="color: #e5e7eb;">Authenticator Code</strong><br>
+                                <strong style="color: #e5e7eb;">{{ __t("authenticator_code") }}</strong><br>
                                 <input type="text" id="disableCode" maxlength="6" placeholder="000000" inputmode="numeric" style="
                                     width: 100%;
                                     padding: 10px;
@@ -417,8 +417,8 @@
                             </label>
                         </div>
                     `,
-                    confirmButtonText: 'Disable',
-                    cancelButtonText: 'Cancel',
+                    confirmButtonText: '{{ __t("disable") }}',
+                    cancelButtonText: '{{ __t("cancel") }}',
                     confirmButtonColor: '#ef4444',
                     showCancelButton: true,
                     preConfirm: () => {
@@ -426,7 +426,7 @@
                         const code = document.getElementById('disableCode').value;
 
                         if (!password || !code) {
-                            Swal.showValidationMessage('Please enter both password and code');
+                            Swal.showValidationMessage('{{ __t("enter_password_and_code") }}');
                             return false;
                         }
 
@@ -454,8 +454,8 @@
                     if (result.isConfirmed) {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Two-Factor Disabled',
-                            text: 'Your account is no longer protected with 2FA.',
+                            title: '{{ __t("two_factor_disabled") }}',
+                            text: '{{ __t("account_no_longer_protected") }}',
                             confirmButtonColor: '#38bdf8'
                         }).then(() => {
                             window.location.href = '{{ route("account.settings") }}';
@@ -464,7 +464,7 @@
                 }).catch(error => {
                     Swal.fire({
                         icon: 'error',
-                        title: 'Error',
+                        title: '{{ __t("error") }}',
                         text: error.message,
                         confirmButtonColor: '#ef4444'
                     });

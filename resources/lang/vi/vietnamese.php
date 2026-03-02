@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'home' => 'Trang chủ',
@@ -304,4 +304,39 @@ return [
     'congratulations' => 'Chúc mừng!',
     'claim_reward' => 'Nhận Phần Thưởng',
     'opening' => 'Đang mở...',
+    
+    // Two-Factor Authentication
+    'two_factor_auth' => 'Xác thực hai yếu tố',
+    'enable_2fa' => 'Bật xác thực hai yếu tố',
+    'disable_2fa' => 'Tắt xác thực hai yếu tố',
+    'protect_account_extra_security' => 'Bảo vệ tài khoản của bạn với một lớp bảo mật bổ sung',
+    'account_protected_2fa' => 'Tài khoản của bạn hiện đã được bảo vệ bằng 2FA',
+    'account_secured_2fa' => 'Tài khoản của bạn được bảo mật bằng xác thực hai yếu tố. Bạn sẽ cần ứng dụng xác thực để đăng nhập.',
+    'account_no_longer_protected' => 'Tài khoản của bạn không còn được bảo vệ bằng 2FA',
+    'install_authenticator_app' => 'Cài đặt ứng dụng xác thực',
+    'download_authenticator_app' => 'Tải xuống Google Authenticator, Authy hoặc bất kỳ ứng dụng tương thích TOTP nào từ cửa hàng ứng dụng.',
+    'scan_qr_code' => 'Quét mã QR',
+    'generate_qr_code' => 'Tạo mã QR',
+    'regenerate_qr_code' => 'Tạo lại mã QR',
+    'generating' => 'Đang tạo',
+    'cant_scan_enter_manually' => 'Không thể quét? Nhập thủ công',
+    'failed_generate_qr' => 'Không thể tạo mã QR',
+    'verify_code' => 'Xác minh mã',
+    'enter_6digit_code' => 'Nhập mã 6 chữ số từ ứng dụng xác thực của bạn',
+    'please_enter_6digit_code' => 'Vui lòng nhập mã 6 chữ số',
+    'verify_enable' => 'Xác minh và Bật',
+    'two_factor_enabled' => 'Đã bật hai yếu tố',
+    'two_factor_disabled' => 'Đã tắt hai yếu tố',
+    'save_recovery_codes' => 'Lưu mã khôi phục của bạn',
+    'ok_saved_them' => 'OK, tôi đã lưu chúng',
+    'invalid_code' => 'Mã không hợp lệ',
+    'error_occurred' => 'Đã xảy ra lỗi',
+    'disable_two_factor_auth' => 'Tắt xác thực hai yếu tố',
+    'provide_password_code' => 'Bạn sẽ cần cung cấp mật khẩu và mã xác minh',
+    'continue' => 'Tiếp tục',
+    'verify_identity' => 'Xác minh danh tính của bạn',
+    'enter_password' => 'Nhập mật khẩu của bạn',
+    'authenticator_code' => 'Mã xác thực',
+    'disable' => 'Tắt',
+    'enter_password_and_code' => 'Vui lòng nhập cả mật khẩu và mã',
 ];

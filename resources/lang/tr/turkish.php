@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'home' => 'Ana Sayfa',
@@ -304,4 +304,39 @@ return [
     'congratulations' => 'Tebrikler!',
     'claim_reward' => 'Ödülü Talep Et',
     'opening' => 'Açılıyor...',
+    
+    // Two-Factor Authentication
+    'two_factor_auth' => 'İki Faktörlü Kimlik Doğrulama',
+    'enable_2fa' => 'İki Faktörlü Kimlik Doğrulamayı Etkinleştir',
+    'disable_2fa' => 'İki Faktörlü Kimlik Doğrulamayı Devre Dışı Bırak',
+    'protect_account_extra_security' => 'Hesabınızı ekstra bir güvenlik katmanıyla koruyun',
+    'account_protected_2fa' => 'Hesabınız artık 2FA ile korunuyor',
+    'account_secured_2fa' => 'Hesabınız iki faktörlü kimlik doğrulama ile güvence altına alındı. Giriş yapmak için kimlik doğrulama uygulamanıza ihtiyacınız olacak.',
+    'account_no_longer_protected' => 'Hesabınız artık 2FA ile korunmuyor',
+    'install_authenticator_app' => 'Kimlik Doğrulama Uygulamasını Yükle',
+    'download_authenticator_app' => 'Uygulama mağazağınızdan Google Authenticator, Authy veya TOTP uyumlu herhangi bir uygulama indirin.',
+    'scan_qr_code' => 'QR Kodunu Tara',
+    'generate_qr_code' => 'QR Kodu Oluştur',
+    'regenerate_qr_code' => 'QR Kodunu Yeniden Oluştur',
+    'generating' => 'Oluşturuluyor',
+    'cant_scan_enter_manually' => 'Tarayamıyor musunuz? Manuel olarak girin',
+    'failed_generate_qr' => 'QR kodu oluşturulamadı',
+    'verify_code' => 'Kodu Doğrula',
+    'enter_6digit_code' => 'Kimlik doğrulama uygulamanızdan 6 haneli kodu girin',
+    'please_enter_6digit_code' => 'Lütfen 6 haneli bir kod girin',
+    'verify_enable' => 'Doğrula ve Etkinleştir',
+    'two_factor_enabled' => 'İki Faktör Etkinleştirildi',
+    'two_factor_disabled' => 'İki Faktör Devre Dışı Bırakıldı',
+    'save_recovery_codes' => 'Kurtarma kodlarınızı kaydedin',
+    'ok_saved_them' => 'Tamam, kaydettim',
+    'invalid_code' => 'Geçersiz kod',
+    'error_occurred' => 'Bir hata oluştu',
+    'disable_two_factor_auth' => 'İki Faktörlü Kimlik Doğrulamayı Devre Dışı Bırak',
+    'provide_password_code' => 'Şifrenizi ve bir doğrulama kodu sağlamanız gerekecek',
+    'continue' => 'Devam Et',
+    'verify_identity' => 'Kimliğinizi Doğrulayın',
+    'enter_password' => 'Şifrenizi girin',
+    'authenticator_code' => 'Kimlik Doğrulama Kodu',
+    'disable' => 'Devre Dışı Bırak',
+    'enter_password_and_code' => 'Lütfen hem şifre hem de kodu girin',
 ];

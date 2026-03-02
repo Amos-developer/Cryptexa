@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     // Navigation
@@ -335,4 +335,39 @@ return [
     'congratulations' => 'Congratulazioni!',
     'claim_reward' => 'Richiedi Ricompensa',
     'opening' => 'Apertura...',
+    
+    // Two-Factor Authentication
+    'two_factor_auth' => 'Autenticazione a Due Fattori',
+    'enable_2fa' => 'Abilita Autenticazione a Due Fattori',
+    'disable_2fa' => 'Disabilita Autenticazione a Due Fattori',
+    'protect_account_extra_security' => 'Proteggi il tuo account con un ulteriore livello di sicurezza',
+    'account_protected_2fa' => 'Il tuo account è ora protetto con 2FA',
+    'account_secured_2fa' => 'Il tuo account è protetto con autenticazione a due fattori. Avrai bisogno della tua app di autenticazione per accedere.',
+    'account_no_longer_protected' => 'Il tuo account non è più protetto con 2FA',
+    'install_authenticator_app' => 'Installa App di Autenticazione',
+    'download_authenticator_app' => 'Scarica Google Authenticator, Authy o qualsiasi app compatibile TOTP dal tuo app store.',
+    'scan_qr_code' => 'Scansiona Codice QR',
+    'generate_qr_code' => 'Genera Codice QR',
+    'regenerate_qr_code' => 'Rigenera Codice QR',
+    'generating' => 'Generazione',
+    'cant_scan_enter_manually' => 'Non riesci a scansionare? Inserisci manualmente',
+    'failed_generate_qr' => 'Impossibile generare il codice QR',
+    'verify_code' => 'Verifica Codice',
+    'enter_6digit_code' => 'Inserisci il codice a 6 cifre dalla tua app di autenticazione',
+    'please_enter_6digit_code' => 'Inserisci un codice a 6 cifre',
+    'verify_enable' => 'Verifica e Abilita',
+    'two_factor_enabled' => 'Due Fattori Abilitato',
+    'two_factor_disabled' => 'Due Fattori Disabilitato',
+    'save_recovery_codes' => 'Salva i tuoi codici di recupero',
+    'ok_saved_them' => 'OK, li ho salvati',
+    'invalid_code' => 'Codice non valido',
+    'error_occurred' => 'Si è verificato un errore',
+    'disable_two_factor_auth' => 'Disabilita Autenticazione a Due Fattori',
+    'provide_password_code' => 'Dovrai fornire la tua password e un codice di verifica',
+    'continue' => 'Continua',
+    'verify_identity' => 'Verifica la Tua Identità',
+    'enter_password' => 'Inserisci la tua password',
+    'authenticator_code' => 'Codice Autenticatore',
+    'disable' => 'Disabilita',
+    'enter_password_and_code' => 'Inserisci sia la password che il codice',
 ];

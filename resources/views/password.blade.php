@@ -199,8 +199,6 @@
 </div>
 
 <!-- ANIMATIONS & STYLES -->
-<link rel="stylesheet" href="{{ asset('css/$name') }}">
-
 <script>
     // Validate password requirements in real-time
     document.addEventListener('DOMContentLoaded', function() {

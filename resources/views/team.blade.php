@@ -236,7 +236,6 @@
 </div>
 
 <!-- STYLES -->
-<link rel="stylesheet" href="{{ asset('css/$name') }}">
 
 <!-- SCRIPTS -->
 <script>

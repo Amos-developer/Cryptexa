@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     // Navigation
@@ -334,4 +334,39 @@ return [
     'congratulations' => 'Parabéns!',
     'claim_reward' => 'Reivindicar Recompensa',
     'opening' => 'Abrindo...',
+    
+    // Two-Factor Authentication
+    'two_factor_auth' => 'Autenticação de Dois Fatores',
+    'enable_2fa' => 'Ativar Autenticação de Dois Fatores',
+    'disable_2fa' => 'Desativar Autenticação de Dois Fatores',
+    'protect_account_extra_security' => 'Proteja sua conta com uma camada extra de segurança',
+    'account_protected_2fa' => 'Sua conta agora está protegida com 2FA',
+    'account_secured_2fa' => 'Sua conta está protegida com autenticação de dois fatores. Você precisará do seu aplicativo autenticador para fazer login.',
+    'account_no_longer_protected' => 'Sua conta não está mais protegida com 2FA',
+    'install_authenticator_app' => 'Instalar Aplicativo Autenticador',
+    'download_authenticator_app' => 'Baixe o Google Authenticator, Authy ou qualquer aplicativo compatível com TOTP da sua loja de aplicativos.',
+    'scan_qr_code' => 'Escanear Código QR',
+    'generate_qr_code' => 'Gerar Código QR',
+    'regenerate_qr_code' => 'Regenerar Código QR',
+    'generating' => 'Gerando',
+    'cant_scan_enter_manually' => 'Não consegue escanear? Digite manualmente',
+    'failed_generate_qr' => 'Falha ao gerar código QR',
+    'verify_code' => 'Verificar Código',
+    'enter_6digit_code' => 'Digite o código de 6 dígitos do seu aplicativo autenticador',
+    'please_enter_6digit_code' => 'Por favor, digite um código de 6 dígitos',
+    'verify_enable' => 'Verificar e Ativar',
+    'two_factor_enabled' => 'Dois Fatores Ativado',
+    'two_factor_disabled' => 'Dois Fatores Desativado',
+    'save_recovery_codes' => 'Salve seus códigos de recuperação',
+    'ok_saved_them' => 'OK, eu os salvei',
+    'invalid_code' => 'Código inválido',
+    'error_occurred' => 'Ocorreu um erro',
+    'disable_two_factor_auth' => 'Desativar Autenticação de Dois Fatores',
+    'provide_password_code' => 'Você precisará fornecer sua senha e um código de verificação',
+    'continue' => 'Continuar',
+    'verify_identity' => 'Verifique Sua Identidade',
+    'enter_password' => 'Digite sua senha',
+    'authenticator_code' => 'Código do Autenticador',
+    'disable' => 'Desativar',
+    'enter_password_and_code' => 'Por favor, digite a senha e o código',
 ];

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     // Navigation
@@ -333,4 +333,39 @@ return [
     'congratulations' => 'Поздравляем!',
     'claim_reward' => 'Получить Награду',
     'opening' => 'Открывается...',
+    
+    // Two-Factor Authentication
+    'two_factor_auth' => 'Двухфакторная аутентификация',
+    'enable_2fa' => 'Включить двухфакторную аутентификацию',
+    'disable_2fa' => 'Отключить двухфакторную аутентификацию',
+    'protect_account_extra_security' => 'Защитите свою учетную запись дополнительным уровнем безопасности',
+    'account_protected_2fa' => 'Ваша учетная запись теперь защищена 2FA',
+    'account_secured_2fa' => 'Ваша учетная запись защищена двухфакторной аутентификацией. Для входа вам понадобится приложение-аутентификатор.',
+    'account_no_longer_protected' => 'Ваша учетная запись больше не защищена 2FA',
+    'install_authenticator_app' => 'Установить приложение-аутентификатор',
+    'download_authenticator_app' => 'Скачайте Google Authenticator, Authy или любое TOTP-совместимое приложение из магазина приложений.',
+    'scan_qr_code' => 'Сканировать QR-код',
+    'generate_qr_code' => 'Сгенерировать QR-код',
+    'regenerate_qr_code' => 'Перегенерировать QR-код',
+    'generating' => 'Генерация',
+    'cant_scan_enter_manually' => 'Не можете отсканировать? Введите вручную',
+    'failed_generate_qr' => 'Не удалось сгенерировать QR-код',
+    'verify_code' => 'Проверить код',
+    'enter_6digit_code' => 'Введите 6-значный код из приложения-аутентификатора',
+    'please_enter_6digit_code' => 'Пожалуйста, введите 6-значный код',
+    'verify_enable' => 'Проверить и включить',
+    'two_factor_enabled' => 'Двухфакторная аутентификация включена',
+    'two_factor_disabled' => 'Двухфакторная аутентификация отключена',
+    'save_recovery_codes' => 'Сохраните коды восстановления',
+    'ok_saved_them' => 'ОК, я их сохранил',
+    'invalid_code' => 'Неверный код',
+    'error_occurred' => 'Произошла ошибка',
+    'disable_two_factor_auth' => 'Отключить двухфакторную аутентификацию',
+    'provide_password_code' => 'Вам нужно будет предоставить пароль и код подтверждения',
+    'continue' => 'Продолжить',
+    'verify_identity' => 'Подтвердите свою личность',
+    'enter_password' => 'Введите свой пароль',
+    'authenticator_code' => 'Код аутентификатора',
+    'disable' => 'Отключить',
+    'enter_password_and_code' => 'Пожалуйста, введите пароль и код',
 ];
