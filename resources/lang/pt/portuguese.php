@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 return [
     // Navigation
@@ -129,16 +129,16 @@ return [
     'share_on_whatsapp' => 'Compartilhar no WhatsApp',
     'share_on_telegram' => 'Compartilhar no Telegram',
     'share_on_twitter' => 'Compartilhar no Twitter',
-    'commission_structure' => 'Estrutura de Comissão',
-    'level_earning_system' => 'Sistema de Ganhos de 3 Níveis',
+    'commission_structure' => 'Estrutura de Bônus de Depósito',
+    'level_earning_system' => 'Sistema de Bônus de Depósito de 3 Níveis',
     'direct_referrals' => 'Indicações Diretas',
     'second_generation' => '2ª Geração',
     'third_generation' => '3ª Geração',
     'note' => 'Nota',
-    'commission_note_text' => 'As comissões são ganhas com depósitos feitos por membros em cada nível.',
+    'commission_note_text' => 'Os bônus de depósito são ganhos com depósitos feitos por membros em cada nível.',
     'active_members_note' => 'são aqueles que fizeram pelo menos um depósito.',
     'network_levels' => 'Níveis de Rede',
-    'commission' => 'comissão',
+    'commission' => 'Bônus de Depósito',
     'total' => 'Total',
     'no_members_yet' => 'Ainda não há membros neste nível',
     'joined' => 'Entrou',
@@ -321,19 +321,6 @@ return [
     'next_checkin_available_in' => 'Próximo check-in disponível em',
     'current_streak' => 'Sequência Atual',
     'last_7_days' => 'Últimos 7 Dias',
-    'total_earned' => 'Total Ganho',
-
-    // Lucky Box Page
-    'mystery_reward' => 'Recompensa Misteriosa',
-    'open_box_reveal_prize' => 'Abra a caixa para revelar seu prêmio!',
-    'open_lucky_box' => 'Abrir Caixa da Sorte',
-    'already_opened_today' => 'Já Aberta Hoje',
-    'min_reward' => 'Recompensa Mín',
-    'max_reward' => 'Recompensa Máx',
-    'next_box_available_tomorrow' => 'Próxima caixa disponível amanhã',
-    'congratulations' => 'Parabéns!',
-    'claim_reward' => 'Reivindicar Recompensa',
-    'opening' => 'Abrindo...',
     
     // Two-Factor Authentication
     'two_factor_auth' => 'Autenticação de Dois Fatores',
@@ -347,7 +334,7 @@ return [
     'download_authenticator_app' => 'Baixe o Google Authenticator, Authy ou qualquer aplicativo compatível com TOTP da sua loja de aplicativos.',
     'scan_qr_code' => 'Escanear Código QR',
     'generate_qr_code' => 'Gerar Código QR',
-    'regenerate_qr_code' => 'Regenerar Código QR',
+    'regenerate_qr_code' => 'Regerar Código QR',
     'generating' => 'Gerando',
     'cant_scan_enter_manually' => 'Não consegue escanear? Digite manualmente',
     'failed_generate_qr' => 'Falha ao gerar código QR',
@@ -368,5 +355,5 @@ return [
     'enter_password' => 'Digite sua senha',
     'authenticator_code' => 'Código do Autenticador',
     'disable' => 'Desativar',
-    'enter_password_and_code' => 'Por favor, digite a senha e o código',
+    'enter_password_and_code' => 'Digite a senha e o código',
 ];

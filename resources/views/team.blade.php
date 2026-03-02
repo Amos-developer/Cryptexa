@@ -18,10 +18,105 @@
 
 <div class="team-container">
 
-    <!-- PAGE TITLE -->
-    <div class="page-header">
-        <!-- <h1>{{ __t('my_team') }}</h1> -->
-        <p>{{ __t('earn_passive_income') }}</p>
+    <!-- HERO STATS SECTION -->
+    <div style="
+        background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(168,85,247,0.15));
+        border: 1px solid rgba(56,189,248,0.3);
+        border-radius: 20px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 20px 60px rgba(56,189,248,0.2);
+        position: relative;
+        overflow: hidden;
+    ">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h2 style="color: #e5e7eb; font-size: 18px; font-weight: 700; margin: 0 0 4px 0;">{{ __t('my_team') }}</h2>
+            <p style="color: #94a3b8; font-size: 13px; margin: 0;">{{ __t('earn_passive_income') }}</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+            <div style="
+                background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(56,189,248,0.05));
+                border: 1px solid rgba(56,189,248,0.4);
+                border-radius: 16px;
+                padding: 20px 12px;
+                text-align: center;
+            ">
+                <div style="
+                    width: 48px;
+                    height: 48px;
+                    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 12px;
+                    box-shadow: 0 8px 16px rgba(56,189,248,0.4);
+                ">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                </div>
+                <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px 0;">{{ __t('total_members') }}</p>
+                <h3 style="color: #38bdf8; font-size: 28px; font-weight: 900; margin: 0;">{{ $totalMembers }}</h3>
+            </div>
+
+            <div style="
+                background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(34,197,94,0.05));
+                border: 1px solid rgba(34,197,94,0.4);
+                border-radius: 16px;
+                padding: 20px 12px;
+                text-align: center;
+            ">
+                <div style="
+                    width: 48px;
+                    height: 48px;
+                    background: linear-gradient(135deg, #22c55e, #16a34a);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 12px;
+                    box-shadow: 0 8px 16px rgba(34,197,94,0.4);
+                ">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                </div>
+                <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px 0;">{{ __t('active') }}</p>
+                <h3 style="color: #22c55e; font-size: 28px; font-weight: 900; margin: 0;">{{ $totalActiveMembers }}</h3>
+            </div>
+
+            <div style="
+                background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(251,191,36,0.05));
+                border: 1px solid rgba(251,191,36,0.4);
+                border-radius: 16px;
+                padding: 20px 12px;
+                text-align: center;
+            ">
+                <div style="
+                    width: 48px;
+                    height: 48px;
+                    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 12px;
+                    box-shadow: 0 8px 16px rgba(251,191,36,0.4);
+                ">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                </div>
+                <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px 0;">{{ __t('total_earnings') }}</p>
+                <h3 style="color: #fbbf24; font-size: 24px; font-weight: 900; margin: 0;">${{ number_format($earnings, 2) }}</h3>
+            </div>
+        </div>
     </div>
 
     <!-- REFERRAL CODE SECTION -->
@@ -89,7 +184,7 @@
         </div>
     </div>
 
-    <!-- COMMISSION STRUCTURE -->
+    <!-- DEPOSIT BONUS STRUCTURE -->
     <div class="commission-section">
         <div class="section-header">
             <h3>{{ __t('commission_structure') }}</h3>
@@ -118,53 +213,7 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: inline; margin-right: 8px; vertical-align: middle;">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
-            <strong>{{ __t('note') }}:</strong> {{ __t('commission_note_text') }} {{ __t('active_members') }} {{ __t('active_members_note') }}
-        </div>
-    </div>
-
-    <!-- STATS SECTION -->
-    <div class="stats-grid">
-        <div class="stat-card stat-total">
-            <div class="stat-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-            </div>
-            <div class="stat-content">
-                <p class="stat-label">{{ __t('total_members') }}</p>
-                <h3 class="stat-value">{{ $totalMembers }}</h3>
-            </div>
-        </div>
-
-        <div class="stat-card stat-active">
-            <div class="stat-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-                </svg>
-            </div>
-            <div class="stat-content">
-                <p class="stat-label">{{ __t('active_members') }}</p>
-                <h3 class="stat-value">{{ $totalActiveMembers }}</h3>
-            </div>
-        </div>
-
-        <div class="stat-card stat-earnings">
-            <div class="stat-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="1"></circle>
-                    <path d="M12 1v6m0 6v6"></path>
-                    <path d="M4.22 4.22l4.24 4.24m5.08 0l4.24-4.24"></path>
-                    <path d="M1 12h6m6 0h6"></path>
-                    <path d="M4.22 19.78l4.24-4.24m5.08 0l4.24 4.24"></path>
-                </svg>
-            </div>
-            <div class="stat-content">
-                <p class="stat-label">{{ __t('total_earnings') }}</p>
-                <h3 class="stat-value">${{ number_format($earnings, 2) }}</h3>
-            </div>
+            <strong>{{ __t('note') }}:</strong> {{ __t('commission_note_text') }}
         </div>
     </div>
 
@@ -174,9 +223,9 @@
 
         @php
         $levels = [
-        ['name' => 'Level 1', 'users' => $level1, 'active' => $level1Active, 'commission' => '2%', 'color' => 'level-1'],
-        ['name' => 'Level 2', 'users' => $level2, 'active' => $level2Active, 'commission' => '1%', 'color' => 'level-2'],
-        ['name' => 'Level 3', 'users' => $level3, 'active' => $level3Active, 'commission' => '0.5%', 'color' => 'level-3'],
+        ['name' => 'Level 1', 'users' => $level1, 'active' => $level1Active, 'bonus' => '2%', 'color' => 'level-1'],
+        ['name' => 'Level 2', 'users' => $level2, 'active' => $level2Active, 'bonus' => '1%', 'color' => 'level-2'],
+        ['name' => 'Level 3', 'users' => $level3, 'active' => $level3Active, 'bonus' => '0.5%', 'color' => 'level-3'],
         ];
         @endphp
 
@@ -185,7 +234,7 @@
             <div class="level-header">
                 <div class="level-info">
                     <h4 class="level-name">{{ $level['name'] }}</h4>
-                    <span class="commission-badge">{{ $level['commission'] }} {{ __t('commission') }}</span>
+                    <span class="commission-badge">{{ $level['bonus'] }} {{ __t('commission') }}</span>
                 </div>
                 <div class="level-stats">
                     <div class="stat-mini">

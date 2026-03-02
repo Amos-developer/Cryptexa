@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 return [
     // Navigation
@@ -130,16 +130,16 @@ return [
     'share_on_whatsapp' => 'Compartir en WhatsApp',
     'share_on_telegram' => 'Compartir en Telegram',
     'share_on_twitter' => 'Compartir en Twitter',
-    'commission_structure' => 'Estructura de Comisiones',
-    'level_earning_system' => 'Sistema de Ganancias de 3 Niveles',
+    'commission_structure' => 'Struttura Bonus Deposito',
+    'level_earning_system' => 'Sistema Bonus Deposito a 3 Livelli',
     'direct_referrals' => 'Referidos Directos',
     'second_generation' => '2da Generación',
     'third_generation' => '3ra Generación',
     'note' => 'Nota',
-    'commission_note_text' => 'Las comisiones se ganan de los depósitos realizados por miembros en cada nivel.',
+    'commission_note_text' => 'I bonus deposito vengono guadagnati dai depositi effettuati dai membri a ogni livello.',
     'active_members_note' => 'son aquellos que han realizado al menos un depósito.',
     'network_levels' => 'Niveles de Red',
-    'commission' => 'comisión',
+    'commission' => 'Bonus Deposito',
     'total' => 'Total',
     'no_members_yet' => 'Aún no hay miembros en este nivel',
     'joined' => 'Unido',
@@ -322,25 +322,12 @@ return [
     'next_checkin_available_in' => 'Prossimo check-in disponibile tra',
     'current_streak' => 'Serie Attuale',
     'last_7_days' => 'Ultimi 7 Giorni',
-    'total_earned' => 'Totale Guadagnato',
-
-    // Lucky Box Page
-    'mystery_reward' => 'Ricompensa Misteriosa',
-    'open_box_reveal_prize' => 'Apri la scatola per rivelare il tuo premio!',
-    'open_lucky_box' => 'Apri Scatola Fortunata',
-    'already_opened_today' => 'Già Aperta Oggi',
-    'min_reward' => 'Ricompensa Min',
-    'max_reward' => 'Ricompensa Max',
-    'next_box_available_tomorrow' => 'Prossima scatola disponibile domani',
-    'congratulations' => 'Congratulazioni!',
-    'claim_reward' => 'Richiedi Ricompensa',
-    'opening' => 'Apertura...',
     
     // Two-Factor Authentication
     'two_factor_auth' => 'Autenticazione a Due Fattori',
     'enable_2fa' => 'Abilita Autenticazione a Due Fattori',
     'disable_2fa' => 'Disabilita Autenticazione a Due Fattori',
-    'protect_account_extra_security' => 'Proteggi il tuo account con un ulteriore livello di sicurezza',
+    'protect_account_extra_security' => 'Proteggi il tuo account con un livello di sicurezza aggiuntivo',
     'account_protected_2fa' => 'Il tuo account è ora protetto con 2FA',
     'account_secured_2fa' => 'Il tuo account è protetto con autenticazione a due fattori. Avrai bisogno della tua app di autenticazione per accedere.',
     'account_no_longer_protected' => 'Il tuo account non è più protetto con 2FA',
@@ -369,5 +356,5 @@ return [
     'enter_password' => 'Inserisci la tua password',
     'authenticator_code' => 'Codice Autenticatore',
     'disable' => 'Disabilita',
-    'enter_password_and_code' => 'Inserisci sia la password che il codice',
+    'enter_password_and_code' => 'Inserisci password e codice',
 ];

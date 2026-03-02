@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 return [
     'home' => 'Ana Sayfa',
@@ -109,16 +109,16 @@ return [
     'share_on_whatsapp' => 'WhatsApp\'ta Paylaş',
     'share_on_telegram' => 'Telegram\'da Paylaş',
     'share_on_twitter' => 'Twitter\'da Paylaş',
-    'commission_structure' => 'Komisyon Yapısı',
-    'level_earning_system' => '3 Seviyeli Kazanç Sistemi',
+    'commission_structure' => 'Para Yatırma Bonusu Yapısı',
+    'level_earning_system' => '3 Seviyeli Para Yatırma Bonusu Sistemi',
     'direct_referrals' => 'Doğrudan Referanslar',
     'second_generation' => '2. Nesil',
     'third_generation' => '3. Nesil',
     'note' => 'Not',
-    'commission_note_text' => 'Komisyonlar, her seviyedeki üyelerin yaptığı yatırımlardan kazanılır.',
+    'commission_note_text' => 'Para yatırma bonusları, her seviyedeki üyelerin yaptığı yatırımlardan kazanılır.',
     'active_members_note' => 'en az bir yatırım yapmış olanlardır.',
     'network_levels' => 'Ağ Seviyeleri',
-    'commission' => 'komisyon',
+    'commission' => 'Para Yatırma Bonusu',
     'total' => 'Toplam',
     'no_members_yet' => 'Bu seviyede henüz üye yok',
     'joined' => 'Katıldı',
@@ -291,30 +291,17 @@ return [
     'next_checkin_available_in' => 'Sonraki giriş şu süre içinde mevcut',
     'current_streak' => 'Mevcut Seri',
     'last_7_days' => 'Son 7 Gün',
-    'total_earned' => 'Toplam Kazanılan',
-
-    // Lucky Box Page
-    'mystery_reward' => 'Gizemli Ödül',
-    'open_box_reveal_prize' => 'Ödülünüzü ortaya çıkarmak için kutuyu açın!',
-    'open_lucky_box' => 'Şans Kutusunu Aç',
-    'already_opened_today' => 'Bugün Zaten Açıldı',
-    'min_reward' => 'Min Ödül',
-    'max_reward' => 'Maks Ödül',
-    'next_box_available_tomorrow' => 'Sonraki kutu yarın mevcut',
-    'congratulations' => 'Tebrikler!',
-    'claim_reward' => 'Ödülü Talep Et',
-    'opening' => 'Açılıyor...',
     
     // Two-Factor Authentication
     'two_factor_auth' => 'İki Faktörlü Kimlik Doğrulama',
     'enable_2fa' => 'İki Faktörlü Kimlik Doğrulamayı Etkinleştir',
     'disable_2fa' => 'İki Faktörlü Kimlik Doğrulamayı Devre Dışı Bırak',
-    'protect_account_extra_security' => 'Hesabınızı ekstra bir güvenlik katmanıyla koruyun',
+    'protect_account_extra_security' => 'Hesabınızı ekstra güvenlik katmanıyla koruyun',
     'account_protected_2fa' => 'Hesabınız artık 2FA ile korunuyor',
     'account_secured_2fa' => 'Hesabınız iki faktörlü kimlik doğrulama ile güvence altına alındı. Giriş yapmak için kimlik doğrulama uygulamanıza ihtiyacınız olacak.',
     'account_no_longer_protected' => 'Hesabınız artık 2FA ile korunmuyor',
     'install_authenticator_app' => 'Kimlik Doğrulama Uygulamasını Yükle',
-    'download_authenticator_app' => 'Uygulama mağazağınızdan Google Authenticator, Authy veya TOTP uyumlu herhangi bir uygulama indirin.',
+    'download_authenticator_app' => 'Uygulama mağazağınızdan Google Authenticator, Authy veya TOTP uyumlu bir uygulama indirin.',
     'scan_qr_code' => 'QR Kodunu Tara',
     'generate_qr_code' => 'QR Kodu Oluştur',
     'regenerate_qr_code' => 'QR Kodunu Yeniden Oluştur',
@@ -338,5 +325,5 @@ return [
     'enter_password' => 'Şifrenizi girin',
     'authenticator_code' => 'Kimlik Doğrulama Kodu',
     'disable' => 'Devre Dışı Bırak',
-    'enter_password_and_code' => 'Lütfen hem şifre hem de kodu girin',
+    'enter_password_and_code' => 'Şifre ve kodu girin',
 ];
