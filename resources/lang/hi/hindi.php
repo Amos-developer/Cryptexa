@@ -326,4 +326,17 @@ return [
     'authenticator_code' => 'प्रमाणीकरण कोड',
     'disable' => 'अक्षम करें',
     'enter_password_and_code' => 'पासवर्ड और कोड दर्ज करें',
+    
+    // Show Plan Page (Additional)
+    'fixed' => 'निश्चित',
+    'daily_compounding_returns' => 'आपके निवेश पर दैनिक चक्रवृद्धि रिटर्न',
+    'your_balance' => 'आपका शेष',
+    'min' => 'न्यूनतम',
+    'max' => 'अधिकतम',
+    'unlimited' => 'असीमित',
+    'projected_returns' => 'अनुमानित रिटर्न',
+    'investment' => 'निवेश',
+    'expected_profit' => 'अपेक्षित लाभ',
+    'locked_funds' => 'लॉक किए गए फंड',
+    'investment_locked_until_complete' => 'योजना पूर्ण होने तक आपका निवेश लॉक रहेगा',
 ];

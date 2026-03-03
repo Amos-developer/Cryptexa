@@ -326,4 +326,17 @@ return [
     'authenticator_code' => 'Kode Autentikator',
     'disable' => 'Nonaktifkan',
     'enter_password_and_code' => 'Masukkan kata sandi dan kode',
+    
+    // Show Plan Page (Additional)
+    'fixed' => 'Tetap',
+    'daily_compounding_returns' => 'Pengembalian majemuk harian atas investasi Anda',
+    'your_balance' => 'Saldo Anda',
+    'min' => 'Min',
+    'max' => 'Maks',
+    'unlimited' => 'Tidak Terbatas',
+    'projected_returns' => 'Pengembalian yang Diproyeksikan',
+    'investment' => 'Investasi',
+    'expected_profit' => 'Keuntungan yang Diharapkan',
+    'locked_funds' => 'Dana Terkunci',
+    'investment_locked_until_complete' => 'Investasi Anda akan dikunci hingga rencana selesai',
 ];

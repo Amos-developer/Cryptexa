@@ -52,7 +52,7 @@
                     border-radius: 12px;
                     border: 1px solid rgba(56,189,248,0.2);
                 ">
-                    <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">💰 Investment Range</p>
+                    <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">💰 {{ __t('investment_range') }}</p>
                     <h3 style="color: #38bdf8; font-size: 24px; font-weight: 900; margin: 0;">
                         ${{ number_format($plan->price, 2) }} - 
                         @if($plan->max_investment)
@@ -85,12 +85,12 @@
                 border-radius: 12px;
                 padding: 16px;
             ">
-                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">📈 {{ __t('daily_return') }} (Fixed)</p>
+                <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">📈 {{ __t('daily_return') }} ({{ __t('fixed') }})</p>
                 <h3 style="color: #22c55e; font-size: 28px; font-weight: 900; margin: 0;">
                     {{ number_format($plan->daily_profit, 1) }}%
                 </h3>
                 <p style="color: #86efac; font-size: 12px; margin: 8px 0 0 0;">
-                    Daily compounding returns on your investment
+                    {{ __t('daily_compounding_returns') }}
                 </p>
             </div>
 
@@ -126,7 +126,7 @@
                 justify-content: space-between;
                 align-items: center;
             ">
-                <span style="color: #94a3b8; font-size: 13px; font-weight: 600;">💼 Your Balance</span>
+                <span style="color: #94a3b8; font-size: 13px; font-weight: 600;">💼 {{ __t('your_balance') }}</span>
                 <span style="color: #a855f7; font-size: 18px; font-weight: 900;">${{ number_format(auth()->user()->balance, 2) }}</span>
             </div>
             
@@ -191,14 +191,14 @@
                 
                 <div style="display: flex; justify-content: space-between; margin-top: 8px;">
                     <p style="color: #64748b; font-size: 12px; margin: 0;">
-                        Min: <span style="color: #38bdf8; font-weight: 600;">${{ number_format($plan->price, 2) }}</span>
+                        {{ __t('min') }}: <span style="color: #38bdf8; font-weight: 600;">${{ number_format($plan->price, 2) }}</span>
                     </p>
                     <p style="color: #64748b; font-size: 12px; margin: 0;">
-                        Max: <span style="color: #a855f7; font-weight: 600;">
+                        {{ __t('max') }}: <span style="color: #a855f7; font-weight: 600;">
                             @if($plan->max_investment)
                                 ${{ number_format($plan->max_investment, 2) }}
                             @else
-                                Unlimited
+                                {{ __t('unlimited') }}
                             @endif
                         </span>
                     </p>
@@ -298,15 +298,15 @@
                 margin-bottom: 16px;
                 display: none;
             ">
-                <h6 style="color: #22c55e; font-weight: 700; font-size: 14px; margin: 0 0 16px 0;">📊 Projected Returns</h6>
+                <h6 style="color: #22c55e; font-weight: 700; font-size: 14px; margin: 0 0 16px 0;">📊 {{ __t('projected_returns') }}</h6>
                 
                 <div style="display: grid; gap: 12px;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="color: #94a3b8; font-size: 13px;">Investment</span>
+                        <span style="color: #94a3b8; font-size: 13px;">{{ __t('investment') }}</span>
                         <span id="investDisplay" style="color: #e5e7eb; font-weight: 700; font-size: 15px;">$0.00</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="color: #94a3b8; font-size: 13px;">Expected Profit</span>
+                        <span style="color: #94a3b8; font-size: 13px;">{{ __t('expected_profit') }}</span>
                         <span id="profitDisplay" style="color: #22c55e; font-weight: 700; font-size: 15px;">$0.00</span>
                     </div>
                     <div style="height: 1px; background: rgba(34,197,94,0.2); margin: 4px 0;"></div>
@@ -350,7 +350,7 @@
             animation: slideUp 0.6s ease 0.3s backwards;
         ">
             <p class="text-secondary" style="font-size: 12px; margin: 0;">
-                <span style="color: #a855f7; font-weight: 600;">🔒 Locked Funds</span> - Your investment will be locked until the plan completes
+                <span style="color: #a855f7; font-weight: 600;">🔒 {{ __t('locked_funds') }}</span> - {{ __t('investment_locked_until_complete') }}
             </p>
         </div>
 

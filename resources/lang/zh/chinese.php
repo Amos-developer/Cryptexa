@@ -356,4 +356,17 @@ return [
     'authenticator_code' => '认证器代码',
     'disable' => '禁用',
     'enter_password_and_code' => '输入密码和代码',
+    
+    // Show Plan Page (Additional)
+    'fixed' => '固定',
+    'daily_compounding_returns' => '您投资的每日复利回报',
+    'your_balance' => '您的余额',
+    'min' => '最小',
+    'max' => '最大',
+    'unlimited' => '无限制',
+    'projected_returns' => '预计回报',
+    'investment' => '投资',
+    'expected_profit' => '预期利润',
+    'locked_funds' => '锁定资金',
+    'investment_locked_until_complete' => '您的投资将被锁定直到计划完成',
 ];

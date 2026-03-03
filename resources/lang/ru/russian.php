@@ -355,4 +355,17 @@ return [
     'authenticator_code' => 'Код Аутентификатора',
     'disable' => 'Отключить',
     'enter_password_and_code' => 'Введите пароль и код',
+    
+    // Show Plan Page (Additional)
+    'fixed' => 'Фиксированный',
+    'daily_compounding_returns' => 'Ежедневные сложные доходы от вашей инвестиции',
+    'your_balance' => 'Ваш Баланс',
+    'min' => 'Мин',
+    'max' => 'Макс',
+    'unlimited' => 'Неограниченно',
+    'projected_returns' => 'Прогнозируемая Доходность',
+    'investment' => 'Инвестиция',
+    'expected_profit' => 'Ожидаемая Прибыль',
+    'locked_funds' => 'Заблокированные Средства',
+    'investment_locked_until_complete' => 'Ваша инвестиция будет заблокирована до завершения плана',
 ];

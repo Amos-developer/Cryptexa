@@ -356,4 +356,17 @@ return [
     'authenticator_code' => 'Código do Autenticador',
     'disable' => 'Desativar',
     'enter_password_and_code' => 'Digite a senha e o código',
+    
+    // Show Plan Page (Additional)
+    'fixed' => 'Fixo',
+    'daily_compounding_returns' => 'Retornos compostos diários sobre seu investimento',
+    'your_balance' => 'Seu Saldo',
+    'min' => 'Mín',
+    'max' => 'Máx',
+    'unlimited' => 'Ilimitado',
+    'projected_returns' => 'Retornos Projetados',
+    'investment' => 'Investimento',
+    'expected_profit' => 'Lucro Esperado',
+    'locked_funds' => 'Fundos Bloqueados',
+    'investment_locked_until_complete' => 'Seu investimento será bloqueado até a conclusão do plano',
 ];

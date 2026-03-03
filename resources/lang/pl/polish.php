@@ -326,4 +326,17 @@ return [
     'authenticator_code' => 'Kod Uwierzytelniający',
     'disable' => 'Wyłącz',
     'enter_password_and_code' => 'Wprowadź hasło i kod',
+    
+    // Show Plan Page (Additional)
+    'fixed' => 'Stały',
+    'daily_compounding_returns' => 'Dzienne zwroty składane z Twojej inwestycji',
+    'your_balance' => 'Twoje Saldo',
+    'min' => 'Min',
+    'max' => 'Maks',
+    'unlimited' => 'Nieograniczony',
+    'projected_returns' => 'Przewidywane Zwroty',
+    'investment' => 'Inwestycja',
+    'expected_profit' => 'Oczekiwany Zysk',
+    'locked_funds' => 'Zablokowane Środki',
+    'investment_locked_until_complete' => 'Twoja inwestycja zostanie zablokowana do czasu zakończenia planu',
 ];

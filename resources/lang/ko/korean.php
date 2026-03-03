@@ -357,4 +357,17 @@ return [
     'authenticator_code' => '인증 코드',
     'disable' => '비활성화',
     'enter_password_and_code' => '비밀번호와 코드를 입력하세요',
+    
+    // Show Plan Page (Additional)
+    'fixed' => '고정',
+    'daily_compounding_returns' => '투자에 대한 일일 복리 수익',
+    'your_balance' => '잔액',
+    'min' => '최소',
+    'max' => '최대',
+    'unlimited' => '무제한',
+    'projected_returns' => '예상 수익',
+    'investment' => '투자',
+    'expected_profit' => '예상 이익',
+    'locked_funds' => '잠긴 자금',
+    'investment_locked_until_complete' => '플랜이 완료될 때까지 투자가 잠깁니다',
 ];

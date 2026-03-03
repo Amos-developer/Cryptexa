@@ -356,4 +356,17 @@ return [
     'authenticator_code' => '認証コード',
     'disable' => '無効化',
     'enter_password_and_code' => 'パスワードとコードを入力',
+    
+    // Show Plan Page (Additional)
+    'fixed' => '固定',
+    'daily_compounding_returns' => '投資に対する毎日の複利リターン',
+    'your_balance' => '残高',
+    'min' => '最小',
+    'max' => '最大',
+    'unlimited' => '無制限',
+    'projected_returns' => '予想リターン',
+    'investment' => '投資',
+    'expected_profit' => '予想利益',
+    'locked_funds' => 'ロックされた資金',
+    'investment_locked_until_complete' => 'プランが完了するまで投資はロックされます',
 ];

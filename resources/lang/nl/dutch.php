@@ -326,4 +326,17 @@ return [
     'authenticator_code' => 'Authenticator Code',
     'disable' => 'Uitschakelen',
     'enter_password_and_code' => 'Voer wachtwoord en code in',
+    
+    // Show Plan Page (Additional)
+    'fixed' => 'Vast',
+    'daily_compounding_returns' => 'Dagelijkse samengestelde rendementen op uw investering',
+    'your_balance' => 'Uw Saldo',
+    'min' => 'Min',
+    'max' => 'Max',
+    'unlimited' => 'Onbeperkt',
+    'projected_returns' => 'Verwachte Rendementen',
+    'investment' => 'Investering',
+    'expected_profit' => 'Verwachte Winst',
+    'locked_funds' => 'Vergrendelde Fondsen',
+    'investment_locked_until_complete' => 'Uw investering wordt vergrendeld totdat het plan is voltooid',
 ];

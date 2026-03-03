@@ -362,4 +362,17 @@ return [
     'authenticator_code' => 'Authenticator Code',
     'disable' => 'Disable',
     'enter_password_and_code' => 'Please enter password and code',
+    
+    // Show Plan Page (Additional)
+    'fixed' => 'Fixed',
+    'daily_compounding_returns' => 'Daily compounding returns on your investment',
+    'your_balance' => 'Your Balance',
+    'min' => 'Min',
+    'max' => 'Max',
+    'unlimited' => 'Unlimited',
+    'projected_returns' => 'Projected Returns',
+    'investment' => 'Investment',
+    'expected_profit' => 'Expected Profit',
+    'locked_funds' => 'Locked Funds',
+    'investment_locked_until_complete' => 'Your investment will be locked until the plan completes',
 ];

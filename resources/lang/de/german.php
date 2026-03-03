@@ -356,4 +356,17 @@ return [
     'next_checkin_available_in' => 'Nächstes Einchecken verfügbar in',
     'current_streak' => 'Aktuelle Serie',
     'last_7_days' => 'Letzte 7 Tage',
+    
+    // Show Plan Page (Additional)
+    'fixed' => 'Fest',
+    'daily_compounding_returns' => 'Tägliche Zinseszinsrenditen auf Ihre Investition',
+    'your_balance' => 'Ihr Guthaben',
+    'min' => 'Min',
+    'max' => 'Max',
+    'unlimited' => 'Unbegrenzt',
+    'projected_returns' => 'Prognostizierte Renditen',
+    'investment' => 'Investition',
+    'expected_profit' => 'Erwarteter Gewinn',
+    'locked_funds' => 'Gesperrte Mittel',
+    'investment_locked_until_complete' => 'Ihre Investition wird bis zum Abschluss des Plans gesperrt',
 ];

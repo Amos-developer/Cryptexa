@@ -326,4 +326,17 @@ return [
     'authenticator_code' => 'Mã Xác Thực',
     'disable' => 'Tắt',
     'enter_password_and_code' => 'Nhập mật khẩu và mã',
+    
+    // Show Plan Page (Additional)
+    'fixed' => 'Cố định',
+    'daily_compounding_returns' => 'Lợi nhuận kép hàng ngày từ khoản đầu tư của bạn',
+    'your_balance' => 'Số Dư Của Bạn',
+    'min' => 'Tối thiểu',
+    'max' => 'Tối đa',
+    'unlimited' => 'Không giới hạn',
+    'projected_returns' => 'Lợi Nhuận Dự Kiến',
+    'investment' => 'Đầu tư',
+    'expected_profit' => 'Lợi Nhuận Kỳ Vọng',
+    'locked_funds' => 'Quỹ Bị Khóa',
+    'investment_locked_until_complete' => 'Khoản đầu tư của bạn sẽ bị khóa cho đến khi kế hoạch hoàn thành',
 ];

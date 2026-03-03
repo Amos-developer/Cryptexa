@@ -326,4 +326,17 @@ return [
     'authenticator_code' => 'รหัสยืนยันตัวตน',
     'disable' => 'ปิดใช้งาน',
     'enter_password_and_code' => 'ป้อนรหัสผ่านและรหัส',
+    
+    // Show Plan Page (Additional)
+    'fixed' => 'คงที่',
+    'daily_compounding_returns' => 'ผลตอบแทนทบต้นรายวันจากการลงทุนของคุณ',
+    'your_balance' => 'ยอดคงเหลือของคุณ',
+    'min' => 'ต่ำสุด',
+    'max' => 'สูงสุด',
+    'unlimited' => 'ไม่จำกัด',
+    'projected_returns' => 'ผลตอบแทนที่คาดการณ์',
+    'investment' => 'การลงทุน',
+    'expected_profit' => 'กำไรที่คาดหวัง',
+    'locked_funds' => 'เงินที่ถูกล็อค',
+    'investment_locked_until_complete' => 'การลงทุนของคุณจะถูกล็อคจนกว่าแผนจะเสร็จสมบูรณ์',
 ];

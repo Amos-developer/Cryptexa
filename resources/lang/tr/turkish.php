@@ -326,4 +326,17 @@ return [
     'authenticator_code' => 'Kimlik Doğrulama Kodu',
     'disable' => 'Devre Dışı Bırak',
     'enter_password_and_code' => 'Şifre ve kodu girin',
+    
+    // Show Plan Page (Additional)
+    'fixed' => 'Sabit',
+    'daily_compounding_returns' => 'Yatırımınızdan günlük bileşik getiriler',
+    'your_balance' => 'Bakiyeniz',
+    'min' => 'Min',
+    'max' => 'Maks',
+    'unlimited' => 'Sınırsız',
+    'projected_returns' => 'Öngörülen Getiriler',
+    'investment' => 'Yatırım',
+    'expected_profit' => 'Beklenen Kar',
+    'locked_funds' => 'Kilitli Fonlar',
+    'investment_locked_until_complete' => 'Yatırımınız plan tamamlanana kadar kilitli kalacak',
 ];

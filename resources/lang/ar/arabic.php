@@ -327,4 +327,17 @@ return [
     'authenticator_code' => 'رمز المصادقة',
     'disable' => 'تعطيل',
     'enter_password_and_code' => 'أدخل كلمة المرور والرمز',
+    
+    // Show Plan Page (Additional)
+    'fixed' => 'ثابت',
+    'daily_compounding_returns' => 'عوائد مركبة يومية على استثمارك',
+    'your_balance' => 'رصيدك',
+    'min' => 'الحد الأدنى',
+    'max' => 'الحد الأقصى',
+    'unlimited' => 'غير محدود',
+    'projected_returns' => 'العوائد المتوقعة',
+    'investment' => 'الاستثمار',
+    'expected_profit' => 'الربح المتوقع',
+    'locked_funds' => 'الأموال المقفلة',
+    'investment_locked_until_complete' => 'سيتم قفل استثمارك حتى اكتمال الخطة',
 ];
