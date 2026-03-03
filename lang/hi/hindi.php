@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'home' => 'होम',
@@ -292,3 +292,4 @@ return [
     'current_streak' => 'Current Streak',
     'last_7_days' => 'Last 7 Days',
 ];
+

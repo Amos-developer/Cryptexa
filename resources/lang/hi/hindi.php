@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'home' => 'होम',
@@ -340,3 +340,4 @@ return [
     'locked_funds' => 'लॉक किए गए फंड',
     'investment_locked_until_complete' => 'योजना पूर्ण होने तक आपका निवेश लॉक रहेगा',
 ];
+

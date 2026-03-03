@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     // Navigation
@@ -371,3 +371,4 @@ return [
     'locked_funds' => '잠긴 자금',
     'investment_locked_until_complete' => '플랜이 완료될 때까지 투자가 잠깁니다',
 ];
+

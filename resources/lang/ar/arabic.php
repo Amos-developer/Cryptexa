@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'home' => 'الرئيسية',
@@ -341,3 +341,4 @@ return [
     'locked_funds' => 'الأموال المقفلة',
     'investment_locked_until_complete' => 'سيتم قفل استثمارك حتى اكتمال الخطة',
 ];
+

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     // Navigation
@@ -370,3 +370,4 @@ return [
     'locked_funds' => 'ロックされた資金',
     'investment_locked_until_complete' => 'プランが完了するまで投資はロックされます',
 ];
+

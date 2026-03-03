@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     // Navigation
@@ -322,3 +322,4 @@ return [
     'current_streak' => '現在の連続',
     'last_7_days' => '過去7日間',
 ];
+
