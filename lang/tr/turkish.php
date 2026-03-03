@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'home' => 'Ana Sayfa',
@@ -22,7 +22,7 @@ return [
     'active_pools' => 'Havuzlar',
     'portfolio_growth' => 'Portföy Büyümesi',
     'todays_earnings' => 'Bugünkü Kazançlar',
-    'liquidity_pools' => 'Likidite Büyüme Havuzları',
+    'liquidity_pools' => 'Yatirim Kasalari',
     'active' => 'Aktif',
     'investment_range' => 'Yatırım Aralığı',
     'daily_return' => 'Günlük Getiri',

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'home' => 'Strona główna',
@@ -22,7 +22,7 @@ return [
     'active_pools' => 'Pule',
     'portfolio_growth' => 'Wzrost portfela',
     'todays_earnings' => 'Dzisiejsze zarobki',
-    'liquidity_pools' => 'Pule wzrostu płynności',
+    'liquidity_pools' => 'Skarbce Inwestycyjne',
     'active' => 'Aktywny',
     'investment_range' => 'Zakres inwestycji',
     'daily_return' => 'Dzienny zwrot',

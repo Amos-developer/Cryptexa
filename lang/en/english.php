@@ -15,11 +15,11 @@ return [
     'logout' => 'Logout',
     'account' => 'Account',
     'leaders_rank' => 'Leaders Rank',
-    'liquidity_portfolio_overview' => 'Liquidity Portfolio Overview',
+    'liquidity_portfolio_overview' => 'Portfolio Overview',
     
     // Balance Section
     'total_balance' => 'Total Account Balance',
-    'active_liquidity' => 'Active Liquidity Allocation',
+    'active_liquidity' => 'Active Investments',
     'active_investment' => 'Active',
     'total_profit' => 'Profit',
     'active_pools' => 'Pools',
@@ -27,7 +27,7 @@ return [
     'todays_earnings' => "Today's Earnings",
     
     // Pools
-    'liquidity_pools' => 'Liquidity Growth Pools',
+    'liquidity_pools' => 'Investment Vaults',
     'active' => 'Active',
     'investment_range' => 'Investment Range',
     'daily_return' => 'Daily Return',
@@ -149,7 +149,7 @@ return [
     
     // Show Plan Page
     'pool_details' => 'Pool Details',
-    'activate_pool' => 'Activate Pool',
+    'activate_pool' => 'Activate Vault',
     'enter_amount' => 'Enter Amount',
     'minimum' => 'Minimum',
     'maximum' => 'Maximum',

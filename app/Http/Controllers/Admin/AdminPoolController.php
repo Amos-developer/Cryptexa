@@ -28,7 +28,10 @@ class AdminPoolController extends Controller
             'max_investment' => 'nullable|numeric|min:0',
             'daily_profit' => 'required|numeric|min:0|max:100',
             'duration_minutes' => 'required|integer|min:1',
+            'compound_interest' => 'nullable|boolean',
         ]);
+        
+        $validated['compound_interest'] = $validated['compound_interest'] ?? true;
         
         ComputePlan::create($validated);
         
@@ -54,7 +57,10 @@ class AdminPoolController extends Controller
             'max_investment' => 'nullable|numeric|min:0',
             'daily_profit' => 'required|numeric|min:0|max:100',
             'duration_minutes' => 'required|integer|min:1',
+            'compound_interest' => 'nullable|boolean',
         ]);
+        
+        $validated['compound_interest'] = $validated['compound_interest'] ?? true;
         
         $pool->update($validated);
         

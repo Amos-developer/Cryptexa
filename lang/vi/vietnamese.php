@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'home' => 'Trang chủ',
@@ -22,7 +22,7 @@ return [
     'active_pools' => 'Hồ',
     'portfolio_growth' => 'Tăng trưởng danh mục',
     'todays_earnings' => 'Thu nhập hôm nay',
-    'liquidity_pools' => 'Hồ tăng trưởng thanh khoản',
+    'liquidity_pools' => 'Ket Dau Tu',
     'active' => 'Hoạt động',
     'investment_range' => 'Phạm vi đầu tư',
     'daily_return' => 'Lợi nhuận hàng ngày',

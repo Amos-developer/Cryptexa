@@ -27,7 +27,7 @@ return [
     'todays_earnings' => 'Сегодняшние заработки',
     
     // Pools
-    'liquidity_pools' => 'Пулы роста ликвидности',
+    'liquidity_pools' => 'Инвестиционные Хранилища',
     'active' => 'Активный',
     'investment_range' => 'Диапазон инвестиций',
     'daily_return' => 'Ежедневная доходность',

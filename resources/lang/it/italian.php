@@ -25,7 +25,7 @@ return [
     'todays_earnings' => 'Guadagni di Oggi',
     
     // Pools
-    'liquidity_pools' => 'Pools de Crecimiento de Liquidez',
+    'liquidity_pools' => 'Casseforti di Investimento',
     'active' => 'Activo',
     'investment_range' => 'Rango de InversiÃ³n',
     'daily_return' => 'Retorno Diario',

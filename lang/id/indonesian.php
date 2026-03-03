@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'home' => 'Beranda',
@@ -22,7 +22,7 @@ return [
     'active_pools' => 'Pool',
     'portfolio_growth' => 'Pertumbuhan Portofolio',
     'todays_earnings' => 'Penghasilan Hari Ini',
-    'liquidity_pools' => 'Pool Pertumbuhan Likuiditas',
+    'liquidity_pools' => 'Brankas Investasi',
     'active' => 'Aktif',
     'investment_range' => 'Rentang Investasi',
     'daily_return' => 'Pengembalian Harian',

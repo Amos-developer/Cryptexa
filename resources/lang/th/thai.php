@@ -22,7 +22,7 @@ return [
     'active_pools' => 'พูล',
     'portfolio_growth' => 'การเติบโตของพอร์ต',
     'todays_earnings' => 'รายได้วันนี้',
-    'liquidity_pools' => 'พูลการเติบโตสภาพคล่อง',
+    'liquidity_pools' => 'ตู้นิรภัยการลงทุน',
     'active' => 'ใช้งาน',
     'investment_range' => 'ช่วงการลงทุน',
     'daily_return' => 'ผลตอบแทนรายวัน',

@@ -45,6 +45,7 @@ class User extends Authenticatable
         'elite_leader_bonus_paid',
         'legendary_leader_bonus_paid',
         'grand_leader_bonus_paid',
+        'notification_preferences',
     ];
 
     /**
@@ -68,6 +69,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'two_factor_confirmed_at' => 'datetime',
             'password' => 'hashed',
+            'notification_preferences' => 'array',
         ];
     }
 

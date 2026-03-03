@@ -22,9 +22,9 @@
 
         <!-- HERO SECTION -->
         <div class="mb-32" style="animation: slideDown 0.6s ease;">
-            <!-- <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 12px 0;">
+            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 12px 0;">
                 {{ $plan->name }}
-            </h1> -->
+            </h1>
             <p class="text-secondary" style="font-size: 14px; margin: 0; line-height: 1.6;">
                 {{ $plan->description }}
             </p>
@@ -54,11 +54,11 @@
                 ">
                     <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">💰 {{ __t('investment_range') }}</p>
                     <h3 style="color: #38bdf8; font-size: 24px; font-weight: 900; margin: 0;">
-                        ${{ number_format($plan->price, 2) }} - 
+                        ${{ number_format($plan->price, 2) }} -
                         @if($plan->max_investment)
-                            ${{ number_format($plan->max_investment, 2) }}
+                        ${{ number_format($plan->max_investment, 2) }}
                         @else
-                            <span style="font-size: 20px;">∞</span>
+                        <span style="font-size: 20px;">∞</span>
                         @endif
                     </h3>
                 </div>
@@ -87,7 +87,7 @@
             ">
                 <p style="color: #94a3b8; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">📈 {{ __t('daily_return') }} ({{ __t('fixed') }})</p>
                 <h3 style="color: #22c55e; font-size: 28px; font-weight: 900; margin: 0;">
-                    {{ number_format($plan->daily_profit, 1) }}%
+                    {{ number_format($plan->daily_profit, 2) }}%
                 </h3>
                 <p style="color: #86efac; font-size: 12px; margin: 8px 0 0 0;">
                     {{ __t('daily_compounding_returns') }}
@@ -99,7 +99,7 @@
         <!-- {{ __t('enter_amount') }} INPUT -->
         <form method="POST" action="{{ route('pools.activate', $plan->id) }}" id="activationForm" style="animation: slideUp 0.6s ease 0.2s backwards;">
             @csrf
-            
+
             <!-- VALIDATION ERRORS -->
             @if ($errors->any())
             <div style="
@@ -129,7 +129,7 @@
                 <span style="color: #94a3b8; font-size: 13px; font-weight: 600;">💼 {{ __t('your_balance') }}</span>
                 <span style="color: #a855f7; font-size: 18px; font-weight: 900;">${{ number_format(auth()->user()->balance, 2) }}</span>
             </div>
-            
+
             <!-- AMOUNT INPUT CARD -->
             <div style="
                 background: linear-gradient(135deg, rgba(56,189,248,0.08) 0%, rgba(56,189,248,0.02) 100%);
@@ -148,7 +148,7 @@
                     letter-spacing: 0.5px;
                     margin-bottom: 12px;
                 ">💵 {{ __t('enter_amount') }} (USDT)</label>
-                
+
                 <div style="position: relative;">
                     <!-- <span style="
                         position: absolute;
@@ -160,10 +160,10 @@
                         font-weight: 700;
                         pointer-events: none;
                     ">$</span> -->
-                    
-                    <input 
-                        type="number" 
-                        name="amount" 
+
+                    <input
+                        type="number"
+                        name="amount"
                         id="investmentAmount"
                         step="0.01"
                         min="{{ $plan->price }}"
@@ -185,10 +185,9 @@
                         "
                         onfocus="this.style.borderColor='rgba(56,189,248,0.5)'; this.style.background='rgba(15,23,42,0.8)';"
                         onblur="this.style.borderColor='rgba(56,189,248,0.2)'; this.style.background='rgba(15,23,42,0.6)';"
-                        oninput="calculateReturns()"
-                    >
+                        oninput="calculateReturns()">
                 </div>
-                
+
                 <div style="display: flex; justify-content: space-between; margin-top: 8px;">
                     <p style="color: #64748b; font-size: 12px; margin: 0;">
                         {{ __t('min') }}: <span style="color: #38bdf8; font-weight: 600;">${{ number_format($plan->price, 2) }}</span>
@@ -196,9 +195,9 @@
                     <p style="color: #64748b; font-size: 12px; margin: 0;">
                         {{ __t('max') }}: <span style="color: #a855f7; font-weight: 600;">
                             @if($plan->max_investment)
-                                ${{ number_format($plan->max_investment, 2) }}
+                            ${{ number_format($plan->max_investment, 2) }}
                             @else
-                                {{ __t('unlimited') }}
+                            {{ __t('unlimited') }}
                             @endif
                         </span>
                     </p>
@@ -223,8 +222,8 @@
                     cursor: pointer;
                     transition: all 0.2s ease;
                 "
-                onmouseover="this.style.background='rgba(56,189,248,0.15)'"
-                onmouseout="this.style.background='rgba(56,189,248,0.1)'">
+                    onmouseover="this.style.background='rgba(56,189,248,0.15)'"
+                    onmouseout="this.style.background='rgba(56,189,248,0.1)'">
                     ${{ number_format($plan->price, 0) }}
                 </button>
                 <button type="button" onclick="setAmount({{ $plan->price * 2 }})" style="
@@ -238,8 +237,8 @@
                     cursor: pointer;
                     transition: all 0.2s ease;
                 "
-                onmouseover="this.style.background='rgba(56,189,248,0.15)'"
-                onmouseout="this.style.background='rgba(56,189,248,0.1)'">
+                    onmouseover="this.style.background='rgba(56,189,248,0.15)'"
+                    onmouseout="this.style.background='rgba(56,189,248,0.1)'">
                     ${{ number_format($plan->price * 2, 0) }}
                 </button>
                 <button type="button" onclick="setAmount({{ $plan->price * 5 }})" style="
@@ -253,8 +252,8 @@
                     cursor: pointer;
                     transition: all 0.2s ease;
                 "
-                onmouseover="this.style.background='rgba(56,189,248,0.15)'"
-                onmouseout="this.style.background='rgba(56,189,248,0.1)'">
+                    onmouseover="this.style.background='rgba(56,189,248,0.15)'"
+                    onmouseout="this.style.background='rgba(56,189,248,0.1)'">
                     ${{ number_format($plan->price * 5, 0) }}
                 </button>
                 <button type="button" onclick="setAmount({{ $plan->price * 10 }})" style="
@@ -268,8 +267,8 @@
                     cursor: pointer;
                     transition: all 0.2s ease;
                 "
-                onmouseover="this.style.background='rgba(56,189,248,0.15)'"
-                onmouseout="this.style.background='rgba(56,189,248,0.1)'">
+                    onmouseover="this.style.background='rgba(56,189,248,0.15)'"
+                    onmouseout="this.style.background='rgba(56,189,248,0.1)'">
                     ${{ number_format($plan->price * 10, 0) }}
                 </button>
                 <button type="button" onclick="setAmount({{ $plan->max_investment ?? auth()->user()->balance }})" style="
@@ -283,8 +282,8 @@
                     cursor: pointer;
                     transition: all 0.2s ease;
                 "
-                onmouseover="this.style.background='rgba(168,85,247,0.2)'"
-                onmouseout="this.style.background='rgba(168,85,247,0.15)'">
+                    onmouseover="this.style.background='rgba(168,85,247,0.2)'"
+                    onmouseout="this.style.background='rgba(168,85,247,0.15)'">
                     MAX
                 </button>
             </div>
@@ -299,7 +298,7 @@
                 display: none;
             ">
                 <h6 style="color: #22c55e; font-weight: 700; font-size: 14px; margin: 0 0 16px 0;">📊 {{ __t('projected_returns') }}</h6>
-                
+
                 <div style="display: grid; gap: 12px;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span style="color: #94a3b8; font-size: 13px;">{{ __t('investment') }}</span>
@@ -407,40 +406,39 @@
 
 <!-- ANIMATIONS & STYLES -->
 <script>
-const dailyProfit = {{ $plan->daily_profit }};
-const days = {{ $plan->duration_minutes / 1440 }};
+    const dailyProfit = {{ $plan->daily_profit }};
+    const days = {{ $plan->duration_minutes / 1440 }};
 
-function setAmount(value) {
-    document.getElementById('investmentAmount').value = value.toFixed(2);
-    calculateReturns();
-}
-
-function calculateReturns() {
-    const amount = parseFloat(document.getElementById('investmentAmount').value) || 0;
-    const returnsCard = document.getElementById('returnsCard');
-    
-    if (amount >= {{ $plan->price }}) {
-        const finalAmount = amount * Math.pow((1 + (dailyProfit / 100)), days);
-        const profit = finalAmount - amount;
-        const total = finalAmount;
-        
-        document.getElementById('investDisplay').textContent = '$' + amount.toFixed(2);
-        document.getElementById('profitDisplay').textContent = '$' + profit.toFixed(2);
-        document.getElementById('totalDisplay').textContent = '$' + total.toFixed(2);
-        
-        returnsCard.style.display = 'block';
-    } else {
-        returnsCard.style.display = 'none';
-    }
-}
-
-// Auto-calculate on page load if value exists
-window.addEventListener('DOMContentLoaded', function() {
-    const input = document.getElementById('investmentAmount');
-    if (input.value) {
+    function setAmount(value) {
+        document.getElementById('investmentAmount').value = value.toFixed(2);
         calculateReturns();
     }
-});
+
+    function calculateReturns() {
+        const amount = parseFloat(document.getElementById('investmentAmount').value) || 0;
+        const returnsCard = document.getElementById('returnsCard');
+
+        if (amount >= {{ $plan->price }}) {
+            const finalAmount = amount * Math.pow((1 + (dailyProfit / 100)), days);
+            const profit = finalAmount - amount;
+            const total = finalAmount;
+
+            document.getElementById('investDisplay').textContent = '$' + amount.toFixed(2);
+            document.getElementById('profitDisplay').textContent = '$' + profit.toFixed(2);
+            document.getElementById('totalDisplay').textContent = '$' + total.toFixed(2);
+
+            returnsCard.style.display = 'block';
+        } else {
+            returnsCard.style.display = 'none';
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+        const input = document.getElementById('investmentAmount');
+        if (input.value) {
+            calculateReturns();
+        }
+    });
 </script>
 
 <style>

@@ -13,7 +13,14 @@ class ComputePlan extends Model
         'price',
         'max_investment',
         'daily_profit',
-        'duration_minutes'
+        'duration_minutes',
+        'compound_interest'
     ];
     
+    protected $casts = [
+        'compound_interest' => 'boolean',
+        'price' => 'decimal:2',
+        'max_investment' => 'decimal:2',
+        'daily_profit' => 'decimal:2',
+    ];
 }

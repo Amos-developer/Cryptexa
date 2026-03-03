@@ -25,7 +25,7 @@ return [
     'todays_earnings' => '今日收益',
     
     // Pools
-    'liquidity_pools' => '流动性增长池',
+    'liquidity_pools' => '投资金库',
     'active' => '活跃',
     'investment_range' => '投资范围',
     'daily_return' => '日收益率',

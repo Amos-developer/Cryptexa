@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     // Navigation
@@ -25,7 +25,7 @@ return [
     'todays_earnings' => 'Gains d’Aujourd’hui',
     
     // Pools
-    'liquidity_pools' => 'Pools de Croissance de Liquidité',
+    'liquidity_pools' => 'Coffres d''Investissement',
     'active' => 'Actif',
     'investment_range' => 'Plage d’Investissement',
     'daily_return' => 'Rendement Quotidien',

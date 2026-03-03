@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'home' => 'Home',
@@ -22,7 +22,7 @@ return [
     'active_pools' => 'Pools',
     'portfolio_growth' => 'Portefeuillegroei',
     'todays_earnings' => 'Vandaag Verdiend',
-    'liquidity_pools' => 'Liquiditeitsgroei Pools',
+    'liquidity_pools' => 'Investeringskluizen',
     'active' => 'Actief',
     'investment_range' => 'Investeringsbereik',
     'daily_return' => 'Dagelijks Rendement',

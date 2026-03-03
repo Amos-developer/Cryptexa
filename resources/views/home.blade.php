@@ -25,8 +25,8 @@
                 {{ __t('active_liquidity') }}
             </span>
         </div>
-        <div class="balance-chart">
-            <div class="chart-bar"></div>
+        <div class="balance-glow">
+            <div class="glow-bar"></div>
         </div>
     </div>
 
@@ -201,14 +201,14 @@
                         </div>
                         <div style="background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; padding: 10px; text-align: center;">
                             <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">{{ __t('daily_return') }}</p>
-                            <p style="color: #22c55e; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format($plan->daily_profit, 1) }}%</p>
+                            <p style="color: #22c55e; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format($plan->daily_profit, 2) }}%</p>
                         </div>
                     </div>
                     
                     <!-- Total ROI -->
                     <div style="background: rgba(251,191,36,0.05); border: 1px solid rgba(251,191,36,0.15); border-radius: 8px; padding: 10px; text-align: center; margin-bottom: 12px;">
                         <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">{{ __t('total_roi') }}</p>
-                        <p style="color: #fbbf24; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format((pow(1 + ($plan->daily_profit / 100), $days) - 1) * 100, 1) }}%</p>
+                        <p style="color: #fbbf24; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format((pow(1 + ($plan->daily_profit / 100), $days) - 1) * 100, 2) }}%</p>
                     </div>
                     
                     <!-- Progress Bar -->

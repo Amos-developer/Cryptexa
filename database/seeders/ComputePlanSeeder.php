@@ -16,51 +16,51 @@ class ComputePlanSeeder extends Seeder
         ComputePlan::insert([
 
             [
-                'name' => 'Stable Liquidity Vault',
-                'type' => 'Conservative Market-Making Strategy',
+                'name' => 'Bronze Vault',
+                'type' => 'Crypto Accelerator',
                 'price' => 50,
-                'max_investment' => 2000,
-                'daily_profit' => 2.2,   // 2.2% daily (fixed)
+                'max_investment' => 500,
+                'daily_profit' => 2.22,   // 2.22% daily
                 'duration_minutes' => 3 * 1440, // 3 Days
                 'compound_interest' => true,
             ],
 
             [
-                'name' => 'Strategic Growth Pool',
-                'type' => 'Diversified Liquidity Allocation',
-                'price' => 200,
-                'max_investment' => 10000,
-                'daily_profit' => 2.6,   // 2.6% daily (fixed)
+                'name' => 'Silver Vault',
+                'type' => 'Liquidity Booster',
+                'price' => 501,
+                'max_investment' => 2000,
+                'daily_profit' => 2.65,   // 2.65% daily
                 'duration_minutes' => 5 * 1440, // 5 Days
                 'compound_interest' => true,
             ],
 
             [
-                'name' => 'Advanced Capital Engine',
-                'type' => 'Active Liquidity Optimization',
-                'price' => 500,
-                'max_investment' => 25000,
-                'daily_profit' => 3.0,   // 3.0% daily (fixed)
+                'name' => 'Gold Vault',
+                'type' => 'Profit Engine',
+                'price' => 2001,
+                'max_investment' => 10000,
+                'daily_profit' => 3.08,   // 3.08% daily
                 'duration_minutes' => 7 * 1440, // 7 Days
                 'compound_interest' => true,
             ],
 
             [
-                'name' => 'Prime Liquidity Reserve',
-                'type' => 'Institutional Yield Strategy',
-                'price' => 2000,
-                'max_investment' => 100000,
-                'daily_profit' => 3.5,   // 3.5% daily (fixed)
+                'name' => 'Platinum Vault',
+                'type' => 'Capital Maximizer',
+                'price' => 10001,
+                'max_investment' => 50000,
+                'daily_profit' => 3.56,   // 3.56% daily
                 'duration_minutes' => 10 * 1440, // 10 Days
                 'compound_interest' => true,
             ],
 
             [
-                'name' => 'Elite Market Advantage Pool',
-                'type' => 'High-Capital Liquidity Deployment',
-                'price' => 5000,
+                'name' => 'Diamond Vault',
+                'type' => 'Wealth Engine',
+                'price' => 50001,
                 'max_investment' => null,  // Unlimited
-                'daily_profit' => 3.8,   // 3.8% daily (fixed)
+                'daily_profit' => 4.00,    // 4.00% daily
                 'duration_minutes' => 14 * 1440, // 14 Days
                 'compound_interest' => true,
             ],
