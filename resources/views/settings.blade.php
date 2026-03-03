@@ -21,19 +21,121 @@
 <!-- MAIN CONTENT -->
 <div class="settings-container">
 
-    <!-- USER PROFILE SECTION -->
-    <!-- <div class="profile-section">
-        <div class="profile-card">
-            <div class="profile-avatar">
-                <img src="{{ asset('images/avt/avt2.jpg') }}" alt="Profile">
+    <!-- USER PORTFOLIO CARD -->
+    <div style="
+        position: relative;
+        background: linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.95) 100%);
+        border: 1px solid rgba(56,189,248,0.3);
+        border-radius: 20px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(56,189,248,0.1) inset;
+        overflow: hidden;
+    ">
+        <!-- Animated Background Gradient -->
+        <div style="
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(56,189,248,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        "></div>
+        
+        <div style="position: relative; z-index: 1;">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+                <div style="
+                    width: 64px;
+                    height: 64px;
+                    border-radius: 50%;
+                    background: linear-gradient(135deg, #38bdf8 0%, #a855f7 100%);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 28px;
+                    font-weight: 900;
+                    color: white;
+                    flex-shrink: 0;
+                    box-shadow: 0 8px 24px rgba(56,189,248,0.4), 0 0 0 3px rgba(56,189,248,0.2);
+                    position: relative;
+                ">
+                    {{ strtoupper(substr(auth()->user()->username, 0, 1)) }}
+                    <div style="
+                        position: absolute;
+                        inset: -2px;
+                        border-radius: 50%;
+                        background: linear-gradient(135deg, #38bdf8, #a855f7);
+                        opacity: 0.3;
+                        filter: blur(8px);
+                        z-index: -1;
+                    "></div>
+                </div>
+                <div style="flex: 1; min-width: 0;">
+                    <h3 style="color: #f8fafc; font-size: 20px; font-weight: 800; margin: 0 0 6px 0; letter-spacing: -0.5px;">{{ auth()->user()->username }}</h3>
+                    <p style="color: #94a3b8; font-size: 14px; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ auth()->user()->email }}</p>
+                </div>
             </div>
-            <div class="profile-info">
-                <h3 class="profile-name">{{ auth()->user()->name }}</h3>
-                <p class="profile-email">{{ auth()->user()->email }}</p>
-                <span class="profile-badge">{{ auth()->user()->role ?? 'User' }}</span>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div style="
+                    background: linear-gradient(135deg, rgba(56,189,248,0.1) 0%, rgba(56,189,248,0.05) 100%);
+                    border: 1px solid rgba(56,189,248,0.3);
+                    border-radius: 14px;
+                    padding: 14px;
+                    backdrop-filter: blur(10px);
+                    position: relative;
+                    overflow: hidden;
+                ">
+                    <div style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        height: 2px;
+                        background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+                    "></div>
+                    <p style="color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px 0; font-weight: 600;">Account</p>
+                    <p style="color: #38bdf8; font-size: 15px; font-weight: 800; margin: 0; font-family: monospace; letter-spacing: 0.5px;">{{ auth()->user()->account_id }}</p>
+                </div>
+                <div style="
+                    background: linear-gradient(135deg, {{ auth()->user()->email_verified_at ? 'rgba(34,197,94,0.1)' : 'rgba(251,191,36,0.1)' }} 0%, {{ auth()->user()->email_verified_at ? 'rgba(34,197,94,0.05)' : 'rgba(251,191,36,0.05)' }} 100%);
+                    border: 1px solid {{ auth()->user()->email_verified_at ? 'rgba(34,197,94,0.4)' : 'rgba(251,191,36,0.4)' }};
+                    border-radius: 14px;
+                    padding: 14px;
+                    backdrop-filter: blur(10px);
+                    position: relative;
+                    overflow: hidden;
+                ">
+                    <div style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        height: 2px;
+                        background: linear-gradient(90deg, transparent, {{ auth()->user()->email_verified_at ? '#22c55e' : '#fbbf24' }}, transparent);
+                    "></div>
+                    <p style="color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px 0; font-weight: 600;">Status</p>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 50%;
+                            background: {{ auth()->user()->email_verified_at ? '#22c55e' : '#fbbf24' }};
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 12px;
+                            color: white;
+                            font-weight: 700;
+                            box-shadow: 0 0 12px {{ auth()->user()->email_verified_at ? 'rgba(34,197,94,0.5)' : 'rgba(251,191,36,0.5)' }};
+                        ">{{ auth()->user()->email_verified_at ? '✓' : '!' }}</div>
+                        <span style="color: {{ auth()->user()->email_verified_at ? '#22c55e' : '#fbbf24' }}; font-size: 14px; font-weight: 700;">{{ auth()->user()->email_verified_at ? 'Verified' : 'Unverified' }}</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     @php
     $sections = [

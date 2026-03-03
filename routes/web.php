@@ -208,6 +208,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/api/notifications/{id}', [NotificationController::class, 'delete'])
         ->name('api.notifications.delete');
 
+    Route::post('/api/notifications/preferences', [NotificationController::class, 'updatePreferences'])
+        ->name('api.notifications.preferences');
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 

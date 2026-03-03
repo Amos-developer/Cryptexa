@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notification;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
@@ -99,5 +100,21 @@ class NotificationController extends Controller
         $notification->delete();
 
         return response()->json(['success' => true]);
+    }
+
+    /**
+     * Update notification preferences
+     */
+    public function updatePreferences(Request $request)
+    {
+        $user = Auth::user();
+        $preferences = $user->notification_preferences ?? [];
+        
+        $preferences[$request->type] = $request->enabled;
+        
+        $user->notification_preferences = $preferences;
+        $user->save();
+
+        return response()->json(['success' => true, 'preferences' => $preferences]);
     }
 }

@@ -22,9 +22,9 @@
 
         <!-- HERO SECTION -->
         <div class="mb-32" style="animation: slideDown 0.6s ease;">
-            <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 12px 0;">
+            <!-- <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 12px 0;">
                 {{ $plan->name }}
-            </h1>
+            </h1> -->
             <p class="text-secondary" style="font-size: 14px; margin: 0; line-height: 1.6;">
                 {{ $plan->description }}
             </p>

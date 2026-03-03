@@ -140,17 +140,40 @@ function toggleNotification(checkbox, type) {
         button.style.left = '3px';
     }
     
-    // Save preference (you can add API call here)
-    console.log(`Notification ${type}: ${checkbox.checked ? 'enabled' : 'disabled'}`);
-    
-    // Show feedback
+    // Save preference to database
+    fetch('{{ route('api.notifications.preferences') }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({
+            type: type,
+            enabled: checkbox.checked
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showFeedback(checkbox.checked);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        checkbox.checked = !checkbox.checked;
+        slider.style.background = checkbox.checked ? '#22c55e' : '#334155';
+        button.style.left = checkbox.checked ? '25px' : '3px';
+    });
+}
+
+function showFeedback(enabled) {
     const feedback = document.createElement('div');
-    feedback.textContent = checkbox.checked ? '✓ Enabled' : '✗ Disabled';
+    feedback.textContent = enabled ? '✓ Enabled' : '✗ Disabled';
     feedback.style.cssText = `
         position: fixed;
         top: 80px;
         right: 20px;
-        background: ${checkbox.checked ? '#22c55e' : '#ef4444'};
+        background: ${enabled ? '#22c55e' : '#ef4444'};
         color: white;
         padding: 12px 20px;
         border-radius: 8px;
