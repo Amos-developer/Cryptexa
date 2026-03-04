@@ -261,7 +261,7 @@
                 @endphp
                 <div class="member-item {{ $hasDeposit ? 'active' : 'inactive' }}">
                     <div class="member-info">
-                        <div class="member-code">{{ $user->referral_code }}</div>
+                        <div class="member-code">{{ $user->account_id }}</div>
                         <div class="member-joined">{{ __t('joined') }} {{ $user->created_at->diffForHumans() }}</div>
                     </div>
                     <div class="member-balance">

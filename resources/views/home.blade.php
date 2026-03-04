@@ -276,6 +276,36 @@
             }
         }
         
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .section-header {
+                font-size: 14px !important;
+            }
+            .section-header span:last-child {
+                font-size: 11px !important;
+            }
+            [style*="padding: 16px"] {
+                padding: 12px !important;
+            }
+            [style*="font-size: 16px"] {
+                font-size: 14px !important;
+            }
+            [style*="font-size: 15px"] {
+                font-size: 13px !important;
+            }
+            [style*="grid-template-columns: repeat(2, 1fr)"] {
+                gap: 8px !important;
+            }
+            [style*="width: 44px; height: 44px"] {
+                width: 36px !important;
+                height: 36px !important;
+            }
+            [style*="width: 22px; height: 22px"] {
+                width: 18px !important;
+                height: 18px !important;
+            }
+        }
+        
         @media (max-width: 768px) {
             [style*="grid-template-columns: repeat(3, 1fr)"] {
                 grid-template-columns: 1fr !important;
