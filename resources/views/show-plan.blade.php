@@ -406,16 +406,8 @@
 
 <!-- ANIMATIONS & STYLES -->
 <script>
-    const dailyProfit = {
-        {
-            $plan - > daily_profit
-        }
-    };
-    const days = {
-        {
-            $plan - > duration_minutes / 1440
-        }
-    };
+    const dailyProfit = {{ $plan->daily_profit }};
+    const days = {{ $plan->duration_minutes / 1440 }};
 
     function setAmount(value) {
         document.getElementById('investmentAmount').value = value.toFixed(2);
@@ -426,11 +418,7 @@
         const amount = parseFloat(document.getElementById('investmentAmount').value) || 0;
         const returnsCard = document.getElementById('returnsCard');
 
-        if (amount >= {
-                {
-                    $plan - > price
-                }
-            }) {
+        if (amount >= {{ $plan->price }}) {
             const finalAmount = amount * Math.pow((1 + (dailyProfit / 100)), days);
             const profit = finalAmount - amount;
             const total = finalAmount;

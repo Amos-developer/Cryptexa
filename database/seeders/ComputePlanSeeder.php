@@ -19,7 +19,7 @@ class ComputePlanSeeder extends Seeder
                 'name' => 'Bronze Vault',
                 'type' => 'Crypto Accelerator',
                 'price' => 50,
-                'max_investment' => 500,
+                'max_investment' => 499,
                 'daily_profit' => 2.22,   // 2.22% daily
                 'duration_minutes' => 3 * 1440, // 3 Days
                 'compound_interest' => true,
@@ -28,8 +28,8 @@ class ComputePlanSeeder extends Seeder
             [
                 'name' => 'Silver Vault',
                 'type' => 'Liquidity Booster',
-                'price' => 501,
-                'max_investment' => 2000,
+                'price' => 500,
+                'max_investment' => 999,
                 'daily_profit' => 2.65,   // 2.65% daily
                 'duration_minutes' => 5 * 1440, // 5 Days
                 'compound_interest' => true,
@@ -38,8 +38,8 @@ class ComputePlanSeeder extends Seeder
             [
                 'name' => 'Gold Vault',
                 'type' => 'Profit Engine',
-                'price' => 2001,
-                'max_investment' => 10000,
+                'price' => 1000,
+                'max_investment' => 2499,
                 'daily_profit' => 3.08,   // 3.08% daily
                 'duration_minutes' => 7 * 1440, // 7 Days
                 'compound_interest' => true,
@@ -48,8 +48,8 @@ class ComputePlanSeeder extends Seeder
             [
                 'name' => 'Platinum Vault',
                 'type' => 'Capital Maximizer',
-                'price' => 10001,
-                'max_investment' => 50000,
+                'price' => 2500,
+                'max_investment' => 4999,
                 'daily_profit' => 3.56,   // 3.56% daily
                 'duration_minutes' => 10 * 1440, // 10 Days
                 'compound_interest' => true,
@@ -58,8 +58,8 @@ class ComputePlanSeeder extends Seeder
             [
                 'name' => 'Diamond Vault',
                 'type' => 'Wealth Engine',
-                'price' => 50001,
-                'max_investment' => null,  // Unlimited
+                'price' => 5000,
+                'max_investment' => null,  // Unlimited (5000 to infinity)
                 'daily_profit' => 4.00,    // 4.00% daily
                 'duration_minutes' => 14 * 1440, // 14 Days
                 'compound_interest' => true,

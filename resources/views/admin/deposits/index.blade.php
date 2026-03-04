@@ -104,11 +104,11 @@
   </div>
 
   <div class="filter-card">
-    <form action="{{ route('admin.deposits.index') }}" method="GET">
+    <form id="filterForm">
       <div class="filter-row">
         <div class="filter-group">
           <label>Status</label>
-          <select name="status" class="filter-select">
+          <select name="status" class="filter-select" onchange="applyFilters()">
             <option value="">All Statuses</option>
             <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
             <option value="waiting" {{ request('status') == 'waiting' ? 'selected' : '' }}>Waiting</option>
@@ -119,7 +119,7 @@
         </div>
         <div class="filter-group">
           <label>User</label>
-          <select name="user_id" class="filter-select">
+          <select name="user_id" class="filter-select" onchange="applyFilters()">
             <option value="">All Users</option>
             @foreach($users as $user)
               <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
@@ -128,21 +128,21 @@
         </div>
         <div class="filter-group">
           <label>From Date</label>
-          <input type="date" name="from_date" class="filter-input" value="{{ request('from_date') }}">
+          <input type="date" name="from_date" class="filter-input" value="{{ request('from_date') }}" onchange="applyFilters()">
         </div>
         <div class="filter-group">
           <label>To Date</label>
-          <input type="date" name="to_date" class="filter-input" value="{{ request('to_date') }}">
+          <input type="date" name="to_date" class="filter-input" value="{{ request('to_date') }}" onchange="applyFilters()">
         </div>
         <div style="display:flex;gap:8px">
-          <button type="submit" class="btn-filter btn-primary">🔍 Filter</button>
-          <a href="{{ route('admin.deposits.index') }}" class="btn-filter btn-secondary">↻ Reset</a>
+          <button type="button" onclick="applyFilters()" class="btn-filter btn-primary">🔍 Filter</button>
+          <button type="button" onclick="resetFilters()" class="btn-filter btn-secondary">↻ Reset</button>
         </div>
       </div>
     </form>
   </div>
 
-  <div class="table-card">
+  <div id="tableContainer" class="table-card">
     <div class="table-header">
       <h3 class="table-title">Deposits List</h3>
       <a href="{{ route('admin.deposits.create') }}" class="btn-filter btn-primary" style="text-decoration:none">➕ Create Deposit</a>
@@ -151,8 +151,9 @@
       <table class="modern-table">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>User</th>
+            <th>#</th>
+            <th>Username</th>
+            <th>Account ID</th>
             <th>Amount</th>
             <th>Currency</th>
             <th>Status</th>
@@ -161,14 +162,21 @@
           </tr>
         </thead>
         <tbody>
-          @forelse($deposits as $deposit)
+          @forelse($deposits as $index => $deposit)
           <tr>
-            <td data-label="ID">#{{ $deposit->id }}</td>
-            <td data-label="User">
+            <td data-label="#">{{ $deposits->firstItem() + $index }}</td>
+            <td data-label="Username">
               @if($deposit->user)
-                <a href="{{ route('admin.users.show', $deposit->user) }}" style="color:#667eea;font-weight:600;text-decoration:none">{{ $deposit->user->name }}</a>
+                <a href="{{ route('admin.users.show', $deposit->user) }}" style="color:#667eea;font-weight:600;text-decoration:none">{{ $deposit->user->username }}</a>
               @else
                 <span style="color:#94a3b8">Unknown</span>
+              @endif
+            </td>
+            <td data-label="Account ID">
+              @if($deposit->user)
+                <code style="background:#f1f5f9;padding:4px 8px;border-radius:6px;font-size:12px;color:#475569">{{ $deposit->user->account_id }}</code>
+              @else
+                <span style="color:#94a3b8">-</span>
               @endif
             </td>
             <td data-label="Amount" style="font-weight:700;color:#059669">${{ number_format($deposit->amount, 2) }}</td>
@@ -184,13 +192,13 @@
             </td>
             <td data-label="Date" style="color:#64748b">{{ $deposit->created_at->format('M d, Y H:i') }}</td>
             <td data-label="Action">
-              <button onclick="showDepositDetails({{ $deposit->id }}, '{{ $deposit->user->username ?? 'Unknown' }}', '{{ number_format($deposit->amount, 2) }}', '{{ strtoupper($deposit->currency) }}', '{{ ucfirst($deposit->status) }}', '{{ $deposit->created_at->format('M d, Y H:i') }}', '{{ $deposit->payment_id ?? 'N/A' }}')" class="action-btn info" title="View Details" style="margin-right:4px">👁️</button>
+              <button onclick="showDepositDetails({{ $deposits->firstItem() + $index }}, '{{ $deposit->user->username ?? 'Unknown' }}', '{{ $deposit->user->account_id ?? 'N/A' }}', '{{ number_format($deposit->amount, 2) }}', '{{ strtoupper($deposit->currency) }}', '{{ ucfirst($deposit->status) }}', '{{ $deposit->created_at->format('M d, Y H:i') }}', '{{ $deposit->payment_id ?? 'N/A' }}')" class="action-btn info" title="View Details" style="margin-right:4px">👁️</button>
               <a href="{{ route('admin.deposits.edit', $deposit) }}" class="action-btn" style="background:#fef3c7;color:#92400e" title="Edit">✏️</a>
             </td>
           </tr>
           @empty
           <tr>
-            <td colspan="7" class="empty-state">
+            <td colspan="8" class="empty-state">
               <div class="empty-icon">📭</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Deposits Found</div>
               <div style="font-size:14px">Try adjusting your filters</div>
@@ -237,15 +245,65 @@
 </div>
 
 <script>
-function showDepositDetails(id, user, amount, currency, status, date, paymentId) {
+function applyFilters() {
+  const form = document.getElementById('filterForm');
+  const formData = new FormData(form);
+  const params = new URLSearchParams(formData).toString();
+  
+  // Show loading state
+  const tableContainer = document.getElementById('tableContainer');
+  tableContainer.style.opacity = '0.5';
+  tableContainer.style.pointerEvents = 'none';
+  
+  // Fetch filtered data
+  fetch('{{ route('admin.deposits.index') }}?' + params, {
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  })
+  .then(response => response.text())
+  .then(html => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const newTable = doc.getElementById('tableContainer');
+    
+    if (newTable) {
+      tableContainer.innerHTML = newTable.innerHTML;
+    }
+    
+    // Update URL without reload
+    const newUrl = '{{ route('admin.deposits.index') }}' + (params ? '?' + params : '');
+    window.history.pushState({}, '', newUrl);
+    
+    // Restore state
+    tableContainer.style.opacity = '1';
+    tableContainer.style.pointerEvents = 'auto';
+  })
+  .catch(error => {
+    console.error('Filter error:', error);
+    tableContainer.style.opacity = '1';
+    tableContainer.style.pointerEvents = 'auto';
+  });
+}
+
+function resetFilters() {
+  document.getElementById('filterForm').reset();
+  applyFilters();
+}
+
+function showDepositDetails(rowNum, username, accountId, amount, currency, status, date, paymentId) {
   const details = `
     <div style="padding:12px;background:#f8fafc;border-radius:8px">
-      <div style="font-size:12px;color:#64748b;margin-bottom:4px">DEPOSIT ID</div>
-      <div style="font-size:16px;font-weight:700;color:#1e293b">#${id}</div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:4px">ROW #</div>
+      <div style="font-size:16px;font-weight:700;color:#1e293b">${rowNum}</div>
     </div>
     <div style="padding:12px;background:#f8fafc;border-radius:8px">
-      <div style="font-size:12px;color:#64748b;margin-bottom:4px">USER</div>
-      <div style="font-size:16px;font-weight:700;color:#1e293b">${user}</div>
+      <div style="font-size:12px;color:#64748b;margin-bottom:4px">USERNAME</div>
+      <div style="font-size:16px;font-weight:700;color:#1e293b">${username}</div>
+    </div>
+    <div style="padding:12px;background:#f8fafc;border-radius:8px">
+      <div style="font-size:12px;color:#64748b;margin-bottom:4px">ACCOUNT ID</div>
+      <div style="font-size:16px;font-weight:700;color:#1e293b">${accountId}</div>
     </div>
     <div style="padding:12px;background:#f8fafc;border-radius:8px">
       <div style="font-size:12px;color:#64748b;margin-bottom:4px">AMOUNT</div>

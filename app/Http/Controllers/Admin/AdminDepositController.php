@@ -10,9 +10,28 @@ use Illuminate\Support\Facades\Mail;
 
 class AdminDepositController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $deposits = Deposit::with('user')->latest()->paginate(20);
+        $query = Deposit::with('user');
+        
+        // Apply filters
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        
+        if ($request->filled('user_id')) {
+            $query->where('user_id', $request->user_id);
+        }
+        
+        if ($request->filled('from_date')) {
+            $query->whereDate('created_at', '>=', $request->from_date);
+        }
+        
+        if ($request->filled('to_date')) {
+            $query->whereDate('created_at', '<=', $request->to_date);
+        }
+        
+        $deposits = $query->latest()->paginate(20)->withQueryString();
         $users = User::all();
         $totalDeposits = Deposit::where('status', 'completed')->sum('amount');
         $pendingDeposits = Deposit::whereIn('status', ['pending', 'confirming'])->sum('amount');
@@ -38,7 +57,9 @@ class AdminDepositController extends Controller
             'txid' => 'nullable|string',
         ]);
         
-        $deposit = Deposit::create($validated);
+        $deposit = Deposit::create(array_merge($validated, [
+            'pay_amount' => $validated['amount'], // Set pay_amount to match amount for manual deposits
+        ]));
         
         // If status is completed, process deposit immediately (balance + referral commissions)
         if ($deposit->status === 'completed') {
