@@ -81,7 +81,7 @@ return [
     'live_chat' => 'Czat na żywo',
     'coming_soon' => 'Wkrótce',
     'fast_response' => 'Szybka odpowiedź • Dostępne 24/7',
-    'my_pools' => 'Moje pule',
+    'my_pools' => 'Moje Skarbce',
     'track_orders' => 'Śledź swoje aktywne i zakończone zamówienia',
     'active_orders' => 'Aktywne zamówienia',
     'completed_orders' => 'Zakończone zamówienia',

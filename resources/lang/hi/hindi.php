@@ -81,7 +81,7 @@ return [
     'live_chat' => 'लाइव चैट',
     'coming_soon' => 'जल्द आ रहा है',
     'fast_response' => 'तेज़ प्रतिक्रिया • 24/7 उपलब्ध',
-    'my_pools' => 'मेरे पूल',
+    'my_pools' => 'मेरे तिजोरी',
     'track_orders' => 'अपने सक्रिय और पूर्ण ऑर्डर ट्रैक करें',
     'active_orders' => 'सक्रिय ऑर्डर',
     'completed_orders' => 'पूर्ण ऑर्डर',

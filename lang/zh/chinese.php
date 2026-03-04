@@ -100,7 +100,7 @@ return [
     'fast_response' => '快速响应 • 24/7全天候服务',
     
     // Track Page
-    'my_pools' => '我的池',
+    'my_pools' => '我的金库',
     'track_orders' => '跟踪您的活跃和已完成订单',
     'active_orders' => '活跃订单',
     'completed_orders' => '已完成订单',

@@ -100,7 +100,7 @@ return [
     'fast_response' => '迅速対応 • 24/7対応',
     
     // Track Page
-    'my_pools' => 'マイプール',
+    'my_pools' => 'マイボールト',
     'track_orders' => 'アクティブおよび完了した注文を追跡',
     'active_orders' => 'アクティブ注文',
     'completed_orders' => '完了注文',

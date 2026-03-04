@@ -12,7 +12,7 @@
     <a href="{{ url()->previous() }}" class="back-btn">
         <i class="icon-left-btn"></i>
     </a>
-    <h6 class="header-title">{{ $plan->name }}</h6>
+    <h6 class="header-title">Vault Details</h6>
     <span class="placeholder"></span>
 </div>
 

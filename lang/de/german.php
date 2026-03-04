@@ -101,7 +101,7 @@ return [
     'fast_response' => 'Schnelle Antwort • 24/7 verfügbar',
     
     // Track Page
-    'my_pools' => 'Meine Pools',
+    'my_pools' => 'Meine Tresore',
     'track_orders' => 'Verfolgen Sie Ihre aktiven und abgeschlossenen Bestellungen',
     'active_orders' => 'Aktive Bestellungen',
     'completed_orders' => 'Abgeschlossene Bestellungen',

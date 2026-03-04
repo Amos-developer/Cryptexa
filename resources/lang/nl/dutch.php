@@ -81,7 +81,7 @@ return [
     'live_chat' => 'Live Chat',
     'coming_soon' => 'Binnenkort',
     'fast_response' => 'Snelle reactie • 24/7 beschikbaar',
-    'my_pools' => 'Mijn Pools',
+    'my_pools' => 'Mijn Kluizen',
     'track_orders' => 'Volg je actieve en voltooide orders',
     'active_orders' => 'Actieve Orders',
     'completed_orders' => 'Voltooide Orders',

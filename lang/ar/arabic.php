@@ -81,7 +81,7 @@ return [
     'live_chat' => 'الدردشة المباشرة',
     'coming_soon' => 'قريبًا',
     'fast_response' => 'استجابة سريعة • متاح 24/7',
-    'my_pools' => 'مجمعاتي',
+    'my_pools' => 'خزائني',
     'track_orders' => 'تتبع طلباتك النشطة والمكتملة',
     'active_orders' => 'الطلبات النشطة',
     'completed_orders' => 'الطلبات المكتملة',

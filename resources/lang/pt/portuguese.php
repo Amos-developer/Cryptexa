@@ -100,7 +100,7 @@ return [
     'fast_response' => 'Resposta rápida • Disponível 24/7',
     
     // Track Page
-    'my_pools' => 'Meus Pools',
+    'my_pools' => 'Meus Cofres',
     'track_orders' => 'Rastreie seus pedidos ativos e concluídos',
     'active_orders' => 'Pedidos Ativos',
     'completed_orders' => 'Pedidos Concluídos',

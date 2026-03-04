@@ -25,7 +25,7 @@ return [
     'todays_earnings' => 'Gains d’Aujourd’hui',
     
     // Pools
-    'liquidity_pools' => 'Coffres d''Investissement',
+    'liquidity_pools' => 'Coffres d\'Investissement',
     'active' => 'Actif',
     'investment_range' => 'Plage d’Investissement',
     'daily_return' => 'Rendement Quotidien',
@@ -100,7 +100,7 @@ return [
     'fast_response' => 'Réponse rapide • Disponible 24/7',
     
     // Track Page
-    'my_pools' => 'Mes Pools',
+    'my_pools' => 'Mes Coffres',
     'track_orders' => 'Suivez vos commandes actives et terminées',
     'active_orders' => 'Commandes Actives',
     'completed_orders' => 'Commandes Terminées',

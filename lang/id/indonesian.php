@@ -81,7 +81,7 @@ return [
     'live_chat' => 'Chat Langsung',
     'coming_soon' => 'Segera hadir',
     'fast_response' => 'Respon cepat • Tersedia 24/7',
-    'my_pools' => 'Pool Saya',
+    'my_pools' => 'Brankas Saya',
     'track_orders' => 'Lacak pesanan aktif dan selesai Anda',
     'active_orders' => 'Pesanan Aktif',
     'completed_orders' => 'Pesanan Selesai',

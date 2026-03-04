@@ -100,7 +100,7 @@ return [
     'fast_response' => '빠른 응답 • 24/7 상시 이용 가능',
     
     // Track Page
-    'my_pools' => '내 풀',
+    'my_pools' => '내 금고',
     'track_orders' => '활성 및 완료된 주문 추적',
     'active_orders' => '활성 주문',
     'completed_orders' => '완료된 주문',

@@ -101,7 +101,7 @@ return [
     'fast_response' => 'Respuesta rÃ¡pida â€¢ Disponible 24/7',
     
     // Track Page
-    'my_pools' => 'Mis Pools',
+    'my_pools' => 'Le Mie Casseforti',
     'track_orders' => 'Rastrea tus Ã³rdenes activas y completadas',
     'active_orders' => 'Ã“rdenes Activas',
     'completed_orders' => 'Ã“rdenes Completadas',

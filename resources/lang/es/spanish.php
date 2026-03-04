@@ -101,7 +101,7 @@ return [
     'fast_response' => 'Respuesta rápida • Disponible 24/7',
     
     // Track Page
-    'my_pools' => 'Mis Pools',
+    'my_pools' => 'Mis Bóvedas',
     'track_orders' => 'Rastrea tus órdenes activas y completadas',
     'active_orders' => 'Órdenes Activas',
     'completed_orders' => 'Órdenes Completadas',

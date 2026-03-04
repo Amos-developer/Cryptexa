@@ -81,7 +81,7 @@ return [
     'live_chat' => 'Canlı Sohbet',
     'coming_soon' => 'Yakında',
     'fast_response' => 'Hızlı yanıt • 7/24 mevcut',
-    'my_pools' => 'Havuzlarım',
+    'my_pools' => 'Kasalarım',
     'track_orders' => 'Aktif ve tamamlanmış siparişlerinizi takip edin',
     'active_orders' => 'Aktif Siparişler',
     'completed_orders' => 'Tamamlanan Siparişler',

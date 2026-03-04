@@ -100,7 +100,7 @@ return [
     'fast_response' => 'Fast response • 24/7 available',
     
     // Track Page
-    'my_pools' => 'My Pools',
+    'my_pools' => 'My Vaults',
     'track_orders' => 'Track your active and completed compute orders',
     'active_orders' => 'Active Orders',
     'completed_orders' => 'Completed Orders',

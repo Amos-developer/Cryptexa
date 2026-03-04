@@ -81,7 +81,7 @@ return [
     'live_chat' => 'Trò chuyện trực tiếp',
     'coming_soon' => 'Sắp ra mắt',
     'fast_response' => 'Phản hồi nhanh • Có sẵn 24/7',
-    'my_pools' => 'Hồ của tôi',
+    'my_pools' => 'Két của tôi',
     'track_orders' => 'Theo dõi các đơn hàng đang hoạt động và đã hoàn thành',
     'active_orders' => 'Đơn hàng đang hoạt động',
     'completed_orders' => 'Đơn hàng đã hoàn thành',
