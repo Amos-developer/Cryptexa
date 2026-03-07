@@ -30,6 +30,8 @@
 
 <div class="tabs">
   <button class="tab active" onclick="switchTab('system')">⚙️ System</button>
+  <button class="tab" onclick="switchTab('maintenance')">🔧 Maintenance</button>
+  <button class="tab" onclick="switchTab('logs')">📋 Logs</button>
   <button class="tab" onclick="switchTab('profile')">👤 My Account</button>
   <button class="tab" onclick="switchTab('admins')">👥 Admins</button>
 </div>
@@ -100,6 +102,100 @@
       <button type="submit" class="btn-save">💾 Save Settings</button>
     </div>
   </form>
+</div>
+
+<div id="maintenance" class="tab-content">
+  <div class="settings-grid">
+    <div class="settings-card">
+      <h3>🧹 Clear Caches</h3>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <form action="{{ route('admin.maintenance.cache-clear') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn-save" style="width:100%;background:linear-gradient(135deg,#f59e0b,#d97706)">🗑️ Clear Application Cache</button>
+        </form>
+        <form action="{{ route('admin.maintenance.config-clear') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn-save" style="width:100%;background:linear-gradient(135deg,#8b5cf6,#7c3aed)">⚙️ Clear Config Cache</button>
+        </form>
+        <form action="{{ route('admin.maintenance.view-clear') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn-save" style="width:100%;background:linear-gradient(135deg,#06b6d4,#0891b2)">👁️ Clear View Cache</button>
+        </form>
+        <form action="{{ route('admin.maintenance.route-clear') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn-save" style="width:100%;background:linear-gradient(135deg,#10b981,#059669)">🛣️ Clear Route Cache</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <h3>⚡ Optimize</h3>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <form action="{{ route('admin.maintenance.optimize') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn-save" style="width:100%;background:linear-gradient(135deg,#667eea,#764ba2)">🚀 Optimize Application</button>
+        </form>
+        <form action="{{ route('admin.maintenance.optimize-clear') }}" method="POST">
+          @csrf
+          <button type="submit" class="btn-save" style="width:100%;background:linear-gradient(135deg,#ef4444,#dc2626)">🔄 Clear All Optimizations</button>
+        </form>
+      </div>
+      <div style="margin-top:20px;padding:16px;background:#fef3c7;border-radius:8px;font-size:13px;color:#92400e">
+        <strong>ℹ️ Note:</strong> Optimize caches config, routes, and views for better performance.
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <h3>📊 System Info</h3>
+      <div style="font-size:14px;line-height:2">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f3f4f6">
+          <span style="color:#6b7280">PHP Version:</span>
+          <strong>{{ PHP_VERSION }}</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f3f4f6">
+          <span style="color:#6b7280">Laravel Version:</span>
+          <strong>{{ app()->version() }}</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f3f4f6">
+          <span style="color:#6b7280">Environment:</span>
+          <strong style="color:#059669">{{ config('app.env') }}</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0">
+          <span style="color:#6b7280">Debug Mode:</span>
+          <strong style="color:{{ config('app.debug') ? '#ef4444' : '#10b981' }}">{{ config('app.debug') ? 'ON' : 'OFF' }}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="logs" class="tab-content">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="settings-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <h3 style="margin:0">📋 Application Logs</h3>
+        <form action="{{ route('admin.maintenance.logs-clear') }}" method="POST" style="display:inline" onsubmit="return confirm('Clear all logs?')">
+          @csrf
+          <button type="submit" class="btn-delete" style="padding:8px 16px">🗑️ Clear Logs</button>
+        </form>
+      </div>
+      <div style="background:#1f2937;color:#e5e7eb;padding:20px;border-radius:8px;max-height:500px;overflow-y:auto;font-family:monospace;font-size:12px;line-height:1.6">
+        @php
+          $logFile = storage_path('logs/laravel.log');
+          if (file_exists($logFile)) {
+            $logs = file($logFile);
+            $recentLogs = array_slice($logs, -50);
+            echo implode('', array_reverse($recentLogs));
+          } else {
+            echo 'No logs found.';
+          }
+        @endphp
+      </div>
+      <div style="margin-top:12px;font-size:13px;color:#6b7280;text-align:center">
+        Showing last 50 log entries
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="profile" class="tab-content">

@@ -25,21 +25,21 @@ class CommissionController extends Controller
         return view('admin.commissions.index', compact('commissions', 'totalCommissions', 'level1Total', 'level2Total', 'level3Total'));
     }
 
-    public function show($id)
+    public function show($commission)
     {
-        $commission = ReferralEarning::with(['user', 'fromUser'])->findOrFail($id);
+        $commission = ReferralEarning::with(['user', 'fromUser'])->findOrFail($commission);
         return view('admin.commissions.show', compact('commission'));
     }
 
-    public function edit($id)
+    public function edit($commission)
     {
-        $commission = ReferralEarning::with(['user', 'fromUser'])->findOrFail($id);
+        $commission = ReferralEarning::with(['user', 'fromUser'])->findOrFail($commission);
         return view('admin.commissions.edit', compact('commission'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $commission)
     {
-        $commission = ReferralEarning::findOrFail($id);
+        $commission = ReferralEarning::findOrFail($commission);
         
         $request->validate([
             'amount' => 'required|numeric|min:0',
@@ -51,9 +51,9 @@ class CommissionController extends Controller
         return redirect()->route('admin.commissions.index')->with('success', 'Commission updated successfully');
     }
 
-    public function destroy($id)
+    public function destroy($commission)
     {
-        $commission = ReferralEarning::findOrFail($id);
+        $commission = ReferralEarning::findOrFail($commission);
         $commission->delete();
         
         return redirect()->route('admin.commissions.index')->with('success', 'Commission deleted successfully');

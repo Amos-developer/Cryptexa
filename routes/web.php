@@ -221,7 +221,6 @@ Route::middleware(['auth', 'admin'])
     ->name('admin.')
     ->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-        Route::resource('users', UserController::class);
         Route::get('/deposits', [AdminDepositController::class, 'index'])->name('deposits.index');
         Route::get('/deposits/create', [AdminDepositController::class, 'create'])->name('deposits.create');
         Route::post('/deposits', [AdminDepositController::class, 'store'])->name('deposits.store');
@@ -255,9 +254,6 @@ Route::middleware(['auth', 'admin'])
         Route::delete('/admins/{admin}', [\App\Http\Controllers\Admin\AdminManagementController::class, 'destroy'])->name('admins.destroy');
         
         Route::resource('commissions', \App\Http\Controllers\Admin\CommissionController::class)->except(['create', 'store']);
-        Route::resource('rank-bonuses', \App\Http\Controllers\Admin\RankBonusController::class)->except(['create', 'store']);
-        Route::resource('checkins', \App\Http\Controllers\Admin\AdminCheckInController::class)->except(['create', 'store']);
-        Route::resource('lucky-boxes', \App\Http\Controllers\Admin\LuckyBoxController::class)->except(['create', 'store']);
         
         Route::post('/withdrawals/{withdrawal}/approve', [AdminWithdrawalController::class, 'approve'])->name('withdrawals.approve');
         Route::post('/withdrawals/{withdrawal}/reject', [AdminWithdrawalController::class, 'reject'])->name('withdrawals.reject');

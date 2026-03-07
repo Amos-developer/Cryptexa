@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class AdminSettingsController extends Controller
 {
@@ -12,20 +13,48 @@ class AdminSettingsController extends Controller
         return view('admin.settings.index');
     }
 
-    public function update(Request $request)
+    public function cacheClean()
     {
-        $request->validate([
-            'site_name' => 'nullable|string|max:255',
-            'site_email' => 'nullable|email',
-            'referral_commission_level1' => 'nullable|numeric|min:0|max:100',
-            'referral_commission_level2' => 'nullable|numeric|min:0|max:100',
-            'referral_commission_level3' => 'nullable|numeric|min:0|max:100',
-            'min_deposit' => 'nullable|numeric|min:0',
-            'min_withdrawal' => 'nullable|numeric|min:0',
-        ]);
+        Artisan::call('cache:clear');
+        return back()->with('success', 'Application cache cleared successfully');
+    }
 
-        // Store settings in .env or database
-        // For now, just return success
-        return redirect()->route('admin.settings.index')->with('success', 'Settings updated successfully');
+    public function configClear()
+    {
+        Artisan::call('config:clear');
+        return back()->with('success', 'Configuration cache cleared successfully');
+    }
+
+    public function viewClear()
+    {
+        Artisan::call('view:clear');
+        return back()->with('success', 'View cache cleared successfully');
+    }
+
+    public function routeClear()
+    {
+        Artisan::call('route:clear');
+        return back()->with('success', 'Route cache cleared successfully');
+    }
+
+    public function optimize()
+    {
+        Artisan::call('optimize');
+        return back()->with('success', 'Application optimized successfully');
+    }
+
+    public function optimizeClear()
+    {
+        Artisan::call('optimize:clear');
+        return back()->with('success', 'All optimizations cleared successfully');
+    }
+
+    public function logsClear()
+    {
+        $logFile = storage_path('logs/laravel.log');
+        if (file_exists($logFile)) {
+            file_put_contents($logFile, '');
+        }
+        return back()->with('success', 'Logs cleared successfully');
     }
 }

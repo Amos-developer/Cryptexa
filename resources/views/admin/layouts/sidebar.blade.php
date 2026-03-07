@@ -26,13 +26,13 @@
     </li>
   </div>
 
-  <li class="header" onclick="toggleCat(this)">💧 LIQUIDITY POOLS</li>
+  <li class="header" onclick="toggleCat(this)">🔐 VAULTS</li>
   <div class="sidebar-category open">
     <li class="{{ request()->routeIs('admin.pools.*') ? 'active' : '' }}">
-      <a href="{{ route('admin.pools.index') }}"><i class="fa fa-database"></i> Pool Plans</a>
+      <a href="{{ route('admin.pools.index') }}"><i class="fa fa-database"></i> Vault Plans</a>
     </li>
     <li class="{{ request()->routeIs('admin.user-pools.*') ? 'active' : '' }}">
-      <a href="{{ route('admin.user-pools.index') }}"><i class="fa fa-server"></i> Active Pools</a>
+      <a href="{{ route('admin.user-pools.index') }}"><i class="fa fa-server"></i> Active Vaults</a>
     </li>
   </div>
 
@@ -53,15 +53,6 @@
     </li>
     <li class="{{ request()->routeIs('admin.commissions.*') ? 'active' : '' }}">
       <a href="{{ route('admin.commissions.index') }}"><i class="fa fa-dollar"></i> Commissions</a>
-    </li>
-    <li class="{{ request()->routeIs('admin.rank-bonuses.*') ? 'active' : '' }}">
-      <a href="{{ route('admin.rank-bonuses.index') }}"><i class="fa fa-trophy"></i> Rank Bonuses</a>
-    </li>
-    <li class="{{ request()->routeIs('admin.checkins.*') ? 'active' : '' }}">
-      <a href="{{ route('admin.checkins.index') }}"><i class="fa fa-check-circle"></i> Check-ins</a>
-    </li>
-    <li class="{{ request()->routeIs('admin.lucky-boxes.*') ? 'active' : '' }}">
-      <a href="{{ route('admin.lucky-boxes.index') }}"><i class="fa fa-cube"></i> Lucky Boxes</a>
     </li>
   </div>
 

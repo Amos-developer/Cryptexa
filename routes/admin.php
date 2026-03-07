@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminDepositController;
 use App\Http\Controllers\Admin\AdminWithdrawalController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CommissionController;
+use App\Http\Controllers\Admin\AdminSettingsController;
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     
@@ -32,8 +33,18 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     // Commissions
     Route::get('/commissions', [CommissionController::class, 'index'])->name('commissions.index');
-    Route::get('/commissions/{id}', [CommissionController::class, 'show'])->name('commissions.show');
-    Route::get('/commissions/{id}/edit', [CommissionController::class, 'edit'])->name('commissions.edit');
-    Route::put('/commissions/{id}', [CommissionController::class, 'update'])->name('commissions.update');
-    Route::delete('/commissions/{id}', [CommissionController::class, 'destroy'])->name('commissions.destroy');
+    Route::get('/commissions/{commission}', [CommissionController::class, 'show'])->name('commissions.show');
+    Route::get('/commissions/{commission}/edit', [CommissionController::class, 'edit'])->name('commissions.edit');
+    Route::put('/commissions/{commission}', [CommissionController::class, 'update'])->name('commissions.update');
+    Route::delete('/commissions/{commission}', [CommissionController::class, 'destroy'])->name('commissions.destroy');
+    
+    // Settings
+    Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
+    Route::post('/maintenance/cache-clear', [AdminSettingsController::class, 'cacheClean'])->name('maintenance.cache-clear');
+    Route::post('/maintenance/config-clear', [AdminSettingsController::class, 'configClear'])->name('maintenance.config-clear');
+    Route::post('/maintenance/view-clear', [AdminSettingsController::class, 'viewClear'])->name('maintenance.view-clear');
+    Route::post('/maintenance/route-clear', [AdminSettingsController::class, 'routeClear'])->name('maintenance.route-clear');
+    Route::post('/maintenance/optimize', [AdminSettingsController::class, 'optimize'])->name('maintenance.optimize');
+    Route::post('/maintenance/optimize-clear', [AdminSettingsController::class, 'optimizeClear'])->name('maintenance.optimize-clear');
+    Route::post('/maintenance/logs-clear', [AdminSettingsController::class, 'logsClear'])->name('maintenance.logs-clear');
 });
