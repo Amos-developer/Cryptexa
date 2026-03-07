@@ -89,9 +89,11 @@
           <tr>
             <th>ID</th>
             <th>Referrer</th>
-            <th>User</th>
+            <th>From User</th>
             <th>Level</th>
-            <th>Amount</th>
+            <th>Commission</th>
+            <th>Balance Before</th>
+            <th>Balance After</th>
             <th>Date</th>
             <th>Actions</th>
           </tr>
@@ -100,25 +102,28 @@
           @forelse($commissions as $commission)
           <tr>
             <td>#{{ $commission->id }}</td>
-            <td style="font-weight:600">{{ $commission->referrer->username ?? 'N/A' }}</td>
-            <td>{{ $commission->user->username ?? 'N/A' }}</td>
+            <td style="font-weight:600">{{ $commission->user->username ?? 'N/A' }}</td>
+            <td>{{ $commission->fromUser->username ?? 'N/A' }}</td>
             <td>
               <span class="level-badge level-{{ $commission->level }}">Level {{ $commission->level }}</span>
             </td>
             <td style="font-weight:700;color:#059669">${{ number_format($commission->amount, 2) }}</td>
+            <td style="color:#64748b">${{ number_format(($commission->balance_before > 0 ? $commission->balance_before : $commission->user->balance - $commission->amount), 2) }}</td>
+            <td style="color:#059669;font-weight:600">${{ number_format(($commission->balance_after > 0 ? $commission->balance_after : $commission->user->balance), 2) }}</td>
             <td style="color:#64748b">{{ $commission->created_at->format('M d, Y H:i') }}</td>
             <td>
-              <a href="{{ route('admin.commissions.edit', $commission) }}" class="action-btn edit" title="Edit">✏️</a>
-              <form action="{{ route('admin.commissions.destroy', $commission) }}" method="POST" style="display:inline">
+              <a href="{{ route('admin.commissions.show', $commission->id) }}" class="action-btn" style="background:#dbeafe;color:#1e40af" title="View"><i class="fa fa-eye"></i></a>
+              <a href="{{ route('admin.commissions.edit', $commission->id) }}" class="action-btn edit" title="Edit"><i class="fa fa-edit"></i></a>
+              <form action="{{ route('admin.commissions.destroy', $commission->id) }}" method="POST" style="display:inline" onsubmit="return confirm('Delete this commission?')">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="action-btn delete" title="Delete" onclick="return confirm('Delete this commission?')">🗑️</button>
+                <button type="submit" class="action-btn delete" title="Delete"><i class="fa fa-trash"></i></button>
               </form>
             </td>
           </tr>
           @empty
           <tr>
-            <td colspan="7" style="text-align:center;padding:60px 20px;color:#94a3b8">
+            <td colspan="9" style="text-align:center;padding:60px 20px;color:#94a3b8">
               <div style="font-size:64px;margin-bottom:16px;opacity:.5">💰</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Commissions Found</div>
             </td>

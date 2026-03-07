@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDepositController;
 use App\Http\Controllers\Admin\AdminWithdrawalController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CommissionController;
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     
@@ -28,4 +29,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/withdrawals/{withdrawal}/approve', [AdminWithdrawalController::class, 'approve'])->name('withdrawals.approve');
     Route::post('/withdrawals/{withdrawal}/reject', [AdminWithdrawalController::class, 'reject'])->name('withdrawals.reject');
     Route::post('/withdrawals/{withdrawal}/complete', [AdminWithdrawalController::class, 'complete'])->name('withdrawals.complete');
+    
+    // Commissions
+    Route::get('/commissions', [CommissionController::class, 'index'])->name('commissions.index');
+    Route::get('/commissions/{id}', [CommissionController::class, 'show'])->name('commissions.show');
+    Route::get('/commissions/{id}/edit', [CommissionController::class, 'edit'])->name('commissions.edit');
+    Route::put('/commissions/{id}', [CommissionController::class, 'update'])->name('commissions.update');
+    Route::delete('/commissions/{id}', [CommissionController::class, 'destroy'])->name('commissions.destroy');
 });

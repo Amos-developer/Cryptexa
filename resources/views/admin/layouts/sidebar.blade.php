@@ -1,99 +1,88 @@
 <!-- Sidebar Menu -->
 <style>
-.sidebar-menu{list-style:none;padding:12px 8px}
-.sidebar-menu .header{color:#9ca3af;font-size:10px;padding:20px 16px 8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:8px}
-.sidebar-menu .header::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,#667eea,transparent)}
-.sidebar-menu li a{display:flex;align-items:center;padding:12px 16px;color:#6b7280;text-decoration:none;border-radius:12px;transition:all .3s;font-size:14px;font-weight:500;margin-bottom:4px;position:relative;overflow:hidden}
-.sidebar-menu li a::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(135deg,#667eea,#764ba2);transform:scaleY(0);transition:.3s}
-.sidebar-menu li a:hover{background:#f3f4f6;color:#667eea;padding-left:20px}
-.sidebar-menu li a:hover::before{transform:scaleY(1)}
-.sidebar-menu li.active a{background:linear-gradient(135deg,rgba(102,126,234,.1),rgba(118,75,162,.1));color:#667eea;font-weight:600;border-left:3px solid #667eea;padding-left:20px}
-.sidebar-menu li a i{margin-right:12px;width:20px;font-size:16px;text-align:center;transition:.3s}
-.sidebar-menu li.active a i{transform:scale(1.1)}
+.sidebar-menu .header{cursor:pointer;user-select:none;position:relative}
+.sidebar-menu .header::after{content:'▼';position:absolute;right:12px;font-size:8px;transition:.3s}
+.sidebar-menu .header.collapsed::after{transform:rotate(-90deg)}
+.sidebar-category{max-height:1000px;overflow:hidden;transition:max-height .3s ease}
+.sidebar-category.collapsed{max-height:0}
 @media(max-width:768px){
-.sidebar-menu{padding:8px 4px}
-.sidebar-menu .header{font-size:9px;padding:16px 12px 6px}
-.sidebar-menu li a{padding:10px 12px;font-size:13px}
-.sidebar-menu li a i{font-size:14px}
+.sidebar-category:not(.open){max-height:0}
+.sidebar-category.open{max-height:1000px}
 }
 </style>
 
 <ul class="sidebar-menu">
-  <!-- MAIN -->
-  <li class="header">📊 MAIN</li>
-  <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-    <a href="{{ route('admin.dashboard') }}">
-      <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-    </a>
-  </li>
+  <li class="header" onclick="toggleCat(this)">📊 MAIN</li>
+  <div class="sidebar-category open">
+    <li class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+      <a href="{{ route('admin.dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a>
+    </li>
+  </div>
 
-  <!-- USERS -->
-  <li class="header">👥 USERS</li>
-  <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.users.index') }}">
-      <i class="fa fa-users"></i> <span>Manage Users</span>
-    </a>
-  </li>
+  <li class="header" onclick="toggleCat(this)">👥 USERS</li>
+  <div class="sidebar-category open">
+    <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.users.index') }}"><i class="fa fa-users"></i> Manage Users</a>
+    </li>
+  </div>
 
-  <!-- POOLS -->
-  <li class="header">💧 LIQUIDITY POOLS</li>
-  <li class="{{ request()->routeIs('admin.pools.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.pools.index') }}">
-      <i class="fa fa-database"></i> <span>Pool Plans</span>
-    </a>
-  </li>
-  <li class="{{ request()->routeIs('admin.user-pools.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.user-pools.index') }}">
-      <i class="fa fa-server"></i> <span>Active Pools</span>
-    </a>
-  </li>
+  <li class="header" onclick="toggleCat(this)">💧 LIQUIDITY POOLS</li>
+  <div class="sidebar-category open">
+    <li class="{{ request()->routeIs('admin.pools.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.pools.index') }}"><i class="fa fa-database"></i> Pool Plans</a>
+    </li>
+    <li class="{{ request()->routeIs('admin.user-pools.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.user-pools.index') }}"><i class="fa fa-server"></i> Active Pools</a>
+    </li>
+  </div>
 
-  <!-- TRANSACTIONS -->
-  <li class="header">💰 TRANSACTIONS</li>
-  <li class="{{ request()->routeIs('admin.deposits.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.deposits.index') }}">
-      <i class="fa fa-arrow-down"></i> <span>Deposits</span>
-    </a>
-  </li>
-  <li class="{{ request()->routeIs('admin.withdrawals.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.withdrawals.index') }}">
-      <i class="fa fa-arrow-up"></i> <span>Withdrawals</span>
-    </a>
-  </li>
+  <li class="header" onclick="toggleCat(this)">💰 TRANSACTIONS</li>
+  <div class="sidebar-category open">
+    <li class="{{ request()->routeIs('admin.deposits.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.deposits.index') }}"><i class="fa fa-arrow-down"></i> Deposits</a>
+    </li>
+    <li class="{{ request()->routeIs('admin.withdrawals.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.withdrawals.index') }}"><i class="fa fa-arrow-up"></i> Withdrawals</a>
+    </li>
+  </div>
 
-  <!-- REWARDS -->
-  <li class="header">🎁 REWARDS</li>
-  <li class="{{ request()->routeIs('admin.rewards.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.rewards.index') }}">
-      <i class="fa fa-gift"></i> <span>Overview</span>
-    </a>
-  </li>
-  <li class="{{ request()->routeIs('admin.commissions.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.commissions.index') }}">
-      <i class="fa fa-dollar"></i> <span>Commissions</span>
-    </a>
-  </li>
-  <li class="{{ request()->routeIs('admin.rank-bonuses.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.rank-bonuses.index') }}">
-      <i class="fa fa-trophy"></i> <span>Rank Bonuses</span>
-    </a>
-  </li>
-  <li class="{{ request()->routeIs('admin.checkins.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.checkins.index') }}">
-      <i class="fa fa-check-circle"></i> <span>Check-ins</span>
-    </a>
-  </li>
-  <li class="{{ request()->routeIs('admin.lucky-boxes.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.lucky-boxes.index') }}">
-      <i class="fa fa-cube"></i> <span>Lucky Boxes</span>
-    </a>
-  </li>
+  <li class="header" onclick="toggleCat(this)">🎁 REWARDS</li>
+  <div class="sidebar-category open">
+    <li class="{{ request()->routeIs('admin.rewards.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.rewards.index') }}"><i class="fa fa-gift"></i> Overview</a>
+    </li>
+    <li class="{{ request()->routeIs('admin.commissions.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.commissions.index') }}"><i class="fa fa-dollar"></i> Commissions</a>
+    </li>
+    <li class="{{ request()->routeIs('admin.rank-bonuses.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.rank-bonuses.index') }}"><i class="fa fa-trophy"></i> Rank Bonuses</a>
+    </li>
+    <li class="{{ request()->routeIs('admin.checkins.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.checkins.index') }}"><i class="fa fa-check-circle"></i> Check-ins</a>
+    </li>
+    <li class="{{ request()->routeIs('admin.lucky-boxes.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.lucky-boxes.index') }}"><i class="fa fa-cube"></i> Lucky Boxes</a>
+    </li>
+  </div>
 
-  <!-- SETTINGS -->
-  <li class="header">⚙️ SYSTEM</li>
-  <li class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
-    <a href="{{ route('admin.settings.index') }}">
-      <i class="fa fa-cog"></i> <span>Settings</span>
-    </a>
-  </li>
+  <li class="header" onclick="toggleCat(this)">⚙️ SYSTEM</li>
+  <div class="sidebar-category open">
+    <li class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.settings.index') }}"><i class="fa fa-cog"></i> Settings</a>
+    </li>
+  </div>
 </ul>
+
+<script>
+function toggleCat(h) {
+  const c = h.nextElementSibling;
+  const isOpen = c.classList.contains('open');
+  if (window.innerWidth <= 768) {
+    document.querySelectorAll('.sidebar-category').forEach(cat => cat.classList.remove('open'));
+  }
+  h.classList.toggle('collapsed');
+  c.classList.toggle('collapsed');
+  if (!isOpen) c.classList.add('open');
+  else c.classList.remove('open');
+}
+</script>

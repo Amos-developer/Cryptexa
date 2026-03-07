@@ -51,7 +51,7 @@
                     </svg>
                 </div>
                 <div>
-                    <h3 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Deposit History</h3>
+                    <h3 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0;">Deposit Summary</h3>
                     <p style="color: #94a3b8; font-size: 12px; margin: 0;">Your deposit analytics</p>
                 </div>
             </div>
@@ -103,9 +103,9 @@
                                 <circle cx="12" cy="12" r="10"/>
                                 <polyline points="12 6 12 12 16 14"/>
                             </svg>
-                            <span style="color: #94a3b8; font-size: 11px; font-weight: 600;">Pending Amount</span>
+                            <span style="color: #94a3b8; font-size: 11px; font-weight: 600;">Pending</span>
                         </div>
-                        <div style="color: #a855f7; font-weight: 900; font-size: 24px;">${{ number_format($deposits->whereIn('status', ['pending', 'confirming', 'waiting'])->sum('amount'), 2) }}</div>
+                        <div style="color: #a855f7; font-weight: 900; font-size: 24px;">{{ $deposits->whereIn('status', ['pending', 'confirming', 'waiting'])->count() }}</div>
                         <div style="color: #64748b; font-size: 10px; margin-top: 4px;">Awaiting confirmation</div>
                     </div>
                 </div>
@@ -130,7 +130,11 @@
             ">
                 <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
                     <div>
+                        @if($deposit->status === 'completed')
                         <div style="color: #e5e7eb; font-weight: 700; font-size: 18px; margin-bottom: 4px;">${{ number_format($deposit->amount, 2) }}</div>
+                        @else
+                        <div style="color: #e5e7eb; font-weight: 700; font-size: 18px; margin-bottom: 4px;">---</div>
+                        @endif
                         <div style="color: #64748b; font-size: 13px;">{{ strtoupper($deposit->currency) }}</div>
                     </div>
                     @if($deposit->status === 'completed')

@@ -232,6 +232,7 @@
 
         function updateRequirement(id, isValid) {
             const element = document.getElementById(id);
+            if (!element) return; // Skip if element doesn't exist
             if (isValid) {
                 element.style.color = '#22c55e';
                 element.textContent = element.textContent.replace('✗', '✓');

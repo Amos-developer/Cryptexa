@@ -10,7 +10,7 @@ class CommissionController extends Controller
 {
     public function index(Request $request)
     {
-        $query = ReferralEarning::with(['user', 'referrer']);
+        $query = ReferralEarning::with(['user', 'fromUser']);
         
         if ($request->filled('level')) {
             $query->where('level', $request->level);
@@ -25,9 +25,15 @@ class CommissionController extends Controller
         return view('admin.commissions.index', compact('commissions', 'totalCommissions', 'level1Total', 'level2Total', 'level3Total'));
     }
 
+    public function show($id)
+    {
+        $commission = ReferralEarning::with(['user', 'fromUser'])->findOrFail($id);
+        return view('admin.commissions.show', compact('commission'));
+    }
+
     public function edit($id)
     {
-        $commission = ReferralEarning::with(['user', 'referrer'])->findOrFail($id);
+        $commission = ReferralEarning::with(['user', 'fromUser'])->findOrFail($id);
         return view('admin.commissions.edit', compact('commission'));
     }
 

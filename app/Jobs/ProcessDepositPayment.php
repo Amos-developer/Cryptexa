@@ -91,9 +91,15 @@ class ProcessDepositPayment implements ShouldQueue
                 // Calculate commission on actual deposited amount
                 $commission = round($creditAmount * $commissions[$level], 2);
 
+                // Get balance before commission
+                $balanceBefore = $referrer->balance;
+
                 // Credit commission instantly
                 $referrer->increment('balance', $commission);
                 $referrer->increment('referral_earnings', $commission);
+                
+                // Get balance after commission
+                $balanceAfter = $referrer->fresh()->balance;
 
                 // Record the earning
                 ReferralEarning::create([
@@ -102,6 +108,8 @@ class ProcessDepositPayment implements ShouldQueue
                     'amount' => $commission,
                     'level' => $level,
                     'type' => 'deposit',
+                    'balance_before' => $balanceBefore,
+                    'balance_after' => $balanceAfter,
                 ]);
 
                 // Create notification
