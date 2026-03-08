@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class WeeklySalaryPayment extends Model
 {
-    protected $fillable = ['user_id', 'admin_id', 'amount', 'rank', 'active_members', 'note'];
+    protected $fillable = ['user_id', 'admin_id', 'amount', 'rank', 'active_members', 'week_number', 'year', 'is_auto_paid', 'note'];
 
     public function user()
     {

@@ -32,13 +32,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/withdrawals/{withdrawal}/reject', [AdminWithdrawalController::class, 'reject'])->name('withdrawals.reject');
     Route::post('/withdrawals/{withdrawal}/complete', [AdminWithdrawalController::class, 'complete'])->name('withdrawals.complete');
     
-    // Commissions
-    Route::get('/commissions', [CommissionController::class, 'index'])->name('commissions.index');
-    Route::get('/commissions/{commission}', [CommissionController::class, 'show'])->name('commissions.show');
-    Route::get('/commissions/{commission}/edit', [CommissionController::class, 'edit'])->name('commissions.edit');
-    Route::put('/commissions/{commission}', [CommissionController::class, 'update'])->name('commissions.update');
-    Route::delete('/commissions/{commission}', [CommissionController::class, 'destroy'])->name('commissions.destroy');
-    
     // Settings
     Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
     Route::post('/maintenance/cache-clear', [AdminSettingsController::class, 'cacheClean'])->name('maintenance.cache-clear');
