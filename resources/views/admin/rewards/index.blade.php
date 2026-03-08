@@ -40,6 +40,7 @@
     <table class="modern-table">
       <thead>
         <tr>
+          <th>#</th>
           <th>User</th>
           <th>From User</th>
           <th>Level</th>
@@ -49,8 +50,9 @@
         </tr>
       </thead>
       <tbody>
-        @forelse($commissions as $commission)
+        @forelse($commissions as $index => $commission)
         <tr>
+          <td>{{ $commissions->firstItem() + $index }}</td>
           <td><strong>{{ $commission->fromUser->username ?? 'N/A' }}</strong></td>
           <td>{{ $commission->user->username ?? 'N/A' }}</td>
           <td><span class="badge pending">Level {{ $commission->level }}</span></td>
@@ -66,13 +68,29 @@
           </td>
         </tr>
         @empty
-        <tr><td colspan="6" class="empty">No commissions found</td></tr>
+        <tr><td colspan="7" class="empty">No commissions found</td></tr>
         @endforelse
       </tbody>
     </table>
     @if($commissions->hasPages())
     <div style="padding:20px;display:flex;justify-content:center">
-      {{ $commissions->appends(['tab' => 'commissions'])->links() }}
+      @if($commissions->onFirstPage())
+        <span style="padding:8px 12px;background:#f3f4f6;color:#cbd5e1;border-radius:6px;margin:0 2px">←</span>
+      @else
+        <a href="{{ $commissions->appends(request()->except('commissions_page'))->previousPageUrl() }}" style="padding:8px 12px;background:#f3f4f6;color:#6b7280;border-radius:6px;margin:0 2px;text-decoration:none">←</a>
+      @endif
+      @foreach($commissions->getUrlRange(1, $commissions->lastPage()) as $page => $url)
+        @if($page == $commissions->currentPage())
+          <span style="padding:8px 12px;background:#667eea;color:#fff;border-radius:6px;margin:0 2px">{{ $page }}</span>
+        @else
+          <a href="{{ $commissions->appends(request()->except('commissions_page'))->url($page) }}" style="padding:8px 12px;background:#f3f4f6;color:#6b7280;border-radius:6px;margin:0 2px;text-decoration:none">{{ $page }}</a>
+        @endif
+      @endforeach
+      @if($commissions->hasMorePages())
+        <a href="{{ $commissions->appends(request()->except('commissions_page'))->nextPageUrl() }}" style="padding:8px 12px;background:#f3f4f6;color:#6b7280;border-radius:6px;margin:0 2px;text-decoration:none">→</a>
+      @else
+        <span style="padding:8px 12px;background:#f3f4f6;color:#cbd5e1;border-radius:6px;margin:0 2px">→</span>
+      @endif
     </div>
     @endif
   </div>
@@ -101,6 +119,7 @@
     <table class="modern-table">
       <thead>
         <tr>
+          <th>#</th>
           <th>User</th>
           <th>Day</th>
           <th>Reward</th>
@@ -109,8 +128,10 @@
         </tr>
       </thead>
       <tbody>
-        @forelse($checkins as $checkin)
+        <!-- DEBUG: Page {{ $checkins->currentPage() }} of {{ $checkins->lastPage() }}, showing {{ $checkins->firstItem() }}-{{ $checkins->lastItem() }} of {{ $checkins->total() }} -->
+        @forelse($checkins as $index => $checkin)
         <tr>
+          <td>{{ $checkins->firstItem() + $index }}</td>
           <td><strong>{{ $checkin->user->username ?? 'N/A' }}</strong></td>
           <td><span class="badge pending">Day {{ $checkin->day }}</span></td>
           <td style="font-weight:700;color:#059669">${{ number_format($checkin->reward, 2) }}</td>
@@ -125,13 +146,13 @@
           </td>
         </tr>
         @empty
-        <tr><td colspan="5" class="empty">No check-ins found</td></tr>
+        <tr><td colspan="6" class="empty">No check-ins found</td></tr>
         @endforelse
       </tbody>
     </table>
     @if($checkins->hasPages())
     <div style="padding:20px;display:flex;justify-content:center">
-      {{ $checkins->appends(['tab' => 'checkins'])->links() }}
+      {{ $checkins->appends(request()->except('checkins_page'))->links() }}
     </div>
     @endif
   </div>
@@ -146,6 +167,7 @@
     <table class="modern-table">
       <thead>
         <tr>
+          <th>#</th>
           <th>User</th>
           <th>Reward</th>
           <th>Date</th>
@@ -153,8 +175,9 @@
         </tr>
       </thead>
       <tbody>
-        @forelse($luckyBoxes as $box)
+        @forelse($luckyBoxes as $index => $box)
         <tr>
+          <td>{{ $luckyBoxes->firstItem() + $index }}</td>
           <td><strong>{{ $box->user->username ?? 'N/A' }}</strong></td>
           <td style="font-weight:700;color:#059669">${{ number_format($box->reward, 2) }}</td>
           <td>{{ $box->created_at->format('M d, Y H:i') }}</td>
@@ -168,13 +191,29 @@
           </td>
         </tr>
         @empty
-        <tr><td colspan="4" class="empty">No lucky box rewards found</td></tr>
+        <tr><td colspan="5" class="empty">No lucky box rewards found</td></tr>
         @endforelse
       </tbody>
     </table>
     @if($luckyBoxes->hasPages())
     <div style="padding:20px;display:flex;justify-content:center">
-      {{ $luckyBoxes->appends(['tab' => 'lucky-boxes'])->links() }}
+      @if($luckyBoxes->onFirstPage())
+        <span style="padding:8px 12px;background:#f3f4f6;color:#cbd5e1;border-radius:6px;margin:0 2px">←</span>
+      @else
+        <a href="{{ $luckyBoxes->appends(request()->except('luckyboxes_page'))->previousPageUrl() }}" style="padding:8px 12px;background:#f3f4f6;color:#6b7280;border-radius:6px;margin:0 2px;text-decoration:none">←</a>
+      @endif
+      @foreach($luckyBoxes->getUrlRange(1, $luckyBoxes->lastPage()) as $page => $url)
+        @if($page == $luckyBoxes->currentPage())
+          <span style="padding:8px 12px;background:#667eea;color:#fff;border-radius:6px;margin:0 2px">{{ $page }}</span>
+        @else
+          <a href="{{ $luckyBoxes->appends(request()->except('luckyboxes_page'))->url($page) }}" style="padding:8px 12px;background:#f3f4f6;color:#6b7280;border-radius:6px;margin:0 2px;text-decoration:none">{{ $page }}</a>
+        @endif
+      @endforeach
+      @if($luckyBoxes->hasMorePages())
+        <a href="{{ $luckyBoxes->appends(request()->except('luckyboxes_page'))->nextPageUrl() }}" style="padding:8px 12px;background:#f3f4f6;color:#6b7280;border-radius:6px;margin:0 2px;text-decoration:none">→</a>
+      @else
+        <span style="padding:8px 12px;background:#f3f4f6;color:#cbd5e1;border-radius:6px;margin:0 2px">→</span>
+      @endif
     </div>
     @endif
   </div>
@@ -186,6 +225,21 @@ function switchTab(tab) {
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
   event.target.classList.add('active');
   document.getElementById(tab).classList.add('active');
+}
+
+// Detect which tab should be active based on URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+let activeTab = 'commissions';
+if (urlParams.has('checkins_page')) activeTab = 'checkins';
+else if (urlParams.has('luckyboxes_page')) activeTab = 'lucky-boxes';
+else if (urlParams.has('commissions_page')) activeTab = 'commissions';
+
+// Switch to the correct tab immediately
+if (activeTab !== 'commissions') {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector(`[onclick="switchTab('${activeTab}')"]`).classList.add('active');
+  document.getElementById(activeTab).classList.add('active');
 }
 </script>
 @endsection
