@@ -25,14 +25,6 @@ class Kernel extends ConsoleKernel
             ->onOneServer()
             ->runInBackground();
 
-        // Pay weekly salaries every Monday at 00:00
-        $schedule->command('salaries:pay-weekly')
-            ->weekly()
-            ->mondays()
-            ->at('00:00')
-            ->withoutOverlapping()
-            ->onOneServer();
-
 
     }
 
