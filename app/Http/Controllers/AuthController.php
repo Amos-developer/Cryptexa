@@ -25,7 +25,7 @@ class AuthController extends Controller
     {
         // 1️⃣ Validate input
         $request->validate([
-            'username' => 'required|string|max:255|unique:users,username|regex:/^[a-zA-Z0-9_]+$/',
+            'username' => 'required|string|min:3|max:20|unique:users,username|regex:/^[a-zA-Z0-9_]+$/',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
             'ref' => 'required|digits:8|exists:users,referral_code',
@@ -116,7 +116,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'username' => 'required|string',
+            'username' => 'required|string|min:3|max:20',
             'password' => 'required|string',
         ]);
 
@@ -133,7 +133,19 @@ class AuthController extends Controller
 
             if (!$user->email_verified_at) {
                 Auth::logout();
-                return back()->withErrors(['username' => 'Verify your email first']);
+                
+                // Regenerate verification code
+                $code = rand(100000, 999999);
+                $user->update([
+                    'verification_code' => $code,
+                    'verification_expires_at' => Carbon::now()->addMinutes(10),
+                ]);
+                
+                // Send verification email
+                Mail::to($user->email)->send(new VerificationCodeMail($code));
+                
+                return redirect()->route('verify')
+                    ->with('info', 'Please verify your email first. A new verification code has been sent to your email.');
             }
             
             // Save cookie language to database if different from current
