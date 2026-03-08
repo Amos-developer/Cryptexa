@@ -255,7 +255,7 @@ Route::middleware(['auth', 'admin'])
         
         Route::resource('commissions', \App\Http\Controllers\Admin\CommissionController::class)->except(['create', 'store']);
         Route::resource('rank-bonuses', \App\Http\Controllers\Admin\RankBonusController::class);
-        Route::resource('checkins', \App\Http\Controllers\Admin\CheckinController::class);
+        Route::resource('checkins', \App\Http\Controllers\Admin\AdminCheckInController::class);
         Route::resource('lucky-boxes', \App\Http\Controllers\Admin\LuckyBoxController::class);
         
         Route::post('/withdrawals/{withdrawal}/approve', [AdminWithdrawalController::class, 'approve'])->name('withdrawals.approve');

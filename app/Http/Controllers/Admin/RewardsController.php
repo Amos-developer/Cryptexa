@@ -16,17 +16,51 @@ class RewardsController extends Controller
         $tab = $request->get('tab', 'commissions');
         $perPage = 10;
         
+        // Resolve page numbers from request
+        \Illuminate\Pagination\Paginator::currentPageResolver(function () use ($request) {
+            return $request->get('commissions_page', 1);
+        });
         $commissions = ReferralEarning::with(['user', 'fromUser'])
             ->orderBy('created_at', 'desc')
-            ->paginate($perPage, ['*'], 'commissions_page');
-            
+            ->paginate($perPage, ['*'], 'commissions_page')
+            ->setPath(route('admin.rewards.index'));
+        
+        \Illuminate\Pagination\Paginator::currentPageResolver(function () use ($request) {
+            return $request->get('checkins_page', 1);
+        });
         $checkins = CheckIn::with('user')
             ->orderBy('created_at', 'desc')
-            ->paginate($perPage, ['*'], 'checkins_page');
-            
+            ->paginate($perPage, ['*'], 'checkins_page')
+            ->setPath(route('admin.rewards.index'));
+        
+        \Illuminate\Pagination\Paginator::currentPageResolver(function () use ($request) {
+            return $request->get('luckyboxes_page', 1);
+        });
         $luckyBoxes = LuckyBox::with('user')
             ->orderBy('created_at', 'desc')
-            ->paginate($perPage, ['*'], 'luckyboxes_page');
+            ->paginate($perPage, ['*'], 'luckyboxes_page')
+            ->setPath(route('admin.rewards.index'));
+        
+        // Return JSON for AJAX requests
+        if ($request->ajax()) {
+            $type = $request->get('type');
+            if ($type === 'checkins') {
+                return response()->json([
+                    'html' => view('admin.rewards.partials.checkins-table', compact('checkins'))->render(),
+                    'pagination' => view('admin.rewards.partials.checkins-pagination', compact('checkins'))->render()
+                ]);
+            } elseif ($type === 'luckyboxes') {
+                return response()->json([
+                    'html' => view('admin.rewards.partials.luckyboxes-table', compact('luckyBoxes'))->render(),
+                    'pagination' => view('admin.rewards.partials.luckyboxes-pagination', compact('luckyBoxes'))->render()
+                ]);
+            } elseif ($type === 'commissions') {
+                return response()->json([
+                    'html' => view('admin.rewards.partials.commissions-table', compact('commissions'))->render(),
+                    'pagination' => view('admin.rewards.partials.commissions-pagination', compact('commissions'))->render()
+                ]);
+            }
+        }
         
         return view('admin.rewards.index', compact('commissions', 'checkins', 'luckyBoxes', 'tab'));
     }

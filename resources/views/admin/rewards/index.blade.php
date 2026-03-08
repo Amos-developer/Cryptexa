@@ -22,6 +22,12 @@
 .empty{text-align:center;padding:60px 20px;color:#9ca3af}
 .btn-delete{background:#fee2e2;color:#991b1b;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;transition:.3s}
 .btn-delete:hover{background:#fecaca}
+.pagination{display:flex;gap:8px;list-style:none;padding:20px;margin:0;justify-content:center}
+.pagination li a,.pagination li span{display:block;padding:8px 14px;border-radius:8px;font-size:14px;font-weight:600;transition:all .3s;text-decoration:none}
+.pagination li.active span{background:#667eea;color:#fff}
+.pagination li:not(.active):not(.disabled) a{background:#f1f5f9;color:#64748b}
+.pagination li:not(.active):not(.disabled) a:hover{background:#e2e8f0}
+.pagination li.disabled span{background:#f8fafc;color:#cbd5e1}
 </style>
 
 <div class="tabs">
@@ -33,9 +39,8 @@
 
 <div id="commissions" class="tab-content active">
   <div class="table-card">
-    <div style="padding:20px 24px;border-bottom:2px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center">
+    <div style="padding:20px 24px;border-bottom:2px solid #f1f5f9">
       <h3 style="margin:0;font-size:20px;font-weight:700;color:#1e293b">Recent Commissions</h3>
-      <a href="{{ route('admin.commissions.index') }}" style="padding:10px 20px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View All</a>
     </div>
     <table class="modern-table">
       <thead>
@@ -46,7 +51,6 @@
           <th>Level</th>
           <th>Amount</th>
           <th>Date</th>
-          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -58,63 +62,52 @@
           <td><span class="badge pending">Level {{ $commission->level }}</span></td>
           <td style="font-weight:700;color:#059669">${{ number_format($commission->amount, 2) }}</td>
           <td>{{ $commission->created_at->format('M d, Y H:i') }}</td>
-          <td>
-            <a href="{{ route('admin.commissions.edit', $commission->id) }}" style="padding:6px 12px;background:#fef3c7;color:#92400e;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;margin-right:4px">✏️</a>
-            <form action="{{ route('admin.commissions.destroy', $commission->id) }}" method="POST" style="display:inline" onsubmit="return confirm('Delete this commission?')">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn-delete">🗑️</button>
-            </form>
-          </td>
         </tr>
         @empty
-        <tr><td colspan="7" class="empty">No commissions found</td></tr>
+        <tr><td colspan="6" class="empty">No commissions found</td></tr>
         @endforelse
       </tbody>
     </table>
     @if($commissions->hasPages())
-    <div style="padding:20px;display:flex;justify-content:center">
+    <ul class="pagination">
       @if($commissions->onFirstPage())
-        <span style="padding:8px 12px;background:#f3f4f6;color:#cbd5e1;border-radius:6px;margin:0 2px">←</span>
+        <li class="disabled"><span>←</span></li>
       @else
-        <a href="{{ $commissions->appends(request()->except('commissions_page'))->previousPageUrl() }}" style="padding:8px 12px;background:#f3f4f6;color:#6b7280;border-radius:6px;margin:0 2px;text-decoration:none">←</a>
+        <li><a href="{{ $commissions->appends(request()->except('commissions_page'))->previousPageUrl() }}">←</a></li>
       @endif
       @foreach($commissions->getUrlRange(1, $commissions->lastPage()) as $page => $url)
         @if($page == $commissions->currentPage())
-          <span style="padding:8px 12px;background:#667eea;color:#fff;border-radius:6px;margin:0 2px">{{ $page }}</span>
+          <li class="active"><span>{{ $page }}</span></li>
         @else
-          <a href="{{ $commissions->appends(request()->except('commissions_page'))->url($page) }}" style="padding:8px 12px;background:#f3f4f6;color:#6b7280;border-radius:6px;margin:0 2px;text-decoration:none">{{ $page }}</a>
+          <li><a href="{{ $commissions->appends(request()->except('commissions_page'))->url($page) }}">{{ $page }}</a></li>
         @endif
       @endforeach
       @if($commissions->hasMorePages())
-        <a href="{{ $commissions->appends(request()->except('commissions_page'))->nextPageUrl() }}" style="padding:8px 12px;background:#f3f4f6;color:#6b7280;border-radius:6px;margin:0 2px;text-decoration:none">→</a>
+        <li><a href="{{ $commissions->appends(request()->except('commissions_page'))->nextPageUrl() }}">→</a></li>
       @else
-        <span style="padding:8px 12px;background:#f3f4f6;color:#cbd5e1;border-radius:6px;margin:0 2px">→</span>
+        <li class="disabled"><span>→</span></li>
       @endif
-    </div>
+    </ul>
     @endif
   </div>
 </div>
 
 <div id="rank-bonuses" class="tab-content">
   <div class="table-card">
-    <div style="padding:20px 24px;border-bottom:2px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center">
+    <div style="padding:20px 24px">
       <h3 style="margin:0;font-size:20px;font-weight:700;color:#1e293b">Rank Bonuses</h3>
-      <a href="{{ route('admin.rank-bonuses.index') }}" style="padding:10px 20px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View All</a>
     </div>
     <div class="empty" style="padding:80px 20px">
       <div style="font-size:48px;margin-bottom:16px">🏆</div>
       <div style="font-size:16px;font-weight:600;color:#6b7280">Rank Bonuses</div>
-      <div style="font-size:14px;color:#9ca3af;margin-top:8px">Manage user rank achievements</div>
     </div>
   </div>
 </div>
 
 <div id="checkins" class="tab-content">
   <div class="table-card">
-    <div style="padding:20px 24px;border-bottom:2px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center">
+    <div style="padding:20px 24px;border-bottom:2px solid #f1f5f9">
       <h3 style="margin:0;font-size:20px;font-weight:700;color:#1e293b">Recent Check-ins</h3>
-      <a href="{{ route('admin.checkins.index') }}" style="padding:10px 20px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View All</a>
     </div>
     <table class="modern-table">
       <thead>
@@ -124,11 +117,9 @@
           <th>Day</th>
           <th>Reward</th>
           <th>Date</th>
-          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <!-- DEBUG: Page {{ $checkins->currentPage() }} of {{ $checkins->lastPage() }}, showing {{ $checkins->firstItem() }}-{{ $checkins->lastItem() }} of {{ $checkins->total() }} -->
         @forelse($checkins as $index => $checkin)
         <tr>
           <td>{{ $checkins->firstItem() + $index }}</td>
@@ -136,33 +127,40 @@
           <td><span class="badge pending">Day {{ $checkin->day }}</span></td>
           <td style="font-weight:700;color:#059669">${{ number_format($checkin->reward, 2) }}</td>
           <td>{{ $checkin->created_at->format('M d, Y H:i') }}</td>
-          <td>
-            <a href="{{ route('admin.checkins.edit', $checkin->id) }}" style="padding:6px 12px;background:#fef3c7;color:#92400e;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;margin-right:4px">✏️</a>
-            <form action="{{ route('admin.checkins.destroy', $checkin->id) }}" method="POST" style="display:inline" onsubmit="return confirm('Delete this check-in?')">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn-delete">🗑️</button>
-            </form>
-          </td>
         </tr>
         @empty
-        <tr><td colspan="6" class="empty">No check-ins found</td></tr>
+        <tr><td colspan="5" class="empty">No check-ins found</td></tr>
         @endforelse
       </tbody>
     </table>
     @if($checkins->hasPages())
-    <div style="padding:20px;display:flex;justify-content:center">
-      {{ $checkins->appends(request()->except('checkins_page'))->links() }}
-    </div>
+    <ul class="pagination">
+      @if($checkins->onFirstPage())
+        <li class="disabled"><span>←</span></li>
+      @else
+        <li><a href="{{ $checkins->appends(request()->except('checkins_page'))->previousPageUrl() }}">←</a></li>
+      @endif
+      @foreach($checkins->getUrlRange(1, $checkins->lastPage()) as $page => $url)
+        @if($page == $checkins->currentPage())
+          <li class="active"><span>{{ $page }}</span></li>
+        @else
+          <li><a href="{{ $checkins->appends(request()->except('checkins_page'))->url($page) }}">{{ $page }}</a></li>
+        @endif
+      @endforeach
+      @if($checkins->hasMorePages())
+        <li><a href="{{ $checkins->appends(request()->except('checkins_page'))->nextPageUrl() }}">→</a></li>
+      @else
+        <li class="disabled"><span>→</span></li>
+      @endif
+    </ul>
     @endif
   </div>
 </div>
 
 <div id="lucky-boxes" class="tab-content">
   <div class="table-card">
-    <div style="padding:20px 24px;border-bottom:2px solid #f1f5f9;display:flex;justify-content:space-between;align-items:center">
+    <div style="padding:20px 24px;border-bottom:2px solid #f1f5f9">
       <h3 style="margin:0;font-size:20px;font-weight:700;color:#1e293b">Recent Lucky Boxes</h3>
-      <a href="{{ route('admin.lucky-boxes.index') }}" style="padding:10px 20px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px">View All</a>
     </div>
     <table class="modern-table">
       <thead>
@@ -171,7 +169,6 @@
           <th>User</th>
           <th>Reward</th>
           <th>Date</th>
-          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -181,40 +178,32 @@
           <td><strong>{{ $box->user->username ?? 'N/A' }}</strong></td>
           <td style="font-weight:700;color:#059669">${{ number_format($box->reward, 2) }}</td>
           <td>{{ $box->created_at->format('M d, Y H:i') }}</td>
-          <td>
-            <a href="{{ route('admin.lucky-boxes.edit', $box->id) }}" style="padding:6px 12px;background:#fef3c7;color:#92400e;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;margin-right:4px">✏️</a>
-            <form action="{{ route('admin.lucky-boxes.destroy', $box->id) }}" method="POST" style="display:inline" onsubmit="return confirm('Delete this lucky box?')">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn-delete">🗑️</button>
-            </form>
-          </td>
         </tr>
         @empty
-        <tr><td colspan="5" class="empty">No lucky box rewards found</td></tr>
+        <tr><td colspan="4" class="empty">No lucky box rewards found</td></tr>
         @endforelse
       </tbody>
     </table>
     @if($luckyBoxes->hasPages())
-    <div style="padding:20px;display:flex;justify-content:center">
+    <ul class="pagination">
       @if($luckyBoxes->onFirstPage())
-        <span style="padding:8px 12px;background:#f3f4f6;color:#cbd5e1;border-radius:6px;margin:0 2px">←</span>
+        <li class="disabled"><span>←</span></li>
       @else
-        <a href="{{ $luckyBoxes->appends(request()->except('luckyboxes_page'))->previousPageUrl() }}" style="padding:8px 12px;background:#f3f4f6;color:#6b7280;border-radius:6px;margin:0 2px;text-decoration:none">←</a>
+        <li><a href="{{ $luckyBoxes->appends(request()->except('luckyboxes_page'))->previousPageUrl() }}">←</a></li>
       @endif
       @foreach($luckyBoxes->getUrlRange(1, $luckyBoxes->lastPage()) as $page => $url)
         @if($page == $luckyBoxes->currentPage())
-          <span style="padding:8px 12px;background:#667eea;color:#fff;border-radius:6px;margin:0 2px">{{ $page }}</span>
+          <li class="active"><span>{{ $page }}</span></li>
         @else
-          <a href="{{ $luckyBoxes->appends(request()->except('luckyboxes_page'))->url($page) }}" style="padding:8px 12px;background:#f3f4f6;color:#6b7280;border-radius:6px;margin:0 2px;text-decoration:none">{{ $page }}</a>
+          <li><a href="{{ $luckyBoxes->appends(request()->except('luckyboxes_page'))->url($page) }}">{{ $page }}</a></li>
         @endif
       @endforeach
       @if($luckyBoxes->hasMorePages())
-        <a href="{{ $luckyBoxes->appends(request()->except('luckyboxes_page'))->nextPageUrl() }}" style="padding:8px 12px;background:#f3f4f6;color:#6b7280;border-radius:6px;margin:0 2px;text-decoration:none">→</a>
+        <li><a href="{{ $luckyBoxes->appends(request()->except('luckyboxes_page'))->nextPageUrl() }}">→</a></li>
       @else
-        <span style="padding:8px 12px;background:#f3f4f6;color:#cbd5e1;border-radius:6px;margin:0 2px">→</span>
+        <li class="disabled"><span>→</span></li>
       @endif
-    </div>
+    </ul>
     @endif
   </div>
 </div>
@@ -227,14 +216,12 @@ function switchTab(tab) {
   document.getElementById(tab).classList.add('active');
 }
 
-// Detect which tab should be active based on URL parameters
 const urlParams = new URLSearchParams(window.location.search);
 let activeTab = 'commissions';
 if (urlParams.has('checkins_page')) activeTab = 'checkins';
 else if (urlParams.has('luckyboxes_page')) activeTab = 'lucky-boxes';
 else if (urlParams.has('commissions_page')) activeTab = 'commissions';
 
-// Switch to the correct tab immediately
 if (activeTab !== 'commissions') {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
