@@ -13,7 +13,7 @@ class AdminUserPoolController extends Controller
     {
         $userPools = ComputeOrder::with(['user', 'computePlan'])
             ->orderBy('created_at', 'desc')
-            ->paginate(20);
+            ->paginate(10);
 
         $totalRunning = ComputeOrder::where('status', 'running')->count();
         $totalCompleted = ComputeOrder::where('status', 'completed')->count();

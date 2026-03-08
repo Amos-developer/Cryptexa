@@ -15,7 +15,7 @@ class AdminWithdrawalController extends Controller
     {
         $withdrawals = Withdrawal::with('user')
             ->latest()
-            ->paginate(20);
+            ->paginate(10);
 
         // Calculate stats from all withdrawals
         $totalWithdrawals = Withdrawal::where('status', 'completed')->sum('amount');

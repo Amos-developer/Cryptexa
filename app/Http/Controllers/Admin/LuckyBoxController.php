@@ -9,7 +9,7 @@ class LuckyBoxController extends Controller
 {
     public function index()
     {
-        $luckyBoxes = LuckyBox::with('user')->latest()->paginate(20);
+        $luckyBoxes = LuckyBox::with('user')->latest()->paginate(10);
         $totalClaims = LuckyBox::count();
         $totalRewards = LuckyBox::sum('reward');
         $todayClaims = LuckyBox::whereDate('created_at', today())->count();

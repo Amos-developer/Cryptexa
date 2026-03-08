@@ -10,7 +10,7 @@ class AdminPoolController extends Controller
 {
     public function index()
     {
-        $pools = ComputePlan::latest()->paginate(20);
+        $pools = ComputePlan::latest()->paginate(10);
         return view('admin.pools.index', compact('pools'));
     }
     

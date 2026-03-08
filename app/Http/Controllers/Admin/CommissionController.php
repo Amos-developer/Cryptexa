@@ -16,7 +16,7 @@ class CommissionController extends Controller
             $query->where('level', $request->level);
         }
         
-        $commissions = $query->latest()->paginate(20);
+        $commissions = $query->latest()->paginate(10);
         $totalCommissions = ReferralEarning::sum('amount');
         $level1Total = ReferralEarning::where('level', 1)->sum('amount');
         $level2Total = ReferralEarning::where('level', 2)->sum('amount');

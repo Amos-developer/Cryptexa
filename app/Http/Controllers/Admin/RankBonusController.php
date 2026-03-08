@@ -19,7 +19,7 @@ class RankBonusController extends Controller
             })
             ->withCount('referrals')
             ->latest()
-            ->paginate(20);
+            ->paginate(10);
         
         $totalJunior = User::where('junior_leader_bonus_paid', true)->count();
         $totalElite = User::where('elite_leader_bonus_paid', true)->count();

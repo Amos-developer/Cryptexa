@@ -31,7 +31,7 @@ class AdminDepositController extends Controller
             $query->whereDate('created_at', '<=', $request->to_date);
         }
         
-        $deposits = $query->latest()->paginate(20)->withQueryString();
+        $deposits = $query->latest()->paginate(10)->withQueryString();
         $users = User::all();
         $totalDeposits = Deposit::where('status', 'completed')->sum('amount');
         $pendingDeposits = Deposit::whereIn('status', ['pending', 'confirming'])->sum('amount');

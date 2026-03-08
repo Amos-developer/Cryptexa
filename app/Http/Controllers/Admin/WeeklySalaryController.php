@@ -44,7 +44,7 @@ class WeeklySalaryController extends Controller
     {
         $payments = WeeklySalaryPayment::with(['user', 'admin'])
             ->orderBy('created_at', 'desc')
-            ->paginate(20);
+            ->paginate(10);
 
         return view('admin.weekly-salary.history', compact('payments'));
     }

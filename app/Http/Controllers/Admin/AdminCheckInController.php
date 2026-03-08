@@ -9,7 +9,7 @@ class AdminCheckInController extends Controller
 {
     public function index()
     {
-        $checkIns = CheckIn::with('user')->latest()->paginate(20);
+        $checkIns = CheckIn::with('user')->latest()->paginate(10);
         $totalCheckIns = CheckIn::count();
         $totalRewards = CheckIn::sum('reward');
         $todayCheckIns = CheckIn::whereDate('check_in_date', today())->count();

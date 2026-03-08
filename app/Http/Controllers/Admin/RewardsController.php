@@ -14,7 +14,7 @@ class RewardsController extends Controller
     public function index(Request $request)
     {
         $tab = $request->get('tab', 'commissions');
-        $perPage = 15;
+        $perPage = 10;
         
         $commissions = ReferralEarning::with(['user', 'fromUser'])
             ->orderBy('created_at', 'desc')
