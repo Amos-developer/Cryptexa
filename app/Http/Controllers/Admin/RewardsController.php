@@ -11,9 +11,24 @@ use Illuminate\Http\Request;
 
 class RewardsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.rewards.index');
+        $tab = $request->get('tab', 'commissions');
+        $perPage = 15;
+        
+        $commissions = ReferralEarning::with(['user', 'fromUser'])
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage, ['*'], 'commissions_page');
+            
+        $checkins = CheckIn::with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage, ['*'], 'checkins_page');
+            
+        $luckyBoxes = LuckyBox::with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage, ['*'], 'luckyboxes_page');
+        
+        return view('admin.rewards.index', compact('commissions', 'checkins', 'luckyBoxes', 'tab'));
     }
 
     // Commission CRUD

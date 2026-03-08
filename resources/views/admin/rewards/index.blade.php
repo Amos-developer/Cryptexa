@@ -49,12 +49,9 @@
         </tr>
       </thead>
       <tbody>
-        @php
-          $commissions = \App\Models\ReferralEarning::with('user', 'referrer')->latest()->take(50)->get();
-        @endphp
         @forelse($commissions as $commission)
         <tr>
-          <td><strong>{{ $commission->referrer->username ?? 'N/A' }}</strong></td>
+          <td><strong>{{ $commission->fromUser->username ?? 'N/A' }}</strong></td>
           <td>{{ $commission->user->username ?? 'N/A' }}</td>
           <td><span class="badge pending">Level {{ $commission->level }}</span></td>
           <td style="font-weight:700;color:#059669">${{ number_format($commission->amount, 2) }}</td>
@@ -73,6 +70,11 @@
         @endforelse
       </tbody>
     </table>
+    @if($commissions->hasPages())
+    <div style="padding:20px;display:flex;justify-content:center">
+      {{ $commissions->appends(['tab' => 'commissions'])->links() }}
+    </div>
+    @endif
   </div>
 </div>
 
@@ -107,9 +109,6 @@
         </tr>
       </thead>
       <tbody>
-        @php
-          $checkins = \App\Models\CheckIn::with('user')->latest()->take(50)->get();
-        @endphp
         @forelse($checkins as $checkin)
         <tr>
           <td><strong>{{ $checkin->user->username ?? 'N/A' }}</strong></td>
@@ -130,6 +129,11 @@
         @endforelse
       </tbody>
     </table>
+    @if($checkins->hasPages())
+    <div style="padding:20px;display:flex;justify-content:center">
+      {{ $checkins->appends(['tab' => 'checkins'])->links() }}
+    </div>
+    @endif
   </div>
 </div>
 
@@ -149,9 +153,6 @@
         </tr>
       </thead>
       <tbody>
-        @php
-          $luckyBoxes = \App\Models\LuckyBox::with('user')->latest()->take(50)->get();
-        @endphp
         @forelse($luckyBoxes as $box)
         <tr>
           <td><strong>{{ $box->user->username ?? 'N/A' }}</strong></td>
@@ -171,6 +172,11 @@
         @endforelse
       </tbody>
     </table>
+    @if($luckyBoxes->hasPages())
+    <div style="padding:20px;display:flex;justify-content:center">
+      {{ $luckyBoxes->appends(['tab' => 'lucky-boxes'])->links() }}
+    </div>
+    @endif
   </div>
 </div>
 
