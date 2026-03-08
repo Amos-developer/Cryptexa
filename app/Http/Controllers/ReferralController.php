@@ -68,6 +68,17 @@ class ReferralController extends Controller
 
         /*
         |--------------------------------------------------------------------------
+        | TOTAL DEPOSITS FROM ALL TEAM MEMBERS
+        |--------------------------------------------------------------------------
+        */
+        $allTeamUserIds = $level1->pluck('id')->merge($level2->pluck('id'))->merge($level3->pluck('id'));
+        $totalTeamDeposits = DB::table('deposits')
+            ->whereIn('user_id', $allTeamUserIds)
+            ->where('status', 'completed')
+            ->sum('amount');
+
+        /*
+        |--------------------------------------------------------------------------
         | REFERRAL EARNINGS
         |--------------------------------------------------------------------------
         */
@@ -82,6 +93,7 @@ class ReferralController extends Controller
             'level3Active',
             'totalMembers',
             'totalActiveMembers',
+            'totalTeamDeposits',
             'earnings'
         ));
     }

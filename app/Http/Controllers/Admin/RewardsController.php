@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ReferralEarning;
 use App\Models\CheckIn;
 use App\Models\LuckyBox;
+use App\Models\RankBonus;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -41,6 +42,14 @@ class RewardsController extends Controller
             ->paginate($perPage, ['*'], 'luckyboxes_page')
             ->setPath(route('admin.rewards.index'));
         
+        \Illuminate\Pagination\Paginator::currentPageResolver(function () use ($request) {
+            return $request->get('rankbonuses_page', 1);
+        });
+        $rankBonuses = RankBonus::with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage, ['*'], 'rankbonuses_page')
+            ->setPath(route('admin.rewards.index'));
+        
         // Return JSON for AJAX requests
         if ($request->ajax()) {
             $type = $request->get('type');
@@ -62,7 +71,7 @@ class RewardsController extends Controller
             }
         }
         
-        return view('admin.rewards.index', compact('commissions', 'checkins', 'luckyBoxes', 'tab'));
+        return view('admin.rewards.index', compact('commissions', 'checkins', 'luckyBoxes', 'rankBonuses', 'tab'));
     }
 
     // Commission CRUD

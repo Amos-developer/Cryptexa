@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\RankBonus;
 use App\Services\RankBonusService;
+use Illuminate\Http\Request;
 
 class RankBonusController extends Controller
 {
@@ -33,35 +35,41 @@ class RankBonusController extends Controller
 
     public function edit($id)
     {
-        $user = User::withCount('referrals')->findOrFail($id);
-        return view('admin.rank-bonuses.edit', compact('user'));
+        $bonus = RankBonus::with('user')->findOrFail($id);
+        return view('admin.rank-bonuses.edit', compact('bonus'));
     }
 
-    public function update(\Illuminate\Http\Request $request, $id)
+    public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $bonus = RankBonus::with('user')->findOrFail($id);
         
-        $user->update([
-            'junior_leader_bonus_paid' => $request->has('junior_leader_bonus_paid'),
-            'elite_leader_bonus_paid' => $request->has('elite_leader_bonus_paid'),
-            'legendary_leader_bonus_paid' => $request->has('legendary_leader_bonus_paid'),
-            'grand_leader_bonus_paid' => $request->has('grand_leader_bonus_paid'),
+        $request->validate([
+            'rank' => 'required|string',
+            'bonus_amount' => 'required|numeric|min:0',
+            'balance_before' => 'required|numeric|min:0',
+            'balance_after' => 'required|numeric|min:0',
         ]);
         
-        return redirect()->route('admin.rank-bonuses.index')->with('success', 'Rank bonuses updated successfully');
+        // Calculate the difference in bonus amount
+        $oldBonus = $bonus->bonus_amount;
+        $newBonus = $request->bonus_amount;
+        $difference = $newBonus - $oldBonus;
+        
+        // Update user balance if bonus amount changed
+        if ($difference != 0) {
+            $bonus->user->increment('balance', $difference);
+        }
+        
+        $bonus->update($request->only(['rank', 'bonus_amount', 'balance_before', 'balance_after']));
+        
+        return redirect()->route('admin.rewards.index', ['rankbonuses_page' => request('page', 1)])->with('success', 'Rank bonus updated successfully');
     }
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
+        $bonus = RankBonus::findOrFail($id);
+        $bonus->delete();
         
-        $user->update([
-            'junior_leader_bonus_paid' => false,
-            'elite_leader_bonus_paid' => false,
-            'legendary_leader_bonus_paid' => false,
-            'grand_leader_bonus_paid' => false,
-        ]);
-        
-        return redirect()->route('admin.rank-bonuses.index')->with('success', 'All rank bonuses reset for user');
+        return redirect()->route('admin.rewards.index', ['rankbonuses_page' => request('page', 1)])->with('success', 'Rank bonus deleted successfully');
     }
 }

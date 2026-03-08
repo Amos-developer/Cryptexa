@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Models\RankBonus;
 use Illuminate\Support\Facades\DB;
 
 class RankBonusService
@@ -75,12 +76,23 @@ class RankBonusService
     private function payBonus(User $user, string $rank, float $amount)
     {
         DB::transaction(function () use ($user, $rank, $amount) {
+            $balanceBefore = $user->balance;
+            
             // Add bonus to user balance
             $user->increment('balance', $amount);
             
             // Mark bonus as paid
             $user->update([
                 $rank . '_bonus_paid' => true
+            ]);
+            
+            // Create rank bonus record
+            RankBonus::create([
+                'user_id' => $user->id,
+                'rank' => ucwords(str_replace('_', ' ', $rank)),
+                'bonus_amount' => $amount,
+                'balance_before' => $balanceBefore,
+                'balance_after' => $balanceBefore + $amount,
             ]);
         });
     }

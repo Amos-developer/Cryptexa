@@ -94,13 +94,67 @@
 
 <div id="rank-bonuses" class="tab-content">
   <div class="table-card">
-    <div style="padding:20px 24px">
+    <div style="padding:20px 24px;border-bottom:2px solid #f1f5f9">
       <h3 style="margin:0;font-size:20px;font-weight:700;color:#1e293b">Rank Bonuses</h3>
     </div>
-    <div class="empty" style="padding:80px 20px">
-      <div style="font-size:48px;margin-bottom:16px">🏆</div>
-      <div style="font-size:16px;font-weight:600;color:#6b7280">Rank Bonuses</div>
-    </div>
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>User</th>
+          <th>Rank</th>
+          <th>Bonus Amount</th>
+          <th>Balance Before</th>
+          <th>Balance After</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @forelse($rankBonuses as $index => $bonus)
+        <tr>
+          <td>{{ $rankBonuses->firstItem() + $index }}</td>
+          <td><strong>{{ $bonus->user->username ?? 'N/A' }}</strong></td>
+          <td><span class="badge success">{{ $bonus->rank }}</span></td>
+          <td style="font-weight:700;color:#059669">${{ number_format($bonus->bonus_amount, 2) }}</td>
+          <td style="color:#6b7280">${{ number_format($bonus->balance_before, 2) }}</td>
+          <td style="color:#059669;font-weight:600">${{ number_format($bonus->balance_after, 2) }}</td>
+          <td>{{ $bonus->created_at->format('M d, Y H:i') }}</td>
+          <td>
+            <a href="{{ route('admin.rank-bonuses.edit', ['rank_bonus' => $bonus->id, 'page' => request('rankbonuses_page', 1)]) }}" style="padding:6px 12px;background:#fef3c7;color:#92400e;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;margin-right:4px">✏️</a>
+            <form action="{{ route('admin.rank-bonuses.destroy', $bonus->id) }}" method="POST" style="display:inline" onsubmit="return confirm('Delete this rank bonus?')">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn-delete">🗑️</button>
+            </form>
+          </td>
+        </tr>
+        @empty
+        <tr><td colspan="8" class="empty">No rank bonuses found</td></tr>
+        @endforelse
+      </tbody>
+    </table>
+    @if($rankBonuses->hasPages())
+    <ul class="pagination">
+      @if($rankBonuses->onFirstPage())
+        <li class="disabled"><span>←</span></li>
+      @else
+        <li><a href="{{ $rankBonuses->appends(request()->except('rankbonuses_page'))->previousPageUrl() }}">←</a></li>
+      @endif
+      @foreach($rankBonuses->getUrlRange(1, $rankBonuses->lastPage()) as $page => $url)
+        @if($page == $rankBonuses->currentPage())
+          <li class="active"><span>{{ $page }}</span></li>
+        @else
+          <li><a href="{{ $rankBonuses->appends(request()->except('rankbonuses_page'))->url($page) }}">{{ $page }}</a></li>
+        @endif
+      @endforeach
+      @if($rankBonuses->hasMorePages())
+        <li><a href="{{ $rankBonuses->appends(request()->except('rankbonuses_page'))->nextPageUrl() }}">→</a></li>
+      @else
+        <li class="disabled"><span>→</span></li>
+      @endif
+    </ul>
+    @endif
   </div>
 </div>
 
@@ -220,6 +274,7 @@ const urlParams = new URLSearchParams(window.location.search);
 let activeTab = 'commissions';
 if (urlParams.has('checkins_page')) activeTab = 'checkins';
 else if (urlParams.has('luckyboxes_page')) activeTab = 'lucky-boxes';
+else if (urlParams.has('rankbonuses_page')) activeTab = 'rank-bonuses';
 else if (urlParams.has('commissions_page')) activeTab = 'commissions';
 
 if (activeTab !== 'commissions') {

@@ -34,87 +34,125 @@
             <p style="color: #94a3b8; font-size: 13px; margin: 0;">{{ __t('earn_passive_income') }}</p>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
-            <div style="
-                background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(56,189,248,0.05));
-                border: 1px solid rgba(56,189,248,0.4);
-                border-radius: 16px;
-                padding: 20px 12px;
-                text-align: center;
-            ">
+        <div class="row g-3">
+            <div class="col-6">
                 <div style="
-                    width: 48px;
-                    height: 48px;
-                    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-                    border-radius: 12px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin: 0 auto 12px;
-                    box-shadow: 0 8px 16px rgba(56,189,248,0.4);
+                    background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(56,189,248,0.05));
+                    border: 1px solid rgba(56,189,248,0.4);
+                    border-radius: 16px;
+                    padding: 20px 12px;
+                    text-align: center;
+                    height: 100%;
                 ">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="9" cy="7" r="4"></circle>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                    </svg>
+                    <div style="
+                        width: 48px;
+                        height: 48px;
+                        background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+                        border-radius: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 12px;
+                        box-shadow: 0 8px 16px rgba(56,189,248,0.4);
+                    ">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px 0;">{{ __t('total_members') }}</p>
+                    <h3 style="color: #38bdf8; font-size: 28px; font-weight: 900; margin: 0;">{{ $totalMembers }}</h3>
                 </div>
-                <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px 0;">{{ __t('total_members') }}</p>
-                <h3 style="color: #38bdf8; font-size: 28px; font-weight: 900; margin: 0;">{{ $totalMembers }}</h3>
             </div>
 
-            <div style="
-                background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(34,197,94,0.05));
-                border: 1px solid rgba(34,197,94,0.4);
-                border-radius: 16px;
-                padding: 20px 12px;
-                text-align: center;
-            ">
+            <div class="col-6">
                 <div style="
-                    width: 48px;
-                    height: 48px;
-                    background: linear-gradient(135deg, #22c55e, #16a34a);
-                    border-radius: 12px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin: 0 auto 12px;
-                    box-shadow: 0 8px 16px rgba(34,197,94,0.4);
+                    background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(34,197,94,0.05));
+                    border: 1px solid rgba(34,197,94,0.4);
+                    border-radius: 16px;
+                    padding: 20px 12px;
+                    text-align: center;
+                    height: 100%;
                 ">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
-                    </svg>
+                    <div style="
+                        width: 48px;
+                        height: 48px;
+                        background: linear-gradient(135deg, #22c55e, #16a34a);
+                        border-radius: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 12px;
+                        box-shadow: 0 8px 16px rgba(34,197,94,0.4);
+                    ">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                        </svg>
+                    </div>
+                    <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px 0;">{{ __t('active') }}</p>
+                    <h3 style="color: #22c55e; font-size: 28px; font-weight: 900; margin: 0;">{{ $totalActiveMembers }}</h3>
                 </div>
-                <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px 0;">{{ __t('active') }}</p>
-                <h3 style="color: #22c55e; font-size: 28px; font-weight: 900; margin: 0;">{{ $totalActiveMembers }}</h3>
             </div>
 
-            <div style="
-                background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(251,191,36,0.05));
-                border: 1px solid rgba(251,191,36,0.4);
-                border-radius: 16px;
-                padding: 20px 12px;
-                text-align: center;
-            ">
+            <div class="col-6">
                 <div style="
-                    width: 48px;
-                    height: 48px;
-                    background: linear-gradient(135deg, #fbbf24, #f59e0b);
-                    border-radius: 12px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin: 0 auto 12px;
-                    box-shadow: 0 8px 16px rgba(251,191,36,0.4);
+                    background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(168,85,247,0.05));
+                    border: 1px solid rgba(168,85,247,0.4);
+                    border-radius: 16px;
+                    padding: 20px 12px;
+                    text-align: center;
+                    height: 100%;
                 ">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                        <line x1="12" y1="1" x2="12" y2="23"></line>
-                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                    </svg>
+                    <div style="
+                        width: 48px;
+                        height: 48px;
+                        background: linear-gradient(135deg, #a855f7, #9333ea);
+                        border-radius: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 12px;
+                        box-shadow: 0 8px 16px rgba(168,85,247,0.4);
+                    ">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px 0;">Team Deposits</p>
+                    <h3 style="color: #a855f7; font-size: 24px; font-weight: 900; margin: 0;">${{ number_format($totalTeamDeposits, 2) }}</h3>
                 </div>
-                <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px 0;">{{ __t('total_earnings') }}</p>
-                <h3 style="color: #fbbf24; font-size: 24px; font-weight: 900; margin: 0;">${{ number_format($earnings, 2) }}</h3>
+            </div>
+
+            <div class="col-6">
+                <div style="
+                    background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(251,191,36,0.05));
+                    border: 1px solid rgba(251,191,36,0.4);
+                    border-radius: 16px;
+                    padding: 20px 12px;
+                    text-align: center;
+                    height: 100%;
+                ">
+                    <div style="
+                        width: 48px;
+                        height: 48px;
+                        background: linear-gradient(135deg, #fbbf24, #f59e0b);
+                        border-radius: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin: 0 auto 12px;
+                        box-shadow: 0 8px 16px rgba(251,191,36,0.4);
+                    ">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 6px 0;">{{ __t('total_earnings') }}</p>
+                    <h3 style="color: #fbbf24; font-size: 24px; font-weight: 900; margin: 0;">${{ number_format($earnings, 2) }}</h3>
+                </div>
             </div>
         </div>
     </div>
