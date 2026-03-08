@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Edit Pool')
-@section('page-title', 'Edit Pool')
-@section('page-description', 'Modify pool details')
+@section('title', 'Edit Vault')
+@section('page-title', 'Edit Vault')
+@section('page-description', 'Modify Vault details')
 
 @section('content')
 <style>
@@ -46,18 +46,18 @@
   <div class="edit-card">
     <div class="card-header">
       <div class="card-icon">✏️</div>
-      <h2 class="card-title">Edit Pool</h2>
-      <p class="card-subtitle">Update {{ $pool->name }}</p>
+      <h2 class="card-title">Edit Vault</h2>
+      <p class="card-subtitle">Update {{ $Vault->name }}</p>
     </div>
 
-    <form action="{{ route('admin.pools.update', $pool) }}" method="POST">
+    <form action="{{ route('admin.Vaults.update', $Vault) }}" method="POST">
       @csrf
       @method('PUT')
       
       <div class="form-grid">
         <div class="form-group full">
-          <label class="form-label">📝 Pool Name <span class="required">*</span></label>
-          <input type="text" name="name" class="form-input @error('name') error @enderror" value="{{ old('name', $pool->name) }}" required>
+          <label class="form-label">📝 Vault Name <span class="required">*</span></label>
+          <input type="text" name="name" class="form-input @error('name') error @enderror" value="{{ old('name', $Vault->name) }}" required>
           @error('name')
             <span class="error-message">{{ $message }}</span>
           @enderror
@@ -67,10 +67,10 @@
           <label class="form-label">🏷️ Type <span class="required">*</span></label>
           <select name="type" class="form-select @error('type') error @enderror" required>
             <option value="">Select Type</option>
-            <option value="btc" {{ old('type', $pool->type) == 'btc' ? 'selected' : '' }}>BTC</option>
-            <option value="eth" {{ old('type', $pool->type) == 'eth' ? 'selected' : '' }}>ETH</option>
-            <option value="usdt" {{ old('type', $pool->type) == 'usdt' ? 'selected' : '' }}>USDT</option>
-            <option value="ltc" {{ old('type', $pool->type) == 'ltc' ? 'selected' : '' }}>LTC</option>
+            <option value="btc" {{ old('type', $Vault->type) == 'btc' ? 'selected' : '' }}>BTC</option>
+            <option value="eth" {{ old('type', $Vault->type) == 'eth' ? 'selected' : '' }}>ETH</option>
+            <option value="usdt" {{ old('type', $Vault->type) == 'usdt' ? 'selected' : '' }}>USDT</option>
+            <option value="ltc" {{ old('type', $Vault->type) == 'ltc' ? 'selected' : '' }}>LTC</option>
           </select>
           @error('type')
             <span class="error-message">{{ $message }}</span>
@@ -81,7 +81,7 @@
           <label class="form-label">💵 Price <span class="required">*</span></label>
           <div class="input-group">
             <span class="input-prefix">$</span>
-            <input type="number" step="0.01" min="0" name="price" class="form-input @error('price') error @enderror" value="{{ old('price', $pool->price) }}" required>
+            <input type="number" step="0.01" min="0" name="price" class="form-input @error('price') error @enderror" value="{{ old('price', $Vault->price) }}" required>
           </div>
           @error('price')
             <span class="error-message">{{ $message }}</span>
@@ -92,7 +92,7 @@
           <label class="form-label">💰 Max Investment</label>
           <div class="input-group">
             <span class="input-prefix">$</span>
-            <input type="number" step="0.01" min="0" name="max_investment" class="form-input @error('max_investment') error @enderror" value="{{ old('max_investment', $pool->max_investment) }}" placeholder="Leave empty for unlimited">
+            <input type="number" step="0.01" min="0" name="max_investment" class="form-input @error('max_investment') error @enderror" value="{{ old('max_investment', $Vault->max_investment) }}" placeholder="Leave empty for unlimited">
           </div>
           @error('max_investment')
             <span class="error-message">{{ $message }}</span>
@@ -103,7 +103,7 @@
           <label class="form-label">📈 Daily Profit (%) <span class="required">*</span></label>
           <div class="input-group">
             <span class="input-prefix">%</span>
-            <input type="number" step="0.01" min="0" max="100" name="daily_profit" class="form-input @error('daily_profit') error @enderror" value="{{ old('daily_profit', $pool->daily_profit) }}" required>
+            <input type="number" step="0.01" min="0" max="100" name="daily_profit" class="form-input @error('daily_profit') error @enderror" value="{{ old('daily_profit', $Vault->daily_profit) }}" required>
           </div>
           @error('daily_profit')
             <span class="error-message">{{ $message }}</span>
@@ -112,7 +112,7 @@
 
         <div class="form-group">
           <label class="form-label">⏱️ Duration (Minutes) <span class="required">*</span></label>
-          <input type="number" min="1" name="duration_minutes" class="form-input @error('duration_minutes') error @enderror" value="{{ old('duration_minutes', $pool->duration_minutes) }}" required>
+          <input type="number" min="1" name="duration_minutes" class="form-input @error('duration_minutes') error @enderror" value="{{ old('duration_minutes', $Vault->duration_minutes) }}" required>
           @error('duration_minutes')
             <span class="error-message">{{ $message }}</span>
           @enderror
@@ -120,8 +120,8 @@
       </div>
 
       <div class="form-actions">
-        <a href="{{ route('admin.pools.index') }}" class="btn btn-cancel">← Cancel</a>
-        <button type="submit" class="btn btn-submit">✔ Update Pool</button>
+        <a href="{{ route('admin.Vaults.index') }}" class="btn btn-cancel">← Cancel</a>
+        <button type="submit" class="btn btn-submit">✔ Update Vault</button>
       </div>
     </form>
   </div>

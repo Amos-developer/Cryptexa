@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Edit User Pool')
-@section('page-title', 'Edit User Pool')
-@section('page-description', 'Update user pool information')
+@section('title', 'Edit User Vault')
+@section('page-title', 'Edit User Vault')
+@section('page-description', 'Update user Vault information')
 
 @section('content')
 <style>
@@ -17,41 +17,41 @@
 
 <div class="container-fluid" style="padding:20px">
   <div style="margin-bottom:20px">
-    <a href="{{ route('admin.user-pools.index') }}" class="btn-back">← Back to List</a>
+    <a href="{{ route('admin.user-Vaults.index') }}" class="btn-back">← Back to List</a>
   </div>
 
   <div class="form-card">
-    <h3 style="font-size:24px;font-weight:700;color:#1e293b;margin-bottom:24px">Edit User Pool #{{ $userPool->id }}</h3>
+    <h3 style="font-size:24px;font-weight:700;color:#1e293b;margin-bottom:24px">Edit User Vault #{{ $userVault->id }}</h3>
     
-    <form action="{{ route('admin.user-pools.update', $userPool) }}" method="POST">
+    <form action="{{ route('admin.user-Vaults.update', $userVault) }}" method="POST">
       @csrf
       @method('PUT')
 
       <div class="form-group">
         <label class="form-label">User</label>
-        <input type="text" class="form-input" value="{{ $userPool->user->username ?? 'Unknown' }}" disabled>
+        <input type="text" class="form-input" value="{{ $userVault->user->username ?? 'Unknown' }}" disabled>
       </div>
 
       <div class="form-group">
-        <label class="form-label">Pool Name</label>
-        <input type="text" class="form-input" value="{{ $userPool->computePlan->name ?? 'N/A' }}" disabled>
+        <label class="form-label">Vault Name</label>
+        <input type="text" class="form-input" value="{{ $userVault->computePlan->name ?? 'N/A' }}" disabled>
       </div>
 
       <div class="form-group">
         <label class="form-label">Status</label>
         <select name="status" class="form-select" required>
-          <option value="running" {{ $userPool->status == 'running' ? 'selected' : '' }}>Running</option>
-          <option value="completed" {{ $userPool->status == 'completed' ? 'selected' : '' }}>Completed</option>
+          <option value="running" {{ $userVault->status == 'running' ? 'selected' : '' }}>Running</option>
+          <option value="completed" {{ $userVault->status == 'completed' ? 'selected' : '' }}>Completed</option>
         </select>
       </div>
 
       <div class="form-group">
         <label class="form-label">Expected Profit ($)</label>
-        <input type="number" name="expected_profit" class="form-input" step="0.01" min="0" value="{{ $userPool->expected_profit ?? 0 }}">
+        <input type="number" name="expected_profit" class="form-input" step="0.01" min="0" value="{{ $userVault->expected_profit ?? 0 }}">
       </div>
 
       <div style="margin-top:32px">
-        <button type="submit" class="btn-submit">💾 Update Pool</button>
+        <button type="submit" class="btn-submit">💾 Update Vault</button>
       </div>
     </form>
   </div>

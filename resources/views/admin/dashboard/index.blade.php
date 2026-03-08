@@ -44,7 +44,7 @@
   <div class="stat-box">
     <div class="stat-icon green"><i class="fa fa-database"></i></div>
     <div class="stat-info">
-      <h4>Total Pools</h4>
+      <h4>Total Vaults</h4>
       <h2>{{ number_format($totalPools) }}</h2>
     </div>
   </div>
@@ -143,7 +143,7 @@
 
   <div class="dash-card">
     <div class="dash-card-header">
-      <h3>Recent Pools</h3>
+      <h3>Recent Vaults</h3>
       <a href="{{ route('admin.pools.index') }}">View All →</a>
     </div>
     <table class="dash-table">
@@ -162,7 +162,7 @@
           <td>${{ number_format($pool->price, 2) }}</td>
         </tr>
         @empty
-        <tr><td colspan="3" style="text-align:center;color:#999">No pools found</td></tr>
+        <tr><td colspan="3" style="text-align:center;color:#999">No vaults found</td></tr>
         @endforelse
       </tbody>
     </table>

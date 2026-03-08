@@ -14,6 +14,8 @@
 .stat-icon.green{background:linear-gradient(135deg,#11998e,#38ef7d)}
 .stat-icon.yellow{background:linear-gradient(135deg,#f093fb,#f5576c)}
 .stat-icon.purple{background:linear-gradient(135deg,#667eea,#764ba2)}
+.stat-icon.red{background:linear-gradient(135deg,#fa709a,#fee140)}
+.stat-icon.orange{background:linear-gradient(135deg,#f59e0b,#d97706)}
 .stat-info h4{margin:0;font-size:14px;color:#888;font-weight:400}
 .stat-info h2{margin:5px 0 0;font-size:28px;font-weight:700;color:#333}
 .filter-card{background:var(--bg-filter);border-radius:16px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:24px}
@@ -72,7 +74,7 @@
 
 <div class="container-fluid" style="padding:20px">
   <div class="row">
-    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <div class="stat-box">
         <div class="stat-icon blue"><i class="fa fa-users"></i></div>
         <div class="stat-info">
@@ -81,30 +83,50 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <div class="stat-box">
-        <div class="stat-icon yellow"><i class="fa fa-crown"></i></div>
+        <div class="stat-icon yellow"><i class="fa fa-dollar"></i></div>
         <div class="stat-info">
-          <h4>Admin Users</h4>
-          <h2>{{ number_format($users->where('role', 'admin')->count()) }}</h2>
+          <h4>Total Balance</h4>
+          <h2>${{ number_format($users->sum('balance'), 2) }}</h2>
         </div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <div class="stat-box">
-        <div class="stat-icon green"><i class="fa fa-user"></i></div>
+        <div class="stat-icon green"><i class="fa fa-user-circle"></i></div>
         <div class="stat-info">
-          <h4>Regular Users</h4>
-          <h2>{{ number_format($users->where('role', '!=', 'admin')->count()) }}</h2>
+          <h4>With Referrals</h4>
+          <h2>{{ number_format($users->where('referrals_count', '>', 0)->count()) }}</h2>
         </div>
       </div>
     </div>
-    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+  </div>
+  <div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12">
       <div class="stat-box">
         <div class="stat-icon purple"><i class="fa fa-clock"></i></div>
         <div class="stat-info">
           <h4>Active Today</h4>
           <h2>{{ number_format($users->where('created_at', '>=', today())->count()) }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="stat-box">
+        <div class="stat-icon red"><i class="fa fa-check-circle"></i></div>
+        <div class="stat-info">
+          <h4>Verified</h4>
+          <h2>{{ number_format($users->whereNotNull('email_verified_at')->count()) }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="stat-box">
+        <div class="stat-icon orange"><i class="fa fa-user-plus"></i></div>
+        <div class="stat-info">
+          <h4>This Week</h4>
+          <h2>{{ number_format($users->where('created_at', '>=', now()->startOfWeek())->count()) }}</h2>
         </div>
       </div>
     </div>

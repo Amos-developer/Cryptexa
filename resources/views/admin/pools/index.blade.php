@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Pools')
-@section('page-title', 'Pools')
-@section('page-description', 'Manage compute pools')
+@section('title', 'Vaults')
+@section('page-title', 'Vaults')
+@section('page-description', 'Manage compute Vaults')
 
 @section('content')
 <style>
@@ -55,7 +55,7 @@
       <div class="stat-box">
         <div class="stat-icon blue"><i class="fa fa-database"></i></div>
         <div class="stat-info">
-          <h4>Total Pools</h4>
+          <h4>Total Vaults</h4>
           <h2>{{ number_format($pools->total()) }}</h2>
         </div>
       </div>
@@ -82,8 +82,8 @@
 
   <div class="table-card">
     <div class="table-header">
-      <h3 class="table-title">Compute Pools</h3>
-      <a href="{{ route('admin.pools.create') }}" class="btn-create">➕ Create Pool</a>
+      <h3 class="table-title">Compute Vaults</h3>
+      <a href="{{ route('admin.pools.create') }}" class="btn-create">➕ Create Vault</a>
     </div>
     <div style="overflow-x:auto">
       <table class="modern-table">
@@ -113,7 +113,7 @@
               <form action="{{ route('admin.pools.destroy', $pool) }}" method="POST" style="display:inline">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="action-btn delete" title="Delete" onclick="return confirm('Delete this pool?')">🗑️</button>
+                <button type="submit" class="action-btn delete" title="Delete" onclick="return confirm('Delete this Vault?')">🗑️</button>
               </form>
             </td>
           </tr>
@@ -121,8 +121,8 @@
           <tr>
             <td colspan="7" class="empty-state">
               <div class="empty-icon">🏊</div>
-              <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Pools Found</div>
-              <div style="font-size:14px">Create your first compute pool</div>
+              <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Vaults Found</div>
+              <div style="font-size:14px">Create your first compute Vault</div>
             </td>
           </tr>
           @endforelse

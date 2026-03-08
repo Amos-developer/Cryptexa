@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Pool Details')
-@section('page-title', 'Pool Details')
-@section('page-description', 'View pool information')
+@section('title', 'Vault Details')
+@section('page-title', 'Vault Details')
+@section('page-description', 'View Vault information')
 
 @section('content')
 <style>
@@ -33,47 +33,47 @@
   <div class="detail-card">
     <div class="card-header">
       <div class="card-icon">🏊</div>
-      <h2 class="card-title">{{ $pool->name }}</h2>
+      <h2 class="card-title">{{ $Vault->name }}</h2>
     </div>
 
     <div class="info-grid">
       <div class="info-item">
-        <div class="info-label">🆔 Pool ID</div>
-        <div class="info-value">#{{ $pool->id }}</div>
+        <div class="info-label">🆔 Vault ID</div>
+        <div class="info-value">#{{ $Vault->id }}</div>
       </div>
       <div class="info-item">
         <div class="info-label">🏷️ Type</div>
-        <div class="info-value">{{ strtoupper($pool->type) }}</div>
+        <div class="info-value">{{ strtoupper($Vault->type) }}</div>
       </div>
       <div class="info-item">
         <div class="info-label">💵 Price</div>
-        <div class="info-value" style="color:#059669">${{ number_format($pool->price, 2) }}</div>
+        <div class="info-value" style="color:#059669">${{ number_format($Vault->price, 2) }}</div>
       </div>
       <div class="info-item">
         <div class="info-label">📈 Daily Profit</div>
-        <div class="info-value" style="color:#dc2626">{{ number_format($pool->daily_profit, 2) }}%</div>
+        <div class="info-value" style="color:#dc2626">{{ number_format($Vault->daily_profit, 2) }}%</div>
       </div>
       <div class="info-item">
         <div class="info-label">⏱️ Duration</div>
-        <div class="info-value">{{ $pool->duration_minutes }} minutes</div>
+        <div class="info-value">{{ $Vault->duration_minutes }} minutes</div>
       </div>
       <div class="info-item">
         <div class="info-label">📅 Created At</div>
-        <div class="info-value" style="font-size:16px">{{ $pool->created_at ? $pool->created_at->format('M d, Y H:i') : '-' }}</div>
+        <div class="info-value" style="font-size:16px">{{ $Vault->created_at ? $Vault->created_at->format('M d, Y H:i') : '-' }}</div>
       </div>
       <div class="info-item">
         <div class="info-label">🕐 Updated At</div>
-        <div class="info-value" style="font-size:16px">{{ $pool->updated_at ? $pool->updated_at->format('M d, Y H:i') : '-' }}</div>
+        <div class="info-value" style="font-size:16px">{{ $Vault->updated_at ? $Vault->updated_at->format('M d, Y H:i') : '-' }}</div>
       </div>
     </div>
 
     <div class="actions">
-      <a href="{{ route('admin.pools.index') }}" class="btn btn-back">← Back to List</a>
-      <a href="{{ route('admin.pools.edit', $pool) }}" class="btn btn-edit">✏️ Edit</a>
-      <form action="{{ route('admin.pools.destroy', $pool) }}" method="POST" style="flex:1">
+      <a href="{{ route('admin.Vaults.index') }}" class="btn btn-back">← Back to List</a>
+      <a href="{{ route('admin.Vaults.edit', $Vault) }}" class="btn btn-edit">✏️ Edit</a>
+      <form action="{{ route('admin.Vaults.destroy', $Vault) }}" method="POST" style="flex:1">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-delete" style="width:100%" onclick="return confirm('Delete this pool?')">🗑️ Delete</button>
+        <button type="submit" class="btn btn-delete" style="width:100%" onclick="return confirm('Delete this Vault?')">🗑️ Delete</button>
       </form>
     </div>
   </div>

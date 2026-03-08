@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Create Pool')
-@section('page-title', 'Create Pool')
-@section('page-description', 'Add new compute pool')
+@section('title', 'Create Vault')
+@section('page-title', 'Create Vault')
+@section('page-description', 'Add new compute Vault')
 
 @section('content')
 <style>
@@ -46,16 +46,16 @@
   <div class="edit-card">
     <div class="card-header">
       <div class="card-icon">🏊</div>
-      <h2 class="card-title">Create Pool</h2>
-      <p class="card-subtitle">Add a new compute pool</p>
+      <h2 class="card-title">Create Vault</h2>
+      <p class="card-subtitle">Add a new compute Vault</p>
     </div>
 
-    <form action="{{ route('admin.pools.store') }}" method="POST">
+    <form action="{{ route('admin.Vaults.store') }}" method="POST">
       @csrf
       
       <div class="form-grid">
         <div class="form-group full">
-          <label class="form-label">📝 Pool Name <span class="required">*</span></label>
+          <label class="form-label">📝 Vault Name <span class="required">*</span></label>
           <input type="text" name="name" class="form-input @error('name') error @enderror" value="{{ old('name') }}" required>
           @error('name')
             <span class="error-message">{{ $message }}</span>
@@ -119,8 +119,8 @@
       </div>
 
       <div class="form-actions">
-        <a href="{{ route('admin.pools.index') }}" class="btn btn-cancel">← Cancel</a>
-        <button type="submit" class="btn btn-submit">✔ Create Pool</button>
+        <a href="{{ route('admin.Vaults.index') }}" class="btn btn-cancel">← Cancel</a>
+        <button type="submit" class="btn btn-submit">✔ Create Vault</button>
       </div>
     </form>
   </div>

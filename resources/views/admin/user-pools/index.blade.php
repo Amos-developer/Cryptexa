@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
 
-@section('title', 'User Pools')
-@section('page-title', 'User Pools')
-@section('page-description', 'Manage user activated pools')
+@section('title', 'User Vaults')
+@section('page-title', 'User Vaults')
+@section('page-description', 'Manage user activated Vaults')
 
 @section('content')
 <style>
@@ -56,7 +56,7 @@
       <div class="stat-box">
         <div class="stat-icon green"><i class="fa fa-play-circle"></i></div>
         <div class="stat-info">
-          <h4>Active Pools</h4>
+          <h4>Active Vaults</h4>
           <h2>{{ number_format($totalRunning) }}</h2>
         </div>
       </div>
@@ -65,7 +65,7 @@
       <div class="stat-box">
         <div class="stat-icon blue"><i class="fa fa-check-circle"></i></div>
         <div class="stat-info">
-          <h4>Completed Pools</h4>
+          <h4>Completed Vaults</h4>
           <h2>{{ number_format($totalCompleted) }}</h2>
         </div>
       </div>
@@ -92,7 +92,7 @@
 
   <div class="table-card">
     <div class="table-header">
-      <h3 class="table-title">User Activated Pools</h3>
+      <h3 class="table-title">User Activated Vaults</h3>
     </div>
     <div style="overflow-x:auto">
       <table class="modern-table">
@@ -100,7 +100,7 @@
           <tr>
             <th>ID</th>
             <th>User</th>
-            <th>Pool</th>
+            <th>Vault</th>
             <th>Status</th>
             <th>Profit Earned</th>
             <th>Started</th>
@@ -119,7 +119,7 @@
                 <span style="color:#94a3b8">Unknown</span>
               @endif
             </td>
-            <td data-label="Pool" style="font-weight:700;color:#667eea">{{ $userPool->computePlan->name ?? 'N/A' }}</td>
+            <td data-label="Vault" style="font-weight:700;color:#667eea">{{ $userPool->computePlan->name ?? 'N/A' }}</td>
             <td data-label="Status">
               @if($userPool->status == 'running')
                 <span class="status-badge status-active">✓ Running</span>
@@ -139,8 +139,8 @@
           <tr>
             <td colspan="8" class="empty-state">
               <div class="empty-icon">🏊</div>
-              <div style="font-size:18px;font-weight:600;margin-bottom:8px">No User Pools Found</div>
-              <div style="font-size:14px">No pools have been activated yet</div>
+              <div style="font-size:18px;font-weight:600;margin-bottom:8px">No User Vaults Found</div>
+              <div style="font-size:14px">No Vaults have been activated yet</div>
             </td>
           </tr>
           @endforelse

@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
 
-@section('title', 'User Pool Details')
-@section('page-title', 'User Pool Details')
-@section('page-description', 'View user pool information')
+@section('title', 'User Vault Details')
+@section('page-title', 'User Vault Details')
+@section('page-description', 'View user Vault information')
 
 @section('content')
 <style>
@@ -20,23 +20,23 @@
 
 <div class="container-fluid" style="padding:20px">
   <div style="margin-bottom:20px">
-    <a href="{{ route('admin.user-pools.index') }}" class="btn-back">← Back to List</a>
-    <a href="{{ route('admin.user-pools.edit', $userPool) }}" class="btn-edit">✏️ Edit</a>
+    <a href="{{ route('admin.user-Vaults.index') }}" class="btn-back">← Back to List</a>
+    <a href="{{ route('admin.user-Vaults.edit', $userVault) }}" class="btn-edit">✏️ Edit</a>
   </div>
 
   <div class="detail-card">
-    <h3 style="font-size:24px;font-weight:700;color:#1e293b;margin-bottom:24px">Pool Information</h3>
+    <h3 style="font-size:24px;font-weight:700;color:#1e293b;margin-bottom:24px">Vault Information</h3>
     
     <div class="detail-row">
-      <div class="detail-label">Pool ID</div>
-      <div class="detail-value">#{{ $userPool->id }}</div>
+      <div class="detail-label">Vault ID</div>
+      <div class="detail-value">#{{ $userVault->id }}</div>
     </div>
 
     <div class="detail-row">
       <div class="detail-label">User</div>
       <div class="detail-value">
-        @if($userPool->user)
-          <a href="{{ route('admin.users.show', $userPool->user) }}" style="color:#667eea;text-decoration:none">{{ $userPool->user->username }}</a>
+        @if($userVault->user)
+          <a href="{{ route('admin.users.show', $userVault->user) }}" style="color:#667eea;text-decoration:none">{{ $userVault->user->username }}</a>
         @else
           Unknown
         @endif
@@ -44,19 +44,19 @@
     </div>
 
     <div class="detail-row">
-      <div class="detail-label">Pool Name</div>
-      <div class="detail-value">{{ $userPool->computePlan->name ?? 'N/A' }}</div>
+      <div class="detail-label">Vault Name</div>
+      <div class="detail-value">{{ $userVault->computePlan->name ?? 'N/A' }}</div>
     </div>
 
     <div class="detail-row">
-      <div class="detail-label">Pool Type</div>
-      <div class="detail-value"><code style="background:#f1f5f9;padding:4px 8px;border-radius:6px">{{ strtoupper($userPool->computePlan->type ?? 'N/A') }}</code></div>
+      <div class="detail-label">Vault Type</div>
+      <div class="detail-value"><code style="background:#f1f5f9;padding:4px 8px;border-radius:6px">{{ strtoupper($userVault->computePlan->type ?? 'N/A') }}</code></div>
     </div>
 
     <div class="detail-row">
       <div class="detail-label">Status</div>
       <div class="detail-value">
-        @if($userPool->status == 'running')
+        @if($userVault->status == 'running')
           <span class="status-badge status-active">✓ Running</span>
         @else
           <span class="status-badge status-inactive">✗ Completed</span>
@@ -66,22 +66,22 @@
 
     <div class="detail-row">
       <div class="detail-label">Expected Profit</div>
-      <div class="detail-value" style="color:#059669;font-size:20px">${{ number_format($userPool->expected_profit ?? 0, 2) }}</div>
+      <div class="detail-value" style="color:#059669;font-size:20px">${{ number_format($userVault->expected_profit ?? 0, 2) }}</div>
     </div>
 
     <div class="detail-row">
       <div class="detail-label">Started At</div>
-      <div class="detail-value">{{ $userPool->started_at ? $userPool->started_at->format('M d, Y H:i:s') : 'N/A' }}</div>
+      <div class="detail-value">{{ $userVault->started_at ? $userVault->started_at->format('M d, Y H:i:s') : 'N/A' }}</div>
     </div>
 
     <div class="detail-row">
       <div class="detail-label">End Time</div>
-      <div class="detail-value">{{ $userPool->ends_at ? $userPool->ends_at->format('M d, Y H:i:s') : 'N/A' }}</div>
+      <div class="detail-value">{{ $userVault->ends_at ? $userVault->ends_at->format('M d, Y H:i:s') : 'N/A' }}</div>
     </div>
 
     <div class="detail-row">
       <div class="detail-label">Duration</div>
-      <div class="detail-value">{{ $userPool->computePlan->duration_minutes ?? 'N/A' }} minutes</div>
+      <div class="detail-value">{{ $userVault->computePlan->duration_minutes ?? 'N/A' }} minutes</div>
     </div>
   </div>
 </div>
