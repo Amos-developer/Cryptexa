@@ -258,6 +258,15 @@ Route::middleware(['auth', 'admin'])
         Route::post('/withdrawals/{withdrawal}/approve', [AdminWithdrawalController::class, 'approve'])->name('withdrawals.approve');
         Route::post('/withdrawals/{withdrawal}/reject', [AdminWithdrawalController::class, 'reject'])->name('withdrawals.reject');
         Route::post('/withdrawals/{withdrawal}/complete', [AdminWithdrawalController::class, 'complete'])->name('withdrawals.complete');
+        
+        Route::get('/weekly-salary', [\App\Http\Controllers\Admin\WeeklySalaryController::class, 'index'])->name('weekly-salary.index');
+        Route::get('/weekly-salary/history', [\App\Http\Controllers\Admin\WeeklySalaryController::class, 'history'])->name('weekly-salary.history');
+        Route::get('/weekly-salary/create', [\App\Http\Controllers\Admin\WeeklySalaryController::class, 'create'])->name('weekly-salary.create');
+        Route::post('/weekly-salary', [\App\Http\Controllers\Admin\WeeklySalaryController::class, 'store'])->name('weekly-salary.store');
+        Route::get('/weekly-salary/{payment}', [\App\Http\Controllers\Admin\WeeklySalaryController::class, 'show'])->name('weekly-salary.show');
+        Route::delete('/weekly-salary/{payment}', [\App\Http\Controllers\Admin\WeeklySalaryController::class, 'destroy'])->name('weekly-salary.destroy');
+        Route::post('/weekly-salary/pay/{user}', [\App\Http\Controllers\Admin\WeeklySalaryController::class, 'pay'])->name('weekly-salary.pay');
+        Route::post('/weekly-salary/pay-all', [\App\Http\Controllers\Admin\WeeklySalaryController::class, 'payAll'])->name('weekly-salary.pay-all');
     });
 
 require __DIR__ . '/admin.php';

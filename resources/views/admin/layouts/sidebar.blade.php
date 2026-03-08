@@ -54,6 +54,9 @@
     <li class="{{ request()->routeIs('admin.commissions.*') ? 'active' : '' }}">
       <a href="{{ route('admin.commissions.index') }}"><i class="fa fa-dollar"></i> Commissions</a>
     </li>
+    <li class="{{ request()->routeIs('admin.weekly-salary.*') ? 'active' : '' }}">
+      <a href="{{ route('admin.weekly-salary.index') }}"><i class="fa fa-money"></i> Weekly Salary</a>
+    </li>
   </div>
 
   <li class="header" onclick="toggleCat(this)">⚙️ SYSTEM</li>

@@ -67,7 +67,7 @@
                 <p style="color: #94a3b8; font-size: 12px; margin: 0 0 4px 0;">Weekly Salary</p>
                 <h3 style="color: #22c55e; font-size: 36px; font-weight: 900; margin: 0;">${{ number_format($weeklySalary, 0) }}</h3>
             </div>
-            <p style="color: #64748b; font-size: 12px; margin: 0;">Next payment: <span style="color: #e5e7eb; font-weight: 600;">{{ $nextPaymentDate->format('M d, Y') }} (Monday)</span></p>
+            <p style="color: #64748b; font-size: 12px; margin: 0;">Paid by admin approval</p>
             @else
             <div style="background: rgba(0,0,0,0.2); border-radius: 12px; padding: 16px;">
                 <p style="color: #ef4444; font-size: 14px; font-weight: 600; margin: 0;">Not Eligible for Weekly Salary</p>
@@ -160,7 +160,7 @@
                 <h3 style="color: #38bdf8; font-size: 20px; font-weight: 700; margin: 0;">How It Works</h3>
             </div>
             <p style="color: #94a3b8; font-size: 14px; line-height: 1.8; margin: 0 0 16px 0;">
-                Weekly salary is automatically paid to Elite Leaders and above based on your rank tier. Build your team to unlock higher ranks and bigger rewards.
+                Weekly salary is paid manually by admin to eligible users based on your rank tier. Build your team to unlock higher ranks and bigger rewards.
             </p>
             <div style="display: grid; gap: 12px;">
                 <div style="display: flex; gap: 12px; align-items: start;">
@@ -182,8 +182,8 @@
                         </svg>
                     </div>
                     <div>
-                        <p style="color: #e5e7eb; font-size: 14px; font-weight: 700; margin: 0 0 4px 0;">Automatic Payments</p>
-                        <p style="color: #94a3b8; font-size: 13px; margin: 0; line-height: 1.6;">Weekly salary deposited every Monday directly to your balance</p>
+                        <p style="color: #e5e7eb; font-size: 14px; font-weight: 700; margin: 0 0 4px 0;">Manual Payments</p>
+                        <p style="color: #94a3b8; font-size: 13px; margin: 0; line-height: 1.6;">Weekly salary paid by admin approval directly to your balance</p>
                     </div>
                 </div>
                 <div style="display: flex; gap: 12px; align-items: start;">
@@ -193,8 +193,8 @@
                         </svg>
                     </div>
                     <div>
-                        <p style="color: #e5e7eb; font-size: 14px; font-weight: 700; margin: 0 0 4px 0;">Permanent Ranks</p>
-                        <p style="color: #94a3b8; font-size: 13px; margin: 0; line-height: 1.6;">Once achieved, your rank and salary never decrease</p>
+                        <p style="color: #e5e7eb; font-size: 14px; font-weight: 700; margin: 0 0 4px 0;">Rank-Based Salary</p>
+                        <p style="color: #94a3b8; font-size: 13px; margin: 0; line-height: 1.6;">Your salary amount is based on your current active member count</p>
                     </div>
                 </div>
                 <div style="display: flex; gap: 12px; align-items: start;">
