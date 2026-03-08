@@ -254,6 +254,9 @@ Route::middleware(['auth', 'admin'])
         Route::delete('/admins/{admin}', [\App\Http\Controllers\Admin\AdminManagementController::class, 'destroy'])->name('admins.destroy');
         
         Route::resource('commissions', \App\Http\Controllers\Admin\CommissionController::class)->except(['create', 'store']);
+        Route::resource('rank-bonuses', \App\Http\Controllers\Admin\RankBonusController::class);
+        Route::resource('checkins', \App\Http\Controllers\Admin\CheckinController::class);
+        Route::resource('lucky-boxes', \App\Http\Controllers\Admin\LuckyBoxController::class);
         
         Route::post('/withdrawals/{withdrawal}/approve', [AdminWithdrawalController::class, 'approve'])->name('withdrawals.approve');
         Route::post('/withdrawals/{withdrawal}/reject', [AdminWithdrawalController::class, 'reject'])->name('withdrawals.reject');

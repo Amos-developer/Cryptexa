@@ -184,13 +184,14 @@ class AuthController extends Controller
             return back()->with('error', 'No pending verification found');
         }
 
+        $code = rand(100000, 999999);
         $user->update([
-            'verification_code' => rand(100000, 999999),
+            'verification_code' => $code,
             'verification_expires_at' => now()->addMinutes(10),
         ]);
 
         Mail::to($user->email)->send(
-            new \App\Mail\VerificationCodeMail($user)
+            new VerificationCodeMail($code)
         );
 
         return back()->with('success', 'Verification code resent');

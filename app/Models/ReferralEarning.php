@@ -23,4 +23,9 @@ class ReferralEarning extends Model
     {
         return $this->belongsTo(User::class, 'from_user_id');
     }
+
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'from_user_id');
+    }
 }
