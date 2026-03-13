@@ -94,9 +94,12 @@ class WithdrawalController extends Controller
 
         // 7️⃣ Transaction (CRITICAL)
         DB::transaction(function () use ($user, $request, $totalDebit) {
+            $balanceBefore = $user->balance;
 
             // Lock funds
             $user->decrement('balance', $totalDebit);
+            $user->refresh();
+            $balanceAfter = $user->balance;
 
             // Create withdrawal
             Withdrawal::create([
@@ -105,6 +108,8 @@ class WithdrawalController extends Controller
                 'currency' => 'USDT_' . $request->network,
                 'address'  => $request->address,
                 'status'   => 'pending',
+                'balance_before' => $balanceBefore,
+                'balance_after' => $balanceAfter,
             ]);
 
             // Invalidate email code and session

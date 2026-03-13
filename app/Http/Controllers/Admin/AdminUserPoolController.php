@@ -37,21 +37,47 @@ class AdminUserPoolController extends Controller
 
     public function update(Request $request, $id)
     {
-        $userPool = ComputeOrder::findOrFail($id);
+        $userPool = ComputeOrder::with('computePlan')->findOrFail($id);
+        $plan = $userPool->computePlan;
         
-        $request->validate([
+        // Strong validation for amount if being updated
+        $rules = [
             'status' => 'required|in:running,completed',
             'expected_profit' => 'nullable|numeric|min:0',
-        ]);
+        ];
+        
+        if ($request->has('amount')) {
+            $rules['amount'] = 'required|numeric|min:' . $plan->price;
+            if ($plan->max_investment) {
+                $rules['amount'] .= '|max:' . $plan->max_investment;
+            }
+        }
+        
+        $request->validate($rules);
+        
+        // Server-side double check for amount
+        if ($request->has('amount')) {
+            $amount = $request->input('amount');
+            if ($amount < $plan->price) {
+                return back()->with('error', 'Investment amount must be at least $' . number_format($plan->price, 2));
+            }
+            if ($plan->max_investment && $amount > $plan->max_investment) {
+                return back()->with('error', 'Investment amount cannot exceed $' . number_format($plan->max_investment, 2));
+            }
+        }
 
         // If status is being changed to completed, credit user
         if ($request->status == 'completed' && $userPool->status == 'running') {
             $totalReturn = $userPool->amount + ($request->expected_profit ?? $userPool->expected_profit);
             $userPool->user->increment('balance', $totalReturn);
+            $userPool->user->refresh();
+            $balanceAfter = $userPool->user->balance;
+            
             $userPool->update([
                 'status' => 'completed',
                 'is_paid' => true,
                 'expected_profit' => $request->expected_profit ?? $userPool->expected_profit,
+                'balance_after' => $balanceAfter,
             ]);
             
             Notification::create([

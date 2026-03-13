@@ -22,3 +22,8 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Deployment files (keep local only)
+.env.production.example
+supervisor-cryptexa-worker.conf
+deploy.sh

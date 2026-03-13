@@ -13,6 +13,8 @@ class Withdrawal extends Model
         'address',
         'status',
         'txid',
+        'balance_before',
+        'balance_after',
     ];
 
     public function user()

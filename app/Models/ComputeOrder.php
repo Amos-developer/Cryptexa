@@ -19,6 +19,8 @@ class ComputeOrder extends Model
         'ends_at',
         'status',
         'is_paid',
+        'balance_before',
+        'balance_after',
     ];
 
     protected $casts = [

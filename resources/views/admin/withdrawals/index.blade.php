@@ -108,6 +108,8 @@
             <th>ID</th>
             <th>User</th>
             <th>Amount</th>
+            <th>Balance Before</th>
+            <th>Balance After</th>
             <th>Currency</th>
             <th>Address</th>
             <th>Status</th>
@@ -127,6 +129,8 @@
               @endif
             </td>
             <td data-label="Amount" style="font-weight:700;color:#dc2626">${{ number_format($withdrawal->amount, 2) }}</td>
+            <td data-label="Balance Before" style="font-weight:600;color:#059669">${{ number_format($withdrawal->balance_before ?? 0, 2) }}</td>
+            <td data-label="Balance After" style="font-weight:600;color:#0284c7">${{ number_format($withdrawal->balance_after ?? 0, 2) }}</td>
             <td data-label="Currency"><code style="background:#f1f5f9;padding:4px 8px;border-radius:6px;font-size:12px">{{ strtoupper($withdrawal->currency ?? 'USD') }}</code></td>
             <td data-label="Address" style="font-size:12px;max-width:150px;overflow:hidden;text-overflow:ellipsis">{{ $withdrawal->address ?? 'N/A' }}</td>
             <td data-label="Status">
@@ -154,7 +158,7 @@
           </tr>
           @empty
           <tr>
-            <td colspan="8" class="empty-state">
+            <td colspan="10" class="empty-state">
               <div class="empty-icon">📭</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Withdrawals Found</div>
               <div style="font-size:14px">No withdrawal requests yet</div>

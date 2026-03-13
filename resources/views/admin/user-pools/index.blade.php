@@ -21,7 +21,7 @@
 .modern-table tbody td{padding:16px 20px;border-bottom:1px solid #f1f5f9;font-size:14px;color:#334155}
 .modern-table tbody tr:hover{background:#f8fafc}
 .status-badge{display:inline-block;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600}
-.status-active{background:#d1fae5;color:#065f46}
+.status-active{background:#fef3c7;color:#92400e}
 .status-completed{background:#d1fae5;color:#065f46}
 .status-inactive{background:#fee2e2;color:#991b1b}
 .action-btn{width:36px;height:36px;border-radius:8px;border:none;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;justify-content:center;margin:0 2px}
@@ -101,8 +101,11 @@
             <th>ID</th>
             <th>User</th>
             <th>Vault</th>
+            <th>Amount Invested</th>
             <th>Status</th>
             <th>Profit Earned</th>
+            <th>Balance Before</th>
+            <th>Balance After</th>
             <th>Started</th>
             <th>Ends</th>
             <th>Actions</th>
@@ -120,6 +123,7 @@
               @endif
             </td>
             <td data-label="Vault" style="font-weight:700;color:#667eea">{{ $userPool->computePlan->name ?? 'N/A' }}</td>
+            <td data-label="Amount Invested" style="font-weight:700;color:#dc2626">${{ number_format($userPool->amount ?? 0, 2) }}</td>
             <td data-label="Status">
               @if($userPool->status == 'running')
                 <span class="status-badge status-active">✓ Running</span>
@@ -128,6 +132,8 @@
               @endif
             </td>
             <td data-label="Profit Earned" style="font-weight:700;color:#059669">${{ number_format($userPool->expected_profit ?? 0, 2) }}</td>
+            <td data-label="Balance Before" style="font-weight:600;color:#059669">${{ number_format($userPool->balance_before ?? 0, 2) }}</td>
+            <td data-label="Balance After" style="font-weight:600;color:#0284c7">${{ number_format($userPool->balance_after ?? 0, 2) }}</td>
             <td data-label="Started" style="color:#64748b">{{ $userPool->started_at ? $userPool->started_at->format('M d, Y H:i') : 'N/A' }}</td>
             <td data-label="Ends" style="color:#64748b">{{ $userPool->ends_at ? $userPool->ends_at->format('M d, Y H:i') : 'N/A' }}</td>
             <td data-label="Actions">
@@ -137,7 +143,7 @@
           </tr>
           @empty
           <tr>
-            <td colspan="8" class="empty-state">
+            <td colspan="11" class="empty-state">
               <div class="empty-icon">🏊</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No User Vaults Found</div>
               <div style="font-size:14px">No Vaults have been activated yet</div>
