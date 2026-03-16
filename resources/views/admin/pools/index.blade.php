@@ -89,7 +89,7 @@
       <table class="modern-table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Name</th>
             <th>Type</th>
             <th>Price</th>
@@ -101,7 +101,7 @@
         <tbody>
           @forelse($pools as $pool)
           <tr>
-            <td data-label="ID">#{{ $pool->id }}</td>
+            <td data-label="#">{{ ($pools->currentPage() - 1) * $pools->perPage() + $loop->iteration }}</td>
             <td data-label="Name" style="font-weight:700;color:#667eea">{{ $pool->name }}</td>
             <td data-label="Type"><code style="background:#f1f5f9;padding:4px 8px;border-radius:6px;font-size:12px">{{ strtoupper($pool->type) }}</code></td>
             <td data-label="Price" style="font-weight:700;color:#059669">${{ number_format($pool->price, 2) }}</td>

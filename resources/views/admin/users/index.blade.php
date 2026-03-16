@@ -165,6 +165,7 @@
       <table class="modern-table">
         <thead>
           <tr>
+            <th>#</th>
             <th>User</th>
             <th>Account ID</th>
             <th>Email</th>
@@ -178,6 +179,7 @@
         <tbody>
           @forelse($users as $user)
           <tr>
+            <td data-label="#">{{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}</td>
             <td data-label="User">
               <span class="user-avatar">{{ strtoupper(substr($user->username ?? $user->email, 0, 1)) }}</span>
               <span style="font-weight:600">{{ $user->username }}</span>

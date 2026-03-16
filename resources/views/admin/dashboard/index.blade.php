@@ -87,6 +87,7 @@
     <table class="dash-table">
       <thead>
         <tr>
+          <th>#</th>
           <th>Username</th>
           <th>Email</th>
           <th>Joined</th>
@@ -95,12 +96,13 @@
       <tbody>
         @forelse($recentUsers as $user)
         <tr>
+          <td>{{ $loop->iteration }}</td>
           <td>{{ $user->username }}</td>
           <td>{{ $user->email }}</td>
           <td>{{ $user->created_at->diffForHumans() }}</td>
         </tr>
         @empty
-        <tr><td colspan="3" style="text-align:center;color:#999">No users found</td></tr>
+        <tr><td colspan="4" style="text-align:center;color:#999">No users found</td></tr>
         @endforelse
       </tbody>
     </table>
@@ -114,6 +116,7 @@
     <table class="dash-table">
       <thead>
         <tr>
+          <th>#</th>
           <th>User</th>
           <th>Amount</th>
           <th>Status</th>
@@ -122,6 +125,7 @@
       <tbody>
         @forelse($recentDeposits as $deposit)
         <tr>
+          <td>{{ $loop->iteration }}</td>
           <td>{{ $deposit->user->username ?? 'N/A' }}</td>
           <td>${{ number_format($deposit->amount, 2) }}</td>
           <td>
@@ -135,7 +139,7 @@
           </td>
         </tr>
         @empty
-        <tr><td colspan="3" style="text-align:center;color:#999">No deposits found</td></tr>
+        <tr><td colspan="4" style="text-align:center;color:#999">No deposits found</td></tr>
         @endforelse
       </tbody>
     </table>
@@ -149,6 +153,7 @@
     <table class="dash-table">
       <thead>
         <tr>
+          <th>#</th>
           <th>Name</th>
           <th>Type</th>
           <th>Price</th>
@@ -157,12 +162,13 @@
       <tbody>
         @forelse($recentPools as $pool)
         <tr>
+          <td>{{ $loop->iteration }}</td>
           <td>{{ $pool->name }}</td>
           <td><span class="badge info">{{ strtoupper($pool->type) }}</span></td>
           <td>${{ number_format($pool->price, 2) }}</td>
         </tr>
         @empty
-        <tr><td colspan="3" style="text-align:center;color:#999">No vaults found</td></tr>
+        <tr><td colspan="4" style="text-align:center;color:#999">No vaults found</td></tr>
         @endforelse
       </tbody>
     </table>
@@ -176,6 +182,7 @@
     <table class="dash-table">
       <thead>
         <tr>
+          <th>#</th>
           <th>User</th>
           <th>Amount</th>
           <th>Status</th>
@@ -184,6 +191,7 @@
       <tbody>
         @forelse($recentWithdrawals as $withdrawal)
         <tr>
+          <td>{{ $loop->iteration }}</td>
           <td>{{ $withdrawal->user->username ?? 'N/A' }}</td>
           <td>${{ number_format($withdrawal->amount, 2) }}</td>
           <td>
@@ -199,7 +207,7 @@
           </td>
         </tr>
         @empty
-        <tr><td colspan="3" style="text-align:center;color:#999">No withdrawals found</td></tr>
+        <tr><td colspan="4" style="text-align:center;color:#999">No withdrawals found</td></tr>
         @endforelse
       </tbody>
     </table>

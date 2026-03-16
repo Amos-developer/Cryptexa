@@ -98,7 +98,7 @@
       <table class="modern-table">
         <thead>
           <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>User</th>
             <th>Vault</th>
             <th>Amount Invested</th>
@@ -114,7 +114,7 @@
         <tbody>
           @forelse($userPools as $userPool)
           <tr>
-            <td data-label="ID">#{{ $userPool->id }}</td>
+            <td data-label="#">{{ ($userPools->currentPage() - 1) * $userPools->perPage() + $loop->iteration }}</td>
             <td data-label="User">
               @if($userPool->user)
                 <a href="{{ route('admin.users.show', $userPool->user) }}" style="color:#667eea;font-weight:600;text-decoration:none">{{ $userPool->user->username }}</a>

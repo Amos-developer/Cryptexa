@@ -92,6 +92,71 @@
         </div>
     </div>
 
+    <!-- Active Pool Summary -->
+    @php
+        $activeOrders = $orders->where('status', 'running');
+        $totalCapital = $activeOrders->sum('amount');
+        $totalExpectedProfit = $activeOrders->sum('expected_profit');
+    @endphp
+
+    @if($activeOrders->count() > 0)
+    <div class="section-container" style="margin-bottom: 24px;">
+        <a href="{{ route('compute.track') }}" style="text-decoration: none; display: block;">
+            <div style="
+                background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(251,191,36,0.02));
+                border: 1px solid rgba(251,191,36,0.25);
+                border-radius: 16px;
+                padding: 16px;
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            "
+            onmouseover="this.style.borderColor='rgba(251,191,36,0.45)'; this.style.boxShadow='0 8px 24px rgba(251,191,36,0.12)'"
+            onmouseout="this.style.borderColor='rgba(251,191,36,0.25)'; this.style.boxShadow='none'">
+
+                <!-- Glow -->
+                <div style="position: absolute; top: 0; right: 0; width: 120px; height: 120px; background: radial-gradient(circle, rgba(251,191,36,0.1) 0%, transparent 70%); pointer-events: none;"></div>
+
+                <!-- Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 38px; height: 38px; background: linear-gradient(135deg, #fbbf24, #f59e0b); border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(251,191,36,0.3);">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p style="color: #e5e7eb; font-weight: 700; font-size: 14px; margin: 0;">{{ __t('active_orders') }}</p>
+                            <p style="color: #94a3b8; font-size: 11px; margin: 0;">{{ __t('track_orders') }}</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 6px;">
+                        <span style="background: rgba(251,191,36,0.15); border: 1px solid rgba(251,191,36,0.3); color: #fbbf24; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;">
+                            ⚡ {{ $activeOrders->count() }} {{ __t('active') }}
+                        </span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="background: rgba(0,0,0,0.2); border: 1px solid rgba(251,191,36,0.15); border-radius: 10px; padding: 12px;">
+                        <p style="color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 5px 0; font-weight: 600;">💰 {{ __t('amount') }}</p>
+                        <p style="color: #e5e7eb; font-size: 16px; font-weight: 800; margin: 0;">${{ number_format($totalCapital, 2) }}</p>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; padding: 12px;">
+                        <p style="color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 5px 0; font-weight: 600;">📈 {{ __t('total_profit') }}</p>
+                        <p style="color: #22c55e; font-size: 16px; font-weight: 800; margin: 0;">+${{ number_format($totalExpectedProfit, 2) }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </a>
+    </div>
+    @endif
+
     <!-- Liquidity Growth Pools Section -->
     <div class="main-grid">
 
