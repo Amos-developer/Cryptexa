@@ -76,7 +76,7 @@
     <div class="login-container">
         <div class="login-card">
             <div class="logo-section">
-                <div class="logo-icon">💎</div>
+                <!-- <div class="logo-icon">💎</div> -->
                 <h1>CRYPTEXA</h1>
                 <p>{{ __t('welcome_back') }}</p>
             </div>
