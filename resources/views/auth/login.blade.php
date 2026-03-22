@@ -26,18 +26,17 @@
         .alert{padding:16px 20px;border-radius:12px;margin-bottom:24px;font-size:14px;font-weight:500;display:flex;align-items:center;gap:10px}
         .alert-success{background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);color:#4ade80}
         .alert-danger{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#f87171}
-        .form-group{margin-bottom:24px}
-        .form-label{display:block;color:rgba(255,255,255,0.9);font-size:14px;font-weight:600;margin-bottom:10px;letter-spacing:0.3px}
-        .form-input{width:100%;padding:12px 14px;background:rgba(15,23,42,0.7);border:1.5px solid rgba(56,189,248,0.2);border-radius:12px;color:rgb(226,232,240);font-size:14px;transition:all .3s;font-weight:500}
-        .form-input:focus{outline:0;border-color:rgba(56,189,248,0.8);background:rgba(15,23,42,0.9);box-shadow:0 0 0 3px rgba(56,189,248,0.1),0 10px 25px rgba(56,189,248,0.2)}
+        .form-group{margin-bottom:20px}
+        .form-label{display:block;color:rgba(255,255,255,0.9);font-size:13px;font-weight:600;margin-bottom:8px;letter-spacing:0.2px}
+        .form-input{width:100%;padding:13px 16px;background:rgba(15,23,42,0.6);border:1.5px solid rgba(56,189,248,0.25);border-radius:12px;color:rgb(226,232,240);font-size:15px;transition:all .3s;font-weight:500}
+        .form-input:focus{outline:0;border-color:rgba(56,189,248,0.6);background:rgba(15,23,42,0.8);box-shadow:0 0 0 3px rgba(56,189,248,0.1),0 10px 25px rgba(56,189,248,0.15)}
         .form-input::placeholder{color:rgba(255,255,255,0.4)}
         .input-group{position:relative}
         .input-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:20px;transition:.3s;padding:8px}
         .input-icon:hover{color:#38bdf8}
-        .captcha-wrapper{display:flex;gap:12px;align-items:center;margin-bottom:12px}
-        .captcha-display{flex:1;background:linear-gradient(135deg,rgba(56,189,248,0.15),rgba(34,211,238,0.15));border:2px solid rgba(56,189,248,0.3);border-radius:12px;padding:20px;font-size:32px;font-weight:800;letter-spacing:10px;color:#38bdf8;user-select:none;font-family:'Courier New',monospace;text-align:center;text-shadow:0 2px 10px rgba(56,189,248,0.5)}
-        .captcha-refresh{width:56px;height:56px;background:rgba(56,189,248,0.15);border:2px solid rgba(56,189,248,0.3);border-radius:12px;color:#38bdf8;cursor:pointer;transition:.3s;font-size:24px;display:flex;align-items:center;justify-content:center}
-        .captcha-refresh:hover{background:rgba(56,189,248,0.25);transform:rotate(180deg)}
+        .captcha-wrapper{display:none}
+        .captcha-display{display:none}
+        .captcha-refresh{display:none}
         .forgot-remember{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
         .forgot-link{color:#38bdf8;text-decoration:none;font-size:14px;font-weight:600;transition:.3s}
         .forgot-link:hover{color:#8b5cf6}
@@ -57,9 +56,7 @@
             .login-card{padding:24px 20px}
             .logo-icon{width:60px;height:60px;font-size:32px}
             .logo-section h1{font-size:24px}
-            .captcha-display{font-size:24px;letter-spacing:6px;padding:16px}
-            .captcha-refresh{width:48px;height:48px;font-size:20px}
-            .form-input{padding:11px 12px;font-size:16px}
+            .form-input{padding:12px 14px;font-size:16px}
             .btn-login{padding:12px 20px;font-size:14px}
         }
     </style>
@@ -141,28 +138,6 @@
                         </div>
                         @if($errors->has('password'))
                         <span class="input-error">{{ $errors->first('password') }}</span>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">{{ __t('verify_human') ?? 'Verify You\'re Human' }}</label>
-                        <div class="captcha-wrapper">
-                            <div id="captchaDisplay" class="captcha-display"></div>
-                            <button type="button" onclick="generateCaptcha()" class="captcha-refresh" title="Refresh captcha">🔄</button>
-                        </div>
-                        <input
-                            type="text"
-                            name="captcha"
-                            id="captchaInput"
-                            class="form-input"
-                            placeholder="{{ __t('enter_code') ?? 'Enter the code above' }}"
-                            required
-                            autocomplete="off"
-                            maxlength="6"
-                            style="text-transform:uppercase;letter-spacing:4px;font-weight:700">
-                        <input type="hidden" name="captcha_token" id="captchaToken">
-                        @if($errors->has('captcha'))
-                        <span class="input-error">{{ $errors->first('captcha') }}</span>
                         @endif
                     </div>
 
@@ -284,21 +259,6 @@
 
     <!-- Login Page Scripts -->
     <script>
-        // Captcha generation
-        function generateCaptcha() {
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-            let captcha = '';
-            for (let i = 0; i < 6; i++) {
-                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            document.getElementById('captchaDisplay').textContent = captcha;
-            document.getElementById('captchaToken').value = captcha;
-            document.getElementById('captchaInput').value = '';
-        }
-
-        // Generate captcha on page load
-        window.addEventListener('load', generateCaptcha);
-
         // Password visibility toggle
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('passwordInput');

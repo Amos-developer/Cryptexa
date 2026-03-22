@@ -60,6 +60,9 @@ return [
     'join_traders' => '何千人ものクリプトトレーダーに参加',
     'terms_agree' => '同意します',
     'terms_conditions' => '利用規約',
+    'verification_code' => '確認コード',
+    'verify_human' => '人間であることを確認',
+    'enter_code' => '上記のコードを入力',
     
     // Notifications
     'notifications' => '通知',

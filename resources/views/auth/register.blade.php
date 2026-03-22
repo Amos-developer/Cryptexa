@@ -97,12 +97,12 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 24px 16px;
         }
 
         .register-wrapper {
             width: 100%;
-            max-width: 480px;
+            max-width: 440px;
             animation: slideUp 0.8s ease-out;
         }
 
@@ -121,21 +121,21 @@
         /* Logo */
         .logo-section {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
             animation: fadeInDown 0.6s ease-out;
         }
 
         .logo-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 15px;
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 12px;
             background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 100%);
-            border-radius: 15px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
+            font-size: 28px;
+            box-shadow: 0 8px 24px rgba(56, 189, 248, 0.3);
             animation: bounce 2s ease-in-out infinite;
         }
 
@@ -165,31 +165,33 @@
 
         .logo-section h1 {
             color: #fff;
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
-            margin: 0 0 8px 0;
+            margin: 0 0 6px 0;
             background: linear-gradient(135deg, #38bdf8, #22d3ee);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.5px;
         }
 
         .logo-section p {
-            color: rgba(226, 232, 240, 0.6);
+            color: rgba(226, 232, 240, 0.65);
             font-size: 14px;
             margin: 0;
+            font-weight: 400;
         }
 
         /* Card */
         .register-card {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.85) 100%);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 24px;
-            padding: 32px 24px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 20px;
+            padding: 28px 24px;
             box-shadow:
                 0 20px 60px rgba(0, 0, 0, 0.4),
-                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+                inset 0 1px 1px rgba(255, 255, 255, 0.08);
             animation: fadeIn 0.8s ease-out 0.2s both;
         }
 
@@ -205,9 +207,9 @@
 
         /* Alert Messages */
         .alert {
-            border-radius: 12px;
+            border-radius: 14px;
             border: none;
-            padding: 12px 16px;
+            padding: 14px 16px;
             font-size: 14px;
             margin-bottom: 20px;
             animation: slideDown 0.4s ease-out;
@@ -239,17 +241,18 @@
 
         /* Form Group */
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             animation: fadeIn 0.8s ease-out;
         }
 
         .form-label {
             display: block;
             color: rgb(226, 232, 240);
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 600;
             margin-bottom: 8px;
             transition: color 0.3s ease;
+            letter-spacing: 0.2px;
         }
 
         .form-label .required {
@@ -259,12 +262,12 @@
         /* Input Fields */
         .form-input {
             width: 100%;
-            padding: 12px 14px;
-            background: rgba(15, 23, 42, 0.7);
-            border: 1.5px solid rgba(56, 189, 248, 0.2);
-            border-radius: 12px;
+            padding: 13px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1.5px solid rgba(56, 189, 248, 0.25);
+            border-radius: 14px;
             color: rgb(226, 232, 240);
-            font-size: 14px;
+            font-size: 15px;
             transition: all 0.3s ease;
             position: relative;
         }
@@ -275,11 +278,11 @@
 
         .form-input:focus {
             outline: none;
-            border-color: rgba(56, 189, 248, 0.8);
-            background: rgba(15, 23, 42, 0.9);
+            border-color: rgba(56, 189, 248, 0.6);
+            background: rgba(15, 23, 42, 0.8);
             box-shadow:
-                0 0 0 3px rgba(56, 189, 248, 0.1),
-                0 10px 25px rgba(56, 189, 248, 0.2);
+                0 0 0 4px rgba(56, 189, 248, 0.12),
+                0 8px 20px rgba(56, 189, 248, 0.15);
         }
 
         .input-group {
@@ -326,12 +329,12 @@
         .form-checkbox-group {
             display: flex;
             align-items: flex-start;
-            gap: 8px;
-            margin: 20px 0;
-            padding: 14px 12px;
-            background: rgba(56, 189, 248, 0.05);
-            border: 1px solid rgba(56, 189, 248, 0.15);
-            border-radius: 12px;
+            gap: 10px;
+            margin: 24px 0;
+            padding: 16px 14px;
+            background: rgba(56, 189, 248, 0.06);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 14px;
             animation: fadeIn 0.8s ease-out 0.3s both;
         }
 
@@ -367,19 +370,20 @@
         /* Register Button */
         .btn-register {
             width: 100%;
-            padding: 14px 24px;
+            padding: 15px 24px;
             background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 100%);
             color: #020617;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 15px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
+            box-shadow: 0 8px 24px rgba(56, 189, 248, 0.35);
             position: relative;
             overflow: hidden;
             animation: fadeIn 0.8s ease-out 0.4s both;
+            letter-spacing: 0.3px;
         }
 
         .btn-register::before {
@@ -414,8 +418,8 @@
         /* Login link */
         .login-link {
             text-align: center;
-            margin-top: 24px;
-            color: rgba(226, 232, 240, 0.6);
+            margin-top: 28px;
+            color: rgba(226, 232, 240, 0.65);
             font-size: 14px;
             animation: fadeIn 0.8s ease-out 0.5s both;
         }
@@ -445,33 +449,65 @@
         /* Mobile responsiveness */
         @media (max-width: 480px) {
             .register-container {
-                padding: 16px;
+                padding: 20px 16px;
             }
 
             .register-card {
                 padding: 24px 20px;
+                border-radius: 18px;
             }
 
             .logo-section {
-                margin-bottom: 30px;
+                margin-bottom: 28px;
             }
 
             .logo-section h1 {
                 font-size: 24px;
             }
 
+            .logo-section p {
+                font-size: 13px;
+            }
+
             .form-input {
-                padding: 11px 12px;
+                padding: 12px 14px;
                 font-size: 16px;
+                border-radius: 12px;
             }
 
             .form-group {
-                margin-bottom: 16px;
+                margin-bottom: 18px;
+            }
+
+            .form-label {
+                font-size: 13px;
             }
 
             .btn-register {
-                padding: 12px 20px;
-                font-size: 14px;
+                padding: 14px 20px;
+                font-size: 15px;
+                border-radius: 12px;
+            }
+
+            .form-checkbox-group {
+                padding: 14px 12px;
+                border-radius: 12px;
+            }
+
+            .captcha-display {
+                font-size: 22px;
+                letter-spacing: 5px;
+                padding: 12px 14px;
+            }
+
+            .captcha-refresh {
+                width: 44px;
+                min-width: 44px;
+            }
+
+            .captcha-refresh img {
+                width: 18px;
+                height: 18px;
             }
 
             .register-wrapper {
@@ -479,12 +515,84 @@
             }
         }
 
+        @media (min-width: 481px) and (max-width: 768px) {
+            .register-wrapper {
+                max-width: 420px;
+            }
+
+            .register-card {
+                padding: 32px 28px;
+            }
+        }
+
+        /* Captcha */
+        .captcha-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+            margin-bottom: 10px;
+        }
+
+        .captcha-display {
+            flex: 1;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(34, 211, 238, 0.12));
+            border: 1.5px solid rgba(56, 189, 248, 0.25);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 8px;
+            color: #38bdf8;
+            user-select: none;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(56, 189, 248, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .captcha-refresh {
+            width: 48px;
+            min-width: 48px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(34, 211, 238, 0.1));
+            border: 1.5px solid rgba(56, 189, 248, 0.3);
+            border-radius: 12px;
+            color: #38bdf8;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .captcha-refresh:hover {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(34, 211, 238, 0.2));
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+        }
+
+        .captcha-refresh:active {
+            transform: scale(0.95);
+        }
+
+        .captcha-refresh img {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.5s ease;
+        }
+
+        .captcha-refresh:hover img {
+            transform: rotate(180deg);
+        }
+
         /* Validation errors container */
         .validation-errors {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 12px;
-            padding: 12px 16px;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            border-radius: 14px;
+            padding: 14px 16px;
             margin-bottom: 20px;
             animation: slideDown 0.4s ease-out;
         }
@@ -833,6 +941,12 @@
                 this.value = this.value.toUpperCase().replace(/[^0-9]/g, '').slice(0, 8);
             });
         }
+
+        // Captcha generation
+        function generateCaptcha() {}
+
+        // Generate captcha on page load
+        window.addEventListener('load', generateCaptcha);
     </script>
 
 </body>

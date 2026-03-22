@@ -273,7 +273,7 @@
 
         .otp-input {
             width: 100%;
-            padding: 16px 18px;
+            padding: 13px 16px;
             background: rgba(15, 23, 42, 0.7);
             border: 2px solid rgba(56, 189, 248, 0.3);
             border-radius: 14px;
@@ -457,6 +457,98 @@
             margin-bottom: 0;
         }
 
+        /* Captcha */
+        .captcha-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+            margin-bottom: 10px;
+        }
+
+        .captcha-display {
+            flex: 1;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(34, 211, 238, 0.12));
+            border: 1.5px solid rgba(56, 189, 248, 0.25);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 8px;
+            color: #38bdf8;
+            user-select: none;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(56, 189, 248, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .captcha-refresh {
+            width: 48px;
+            min-width: 48px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(34, 211, 238, 0.1));
+            border: 1.5px solid rgba(56, 189, 248, 0.3);
+            border-radius: 12px;
+            color: #38bdf8;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .captcha-refresh:hover {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(34, 211, 238, 0.2));
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+        }
+
+        .captcha-refresh:active {
+            transform: scale(0.95);
+        }
+
+        .captcha-refresh img {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.5s ease;
+        }
+
+        .captcha-refresh:hover img {
+            transform: rotate(180deg);
+        }
+
+        .captcha-input {
+            width: 100%;
+            padding: 13px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1.5px solid rgba(56, 189, 248, 0.25);
+            border-radius: 12px;
+            color: rgb(226, 232, 240);
+            font-size: 15px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .captcha-input::placeholder {
+            color: rgba(226, 232, 240, 0.4);
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+
+        .captcha-input:focus {
+            outline: none;
+            border-color: rgba(56, 189, 248, 0.6);
+            background: rgba(15, 23, 42, 0.8);
+            box-shadow:
+                0 0 0 3px rgba(56, 189, 248, 0.1),
+                0 8px 20px rgba(56, 189, 248, 0.15);
+        }
+
         /* Mobile responsiveness */
         @media (max-width: 480px) {
             .verify-container {
@@ -484,7 +576,7 @@
             }
 
             .otp-input {
-                padding: 14px 16px;
+                padding: 12px 14px;
                 font-size: 16px;
                 letter-spacing: 6px;
             }
@@ -496,6 +588,22 @@
 
             .verify-wrapper {
                 max-width: 100%;
+            }
+
+            .captcha-display {
+                font-size: 22px;
+                letter-spacing: 5px;
+                padding: 12px 14px;
+            }
+
+            .captcha-refresh {
+                width: 44px;
+                min-width: 44px;
+            }
+
+            .captcha-refresh img {
+                width: 18px;
+                height: 18px;
             }
         }
     </style>
@@ -700,6 +808,12 @@
         if (otpInput) {
             otpInput.focus();
         }
+
+        // Captcha generation
+        function generateCaptcha() {}
+
+        // Generate captcha on page load
+        window.addEventListener('load', generateCaptcha);
     </script>
 
 </body>

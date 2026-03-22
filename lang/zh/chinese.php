@@ -60,6 +60,9 @@ return [
     'join_traders' => '加入数千名加密交易者',
     'terms_agree' => '我同意',
     'terms_conditions' => '条款和条件',
+    'verification_code' => '验证码',
+    'verify_human' => '验证您是人类',
+    'enter_code' => '输入上面的代码',
     
     // Notifications
     'notifications' => '通知',

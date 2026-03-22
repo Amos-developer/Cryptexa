@@ -61,6 +61,9 @@ return [
     'join_traders' => 'Treten Sie Tausenden von Krypto-Händlern bei',
     'terms_agree' => 'Ich stimme den',
     'terms_conditions' => 'Allgemeinen Geschäftsbedingungen zu',
+    'verification_code' => 'Verifizierungscode',
+    'verify_human' => 'Bestätigen Sie, dass Sie ein Mensch sind',
+    'enter_code' => 'Geben Sie den obigen Code ein',
     
     // Notifications
     'notifications' => 'Benachrichtigungen',

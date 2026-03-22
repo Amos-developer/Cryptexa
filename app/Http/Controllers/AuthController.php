@@ -118,14 +118,7 @@ class AuthController extends Controller
         $request->validate([
             'username' => 'required|string|min:3|max:20',
             'password' => 'required|string',
-            'captcha' => 'required|string',
-            'captcha_token' => 'required|string',
         ]);
-
-        // Validate captcha
-        if (strtoupper($request->captcha) !== strtoupper($request->captcha_token)) {
-            return back()->withErrors(['captcha' => 'Invalid captcha code'])->withInput();
-        }
 
         $credentials = [
             'username' => $request->username,

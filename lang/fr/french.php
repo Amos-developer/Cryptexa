@@ -60,6 +60,9 @@ return [
     'join_traders' => 'Rejoignez des milliers de traders crypto',
     'terms_agree' => "J'accepte les",
     'terms_conditions' => 'Termes et Conditions',
+    'verification_code' => 'Code de Vérification',
+    'verify_human' => 'Vérifiez que Vous Êtes Humain',
+    'enter_code' => 'Entrez le code ci-dessus',
     
     // Notifications
     'notifications' => 'Notifications',

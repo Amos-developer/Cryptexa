@@ -60,6 +60,9 @@ return [
     'join_traders' => '수천 명의 크립토 트레이더와 함께하세요',
     'terms_agree' => '동의합니다',
     'terms_conditions' => '이용 약관',
+    'verification_code' => '확인 코드',
+    'verify_human' => '인간임을 확인',
+    'enter_code' => '위의 코드를 입력하세요',
     
     // Notifications
     'notifications' => '알림',
