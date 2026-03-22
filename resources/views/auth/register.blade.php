@@ -519,7 +519,7 @@
         <div class="register-wrapper">
             <!-- Logo Section -->
             <div class="logo-section">
-                <div class="logo-icon">💎</div>
+                <!-- <div class="logo-icon">💎</div> -->
                 <h1>CRYPTEXA</h1>
                 <p>Join thousands of crypto traders</p>
             </div>
