@@ -5,7 +5,7 @@
 
 @section('content')
 
-<link rel="stylesheet" href="{{ asset('css/team.css') }}">
+<link rel="stylesheet" href="{{ asset('css/team.css') }}?v={{ filemtime(public_path('css/team.css')) }}">
 
 <div class="team-container">
     <!-- HEADER BAR -->
@@ -19,11 +19,14 @@
 
     <!-- HERO STATS SECTION -->
     <section class="team-hero">
+        <div class="team-hero__glow team-hero__glow--one"></div>
+        <div class="team-hero__glow team-hero__glow--two"></div>
         <div class="team-hero__heading">
-            <span class="team-hero__eyebrow">Referral Desk</span>
-            <h2 class="team-hero__title">{{ __t('my_team') }}</h2>
+           
             <p class="team-hero__subtitle">{{ __t('earn_passive_income') }}</p>
         </div>
+
+
 
         <div class="team-hero__grid row g-3">
             <div class="col-6">
@@ -85,8 +88,9 @@
         <div class="referral-code-card">
             <div class="panel-head">
                 <div>
-                    <span class="panel-kicker">Invite Flow</span>
+                    <span class="panel-kicker">Desk Access</span>
                     <h3 class="panel-title">{{ __t('referral_code') }}</h3>
+                    <p class="panel-text">Distribute your invite credentials and onboard new traders into your network.</p>
                 </div>
             </div>
 
@@ -97,7 +101,7 @@
                         class="code-input"
                         value="{{ auth()->user()->referral_code }}"
                         readonly>
-                    <button onclick="copyText('refCode')" class="copy-btn">
+                    <button onclick="copyText(event, 'refCode')" class="copy-btn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
                             <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
@@ -115,7 +119,7 @@
                         class="code-input"
                         value="{{ url('/register?ref='.auth()->user()->referral_code) }}"
                         readonly>
-                    <button onclick="copyText('refLink')" class="copy-btn copy-btn-green">
+                    <button onclick="copyText(event, 'refLink')" class="copy-btn copy-btn-green">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M10 13a5 5 0 0 0 7.54.54l3.46-3.46a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
                             <path d="M14 11a5 5 0 0 0-7.54-.54l-3.46 3.46a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
@@ -125,30 +129,40 @@
             </div>
 
             <!-- SHARE BUTTONS -->
+            <div class="share-head">
+                <span class="card-label">Distribution Channels</span>
+                <p>Push your signup link through the fastest client communication channels.</p>
+            </div>
             <div class="share-buttons">
                 <a target="_blank"
                     href="https://wa.me/?text={{ urlencode(__t('join_cryptexa_link').' '.url('/register?ref='.auth()->user()->referral_code)) }}"
                     class="share-btn share-whatsapp"
                     title="{{ __t('share_on_whatsapp') }}">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.869 1.171l-.346.197-3.57.734.747-2.732-.199-.319A9.9 9.9 0 015.25 2c5.385 0 9.75 4.365 9.75 9.75 0 2.6-.997 5.04-2.799 6.877m8.556-15.113c-1.713-.342-3.529-.333-5.228.039-3.26.707-6.501 2.986-8.023 6.088-1.562 3.149-1.379 6.716.548 9.614 1.921 2.88 5.286 4.827 8.993 4.986.652.034 1.297.034 1.99-.122 1.69-.358 3.242-1.137 4.532-2.235l.456-.378 2.948.771-.772-2.982.36-.287A13.52 13.52 0 0024 12.556c0-3.527-1.397-6.8-3.936-9.21-1.584-1.456-3.509-2.448-5.535-2.712z" />
+                    <svg width="20" height="20" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                        <circle cx="16" cy="16" r="16" fill="#25D366" />
+                        <path fill="#fff" d="M23.12 8.86A9.9 9.9 0 0 0 16.08 6c-5.48 0-9.94 4.45-9.95 9.94 0 1.75.46 3.46 1.32 4.97L6 26l5.26-1.37a9.95 9.95 0 0 0 4.77 1.21h.01c5.48 0 9.94-4.46 9.95-9.95A9.87 9.87 0 0 0 23.12 8.86Zm-7.08 15.3h-.01a8.27 8.27 0 0 1-4.21-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.25 8.25 0 0 1-1.28-4.37c0-4.56 3.71-8.27 8.28-8.27 2.2 0 4.28.86 5.83 2.42a8.2 8.2 0 0 1 2.42 5.84c0 4.56-3.71 8.27-8.24 8.24Zm4.54-6.2c-.25-.13-1.5-.74-1.72-.82-.23-.08-.4-.13-.57.13-.17.25-.65.82-.8.98-.14.17-.29.19-.54.07-.25-.13-1.06-.39-2.01-1.25-.74-.66-1.24-1.48-1.38-1.73-.15-.25-.02-.39.11-.52.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.09-.17.05-.31-.02-.43-.07-.13-.57-1.37-.78-1.88-.2-.48-.41-.42-.57-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.41 1.01 2.57.12.17 1.76 2.69 4.26 3.76.59.26 1.06.41 1.42.52.6.19 1.14.17 1.58.1.48-.07 1.49-.61 1.7-1.2.21-.58.21-1.08.15-1.18-.07-.1-.23-.17-.48-.3Z" />
                     </svg>
+                    <span>WhatsApp</span>
                 </a>
                 <a target="_blank"
                     href="https://t.me/share/url?url={{ urlencode(url('/register?ref='.auth()->user()->referral_code)) }}"
                     class="share-btn share-telegram"
                     title="{{ __t('share_on_telegram') }}">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295-.39 0-.32-.144-.451-.511l-1.003-3.39-2.953-.921c-.641-.194-.657-.472.14-.708l11.385-4.386c.532-.196 1.006.128.832.941z" />
+                    <svg width="20" height="20" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                        <circle cx="16" cy="16" r="16" fill="#229ED9" />
+                        <path fill="#fff" d="M23.84 9.27c.12-.77-.66-1.38-1.37-1.06L8.2 14.04c-.8.32-.75 1.48.08 1.73l2.96.89 1.15 3.61c.23.74 1.16.96 1.7.41l1.65-1.69 3.23 2.38c.62.45 1.49.11 1.62-.62l3.25-12.48ZM13 15.96l5.8-4.56c.28-.22.56.18.32.42l-4.79 5.08a1.3 1.3 0 0 0-.32.61l-.16 1.21-.85-2.76Zm1.86 3.56.24-1.78 1.32.97-1.56.81Z" />
                     </svg>
+                    <span>Telegram</span>
                 </a>
                 <a target="_blank"
-                    href="https://twitter.com/intent/tweet?text={{ urlencode(__t('join_cryptexa_earn').' '.url('/register?ref='.auth()->user()->referral_code)) }}"
-                    class="share-btn share-twitter"
-                    title="{{ __t('share_on_twitter') }}">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.223-6.821-5.974 6.821h-3.31l7.732-8.835L.424 2.25h6.837l4.822 6.379 5.586-6.379zM17.15 18.738h1.828L6.122 4.146H4.158l13-14.592z" />
+                    href="mailto:?subject={{ rawurlencode('Cryptexa Referral Invitation') }}&body={{ rawurlencode(__t('join_cryptexa_earn').' '.url('/register?ref='.auth()->user()->referral_code)) }}"
+                    class="share-btn share-email"
+                    title="Share via Email">
+                    <svg width="20" height="20" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                        <circle cx="16" cy="16" r="16" fill="#2563EB" />
+                        <path fill="#fff" d="M9 10.5A2.5 2.5 0 0 1 11.5 8h9A2.5 2.5 0 0 1 23 10.5v11a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 9 21.5v-11Zm2 .43v.2l5 3.9 5-3.9v-.2a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5Zm10 2.73-4.39 3.42a1 1 0 0 1-1.22 0L11 13.66v7.84c0 .28.22.5.5.5h9a.5.5 0 0 0 .5-.5v-7.84Z" />
                     </svg>
+                    <span>Email</span>
                 </a>
             </div>
         </div>
@@ -157,7 +171,7 @@
         <div class="commission-section">
             <div class="panel-head">
                 <div>
-                    <span class="panel-kicker">Payout Matrix</span>
+                    <span class="panel-kicker">Commission Board</span>
                     <h3 class="panel-title">{{ __t('commission_structure') }}</h3>
                 </div>
             </div>
@@ -197,7 +211,7 @@
     <div class="levels-section">
         <div class="panel-head panel-head--levels">
             <div>
-                <span class="panel-kicker">Network Map</span>
+                <span class="panel-kicker">Team Ledger</span>
                 <h3 class="section-title">{{ __t('network_levels') }}</h3>
             </div>
         </div>
@@ -242,6 +256,7 @@
                 @endphp
                 <div class="member-item {{ $hasDeposit ? 'active' : 'inactive' }}">
                     <div class="member-info">
+                        <span class="member-avatar">{{ strtoupper(substr($user->account_id, 0, 1)) }}</span>
                         <div class="member-code">{{ $user->account_id }}</div>
                         <div class="member-joined">{{ __t('joined') }} {{ $user->created_at->diffForHumans() }}</div>
                     </div>
@@ -269,7 +284,7 @@
 
 <!-- SCRIPTS -->
 <script>
-    function copyText(id) {
+    function copyText(event, id) {
         const element = document.getElementById(id);
 
         // Create a temporary textarea
@@ -282,7 +297,7 @@
 
         // Show feedback
         const btn = event.target.closest('.copy-btn');
-        const originalText = btn.textContent;
+        const originalText = btn.innerHTML;
         btn.textContent = '✓';
         setTimeout(() => {
             btn.innerHTML = originalText;
