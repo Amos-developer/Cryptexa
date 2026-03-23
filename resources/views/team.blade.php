@@ -88,7 +88,6 @@
         <div class="referral-code-card">
             <div class="panel-head">
                 <div>
-                    <span class="panel-kicker">Desk Access</span>
                     <h3 class="panel-title">{{ __t('referral_code') }}</h3>
                     <p class="panel-text">Distribute your invite credentials and onboard new traders into your network.</p>
                 </div>
@@ -252,24 +251,20 @@
                 @foreach($level['users'] as $user)
                 @php
                 $hasDeposit = DB::table('deposits')->where('user_id', $user->id)->where('status', 'completed')->exists();
-                $totalDeposits = DB::table('deposits')->where('user_id', $user->id)->where('status', 'completed')->sum('amount');
                 @endphp
                 <div class="member-item {{ $hasDeposit ? 'active' : 'inactive' }}">
                     <div class="member-info">
                         <span class="member-avatar">{{ strtoupper(substr($user->account_id, 0, 1)) }}</span>
-                        <div class="member-code">{{ $user->account_id }}</div>
-                        <div class="member-joined">{{ __t('joined') }} {{ $user->created_at->diffForHumans() }}</div>
-                    </div>
-                    <div class="member-balance">
-                        <div class="balance-value">${{ number_format($totalDeposits, 2) }}</div>
-                        <div class="balance-status">
-                            @if($hasDeposit)
-                            <span class="badge active">{{ __t('active') }}</span>
-                            @else
-                            <span class="badge inactive">{{ __t('inactive') }}</span>
-                            @endif
+                        <div class="member-code-wrap">
+                            <div class="member-code">{{ $user->account_id }}</div>
+                            <div class="member-id-label">Referrer ID</div>
                         </div>
                     </div>
+                    @if($hasDeposit)
+                    <span class="badge active">{{ __t('active') }}</span>
+                    @else
+                    <span class="badge inactive">{{ __t('inactive') }}</span>
+                    @endif
                 </div>
                 @endforeach
             </div>
