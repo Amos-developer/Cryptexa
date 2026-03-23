@@ -101,13 +101,13 @@
         <tbody>
           @forelse($users as $user)
           <tr>
-            <td style="font-weight:600">{{ $user->username }}</td>
-            <td>{{ $user->referrals_count }}</td>
+            <td data-label="User" style="font-weight:600">{{ $user->username }}</td>
+            <td data-label="Referrals">{{ $user->referrals_count }}</td>
             <td>{{ $user->junior_leader_bonus_paid ? '✅' : '❌' }}</td>
             <td>{{ $user->elite_leader_bonus_paid ? '✅' : '❌' }}</td>
             <td>{{ $user->legendary_leader_bonus_paid ? '✅' : '❌' }}</td>
             <td>{{ $user->grand_leader_bonus_paid ? '✅' : '❌' }}</td>
-            <td>
+            <td data-label="Actions">
               <a href="{{ route('admin.rank-bonuses.edit', $user) }}" class="action-btn edit" title="Edit">✏️</a>
               <form action="{{ route('admin.rank-bonuses.destroy', $user) }}" method="POST" style="display:inline">
                 @csrf
@@ -118,7 +118,7 @@
           </tr>
           @empty
           <tr>
-            <td colspan="7" style="text-align:center;padding:60px 20px;color:#94a3b8">
+            <td colspan="7" class="empty-state">
               <div style="font-size:64px;margin-bottom:16px;opacity:.5">🏆</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Rank Bonuses Paid</div>
             </td>

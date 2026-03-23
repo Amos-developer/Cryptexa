@@ -59,18 +59,18 @@
         <tbody>
           @forelse($payments as $payment)
           <tr>
-            <td>{{ $payments->firstItem() + $loop->index }}</td>
-            <td style="color:#64748b">{{ $payment->created_at->format('M d, Y H:i') }}</td>
-            <td>
+            <td data-label="#">{{ $payments->firstItem() + $loop->index }}</td>
+            <td data-label="Date" style="color:#64748b">{{ $payment->created_at->format('M d, Y H:i') }}</td>
+            <td data-label="Username">
               <a href="{{ route('admin.users.show', $payment->user) }}" style="color:#667eea;font-weight:600;text-decoration:none">
                 {{ $payment->user->username }}
               </a>
             </td>
-            <td style="font-weight:600;color:#475569">{{ $payment->rank }}</td>
-            <td style="font-weight:600;color:#059669">{{ $payment->active_members }}</td>
-            <td style="font-weight:700;color:#059669;font-size:16px">${{ number_format($payment->amount, 2) }}</td>
-            <td style="color:#64748b">{{ $payment->admin->username }}</td>
-            <td>
+            <td data-label="Rank" style="font-weight:600;color:#475569">{{ $payment->rank }}</td>
+            <td data-label="Active Members" style="font-weight:600;color:#059669">{{ $payment->active_members }}</td>
+            <td data-label="Amount" style="font-weight:700;color:#059669;font-size:16px">${{ number_format($payment->amount, 2) }}</td>
+            <td data-label="Paid By" style="color:#64748b">{{ $payment->admin->username }}</td>
+            <td data-label="Action">
               <a href="{{ route('admin.weekly-salary.show', $payment) }}" class="action-btn info" title="View">👁️</a>
               <form action="{{ route('admin.weekly-salary.destroy', $payment) }}" method="POST" style="display:inline" onsubmit="return confirm('Delete this payment record?')">
                 @csrf
@@ -81,7 +81,7 @@
           </tr>
           @empty
           <tr>
-            <td colspan="8" style="text-align:center;padding:60px 20px;color:#94a3b8">
+            <td colspan="8" class="empty-state">
               <div style="font-size:64px;margin-bottom:16px;opacity:.5">📭</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Payment Records</div>
             </td>

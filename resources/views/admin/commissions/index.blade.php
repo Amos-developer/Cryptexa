@@ -101,17 +101,17 @@
         <tbody>
           @forelse($commissions as $commission)
           <tr>
-            <td>#{{ $commission->id }}</td>
-            <td style="font-weight:600">{{ $commission->user->username ?? 'N/A' }}</td>
-            <td>{{ $commission->fromUser->username ?? 'N/A' }}</td>
-            <td>
+            <td data-label="ID">#{{ $commission->id }}</td>
+            <td data-label="Referrer" style="font-weight:600">{{ $commission->user->username ?? 'N/A' }}</td>
+            <td data-label="From User">{{ $commission->fromUser->username ?? 'N/A' }}</td>
+            <td data-label="Level">
               <span class="level-badge level-{{ $commission->level }}">Level {{ $commission->level }}</span>
             </td>
-            <td style="font-weight:700;color:#059669">${{ number_format($commission->amount, 2) }}</td>
-            <td style="color:#64748b">${{ number_format(($commission->balance_before > 0 ? $commission->balance_before : $commission->user->balance - $commission->amount), 2) }}</td>
-            <td style="color:#059669;font-weight:600">${{ number_format(($commission->balance_after > 0 ? $commission->balance_after : $commission->user->balance), 2) }}</td>
-            <td style="color:#64748b">{{ $commission->created_at->format('M d, Y H:i') }}</td>
-            <td>
+            <td data-label="Commission" style="font-weight:700;color:#059669">${{ number_format($commission->amount, 2) }}</td>
+            <td data-label="Balance Before" style="color:#64748b">${{ number_format(($commission->balance_before > 0 ? $commission->balance_before : $commission->user->balance - $commission->amount), 2) }}</td>
+            <td data-label="Balance After" style="color:#059669;font-weight:600">${{ number_format(($commission->balance_after > 0 ? $commission->balance_after : $commission->user->balance), 2) }}</td>
+            <td data-label="Date" style="color:#64748b">{{ $commission->created_at->format('M d, Y H:i') }}</td>
+            <td data-label="Actions">
               <a href="{{ route('admin.commissions.show', $commission->id) }}" class="action-btn" style="background:#dbeafe;color:#1e40af" title="View"><i class="fa fa-eye"></i></a>
               <a href="{{ route('admin.commissions.edit', $commission->id) }}" class="action-btn edit" title="Edit"><i class="fa fa-edit"></i></a>
               <form action="{{ route('admin.commissions.destroy', $commission->id) }}" method="POST" style="display:inline" onsubmit="return confirm('Delete this commission?')">
@@ -123,7 +123,7 @@
           </tr>
           @empty
           <tr>
-            <td colspan="9" style="text-align:center;padding:60px 20px;color:#94a3b8">
+            <td colspan="9" class="empty-state">
               <div style="font-size:64px;margin-bottom:16px;opacity:.5">💰</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Commissions Found</div>
             </td>

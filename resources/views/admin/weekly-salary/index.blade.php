@@ -102,18 +102,18 @@
         <tbody>
           @forelse($eligibleUsers as $index => $item)
           <tr>
-            <td>{{ $index + 1 }}</td>
-            <td>
+            <td data-label="#">{{ $index + 1 }}</td>
+            <td data-label="Username">
               <a href="{{ route('admin.users.show', $item['user']) }}" style="color:#667eea;font-weight:600;text-decoration:none">
                 {{ $item['user']->username }}
               </a>
             </td>
-            <td>
+            <td data-label="Account ID">
               <code style="background:#f1f5f9;padding:4px 8px;border-radius:6px;font-size:12px;color:#475569">
                 {{ $item['user']->account_id }}
               </code>
             </td>
-            <td>
+            <td data-label="Rank">
               @if($item['rank'] == 'Elite Leader')
                 <span class="rank-badge rank-elite">💎 {{ $item['rank'] }}</span>
               @elseif($item['rank'] == 'Master Leader')
@@ -122,17 +122,17 @@
                 <span class="rank-badge rank-supreme">👑 {{ $item['rank'] }}</span>
               @endif
             </td>
-            <td style="font-weight:600;color:#059669">{{ $item['active_members'] }}</td>
-            <td style="font-weight:700;color:#1e293b;font-size:15px">${{ number_format($item['user']->balance, 2) }}</td>
-            <td style="font-weight:700;color:#059669;font-size:16px">${{ number_format($item['weekly_salary'], 2) }}</td>
-            <td>
+            <td data-label="Active Members" style="font-weight:600;color:#059669">{{ $item['active_members'] }}</td>
+            <td data-label="Current Balance" style="font-weight:700;color:#1e293b;font-size:15px">${{ number_format($item['user']->balance, 2) }}</td>
+            <td data-label="Weekly Salary" style="font-weight:700;color:#059669;font-size:16px">${{ number_format($item['weekly_salary'], 2) }}</td>
+            <td data-label="Status">
               @if($item['paid_this_week'])
                 <span style="display:inline-block;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;background:#d1fae5;color:#065f46">✓ Paid</span>
               @else
                 <span style="display:inline-block;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;background:#fef3c7;color:#92400e">⏳ Pending</span>
               @endif
             </td>
-            <td>
+            <td data-label="Action">
               @if($item['paid_this_week'])
                 <button class="btn-pay" disabled style="opacity:0.5;cursor:not-allowed">✓ Paid</button>
               @else

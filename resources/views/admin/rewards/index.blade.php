@@ -42,6 +42,7 @@
     <div style="padding:20px 24px;border-bottom:2px solid #f1f5f9">
       <h3 style="margin:0;font-size:20px;font-weight:700;color:#1e293b">Recent Commissions</h3>
     </div>
+    <div class="table-scroll">
     <table class="modern-table">
       <thead>
         <tr>
@@ -56,18 +57,19 @@
       <tbody>
         @forelse($commissions as $index => $commission)
         <tr>
-          <td>{{ $commissions->firstItem() + $index }}</td>
-          <td><strong>{{ $commission->fromUser->username ?? 'N/A' }}</strong></td>
-          <td>{{ $commission->user->username ?? 'N/A' }}</td>
-          <td><span class="badge pending">Level {{ $commission->level }}</span></td>
-          <td style="font-weight:700;color:#059669">${{ number_format($commission->amount, 2) }}</td>
-          <td>{{ $commission->created_at->format('M d, Y H:i') }}</td>
+          <td data-label="#">{{ $commissions->firstItem() + $index }}</td>
+          <td data-label="User"><strong>{{ $commission->fromUser->username ?? 'N/A' }}</strong></td>
+          <td data-label="From User">{{ $commission->user->username ?? 'N/A' }}</td>
+          <td data-label="Level"><span class="badge pending">Level {{ $commission->level }}</span></td>
+          <td data-label="Amount" style="font-weight:700;color:#059669">${{ number_format($commission->amount, 2) }}</td>
+          <td data-label="Date">{{ $commission->created_at->format('M d, Y H:i') }}</td>
         </tr>
         @empty
         <tr><td colspan="6" class="empty">No commissions found</td></tr>
         @endforelse
       </tbody>
     </table>
+    </div>
     @if($commissions->hasPages())
     <ul class="pagination">
       @if($commissions->onFirstPage())
@@ -97,6 +99,7 @@
     <div style="padding:20px 24px;border-bottom:2px solid #f1f5f9">
       <h3 style="margin:0;font-size:20px;font-weight:700;color:#1e293b">Rank Bonuses</h3>
     </div>
+    <div class="table-scroll">
     <table class="modern-table">
       <thead>
         <tr>
@@ -113,14 +116,14 @@
       <tbody>
         @forelse($rankBonuses as $index => $bonus)
         <tr>
-          <td>{{ $rankBonuses->firstItem() + $index }}</td>
-          <td><strong>{{ $bonus->user->username ?? 'N/A' }}</strong></td>
-          <td><span class="badge success">{{ $bonus->rank }}</span></td>
-          <td style="font-weight:700;color:#059669">${{ number_format($bonus->bonus_amount, 2) }}</td>
-          <td style="color:#6b7280">${{ number_format($bonus->balance_before, 2) }}</td>
-          <td style="color:#059669;font-weight:600">${{ number_format($bonus->balance_after, 2) }}</td>
-          <td>{{ $bonus->created_at->format('M d, Y H:i') }}</td>
-          <td>
+          <td data-label="#">{{ $rankBonuses->firstItem() + $index }}</td>
+          <td data-label="User"><strong>{{ $bonus->user->username ?? 'N/A' }}</strong></td>
+          <td data-label="Rank"><span class="badge success">{{ $bonus->rank }}</span></td>
+          <td data-label="Bonus Amount" style="font-weight:700;color:#059669">${{ number_format($bonus->bonus_amount, 2) }}</td>
+          <td data-label="Balance Before" style="color:#6b7280">${{ number_format($bonus->balance_before, 2) }}</td>
+          <td data-label="Balance After" style="color:#059669;font-weight:600">${{ number_format($bonus->balance_after, 2) }}</td>
+          <td data-label="Date">{{ $bonus->created_at->format('M d, Y H:i') }}</td>
+          <td data-label="Actions">
             <a href="{{ route('admin.rank-bonuses.edit', ['rank_bonus' => $bonus->id, 'page' => request('rankbonuses_page', 1)]) }}" style="padding:6px 12px;background:#fef3c7;color:#92400e;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;margin-right:4px">✏️</a>
             <form action="{{ route('admin.rank-bonuses.destroy', $bonus->id) }}" method="POST" style="display:inline" onsubmit="return confirm('Delete this rank bonus?')">
               @csrf
@@ -134,6 +137,7 @@
         @endforelse
       </tbody>
     </table>
+    </div>
     @if($rankBonuses->hasPages())
     <ul class="pagination">
       @if($rankBonuses->onFirstPage())
@@ -163,6 +167,7 @@
     <div style="padding:20px 24px;border-bottom:2px solid #f1f5f9">
       <h3 style="margin:0;font-size:20px;font-weight:700;color:#1e293b">Recent Check-ins</h3>
     </div>
+    <div class="table-scroll">
     <table class="modern-table">
       <thead>
         <tr>
@@ -176,17 +181,18 @@
       <tbody>
         @forelse($checkins as $index => $checkin)
         <tr>
-          <td>{{ $checkins->firstItem() + $index }}</td>
-          <td><strong>{{ $checkin->user->username ?? 'N/A' }}</strong></td>
-          <td><span class="badge pending">Day {{ $checkin->day }}</span></td>
-          <td style="font-weight:700;color:#059669">${{ number_format($checkin->reward, 2) }}</td>
-          <td>{{ $checkin->created_at->format('M d, Y H:i') }}</td>
+          <td data-label="#">{{ $checkins->firstItem() + $index }}</td>
+          <td data-label="User"><strong>{{ $checkin->user->username ?? 'N/A' }}</strong></td>
+          <td data-label="Day"><span class="badge pending">Day {{ $checkin->day }}</span></td>
+          <td data-label="Reward" style="font-weight:700;color:#059669">${{ number_format($checkin->reward, 2) }}</td>
+          <td data-label="Date">{{ $checkin->created_at->format('M d, Y H:i') }}</td>
         </tr>
         @empty
         <tr><td colspan="5" class="empty">No check-ins found</td></tr>
         @endforelse
       </tbody>
     </table>
+    </div>
     @if($checkins->hasPages())
     <ul class="pagination">
       @if($checkins->onFirstPage())
@@ -216,6 +222,7 @@
     <div style="padding:20px 24px;border-bottom:2px solid #f1f5f9">
       <h3 style="margin:0;font-size:20px;font-weight:700;color:#1e293b">Recent Lucky Boxes</h3>
     </div>
+    <div class="table-scroll">
     <table class="modern-table">
       <thead>
         <tr>
@@ -228,16 +235,17 @@
       <tbody>
         @forelse($luckyBoxes as $index => $box)
         <tr>
-          <td>{{ $luckyBoxes->firstItem() + $index }}</td>
-          <td><strong>{{ $box->user->username ?? 'N/A' }}</strong></td>
-          <td style="font-weight:700;color:#059669">${{ number_format($box->reward, 2) }}</td>
-          <td>{{ $box->created_at->format('M d, Y H:i') }}</td>
+          <td data-label="#">{{ $luckyBoxes->firstItem() + $index }}</td>
+          <td data-label="User"><strong>{{ $box->user->username ?? 'N/A' }}</strong></td>
+          <td data-label="Reward" style="font-weight:700;color:#059669">${{ number_format($box->reward, 2) }}</td>
+          <td data-label="Date">{{ $box->created_at->format('M d, Y H:i') }}</td>
         </tr>
         @empty
         <tr><td colspan="4" class="empty">No lucky box rewards found</td></tr>
         @endforelse
       </tbody>
     </table>
+    </div>
     @if($luckyBoxes->hasPages())
     <ul class="pagination">
       @if($luckyBoxes->onFirstPage())

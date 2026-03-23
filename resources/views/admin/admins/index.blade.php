@@ -25,6 +25,7 @@
 </div>
 
 <div class="table-card">
+  <div class="table-scroll">
   <table class="modern-table">
     <thead>
       <tr>
@@ -37,10 +38,10 @@
     <tbody>
       @forelse($admins as $admin)
       <tr>
-        <td><strong>{{ $admin->username }}</strong></td>
-        <td>{{ $admin->email }}</td>
-        <td>{{ $admin->created_at->format('M d, Y') }}</td>
-        <td>
+        <td data-label="Username"><strong>{{ $admin->username }}</strong></td>
+        <td data-label="Email">{{ $admin->email }}</td>
+        <td data-label="Created">{{ $admin->created_at->format('M d, Y') }}</td>
+        <td data-label="Actions">
           @if($admin->id !== auth()->id())
           <form action="{{ route('admin.admins.destroy', $admin) }}" method="POST" style="display:inline" onsubmit="return confirm('Delete this admin?')">
             @csrf
@@ -53,10 +54,11 @@
         </td>
       </tr>
       @empty
-      <tr><td colspan="4" style="text-align:center;padding:40px;color:#9ca3af">No admins found</td></tr>
+      <tr><td colspan="4" class="empty-state">No admins found</td></tr>
       @endforelse
     </tbody>
   </table>
+  </div>
 </div>
 
 @if($admins->hasPages())

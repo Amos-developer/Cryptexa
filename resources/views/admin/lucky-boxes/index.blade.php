@@ -93,11 +93,11 @@
         <tbody>
           @forelse($luckyBoxes as $box)
           <tr>
-            <td>#{{ $box->id }}</td>
-            <td style="font-weight:600">{{ $box->user->username ?? 'N/A' }}</td>
-            <td style="font-weight:700;color:#059669">${{ number_format($box->reward, 2) }}</td>
-            <td style="color:#64748b">{{ $box->created_at->format('M d, Y H:i') }}</td>
-            <td>
+            <td data-label="ID">#{{ $box->id }}</td>
+            <td data-label="User" style="font-weight:600">{{ $box->user->username ?? 'N/A' }}</td>
+            <td data-label="Reward" style="font-weight:700;color:#059669">${{ number_format($box->reward, 2) }}</td>
+            <td data-label="Date" style="color:#64748b">{{ $box->created_at->format('M d, Y H:i') }}</td>
+            <td data-label="Actions">
               <a href="{{ route('admin.lucky-boxes.edit', $box) }}" class="action-btn edit" title="Edit">✏️</a>
               <form action="{{ route('admin.lucky-boxes.destroy', $box) }}" method="POST" style="display:inline">
                 @csrf
@@ -108,7 +108,7 @@
           </tr>
           @empty
           <tr>
-            <td colspan="5" style="text-align:center;padding:60px 20px;color:#94a3b8">
+            <td colspan="5" class="empty-state">
               <div style="font-size:64px;margin-bottom:16px;opacity:.5">🎁</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Lucky Box Claims</div>
             </td>

@@ -84,6 +84,7 @@
       <h3>Recent Users</h3>
       <a href="{{ route('admin.users.index') }}">View All →</a>
     </div>
+    <div class="table-scroll">
     <table class="dash-table">
       <thead>
         <tr>
@@ -96,16 +97,17 @@
       <tbody>
         @forelse($recentUsers as $user)
         <tr>
-          <td>{{ $loop->iteration }}</td>
-          <td>{{ $user->username }}</td>
-          <td>{{ $user->email }}</td>
-          <td>{{ $user->created_at->diffForHumans() }}</td>
+          <td data-label="#">{{ $loop->iteration }}</td>
+          <td data-label="Username">{{ $user->username }}</td>
+          <td data-label="Email">{{ $user->email }}</td>
+          <td data-label="Joined">{{ $user->created_at->diffForHumans() }}</td>
         </tr>
         @empty
-        <tr><td colspan="4" style="text-align:center;color:#999">No users found</td></tr>
+        <tr><td colspan="4" class="empty-state">No users found</td></tr>
         @endforelse
       </tbody>
     </table>
+    </div>
   </div>
 
   <div class="dash-card">
@@ -113,6 +115,7 @@
       <h3>Recent Deposits</h3>
       <a href="{{ route('admin.deposits.index') }}">View All →</a>
     </div>
+    <div class="table-scroll">
     <table class="dash-table">
       <thead>
         <tr>
@@ -125,10 +128,10 @@
       <tbody>
         @forelse($recentDeposits as $deposit)
         <tr>
-          <td>{{ $loop->iteration }}</td>
-          <td>{{ $deposit->user->username ?? 'N/A' }}</td>
-          <td>${{ number_format($deposit->amount, 2) }}</td>
-          <td>
+          <td data-label="#">{{ $loop->iteration }}</td>
+          <td data-label="User">{{ $deposit->user->username ?? 'N/A' }}</td>
+          <td data-label="Amount">${{ number_format($deposit->amount, 2) }}</td>
+          <td data-label="Status">
             @if($deposit->status == 'completed')
               <span class="badge success">Completed</span>
             @elseif(in_array($deposit->status, ['pending', 'waiting', 'confirming']))
@@ -139,10 +142,11 @@
           </td>
         </tr>
         @empty
-        <tr><td colspan="4" style="text-align:center;color:#999">No deposits found</td></tr>
+        <tr><td colspan="4" class="empty-state">No deposits found</td></tr>
         @endforelse
       </tbody>
     </table>
+    </div>
   </div>
 
   <div class="dash-card">
@@ -150,6 +154,7 @@
       <h3>Recent Vaults</h3>
       <a href="{{ route('admin.pools.index') }}">View All →</a>
     </div>
+    <div class="table-scroll">
     <table class="dash-table">
       <thead>
         <tr>
@@ -162,16 +167,17 @@
       <tbody>
         @forelse($recentPools as $pool)
         <tr>
-          <td>{{ $loop->iteration }}</td>
-          <td>{{ $pool->name }}</td>
-          <td><span class="badge info">{{ strtoupper($pool->type) }}</span></td>
-          <td>${{ number_format($pool->price, 2) }}</td>
+          <td data-label="#">{{ $loop->iteration }}</td>
+          <td data-label="Name">{{ $pool->name }}</td>
+          <td data-label="Type"><span class="badge info">{{ strtoupper($pool->type) }}</span></td>
+          <td data-label="Price">${{ number_format($pool->price, 2) }}</td>
         </tr>
         @empty
-        <tr><td colspan="4" style="text-align:center;color:#999">No vaults found</td></tr>
+        <tr><td colspan="4" class="empty-state">No vaults found</td></tr>
         @endforelse
       </tbody>
     </table>
+    </div>
   </div>
 
   <div class="dash-card">
@@ -179,6 +185,7 @@
       <h3>Recent Withdrawals</h3>
       <a href="{{ route('admin.withdrawals.index') }}">View All →</a>
     </div>
+    <div class="table-scroll">
     <table class="dash-table">
       <thead>
         <tr>
@@ -191,10 +198,10 @@
       <tbody>
         @forelse($recentWithdrawals as $withdrawal)
         <tr>
-          <td>{{ $loop->iteration }}</td>
-          <td>{{ $withdrawal->user->username ?? 'N/A' }}</td>
-          <td>${{ number_format($withdrawal->amount, 2) }}</td>
-          <td>
+          <td data-label="#">{{ $loop->iteration }}</td>
+          <td data-label="User">{{ $withdrawal->user->username ?? 'N/A' }}</td>
+          <td data-label="Amount">${{ number_format($withdrawal->amount, 2) }}</td>
+          <td data-label="Status">
             @if($withdrawal->status == 'completed')
               <span class="badge success">Completed</span>
             @elseif($withdrawal->status == 'approved')
@@ -207,10 +214,11 @@
           </td>
         </tr>
         @empty
-        <tr><td colspan="4" style="text-align:center;color:#999">No withdrawals found</td></tr>
+        <tr><td colspan="4" class="empty-state">No withdrawals found</td></tr>
         @endforelse
       </tbody>
     </table>
+    </div>
   </div>
 </div>
 @endsection
