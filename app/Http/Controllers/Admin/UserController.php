@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $query = User::where('role', '!=', 'admin')->withCount('referrals');
+        $query = User::query()
+            ->where('role', '!=', 'admin')
+            ->withCount('referrals')
+            ->select('users.*');
         
         if ($request->filled('search')) {
             $search = $request->search;
@@ -25,8 +29,56 @@ class UserController extends Controller
             $query->where('role', $request->role);
         }
         
-        $users = $query->latest()->paginate(10)->appends($request->all());
+        $users = $query->latest('users.created_at')
+            ->paginate(10)
+            ->appends($request->all())
+            ->through(function ($user) {
+                $user->tracked_ip_address = $user->last_login_ip ?: $user->registration_ip;
+                $user->tracked_user_agent = $user->last_login_user_agent ?: $user->registration_user_agent;
+                $user->device_label = $this->extractDeviceLabel($user->tracked_user_agent);
+                $user->same_ip_users_count = 0;
+
+                if ($user->tracked_ip_address) {
+                    $user->same_ip_users_count = User::query()
+                        ->where('id', '!=', $user->id)
+                        ->where(function ($query) use ($user) {
+                            $query->where('last_login_ip', $user->tracked_ip_address)
+                                ->orWhere('registration_ip', $user->tracked_ip_address);
+                        })
+                        ->count();
+                }
+
+                return $user;
+            });
+
         return view('admin.users.index', compact('users'));
+    }
+
+    private function extractDeviceLabel(?string $userAgent): string
+    {
+        if (!$userAgent) {
+            return 'Unknown';
+        }
+
+        $platform = match (true) {
+            Str::contains($userAgent, 'Windows') => 'Windows',
+            Str::contains($userAgent, ['iPhone', 'iPad']) => 'iOS',
+            Str::contains($userAgent, 'Android') => 'Android',
+            Str::contains($userAgent, 'Mac OS X') => 'macOS',
+            Str::contains($userAgent, 'Linux') => 'Linux',
+            default => 'Unknown OS',
+        };
+
+        $browser = match (true) {
+            Str::contains($userAgent, 'Edg/') => 'Edge',
+            Str::contains($userAgent, 'OPR/') => 'Opera',
+            Str::contains($userAgent, 'Firefox/') => 'Firefox',
+            Str::contains($userAgent, 'Chrome/') && !Str::contains($userAgent, 'Edg/') => 'Chrome',
+            Str::contains($userAgent, 'Safari/') && !Str::contains($userAgent, 'Chrome/') => 'Safari',
+            default => 'Browser',
+        };
+
+        return $platform . ' / ' . $browser;
     }
     
     public function create()

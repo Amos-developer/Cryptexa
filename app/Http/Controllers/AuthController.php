@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Mail\VerificationCodeMail;
 use Carbon\Carbon;
 
@@ -56,10 +57,14 @@ class AuthController extends Controller
             'referral_code' => $myReferralCode,
             'referred_by' => $referrer?->id,
             'language' => $request->cookie('locale', 'en'),
+            'registration_ip' => $request->ip(),
+            'registration_user_agent' => $request->userAgent(),
 
             // Register bonus
             'balance' => 3.00,
         ]);
+
+        $this->logUserAccess($user->id, 'register', $request);
 
         // 6️⃣ Send OTP email
         Mail::to($user->email)->send(
@@ -101,6 +106,7 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
+        $this->recordSuccessfulAccess($user, $request, 'email_verify_login');
 
         return redirect()->route('home')->with('success', 'Email verified successfully');
     }
@@ -157,6 +163,7 @@ class AuthController extends Controller
 
             // Check if user has 2FA enabled
             if ($user->two_factor_enabled) {
+                $this->recordSuccessfulAccess($user, $request, 'password_login');
                 // Store user ID in session for 2FA verification
                 Auth::logout();
                 $request->session()->put('2fa_pending_user_id', $user->id);
@@ -166,9 +173,11 @@ class AuthController extends Controller
 
             // 🔥 ROLE-BASED REDIRECT
             if ($user->role === 'admin') {
+                $this->recordSuccessfulAccess($user, $request, 'login');
                 return redirect('/admin/dashboard');
             }
 
+            $this->recordSuccessfulAccess($user, $request, 'login');
             return redirect('/'); // normal user
         }
 
@@ -254,5 +263,27 @@ class AuthController extends Controller
             }
             throw $e;
         }
+    }
+
+    private function recordSuccessfulAccess(User $user, Request $request, string $event): void
+    {
+        $user->forceFill([
+            'last_login_ip' => $request->ip(),
+            'last_login_user_agent' => $request->userAgent(),
+            'last_login_at' => now(),
+        ])->save();
+
+        $this->logUserAccess($user->id, $event, $request);
+    }
+
+    private function logUserAccess(int $userId, string $event, Request $request): void
+    {
+        DB::table('user_access_logs')->insert([
+            'user_id' => $userId,
+            'event' => $event,
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'created_at' => now(),
+        ]);
     }
 }

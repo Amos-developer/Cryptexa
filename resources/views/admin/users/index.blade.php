@@ -40,6 +40,9 @@
 .role-badge{display:inline-block;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600}
 .role-admin{background:#fee2e2;color:#991b1b}
 .role-user{background:#dbeafe;color:#1e40af}
+.meta-stack{display:flex;flex-direction:column;gap:4px}
+.meta-main{font-weight:600;color:var(--text-primary)}
+.meta-sub{font-size:12px;color:var(--text-secondary);word-break:break-word}
 .action-btn{width:36px;height:36px;border-radius:8px;border:none;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;justify-content:center;margin:0 4px}
 .action-btn.view{background:#dbeafe;color:#1e40af}
 .action-btn.view:hover{background:#bfdbfe}
@@ -169,6 +172,8 @@
             <th>User</th>
             <th>Account ID</th>
             <th>Email</th>
+            <th>IP Address</th>
+            <th>Device</th>
             <th>Balance</th>
             <th>Role</th>
             <th>Referrals</th>
@@ -186,6 +191,18 @@
             </td>
             <td data-label="Account ID"><code style="background:var(--hover-bg);padding:4px 8px;border-radius:6px;font-size:12px">{{ $user->account_id }}</code></td>
             <td data-label="Email" style="color:var(--text-secondary)">{{ $user->email }}</td>
+            <td data-label="IP Address">
+              <div class="meta-stack">
+                <span class="meta-main">{{ $user->tracked_ip_address ?: 'N/A' }}</span>
+                <span class="meta-sub">{{ $user->same_ip_users_count > 0 ? 'Shared with ' . $user->same_ip_users_count . ' other account(s)' : 'Unique so far' }}</span>
+              </div>
+            </td>
+            <td data-label="Device">
+              <div class="meta-stack">
+                <span class="meta-main">{{ $user->device_label }}</span>
+                <span class="meta-sub">{{ \Illuminate\Support\Str::limit($user->tracked_user_agent ?: 'No tracking data yet', 55) }}</span>
+              </div>
+            </td>
             <td data-label="Balance" style="font-weight:700;color:#059669">${{ number_format($user->balance ?? 0, 2) }}</td>
             <td data-label="Role">
               @if($user->role == 'admin')
@@ -208,7 +225,7 @@
           </tr>
           @empty
           <tr>
-            <td colspan="8" class="empty-state">
+            <td colspan="11" class="empty-state">
               <div class="empty-icon">👥</div>
               <div style="font-size:18px;font-weight:600;margin-bottom:8px">No Users Found</div>
               <div style="font-size:14px">Try adjusting your filters</div>

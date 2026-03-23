@@ -46,6 +46,11 @@ class User extends Authenticatable
         'legendary_leader_bonus_paid',
         'grand_leader_bonus_paid',
         'notification_preferences',
+        'registration_ip',
+        'registration_user_agent',
+        'last_login_ip',
+        'last_login_user_agent',
+        'last_login_at',
     ];
 
     /**
@@ -68,6 +73,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'two_factor_confirmed_at' => 'datetime',
+            'last_login_at' => 'datetime',
             'password' => 'hashed',
             'notification_preferences' => 'array',
         ];
