@@ -1,954 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover">
-
-    <!-- Fonts -->
     <link rel="stylesheet" href="{{ asset('fonts/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('fonts/font-icons.css') }}">
-
-    <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('images/logo/48.png') }}" />
-    <link rel="apple-touch-icon-precomposed" href="{{ asset('images/logo/48.png') }}" />
-
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="shortcut icon" href="{{ asset('images/logo/48.png') }}">
+    <link rel="apple-touch-icon-precomposed" href="{{ asset('images/logo/48.png') }}">
     <title>Register | CRYPTEXA</title>
-
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0d1726 100%);
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Animated background elements */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background:
-                radial-gradient(circle at 20% 50%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(34, 211, 238, 0.05) 0%, transparent 50%);
-            animation: moveGradient 15s ease infinite;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        @keyframes moveGradient {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-
-            50% {
-                transform: translate(50px, 50px);
-            }
-        }
-
-        /* Animated floating circles */
-        body::after {
-            content: '';
-            position: fixed;
-            bottom: -100px;
-            left: -100px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-30px);
-            }
-        }
-
-        .register-container {
-            position: relative;
-            z-index: 2;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 24px 16px;
-        }
-
-        .register-wrapper {
-            width: 100%;
-            max-width: 440px;
-            animation: slideUp 0.8s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Logo */
-        .logo-section {
-            text-align: center;
-            margin-bottom: 32px;
-            animation: fadeInDown 0.6s ease-out;
-        }
-
-        .logo-icon {
-            width: 56px;
-            height: 56px;
-            margin: 0 auto 12px;
-            background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 100%);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            box-shadow: 0 8px 24px rgba(56, 189, 248, 0.3);
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .logo-section h1 {
-            color: #fff;
-            font-size: 26px;
-            font-weight: 700;
-            margin: 0 0 6px 0;
-            background: linear-gradient(135deg, #38bdf8, #22d3ee);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
-        }
-
-        .logo-section p {
-            color: rgba(226, 232, 240, 0.65);
-            font-size: 14px;
-            margin: 0;
-            font-weight: 400;
-        }
-
-        /* Card */
-        .register-card {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.85) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            border-radius: 20px;
-            padding: 28px 24px;
-            box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.4),
-                inset 0 1px 1px rgba(255, 255, 255, 0.08);
-            animation: fadeIn 0.8s ease-out 0.2s both;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Alert Messages */
-        .alert {
-            border-radius: 14px;
-            border: none;
-            padding: 14px 16px;
-            font-size: 14px;
-            margin-bottom: 20px;
-            animation: slideDown 0.4s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .alert-success {
-            background: rgba(34, 197, 94, 0.15);
-            color: #86efac;
-            border: 1px solid rgba(34, 197, 94, 0.3);
-        }
-
-        .alert-danger {
-            background: rgba(239, 68, 68, 0.15);
-            color: #fca5a5;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        /* Form Group */
-        .form-group {
-            margin-bottom: 20px;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        .form-label {
-            display: block;
-            color: rgb(226, 232, 240);
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            transition: color 0.3s ease;
-            letter-spacing: 0.2px;
-        }
-
-        .form-label .required {
-            color: #fca5a5;
-        }
-
-        /* Input Fields */
-        .form-input {
-            width: 100%;
-            padding: 13px 16px;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1.5px solid rgba(56, 189, 248, 0.25);
-            border-radius: 14px;
-            color: rgb(226, 232, 240);
-            font-size: 15px;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .form-input::placeholder {
-            color: rgba(226, 232, 240, 0.5);
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: rgba(56, 189, 248, 0.6);
-            background: rgba(15, 23, 42, 0.8);
-            box-shadow:
-                0 0 0 4px rgba(56, 189, 248, 0.12),
-                0 8px 20px rgba(56, 189, 248, 0.15);
-        }
-
-        .input-group {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: rgba(56, 189, 248, 0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: none;
-            border: none;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            font-size: 16px;
-        }
-
-        .form-input:focus~.input-icon {
-            color: #38bdf8;
-        }
-
-        /* Error Messages */
-        .input-error {
-            display: block;
-            color: #fca5a5;
-            font-size: 12px;
-            margin-top: 5px;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        .form-input.is-invalid {
-            border-color: rgba(239, 68, 68, 0.5);
-        }
-
-        /* Checkbox */
-        .form-checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin: 24px 0;
-            padding: 16px 14px;
-            background: rgba(56, 189, 248, 0.06);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 14px;
-            animation: fadeIn 0.8s ease-out 0.3s both;
-        }
-
-        .form-checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            min-width: 18px;
-            cursor: pointer;
-            accent-color: #38bdf8;
-            margin-top: 2px;
-        }
-
-        .form-checkbox-group label {
-            color: rgb(226, 232, 240);
-            font-size: 13px;
-            cursor: pointer;
-            flex: 1;
-            margin: 0;
-        }
-
-        .form-checkbox-group label .terms-link {
-            color: #38bdf8;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .form-checkbox-group label .terms-link:hover {
-            color: #22d3ee;
-            text-decoration: underline;
-        }
-
-        /* Register Button */
-        .btn-register {
-            width: 100%;
-            padding: 15px 24px;
-            background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 100%);
-            color: #020617;
-            border: none;
-            border-radius: 14px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 24px rgba(56, 189, 248, 0.35);
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 0.8s ease-out 0.4s both;
-            letter-spacing: 0.3px;
-        }
-
-        .btn-register::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn-register:hover::before {
-            left: 100%;
-        }
-
-        .btn-register:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(56, 189, 248, 0.4);
-        }
-
-        .btn-register:active {
-            transform: translateY(0);
-        }
-
-        .btn-register:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        /* Login link */
-        .login-link {
-            text-align: center;
-            margin-top: 28px;
-            color: rgba(226, 232, 240, 0.65);
-            font-size: 14px;
-            animation: fadeIn 0.8s ease-out 0.5s both;
-        }
-
-        .login-link a {
-            color: #38bdf8;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .login-link a:hover {
-            color: #22d3ee;
-            text-decoration: underline;
-        }
-
-        /* Referral code applied */
-        .referral-success {
-            font-size: 12px;
-            color: #86efac;
-            margin-top: 6px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        /* Mobile responsiveness */
-        @media (max-width: 480px) {
-            .register-container {
-                padding: 20px 16px;
-            }
-
-            .register-card {
-                padding: 24px 20px;
-                border-radius: 18px;
-            }
-
-            .logo-section {
-                margin-bottom: 28px;
-            }
-
-            .logo-section h1 {
-                font-size: 24px;
-            }
-
-            .logo-section p {
-                font-size: 13px;
-            }
-
-            .form-input {
-                padding: 12px 14px;
-                font-size: 16px;
-                border-radius: 12px;
-            }
-
-            .form-group {
-                margin-bottom: 18px;
-            }
-
-            .form-label {
-                font-size: 13px;
-            }
-
-            .btn-register {
-                padding: 14px 20px;
-                font-size: 15px;
-                border-radius: 12px;
-            }
-
-            .form-checkbox-group {
-                padding: 14px 12px;
-                border-radius: 12px;
-            }
-
-            .captcha-display {
-                font-size: 22px;
-                letter-spacing: 5px;
-                padding: 12px 14px;
-            }
-
-            .captcha-refresh {
-                width: 44px;
-                min-width: 44px;
-            }
-
-            .captcha-refresh img {
-                width: 18px;
-                height: 18px;
-            }
-
-            .register-wrapper {
-                max-width: 100%;
-            }
-        }
-
-        @media (min-width: 481px) and (max-width: 768px) {
-            .register-wrapper {
-                max-width: 420px;
-            }
-
-            .register-card {
-                padding: 32px 28px;
-            }
-        }
-
-        /* Captcha */
-        .captcha-wrapper {
-            display: flex;
-            gap: 10px;
-            align-items: stretch;
-            margin-bottom: 10px;
-        }
-
-        .captcha-display {
-            flex: 1;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(34, 211, 238, 0.12));
-            border: 1.5px solid rgba(56, 189, 248, 0.25);
-            border-radius: 12px;
-            padding: 14px 16px;
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 8px;
-            color: #38bdf8;
-            user-select: none;
-            font-family: 'Courier New', monospace;
-            text-align: center;
-            text-shadow: 0 2px 10px rgba(56, 189, 248, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .captcha-refresh {
-            width: 48px;
-            min-width: 48px;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(34, 211, 238, 0.1));
-            border: 1.5px solid rgba(56, 189, 248, 0.3);
-            border-radius: 12px;
-            color: #38bdf8;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-        }
-
-        .captcha-refresh:hover {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(34, 211, 238, 0.2));
-            border-color: rgba(56, 189, 248, 0.5);
-            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
-        }
-
-        .captcha-refresh:active {
-            transform: scale(0.95);
-        }
-
-        .captcha-refresh img {
-            width: 20px;
-            height: 20px;
-            transition: transform 0.5s ease;
-        }
-
-        .captcha-refresh:hover img {
-            transform: rotate(180deg);
-        }
-
-        /* Validation errors container */
-        .validation-errors {
-            background: rgba(239, 68, 68, 0.12);
-            border: 1px solid rgba(239, 68, 68, 0.35);
-            border-radius: 14px;
-            padding: 14px 16px;
-            margin-bottom: 20px;
-            animation: slideDown 0.4s ease-out;
-        }
-
-        .validation-errors p {
-            margin: 4px 0;
-            color: #fca5a5;
-            font-size: 13px;
-        }
-
-        .validation-errors p:first-child {
-            margin-top: 0;
-        }
-
-        .validation-errors p:last-child {
-            margin-bottom: 0;
-        }
+        :root{--bg:#07111f;--bg2:#0c1b2c;--panel:rgba(8,19,35,.9);--line:rgba(106,227,255,.18);--line2:rgba(106,227,255,.38);--text:#e8f0ff;--muted:rgba(232,240,255,.66);--accent:#6ae3ff;--accent2:#1bb8f2;--success:#2dd4bf;--danger:#fb7185}
+        *{box-sizing:border-box} html,body{min-height:100%}
+        body{margin:0;font-family:"Sora","Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at top left,rgba(27,184,242,.18),transparent 30%),radial-gradient(circle at bottom right,rgba(45,212,191,.12),transparent 24%),linear-gradient(180deg,#06101d 0%,#07111f 48%,#0a1422 100%);background-repeat:no-repeat;background-size:cover;background-attachment:fixed;overflow-x:hidden}
+        .page{min-height:100vh;padding:1rem;position:relative;display:flex;align-items:center}.nav-btn,.lang-btn{position:fixed;top:1rem;z-index:5;width:3rem;height:3rem;border:1px solid var(--line2);border-radius:1rem;background:linear-gradient(180deg,rgba(10,24,42,.96),rgba(7,18,34,.92));color:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 16px 34px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.06);transition:border-color .2s ease,transform .2s ease,background .2s ease}
+        .nav-btn{left:1rem}
+        .lang-btn{right:1rem}
+        .nav-btn:hover,.lang-btn:hover{transform:translateY(-1px);border-color:rgba(106,227,255,.58);background:linear-gradient(180deg,rgba(11,27,48,.98),rgba(8,20,37,.96))}
+        .nav-btn span{display:block;color:var(--accent);font-size:2rem;line-height:.8;font-weight:700;transform:translateX(-1px)}
+        .lang-btn img{width:1.15rem;height:1.15rem;display:block;opacity:.92;filter:brightness(0) saturate(100%) invert(83%) sepia(31%) saturate(864%) hue-rotate(159deg) brightness(103%) contrast(103%)}
+        .layout{max-width:640px;margin:0 auto;display:grid;gap:1rem;padding-top:4.25rem}.card{border:1px solid var(--line);border-radius:1.5rem;background:linear-gradient(180deg,rgba(10,20,36,.94),var(--panel));box-shadow:0 24px 70px rgba(0,0,0,.42);position:relative;overflow:hidden}
+        .card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(106,227,255,.08),transparent 28%,transparent 70%,rgba(45,212,191,.05));pointer-events:none}.card{padding:1.25rem}
+        .top,.brand,.eyebrow,.field-label,.security-head,.check{display:flex}.top,.field-label,.security-head{justify-content:space-between}.top,.brand,.eyebrow,.check{align-items:center}
+        .brand{gap:.85rem}.mark{width:2.9rem;height:2.9rem;border-radius:1rem;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(106,227,255,.22),rgba(27,184,242,.3));border:1px solid rgba(106,227,255,.32)}
+        .brand h1{margin:0;font-size:1rem;font-weight:700;letter-spacing:.16em}.brand p,.sub,.signal small,.mini span,.field-label small,.hint,.login,.checklist li,.alert,.errs p{color:var(--muted)} .brand p{margin:.18rem 0 0;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase}
+        .badge,.eyebrow{padding:.45rem .7rem;border-radius:999px;font-size:.72rem}.badge{border:1px solid rgba(45,212,191,.28);background:rgba(45,212,191,.08);color:#96f7df}.eyebrow{gap:.45rem;background:rgba(106,227,255,.08);border:1px solid rgba(106,227,255,.18);color:#b7f4ff;text-transform:uppercase;letter-spacing:.08em;display:inline-flex;margin-bottom:.8rem}
+        .hero-title{margin:.25rem 0;font-size:clamp(1.7rem,7vw,2.2rem);line-height:1.02;letter-spacing:-.05em}.sub{margin:0;line-height:1.5;font-size:.92rem}
+        .top-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;margin:.9rem 0 1rem}.strip-item{padding:.7rem;border-radius:1rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.04)}
+        .strip-item span{display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.2rem}.strip-item strong{font-size:.85rem}
+        .alert,.errs{position:relative;z-index:1;border-radius:1rem;padding:.9rem 1rem;margin-bottom:1rem;border:1px solid transparent;font-size:.88rem}.alert-success{background:rgba(45,212,191,.1);color:#99f6e4;border-color:rgba(45,212,191,.25)}.errs{background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.24)}.errs p{margin:.22rem 0;color:#fecdd3}
+        form{display:grid;gap:.95rem;position:relative;z-index:1}.field{display:grid;gap:.45rem}.field-label{gap:.75rem;font-size:.82rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:rgba(232,240,255,.88)}.required{color:var(--danger)}
+        .input-wrap{position:relative}.input-wrap.has-btn input{padding-right:3.4rem}
+        input{width:100%;min-height:3.5rem;padding:.95rem 1rem;border-radius:1rem;border:1px solid rgba(106,227,255,.18);background:rgba(6,16,30,.86);color:var(--text);font-size:1rem}.is-invalid{border-color:rgba(251,113,133,.52)} input::placeholder{color:rgba(232,240,255,.34)} input:focus{outline:none;border-color:rgba(106,227,255,.56);background:rgba(8,21,39,.95);box-shadow:0 0 0 4px rgba(106,227,255,.08)}
+        .toggle{position:absolute;top:50%;right:.7rem;transform:translateY(-50%);width:2.35rem;height:2.35rem;border:0;border-radius:.85rem;background:transparent;color:rgba(232,240,255,.6);display:flex;align-items:center;justify-content:center;transition:color .2s ease,background .2s ease}
+        .toggle:hover,.toggle.is-active{color:var(--accent);background:rgba(106,227,255,.08)}
+        .input-error,.ref-ok,.hint{font-size:.8rem}.input-error{color:#fecdd3}.ref-ok{color:#9ef7e1}
+        .check{gap:.7rem;padding:.9rem 1rem;border-radius:1rem;border:1px solid rgba(106,227,255,.14);background:rgba(106,227,255,.05);align-items:flex-start}.check input[type=checkbox]{width:1.05rem;height:1.05rem;min-height:auto;margin-top:.1rem;accent-color:var(--accent2)}.check label{margin:0;color:rgba(232,240,255,.9);font-size:.82rem;line-height:1.5}
+        a{color:var(--accent);text-decoration:none}.submit{width:100%;min-height:3.6rem;border:0;border-radius:1.05rem;background:linear-gradient(135deg,#74ebff 0%,#1bb8f2 52%,#16a5d7 100%);color:#03101d;font-size:.96rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 18px 40px rgba(27,184,242,.28)}
+        .login{text-align:center;font-size:.9rem}
+        @media (min-width:768px){.page{padding:1.5rem}.layout{max-width:720px;padding-top:4.75rem}.card{padding:1.5rem}}
     </style>
 </head>
-
 <body>
-    <!-- Language Selector Button -->
-    <button onclick="toggleLanguageSelector()" style="position: fixed; top: 20px; right: 20px; z-index: 1000; width: 44px; height: 44px; padding: 0; background: linear-gradient(135deg, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0.08) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(56,189,248,0.3); border-radius: 12px; color: #38bdf8; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3);" onmouseover="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.25) 0%, rgba(56,189,248,0.15) 100%)'; this.style.borderColor='rgba(56,189,248,0.5)'; this.style.transform='scale(1.05)';" onmouseout="this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0.08) 100%)'; this.style.borderColor='rgba(56,189,248,0.3)'; this.style.transform='scale(1)';">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <line x1="2" y1="12" x2="22" y2="12"/>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-        </svg>
+    @php $refCode = request('ref') ?? old('ref'); @endphp
+    <button type="button" class="nav-btn" onclick="goBack()" aria-label="Go back" title="Go back">
+        <span aria-hidden="true">&#8249;</span>
     </button>
-    
-    <div class="register-container">
-        <div class="register-wrapper">
-            <!-- Logo Section -->
-            <div class="logo-section">
-                <!-- <div class="logo-icon">💎</div> -->
-                <h1>CRYPTEXA</h1>
-                <p>Join thousands of crypto traders</p>
-            </div>
-
-            <!-- Register Card -->
-            <div class="register-card">
-                <!-- Success Alert -->
+    <button type="button" class="lang-btn" onclick="toggleLanguageSelector()" aria-label="Select language">
+        <img src="{{ asset('images/icons/globe.svg') }}" alt="" aria-hidden="true">
+    </button>
+    <main class="page">
+        <section class="layout">
+            <section class="card">
+                <div class="top">
+                    <div class="brand">
+                        <div class="mark">
+                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14l4-4 3 3 7-7"></path><path d="M17 6h2v2"></path><path d="M4 19h16"></path></svg>
+                        </div>
+                        <div><h1>CRYPTEXA</h1><p>Pro Trader Access</p></div>
+                    </div>
+                    <div class="badge">Secure signup</div>
+                </div>
+                <div class="head">
+                    <div class="eyebrow">Register</div>
+                    <h2 class="hero-title">Create account</h2>
+                    <p class="sub">Pro trading access.</p>
+                </div>
+                <div class="top-strip">
+                    <div class="strip-item"><span>Step</span><strong>1</strong></div>
+                    <div class="strip-item"><span>Next</span><strong>Fund</strong></div>
+                    <div class="strip-item"><span>Mode</span><strong>Secure</strong></div>
+                </div>
                 @if(session('success'))
-                <div class="alert alert-success">
-                    ✓ {{ session('success') }}
-                </div>
+                    <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
-
-                <!-- Validation Errors -->
                 @if($errors->any())
-                <div class="validation-errors">
-                    @foreach($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                    @endforeach
-                </div>
+                    <div class="errs">@foreach($errors->all() as $error)<p>{{ $error }}</p>@endforeach</div>
                 @endif
-
                 <form method="POST" action="{{ route('register.post') }}" id="registerForm">
                     @csrf
-                    <!-- Username Field -->
-                    <div class="form-group">
-                        <label class="form-label">{{ __t('username') }}<span class="required">*</span></label>
-                        <input
-                            type="text"
-                            name="username"
-                            value="{{ old('username') }}"
-                            class="form-input{{ $errors->has('username') ? ' is-invalid' : '' }}"
-                            placeholder="Choose a unique username"
-                            required>
-                        @if($errors->has('username'))
-                        <span class="input-error">{{ $errors->first('username') }}</span>
-                        @endif
+                    <div class="field">
+                        <label class="field-label" for="username"><span>{{ __t('username') }} <span class="required">*</span></span></label>
+                        <div class="input-wrap"><input id="username" type="text" name="username" value="{{ old('username') }}" class="{{ $errors->has('username') ? 'is-invalid' : '' }}" placeholder="Choose a unique username" autocomplete="username" required></div>
+                        @if($errors->has('username'))<span class="input-error">{{ $errors->first('username') }}</span>@endif
                     </div>
-
-                    <!-- Email Field -->
-                    <div class="form-group">
-                        <label class="form-label">{{ __t('email') }}<span class="required">*</span></label>
-                        <input
-                            type="email"
-                            name="email"
-                            value="{{ old('email') }}"
-                            class="form-input{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                            placeholder="Enter your email address"
-                            required>
-                        @if($errors->has('email'))
-                        <span class="input-error">{{ $errors->first('email') }}</span>
-                        @endif
+                    <div class="field">
+                        <label class="field-label" for="email"><span>{{ __t('email') }} <span class="required">*</span></span></label>
+                        <div class="input-wrap"><input id="email" type="email" name="email" value="{{ old('email') }}" class="{{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Enter your email address" autocomplete="email" required></div>
+                        @if($errors->has('email'))<span class="input-error">{{ $errors->first('email') }}</span>@endif
                     </div>
-
-                    <!-- Referral Code Field -->
-                    @php
-                    $refCode = request('ref') ?? old('ref');
-                    @endphp
-                    <div class="form-group">
-                        <label class="form-label">{{ __t('referral_code') }}<span class="required">*</span></label>
-                        <input
-                            type="text"
-                            name="ref"
-                            value="{{ $refCode }}"
-                            class="form-input{{ $errors->has('ref') ? ' is-invalid' : '' }}"
-                            placeholder="Enter 8-digit code"
-                            inputmode="numeric"
-                            pattern="[0-9]*"
-                            maxlength="8"
-                            required
-                            {{ request('ref') ? 'readonly' : '' }}>
-                        @if(request('ref'))
-                        <div class="referral-success">✓ Referral code applied</div>
-                        @endif
-                        @if($errors->has('ref'))
-                        <span class="input-error">{{ $errors->first('ref') }}</span>
-                        @endif
+                    <div class="field">
+                        <label class="field-label" for="ref"><span>{{ __t('referral_code') }} <span class="required">*</span></span></label>
+                        <div class="input-wrap"><input id="ref" type="text" name="ref" value="{{ $refCode }}" class="{{ $errors->has('ref') ? 'is-invalid' : '' }}" placeholder="Enter 8-digit code" inputmode="numeric" pattern="[0-9]*" maxlength="8" required {{ request('ref') ? 'readonly' : '' }}></div>
+                        @if(request('ref'))<span class="ref-ok">Referral code applied to this signup.</span>@endif
+                        @if($errors->has('ref'))<span class="input-error">{{ $errors->first('ref') }}</span>@endif
                     </div>
-
-                    <!-- Password Field -->
-                    <div class="form-group">
-                        <label class="form-label">{{ __t('password') }}<span class="required">*</span></label>
-                        <div class="input-group">
-                            <input
-                                type="password"
-                                name="password"
-                                class="form-input{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                placeholder="6-20 characters"
-                                required
-                                id="passwordInput"
-                                autocomplete="new-password">
-                            <button type="button" class="input-icon" id="togglePassword1" title="Show/Hide password">
-                                <span>👁️</span>
-                            </button>
+                    <div class="field">
+                        <label class="field-label" for="passwordInput"><span>{{ __t('password') }} <span class="required">*</span></span></label>
+                        <div class="input-wrap has-btn">
+                            <input id="passwordInput" type="password" name="password" class="{{ $errors->has('password') ? 'is-invalid' : '' }}" placeholder="6-20 characters" autocomplete="new-password" required>
+                            <button type="button" class="toggle" id="togglePassword1" aria-label="Show password" title="Show password"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
                         </div>
-                        @if($errors->has('password'))
-                        <span class="input-error">{{ $errors->first('password') }}</span>
-                        @endif
+                        @if($errors->has('password'))<span class="input-error">{{ $errors->first('password') }}</span>@endif
                     </div>
-
-                    <!-- Confirm Password Field -->
-                    <div class="form-group">
-                        <label class="form-label">{{ __t('confirm_password') }}<span class="required">*</span></label>
-                        <div class="input-group">
-                            <input
-                                type="password"
-                                name="password_confirmation"
-                                class="form-input{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
-                                placeholder="Confirm your password"
-                                required
-                                id="confirmPasswordInput"
-                                autocomplete="new-password">
-                            <button type="button" class="input-icon" id="togglePassword2" title="Show/Hide password">
-                                <span>👁️</span>
-                            </button>
+                    <div class="field">
+                        <label class="field-label" for="confirmPasswordInput"><span>{{ __t('confirm_password') }} <span class="required">*</span></span></label>
+                        <div class="input-wrap has-btn">
+                            <input id="confirmPasswordInput" type="password" name="password_confirmation" class="{{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}" placeholder="Confirm your password" autocomplete="new-password" required>
+                            <button type="button" class="toggle" id="togglePassword2" aria-label="Show password" title="Show password"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
                         </div>
-                        @if($errors->has('password_confirmation'))
-                        <span class="input-error">{{ $errors->first('password_confirmation') }}</span>
-                        @endif
+                        @if($errors->has('password_confirmation'))<span class="input-error">{{ $errors->first('password_confirmation') }}</span>@endif
                     </div>
-
-                    <!-- Terms & Conditions -->
-                    <div class="form-checkbox-group">
+                    <div class="check">
                         <input type="checkbox" id="termsCheckbox" name="terms" required>
-                        <label for="termsCheckbox">
-                            I agree to the <a href="/terms" class="terms-link" target="_blank">Terms & Conditions</a>
-                        </label>
+                        <label for="termsCheckbox">I agree to the <a href="/terms" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a>.</label>
                     </div>
-
-                    <!-- Register Button -->
-                    <button type="submit" class="btn-register" id="registerBtn">
-                        {{ __t('create_account') }}
-                    </button>
-
-                    <!-- Login Link -->
-                    <div class="login-link">
-                        {{ __t('already_have_account') }}
-                        <a href="{{ route('login') }}">{{ __t('sign_in') }}</a>
-                    </div>
+                    <button type="submit" class="submit" id="registerBtn">{{ __t('create_account') }}</button>
+                    <div class="login">{{ __t('already_have_account') }} <a href="{{ route('login') }}">{{ __t('sign_in') }}</a></div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- JS -->
+            </section>
+        </section>
+    </main>
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Language Selector Script -->
     <script>
-        function toggleLanguageSelector() {
-            Swal.fire({
-                title: '🌍 Select Language',
-                html: `
-                    <div style="display: grid; gap: 8px; text-align: left; max-height: 400px; overflow-y: auto;">
-                        <button onclick="changeLanguage('en')" style="padding: 12px; background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; color: #e5e7eb; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; font-size: 14px;" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.08))'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05))'">
-                            <span style="font-size: 24px;">🇬🇧</span>
-                            <span style="font-weight: 600;">English</span>
-                        </button>
-                        <button onclick="changeLanguage('es')" style="padding: 12px; background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; color: #e5e7eb; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; font-size: 14px;" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.08))'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05))'">
-                            <span style="font-size: 24px;">🇪🇸</span>
-                            <span style="font-weight: 600;">Español</span>
-                        </button>
-                        <button onclick="changeLanguage('fr')" style="padding: 12px; background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; color: #e5e7eb; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; font-size: 14px;" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.08))'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05))'">
-                            <span style="font-size: 24px;">🇫🇷</span>
-                            <span style="font-weight: 600;">Français</span>
-                        </button>
-                        <button onclick="changeLanguage('de')" style="padding: 12px; background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; color: #e5e7eb; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; font-size: 14px;" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.08))'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05))'">
-                            <span style="font-size: 24px;">🇩🇪</span>
-                            <span style="font-weight: 600;">Deutsch</span>
-                        </button>
-                        <button onclick="changeLanguage('zh')" style="padding: 12px; background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; color: #e5e7eb; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; font-size: 14px;" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.08))'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05))'">
-                            <span style="font-size: 24px;">🇨🇳</span>
-                            <span style="font-weight: 600;">中文</span>
-                        </button>
-                        <button onclick="changeLanguage('ja')" style="padding: 12px; background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; color: #e5e7eb; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; font-size: 14px;" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.08))'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05))'">
-                            <span style="font-size: 24px;">🇯🇵</span>
-                            <span style="font-weight: 600;">日本語</span>
-                        </button>
-                        <button onclick="changeLanguage('ko')" style="padding: 12px; background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; color: #e5e7eb; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; font-size: 14px;" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.08))'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05))'">
-                            <span style="font-size: 24px;">🇰🇷</span>
-                            <span style="font-weight: 600;">한국어</span>
-                        </button>
-                        <button onclick="changeLanguage('pt')" style="padding: 12px; background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05)); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; color: #e5e7eb; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 10px; font-size: 14px;" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15), rgba(56,189,248,0.08))'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.1), rgba(56,189,248,0.05))'">
-                            <span style="font-size: 24px;">🇧🇷</span>
-                            <span style="font-weight: 600;">Português</span>
-                        </button>
-                    </div>
-                `,
-                background: 'linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.95) 100%)',
-                color: '#e5e7eb',
-                showConfirmButton: false,
-                showCloseButton: true,
-                width: '400px',
-                padding: '20px',
-                backdrop: 'rgba(0,0,0,0.8)'
-            });
-        }
-
-        function changeLanguage(lang) {
-            fetch('/language/change', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ language: lang })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Language Changed!',
-                        text: 'Language preference saved',
-                        background: 'linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.95) 100%)',
-                        color: '#e5e7eb',
-                        timer: 1500,
-                        showConfirmButton: false
-                    }).then(() => {
-                        window.location.reload();
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Failed to change language',
-                    background: 'linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.95) 100%)',
-                    color: '#e5e7eb'
-                });
-            });
-        }
+        function goBack(){if(window.history.length>1){window.history.back()}else{window.location.href='{{ url('/') }}'}}
+        function toggleLanguageSelector(){Swal.fire({title:'Select Language',html:`<div style="display:grid;gap:8px;text-align:left;max-height:400px;overflow-y:auto;"><button onclick="changeLanguage('en')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">English</button><button onclick="changeLanguage('es')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Espanol</button><button onclick="changeLanguage('fr')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Francais</button><button onclick="changeLanguage('de')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Deutsch</button><button onclick="changeLanguage('zh')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Chinese</button><button onclick="changeLanguage('ja')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Japanese</button><button onclick="changeLanguage('ko')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Korean</button><button onclick="changeLanguage('pt')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Portugues</button></div>`,background:'linear-gradient(180deg, rgba(8,21,39,.98), rgba(8,18,33,.98))',color:'#e5e7eb',showConfirmButton:false,showCloseButton:true,width:'400px',padding:'20px',backdrop:'rgba(0,0,0,.8)'})}
+        function changeLanguage(lang){fetch('/language/change',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-TOKEN':'{{ csrf_token() }}'},body:JSON.stringify({language:lang})}).then(r=>r.json()).then(d=>{if(d.success){Swal.fire({icon:'success',title:'Language Changed',text:'Language preference saved',background:'linear-gradient(180deg, rgba(8,21,39,.98), rgba(8,18,33,.98))',color:'#e5e7eb',timer:1500,showConfirmButton:false}).then(()=>window.location.reload())}}).catch(()=>Swal.fire({icon:'error',title:'Error',text:'Failed to change language',background:'linear-gradient(180deg, rgba(8,21,39,.98), rgba(8,18,33,.98))',color:'#e5e7eb'}))}
+        const p1=document.getElementById('togglePassword1'),p2=document.getElementById('togglePassword2'),password=document.getElementById('passwordInput'),confirmPassword=document.getElementById('confirmPasswordInput'),form=document.getElementById('registerForm'),btn=document.getElementById('registerBtn'),ref=document.getElementById('ref');
+        const eyeIcon='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+        const eyeOffIcon='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"></path><path d="M10.6 10.7a3 3 0 0 0 4.2 4.2"></path><path d="M9.4 5.2A10.4 10.4 0 0 1 12 5c6.5 0 10 7 10 7a18.8 18.8 0 0 1-3.1 4.1"></path><path d="M6.6 6.7C4.1 8.4 2.5 12 2.5 12s3.5 7 9.5 7a10.6 10.6 0 0 0 4-.7"></path></svg>';
+        function toggle(btn,input){if(!btn||!input)return;btn.addEventListener('click',e=>{e.preventDefault();const hidden=input.type==='password';input.type=hidden?'text':'password';btn.classList.toggle('is-active',hidden);btn.setAttribute('aria-label',hidden?'Hide password':'Show password');btn.setAttribute('title',hidden?'Hide password':'Show password');btn.innerHTML=hidden?eyeOffIcon:eyeIcon})}
+        toggle(p1,password);toggle(p2,confirmPassword);
+        if(confirmPassword&&password){confirmPassword.addEventListener('input',()=>{const mismatch=confirmPassword.value&&confirmPassword.value!==password.value;confirmPassword.style.borderColor=mismatch?'rgba(251,113,133,.52)':''})}
+        if(ref&&!ref.readOnly){ref.addEventListener('input',()=>{ref.value=ref.value.replace(/[^0-9]/g,'').slice(0,8)})}
+        if(form){form.addEventListener('submit',()=>{if(btn){btn.disabled=true;btn.textContent='Creating Account...'}})}
     </script>
-
-    <!-- Register Page Scripts -->
-    <script>
-        // Password visibility toggles
-        const togglePassword1 = document.getElementById('togglePassword1');
-        const togglePassword2 = document.getElementById('togglePassword2');
-        const passwordInput = document.getElementById('passwordInput');
-        const confirmPasswordInput = document.getElementById('confirmPasswordInput');
-
-        function setupPasswordToggle(button, input) {
-            if (button && input) {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-                    input.setAttribute('type', type);
-                    this.querySelector('span').textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
-                });
-            }
-        }
-
-        setupPasswordToggle(togglePassword1, passwordInput);
-        setupPasswordToggle(togglePassword2, confirmPasswordInput);
-
-        // Form submission feedback
-        const registerForm = document.getElementById('registerForm');
-        const registerBtn = document.getElementById('registerBtn');
-
-        if (registerForm) {
-            registerForm.addEventListener('submit', function() {
-                if (registerBtn) {
-                    registerBtn.disabled = true;
-                    registerBtn.innerHTML = 'Creating Account...';
-                }
-            });
-        }
-
-        // Add focus animations to inputs
-        const inputs = document.querySelectorAll('.form-input');
-        inputs.forEach(input => {
-            input.addEventListener('focus', function() {
-                this.style.transform = 'scale(1.01)';
-            });
-            input.addEventListener('blur', function() {
-                this.style.transform = 'scale(1)';
-            });
-        });
-
-        // Real-time password confirmation validation
-        if (confirmPasswordInput && passwordInput) {
-            confirmPasswordInput.addEventListener('input', function() {
-                if (this.value && this.value !== passwordInput.value) {
-                    this.style.borderColor = 'rgba(239, 68, 68, 0.5)';
-                } else {
-                    this.style.borderColor = 'rgba(56, 189, 248, 0.2)';
-                }
-            });
-        }
-
-        // Prevent password autocomplete issues
-        window.addEventListener('load', function() {
-            if (passwordInput) {
-                passwordInput.setAttribute('autocomplete', 'new-password');
-            }
-            if (confirmPasswordInput) {
-                confirmPasswordInput.setAttribute('autocomplete', 'new-password');
-            }
-        });
-
-        // Referral code auto-formatting (uppercase, only numbers)
-        const refInput = document.querySelector('input[name="ref"]');
-        if (refInput && !refInput.readOnly) {
-            refInput.addEventListener('input', function() {
-                this.value = this.value.toUpperCase().replace(/[^0-9]/g, '').slice(0, 8);
-            });
-        }
-
-        // Captcha generation
-        function generateCaptcha() {}
-
-        // Generate captcha on page load
-        window.addEventListener('load', generateCaptcha);
-    </script>
-
 </body>
-
 </html>
