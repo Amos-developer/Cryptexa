@@ -206,7 +206,16 @@
                 @if($user->same_ip_users_count > 0)
                   <span class="risk-badge warn">Shared IP Risk</span>
                 @endif
-                <span class="meta-sub">{{ $user->same_ip_users_count > 0 ? 'Shared with ' . $user->same_ip_users_count . ' other account(s)' : 'Unique so far' }}</span>
+                @if($user->same_ip_users_count > 0)
+                  <span class="meta-sub">
+                    Shared with {{ $user->same_ip_users_count }} other account(s)
+                    @if($user->shared_ip_usernames)
+                      : {{ $user->shared_ip_usernames }}{{ $user->same_ip_users_count > 3 ? ' +' . ($user->same_ip_users_count - 3) . ' more' : '' }}
+                    @endif
+                  </span>
+                @else
+                  <span class="meta-sub">Unique so far</span>
+                @endif
               </div>
             </td>
             <td data-label="Device">

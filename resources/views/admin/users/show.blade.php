@@ -32,6 +32,17 @@
 .balance-input:focus{outline:0;border-color:#667eea;box-shadow:0 0 0 3px rgba(102,126,234,.1)}
 .btn-update{padding:12px 24px;background:#22c55e;color:#fff;border:none;border-radius:10px;font-weight:600;cursor:pointer;transition:all .3s}
 .btn-update:hover{background:#16a34a;transform:translateY(-2px)}
+.risk-card{background:var(--bg-card);border-radius:16px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,.08);margin-bottom:24px}
+.risk-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.risk-kicker{display:inline-flex;align-items:center;padding:7px 12px;border-radius:999px;background:#fef3c7;color:#92400e;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.risk-copy{font-size:14px;color:var(--text-secondary);line-height:1.7}
+.risk-list{display:grid;gap:12px}
+.risk-item{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:16px;border-radius:12px;border:2px solid var(--border-color);background:var(--hover-bg)}
+.risk-item-main{min-width:0}
+.risk-item-name{font-size:16px;font-weight:700;color:var(--text-primary)}
+.risk-item-meta{margin-top:6px;font-size:13px;color:var(--text-secondary);line-height:1.6;word-break:break-word}
+.risk-link{display:inline-flex;align-items:center;justify-content:center;padding:11px 14px;border-radius:12px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;text-decoration:none;font-weight:600;font-size:14px;white-space:nowrap}
+.risk-empty{padding:16px;border-radius:12px;border:2px dashed var(--border-color);background:var(--hover-bg);color:var(--text-secondary);font-size:14px}
 .activity-card{background:var(--bg-card);border-radius:16px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
 .timeline{position:relative;padding-left:40px}
 .timeline-item{position:relative;padding-bottom:32px}
@@ -50,6 +61,8 @@
 .balance-form{flex-direction:column}
 .balance-input-group{width:100%}
 .btn-update{width:100%}
+.risk-item{flex-direction:column}
+.risk-link{width:100%}
 }
 </style>
 
@@ -92,6 +105,14 @@
             <div class="info-label">📅 Joined</div>
             <div class="info-value" style="font-size:14px">{{ $user->created_at->format('M d, Y') }}</div>
           </div>
+          <div class="info-item">
+            <div class="info-label">IP Address</div>
+            <div class="info-value" style="font-size:14px">{{ $user->tracked_ip_address ?: 'N/A' }}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Device</div>
+            <div class="info-value" style="font-size:14px">{{ $user->device_label }}</div>
+          </div>
         </div>
 
         <a href="{{ route('admin.users.edit', $user) }}" class="btn-edit">✏️ Edit User</a>
@@ -114,6 +135,45 @@
     </div>
 
     <div class="col-lg-8 col-md-7">
+      <div class="risk-card">
+        <div class="risk-head">
+          <div>
+            <span class="risk-kicker">Shared IP Review</span>
+            <h3 class="card-title" style="margin:12px 0 8px">Linked Accounts On Same IP</h3>
+            <div class="risk-copy">
+              @if($user->tracked_ip_address)
+                Tracked IP: <strong>{{ $user->tracked_ip_address }}</strong>
+              @else
+                No tracked IP has been recorded for this user yet.
+              @endif
+            </div>
+          </div>
+          @if($user->tracked_ip_address)
+            <a href="{{ route('admin.users.duplicate-ips', ['search' => $user->tracked_ip_address]) }}" class="risk-link">Open Duplicate IP Cluster</a>
+          @endif
+        </div>
+
+        @if($sharedIpUsers->isEmpty())
+          <div class="risk-empty">No other non-admin account currently shares this tracked IP.</div>
+        @else
+          <div class="risk-list">
+            @foreach($sharedIpUsers as $sharedUser)
+              <div class="risk-item">
+                <div class="risk-item-main">
+                  <div class="risk-item-name">{{ $user->username ?: $user->name }} shares with {{ $sharedUser->username ?: $sharedUser->name }}</div>
+                  <div class="risk-item-meta">
+                    {{ $sharedUser->email }}<br>
+                    Account ID: {{ $sharedUser->account_id }}<br>
+                    Joined: {{ $sharedUser->created_at->format('M d, Y H:i') }}
+                  </div>
+                </div>
+                <a href="{{ route('admin.users.show', $sharedUser->id) }}" class="risk-link">View User</a>
+              </div>
+            @endforeach
+          </div>
+        @endif
+      </div>
+
       <div class="activity-card">
         <h3 class="card-title">📈 Account Activity</h3>
         <div class="timeline">

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 
 class UserController extends Controller
 {
@@ -65,17 +66,13 @@ class UserController extends Controller
                 $user->tracked_ip_address = $user->last_login_ip ?: $user->registration_ip;
                 $user->tracked_user_agent = $user->last_login_user_agent ?: $user->registration_user_agent;
                 $user->device_label = $this->extractDeviceLabel($user->tracked_user_agent);
-                $user->same_ip_users_count = 0;
-
-                if ($user->tracked_ip_address) {
-                    $user->same_ip_users_count = User::query()
-                        ->where('id', '!=', $user->id)
-                        ->where(function ($query) use ($user) {
-                            $query->where('last_login_ip', $user->tracked_ip_address)
-                                ->orWhere('registration_ip', $user->tracked_ip_address);
-                        })
-                        ->count();
-                }
+                $user->shared_ip_users = $this->getSharedIpUsers($user);
+                $user->same_ip_users_count = $user->shared_ip_users->count();
+                $user->shared_ip_usernames = $user->shared_ip_users
+                    ->pluck('username')
+                    ->filter()
+                    ->take(3)
+                    ->implode(', ');
 
                 return $user;
             });
@@ -176,7 +173,31 @@ class UserController extends Controller
     
     public function show(User $user)
     {
-        return view('admin.users.show', compact('user'));
+        $user->tracked_ip_address = $user->last_login_ip ?: $user->registration_ip;
+        $user->tracked_user_agent = $user->last_login_user_agent ?: $user->registration_user_agent;
+        $user->device_label = $this->extractDeviceLabel($user->tracked_user_agent);
+        $sharedIpUsers = $this->getSharedIpUsers($user);
+
+        return view('admin.users.show', compact('user', 'sharedIpUsers'));
+    }
+
+    private function getSharedIpUsers(User $user): Collection
+    {
+        $trackedIpAddress = $user->last_login_ip ?: $user->registration_ip;
+
+        if (!$trackedIpAddress) {
+            return collect();
+        }
+
+        return User::query()
+            ->where('id', '!=', $user->id)
+            ->where('role', '!=', 'admin')
+            ->where(function ($query) use ($trackedIpAddress) {
+                $query->where('last_login_ip', $trackedIpAddress)
+                    ->orWhere('registration_ip', $trackedIpAddress);
+            })
+            ->orderBy('username')
+            ->get(['id', 'username', 'email', 'account_id', 'created_at']);
     }
     
     public function edit(User $user)
