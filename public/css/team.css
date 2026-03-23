@@ -1,558 +1,721 @@
+* {
+    box-sizing: border-box;
+}
 
-    * {
-        box-sizing: border-box;
-    }
+.team-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-top: 4px;
+}
 
-    .team-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 56px;
-        background: linear-gradient(135deg, #020617, #0f172a);
-        border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-        backdrop-filter: blur(10px);
-        z-index: 100;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 16px;
-    }
+.team-back {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(10, 24, 42, 0.96), rgba(7, 18, 34, 0.92));
+    border: 1px solid rgba(106, 227, 255, 0.18);
+    color: #6ae3ff;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.25);
+    text-decoration: none;
+}
 
-    .back-btn {
-        width: 36px;
-        height: 36px;
-        background: rgba(56, 189, 248, 0.1);
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #38bdf8;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
+.team-back span {
+    font-size: 1.75rem;
+    line-height: 0.8;
+    transform: translateX(-1px);
+}
 
-    .back-btn:hover {
-        background: rgba(56, 189, 248, 0.15);
-        border-color: rgba(56, 189, 248, 0.4);
-    }
+.team-topbar h1 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #e8f0ff;
+}
 
-    .header-title {
-        color: #e5e7eb;
-        font-weight: 700;
-        font-size: 14px;
-        margin: 0;
-    }
+.placeholder {
+    width: 44px;
+    height: 44px;
+}
 
-    .placeholder {
-        width: 36px;
-    }
+.team-container {
+    min-height: 100vh;
+    padding: 18px 14px calc(env(safe-area-inset-bottom, 0px) + 122px);
+    background:
+        radial-gradient(circle at top center, rgba(56, 189, 248, 0.08), transparent 24%),
+        linear-gradient(180deg, #020617 0%, #0b1220 48%, #0f172a 100%);
+}
 
+.team-hero,
+.referral-code-card,
+.commission-section,
+.level-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px;
+    border: 1px solid rgba(106, 227, 255, 0.14);
+    background: linear-gradient(180deg, rgba(11, 20, 37, 0.96), rgba(9, 18, 33, 0.92));
+    box-shadow:
+        0 20px 48px rgba(0, 0, 0, 0.26),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.team-hero,
+.referral-code-card,
+.commission-section {
+    margin-bottom: 18px;
+}
+
+.team-panels {
+    display: grid;
+    gap: 18px;
+}
+
+.team-hero {
+    padding: 22px 16px 18px;
+    background:
+        radial-gradient(circle at top right, rgba(56, 189, 248, 0.18), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.14), transparent 28%),
+        linear-gradient(180deg, rgba(11, 20, 37, 0.98), rgba(9, 18, 33, 0.94));
+}
+
+.team-hero::after {
+    content: "";
+    position: absolute;
+    inset: auto -12% -44% 40%;
+    height: 140px;
+    background: radial-gradient(circle, rgba(34, 197, 94, 0.12), transparent 62%);
+    pointer-events: none;
+}
+
+.team-hero__heading,
+.team-hero__grid {
+    position: relative;
+    z-index: 1;
+}
+
+.team-hero__heading {
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.team-hero__eyebrow {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    border: 1px solid rgba(106, 227, 255, 0.16);
+    border-radius: 999px;
+    background: rgba(106, 227, 255, 0.08);
+    color: #b7f4ff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.team-hero__title {
+    margin: 0 0 6px;
+    color: #eaf2ff;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+
+.team-hero__subtitle {
+    margin: 0;
+    color: rgba(226, 232, 240, 0.68);
+    font-size: 13px;
+}
+
+.team-stat-card {
+    height: 100%;
+    padding: 16px 12px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    text-align: center;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.team-stat-card__icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 12px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+}
+
+.team-stat-card__label {
+    margin: 0 0 6px;
+    color: rgba(226, 232, 240, 0.64);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.team-stat-card__value {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+}
+
+.team-stat-card--cyan {
+    background: linear-gradient(180deg, rgba(56, 189, 248, 0.14), rgba(56, 189, 248, 0.05));
+    border-color: rgba(56, 189, 248, 0.24);
+}
+
+.team-stat-card--cyan .team-stat-card__icon {
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+}
+
+.team-stat-card--cyan .team-stat-card__value {
+    color: #7dd3fc;
+}
+
+.team-stat-card--green {
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.14), rgba(34, 197, 94, 0.05));
+    border-color: rgba(34, 197, 94, 0.24);
+}
+
+.team-stat-card--green .team-stat-card__icon {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.team-stat-card--green .team-stat-card__value {
+    color: #86efac;
+}
+
+.team-stat-card--violet {
+    background: linear-gradient(180deg, rgba(168, 85, 247, 0.14), rgba(168, 85, 247, 0.05));
+    border-color: rgba(168, 85, 247, 0.24);
+}
+
+.team-stat-card--violet .team-stat-card__icon {
+    background: linear-gradient(135deg, #a855f7, #9333ea);
+}
+
+.team-stat-card--violet .team-stat-card__value {
+    color: #d8b4fe;
+    font-size: 20px;
+}
+
+.team-stat-card--amber {
+    background: linear-gradient(180deg, rgba(251, 191, 36, 0.14), rgba(251, 191, 36, 0.05));
+    border-color: rgba(251, 191, 36, 0.24);
+}
+
+.team-stat-card--amber .team-stat-card__icon {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+}
+
+.team-stat-card--amber .team-stat-card__value {
+    color: #fde68a;
+    font-size: 20px;
+}
+
+.referral-code-card,
+.commission-section {
+    padding: 20px 16px;
+}
+
+.panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.panel-head--levels {
+    margin-bottom: 14px;
+}
+
+.panel-kicker {
+    display: inline-block;
+    margin-bottom: 6px;
+    color: rgba(106, 227, 255, 0.72);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.panel-title {
+    margin: 0;
+    color: #f8fbff;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.card-header,
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-label {
+    color: #6ae3ff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.copy-group {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.code-input {
+    flex: 1;
+    min-width: 0;
+    padding: 13px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(56, 189, 248, 0.16);
+    background: rgba(15, 23, 42, 0.72);
+    color: #eaf2ff;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: "Courier New", monospace;
+}
+
+.copy-btn {
+    width: 50px;
+    min-width: 50px;
+    border-radius: 14px;
+    border: 1px solid rgba(56, 189, 248, 0.18);
+    background: linear-gradient(180deg, rgba(56, 189, 248, 0.14), rgba(56, 189, 248, 0.05));
+    color: #7dd3fc;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copy-btn:active {
+    transform: scale(0.96);
+}
+
+.copy-btn-green {
+    border-color: rgba(34, 197, 94, 0.18);
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.14), rgba(34, 197, 94, 0.05));
+    color: #86efac;
+}
+
+.card-divider {
+    height: 1px;
+    margin: 16px 0;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.share-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.share-btn {
+    min-height: 50px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+}
+
+.share-whatsapp:hover {
+    background: rgba(37, 211, 102, 0.14);
+    border-color: rgba(37, 211, 102, 0.32);
+}
+
+.share-telegram:hover {
+    background: rgba(0, 136, 204, 0.14);
+    border-color: rgba(0, 136, 204, 0.32);
+}
+
+.share-twitter:hover {
+    background: rgba(29, 161, 242, 0.14);
+    border-color: rgba(29, 161, 242, 0.32);
+}
+
+.section-header {
+    margin-bottom: 18px;
+}
+
+.section-header h3,
+.section-title {
+    margin: 0 0 6px;
+    color: #f8fbff;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.section-header p {
+    margin: 0;
+    color: rgba(226, 232, 240, 0.62);
+    font-size: 12px;
+}
+
+.commission-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.commission-item {
+    padding: 16px 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.commission-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.045);
+}
+
+.commission-item.level-1 {
+    border-top: 3px solid #38bdf8;
+}
+
+.commission-item.level-2 {
+    border-top: 3px solid #06b6d4;
+}
+
+.commission-item.level-3 {
+    border-top: 3px solid #22c55e;
+}
+
+.level-badge {
+    margin-bottom: 8px;
+    color: rgba(226, 232, 240, 0.62);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.commission-rate {
+    margin-bottom: 4px;
+    color: #f8fbff;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+}
+
+.commission-desc {
+    color: rgba(148, 163, 184, 0.8);
+    font-size: 11px;
+}
+
+.commission-note {
+    padding: 14px;
+    border: 1px solid rgba(168, 85, 247, 0.14);
+    border-radius: 14px;
+    background: rgba(168, 85, 247, 0.06);
+    color: rgba(226, 232, 240, 0.82);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.commission-note__icon {
+    display: inline;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.levels-section {
+    margin-bottom: 16px;
+}
+
+.level-card {
+    margin-bottom: 16px;
+}
+
+.level-card.level-1 {
+    border-left: 3px solid #38bdf8;
+}
+
+.level-card.level-2 {
+    border-left: 3px solid #06b6d4;
+}
+
+.level-card.level-3 {
+    border-left: 3px solid #22c55e;
+}
+
+.level-header {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.level-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.level-name {
+    margin: 0 0 6px;
+    color: #f8fbff;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.commission-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 0 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(226, 232, 240, 0.72);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.level-stats {
+    display: flex;
+    gap: 8px;
+}
+
+.stat-mini {
+    min-width: 66px;
+    padding: 10px 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.025);
+    text-align: center;
+}
+
+.stat-mini .label {
+    display: block;
+    color: rgba(148, 163, 184, 0.76);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.stat-mini .value {
+    display: block;
+    margin-top: 4px;
+    color: #7dd3fc;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.stat-mini .value.active {
+    color: #86efac;
+}
+
+.empty-state {
+    padding: 26px 16px;
+    text-align: center;
+    color: rgba(148, 163, 184, 0.82);
+    font-size: 13px;
+}
+
+.members-list {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 420px;
+    overflow-y: auto;
+}
+
+.member-item {
+    padding: 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.member-item.active {
+    border-color: rgba(34, 197, 94, 0.2);
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.08), rgba(34, 197, 94, 0.03));
+}
+
+.member-item.inactive {
+    border-color: rgba(239, 68, 68, 0.16);
+    background: linear-gradient(180deg, rgba(239, 68, 68, 0.06), rgba(239, 68, 68, 0.025));
+}
+
+.member-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.member-code {
+    margin-bottom: 4px;
+    color: #f8fbff;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: "Courier New", monospace;
+}
+
+.member-joined {
+    color: rgba(148, 163, 184, 0.82);
+    font-size: 11px;
+}
+
+.member-balance {
+    text-align: right;
+}
+
+.balance-value {
+    margin-bottom: 5px;
+    color: #86efac;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.balance-status .badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 20px;
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.badge.active {
+    background: rgba(34, 197, 94, 0.14);
+    color: #86efac;
+}
+
+.badge.inactive {
+    background: rgba(239, 68, 68, 0.14);
+    color: #fca5a5;
+}
+
+@media (max-width: 640px) {
     .team-container {
-        background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
-        min-height: 100vh;
-        padding: 80px 16px 80px;
+        padding: 18px 12px calc(env(safe-area-inset-bottom, 0px) + 116px);
     }
 
-    .page-header {
-        margin-bottom: 28px;
-    }
-
-    .page-header h1 {
-        color: #e5e7eb;
-        font-size: 28px;
-        font-weight: 800;
-        margin: 0 0 8px;
-    }
-
-    .page-header p {
-        color: #94a3b8;
-        font-size: 13px;
-        margin: 0;
-    }
-
-    /* Referral Code Card */
-    .referral-code-card {
-        background: linear-gradient(135deg, rgba(56, 189, 248, 0.05) 0%, rgba(56, 189, 248, 0.02) 100%);
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        border-radius: 16px;
-        padding: 20px;
-        margin-bottom: 24px;
-        backdrop-filter: blur(12px);
-    }
-
-    .card-header,
-    .card-content {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .card-label {
-        color: #38bdf8;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .copy-group {
-        display: flex;
-        gap: 8px;
-        align-items: stretch;
-    }
-
-    .code-input {
-        flex: 1;
-        padding: 12px;
-        border-radius: 10px;
-        border: 1px solid rgba(56, 189, 248, 0.2);
-        background: rgba(15, 23, 42, 0.8);
-        color: #e5e7eb;
-        font-weight: 600;
-        font-size: 12px;
-        font-family: 'Courier New', monospace;
-    }
-
-    .copy-btn {
-        padding: 12px 16px;
-        border-radius: 10px;
-        border: none;
-        background: rgba(56, 189, 248, 0.15);
-        color: #38bdf8;
-        font-size: 16px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .copy-btn:active {
-        transform: scale(0.95);
-    }
-
-    .copy-btn-green {
-        background: rgba(34, 197, 94, 0.15);
-        color: #22c55e;
-    }
-
-    .card-divider {
-        height: 1px;
-        background: rgba(56, 189, 248, 0.1);
-        margin: 16px 0;
-    }
-
-    .share-buttons {
-        display: flex;
-        gap: 12px;
-        margin-top: 16px;
-    }
-
-    .share-btn {
-        flex: 1;
-        padding: 12px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(255, 255, 255, 0.05);
-        color: #fff;
-        font-size: 20px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .share-whatsapp:hover {
-        background: rgba(37, 211, 102, 0.2);
-        border-color: #25d366;
-    }
-
-    .share-telegram:hover {
-        background: rgba(0, 136, 204, 0.2);
-        border-color: #0088cc;
-    }
-
-    .share-twitter:hover {
-        background: rgba(29, 161, 242, 0.2);
-        border-color: #1da1f2;
-    }
-
-    /* Commission Section */
+    .team-hero,
+    .referral-code-card,
     .commission-section {
-        background: linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(168, 85, 247, 0.02) 100%);
-        border: 1px solid rgba(168, 85, 247, 0.2);
-        border-radius: 16px;
-        padding: 20px;
-        margin-bottom: 24px;
+        padding-left: 14px;
+        padding-right: 14px;
     }
 
-    .section-header {
-        margin-bottom: 20px;
+    .team-hero__title {
+        font-size: 20px;
     }
 
-    .section-header h3 {
-        color: #a855f7;
-        font-size: 16px;
-        font-weight: 700;
-        margin: 0 0 4px;
+    .team-stat-card {
+        padding: 14px 10px;
     }
 
-    .section-header p {
-        color: #94a3b8;
-        font-size: 12px;
-        margin: 0;
+    .team-stat-card__value {
+        font-size: 22px;
+    }
+
+    .team-stat-card--violet .team-stat-card__value,
+    .team-stat-card--amber .team-stat-card__value {
+        font-size: 18px;
     }
 
     .commission-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 12px;
-        margin-bottom: 16px;
+        grid-template-columns: 1fr;
     }
 
-    .commission-item {
-        padding: 16px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        text-align: center;
-        background: rgba(255, 255, 255, 0.03);
-        transition: all 0.3s ease;
-    }
-
-    .commission-item:hover {
-        border-color: rgba(255, 255, 255, 0.2);
-        background: rgba(255, 255, 255, 0.05);
-    }
-
-    .commission-item.level-1 {
-        border-left: 3px solid #38bdf8;
-    }
-
-    .commission-item.level-2 {
-        border-left: 3px solid #06b6d4;
-    }
-
-    .commission-item.level-3 {
-        border-left: 3px solid #22c55e;
-    }
-
-    .commission-item.level-4 {
-        border-left: 3px solid #fbbf24;
-    }
-
-    .commission-item.level-5 {
-        border-left: 3px solid #f97316;
-    }
-
-    .commission-item.level-6 {
-        border-left: 3px solid #ef4444;
-    }
-
-    .level-badge {
-        color: #94a3b8;
-        font-size: 11px;
-        font-weight: 600;
-        margin-bottom: 8px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .commission-rate {
-        color: #e5e7eb;
-        font-size: 24px;
-        font-weight: 800;
-        margin-bottom: 4px;
-    }
-
-    .commission-desc {
-        color: #64748b;
-        font-size: 11px;
-    }
-
-    .commission-note {
-        padding: 12px;
-        background: rgba(255, 255, 255, 0.03);
-        border-left: 2px solid #a855f7;
-        border-radius: 6px;
-        color: #94a3b8;
-        font-size: 12px;
-        line-height: 1.5;
-    }
-
-    /* Stats Section */
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 12px;
-        margin-bottom: 28px;
-    }
-
-    .stat-card {
-        padding: 16px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(255, 255, 255, 0.03);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .stat-icon {
-        font-size: 24px;
-        margin-bottom: 8px;
-    }
-
-    .stat-label {
-        color: #94a3b8;
-        font-size: 11px;
-        margin: 0;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .stat-value {
-        color: #e5e7eb;
-        font-size: 20px;
-        font-weight: 700;
-        margin: 4px 0 0;
-    }
-
-    .stat-total .stat-value {
-        color: #38bdf8;
-    }
-
-    .stat-active .stat-value {
-        color: #22c55e;
-    }
-
-    .stat-earnings .stat-value {
-        color: #fbbf24;
-    }
-
-    /* Levels Section */
-    .levels-section {
-        margin-bottom: 20px;
-    }
-
+    .panel-title,
     .section-title {
-        color: #e5e7eb;
-        font-size: 18px;
-        font-weight: 700;
-        margin: 0 0 16px;
-    }
-
-    .level-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        overflow: hidden;
-        margin-bottom: 16px;
-        transition: all 0.3s ease;
-    }
-
-    .level-card:hover {
-        border-color: rgba(255, 255, 255, 0.2);
-        background: rgba(255, 255, 255, 0.05);
+        font-size: 16px;
     }
 
     .level-header {
-        padding: 16px;
-        background: rgba(255, 255, 255, 0.05);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .level-info {
-        flex: 1;
-    }
-
-    .level-name {
-        color: #e5e7eb;
-        font-size: 14px;
-        font-weight: 700;
-        margin: 0 0 4px;
-    }
-
-    .commission-badge {
-        color: #94a3b8;
-        font-size: 11px;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 4px 8px;
-        border-radius: 4px;
-        display: inline-block;
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .level-stats {
-        display: flex;
-        gap: 12px;
+        width: 100%;
     }
 
     .stat-mini {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .stat-mini .label {
-        color: #94a3b8;
-        font-size: 10px;
-        text-transform: uppercase;
-    }
-
-    .stat-mini .value {
-        color: #38bdf8;
-        font-size: 16px;
-        font-weight: 700;
-    }
-
-    .stat-mini .value.active {
-        color: #22c55e;
-    }
-
-    .empty-state {
-        padding: 24px 16px;
-        text-align: center;
-        color: #94a3b8;
-        font-size: 13px;
-    }
-
-    .members-list {
-        padding: 12px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        max-height: 400px;
-        overflow-y: auto;
-    }
-
-    .member-item {
-        padding: 12px;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 8px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 12px;
-        transition: all 0.3s ease;
-    }
-
-    .member-item.active {
-        border-color: rgba(34, 197, 94, 0.2);
-        background: rgba(34, 197, 94, 0.05);
-    }
-
-    .member-item.inactive {
-        border-color: rgba(239, 68, 68, 0.2);
-        background: rgba(239, 68, 68, 0.03);
-    }
-
-    .member-info {
         flex: 1;
     }
 
-    .member-code {
-        color: #e5e7eb;
-        font-size: 12px;
-        font-weight: 600;
-        margin-bottom: 4px;
-        font-family: 'Courier New', monospace;
-    }
-
-    .member-joined {
-        color: #94a3b8;
-        font-size: 10px;
+    .member-item {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
     .member-balance {
-        text-align: right;
+        width: 100%;
+        text-align: left;
+    }
+}
+
+@media (min-width: 768px) {
+    .team-container {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 18px 18px 120px;
     }
 
-    .balance-value {
-        color: #22c55e;
-        font-size: 13px;
-        font-weight: 700;
-        margin-bottom: 4px;
+    .team-hero {
+        padding: 24px;
     }
 
-    .balance-status .badge {
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 9px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+    .team-panels {
+        grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+        align-items: start;
     }
 
-    .badge.active {
-        background: rgba(34, 197, 94, 0.2);
-        color: #22c55e;
+    .team-hero__title {
+        font-size: 24px;
     }
 
-    .badge.inactive {
-        background: rgba(239, 68, 68, 0.2);
-        color: #ef4444;
+    .commission-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-
-    /* Color variants for level cards */
-    .level-card.level-1 {
-        border-left: 3px solid #38bdf8;
-    }
-
-    .level-card.level-2 {
-        border-left: 3px solid #06b6d4;
-    }
-
-    .level-card.level-3 {
-        border-left: 3px solid #22c55e;
-    }
-
-    .level-card.level-4 {
-        border-left: 3px solid #fbbf24;
-    }
-
-    .level-card.level-5 {
-        border-left: 3px solid #f97316;
-    }
-
-    .level-card.level-6 {
-        border-left: 3px solid #ef4444;
-    }
-
-    /* Mobile */
-    @media (max-width: 640px) {
-        .team-container {
-            padding: 70px 12px 80px;
-        }
-
-        .page-header h1 {
-            font-size: 24px;
-        }
-
-        .commission-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .level-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .level-stats {
-            width: 100%;
-            justify-content: flex-start;
-        }
-    }
-
+}

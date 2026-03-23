@@ -7,135 +7,44 @@
 
 <link rel="stylesheet" href="{{ asset('css/settings.css') }}">
 
-<!-- HEADER BAR -->
-<div class="settings-header">
-    <a href="{{ url()->previous() }}" class="back-btn">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-        </svg>
-    </a>
-    <h6 class="header-title">{{ __t('settings') }}</h6>
-    <span class="placeholder"></span>
-</div>
-
-<!-- MAIN CONTENT -->
 <div class="settings-container">
+    <div class="settings-topbar">
+        <a href="{{ url()->previous() }}" class="settings-back">
+            <span aria-hidden="true">‹</span>
+        </a>
+        <h1>{{ __t('settings') }}</h1>
+        <span class="placeholder"></span>
+    </div>
 
-    <!-- USER PORTFOLIO CARD -->
-    <div style="
-        position: relative;
-        background: linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.95) 100%);
-        border: 1px solid rgba(56,189,248,0.3);
-        border-radius: 20px;
-        padding: 24px;
-        margin-bottom: 24px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(56,189,248,0.1) inset;
-        overflow: hidden;
-    ">
-        <!-- Animated Background Gradient -->
-        <div style="
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(56,189,248,0.15) 0%, transparent 70%);
-            pointer-events: none;
-        "></div>
-        
-        <div style="position: relative; z-index: 1;">
-            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
-                <div style="
-                    width: 64px;
-                    height: 64px;
-                    border-radius: 50%;
-                    background: linear-gradient(135deg, #38bdf8 0%, #a855f7 100%);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 28px;
-                    font-weight: 900;
-                    color: white;
-                    flex-shrink: 0;
-                    box-shadow: 0 8px 24px rgba(56,189,248,0.4), 0 0 0 3px rgba(56,189,248,0.2);
-                    position: relative;
-                ">
-                    {{ strtoupper(substr(auth()->user()->username, 0, 1)) }}
-                    <div style="
-                        position: absolute;
-                        inset: -2px;
-                        border-radius: 50%;
-                        background: linear-gradient(135deg, #38bdf8, #a855f7);
-                        opacity: 0.3;
-                        filter: blur(8px);
-                        z-index: -1;
-                    "></div>
+    <section class="settings-hero">
+        <div class="settings-hero__glow"></div>
+        <div class="settings-hero__content">
+            <div class="settings-hero__identity">
+                <div class="settings-avatar">
+                    <span>{{ strtoupper(substr(auth()->user()->username, 0, 1)) }}</span>
                 </div>
-                <div style="flex: 1; min-width: 0;">
-                    <h3 style="color: #f8fafc; font-size: 20px; font-weight: 800; margin: 0 0 6px 0; letter-spacing: -0.5px;">{{ auth()->user()->username }}</h3>
-                    <p style="color: #94a3b8; font-size: 14px; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ auth()->user()->email }}</p>
+                <div class="settings-user">
+                    <span class="settings-user__eyebrow">Account Desk</span>
+                    <h2 class="settings-user__name">{{ auth()->user()->username }}</h2>
+                    <p class="settings-user__email">{{ auth()->user()->email }}</p>
                 </div>
             </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div style="
-                    background: linear-gradient(135deg, rgba(56,189,248,0.1) 0%, rgba(56,189,248,0.05) 100%);
-                    border: 1px solid rgba(56,189,248,0.3);
-                    border-radius: 14px;
-                    padding: 14px;
-                    backdrop-filter: blur(10px);
-                    position: relative;
-                    overflow: hidden;
-                ">
-                    <div style="
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        height: 2px;
-                        background: linear-gradient(90deg, transparent, #38bdf8, transparent);
-                    "></div>
-                    <p style="color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px 0; font-weight: 600;">Account</p>
-                    <p style="color: #38bdf8; font-size: 15px; font-weight: 800; margin: 0; font-family: monospace; letter-spacing: 0.5px;">{{ auth()->user()->account_id }}</p>
+
+            <div class="settings-hero__stats">
+                <div class="hero-stat hero-stat--cyan">
+                    <span class="hero-stat__label">Account</span>
+                    <strong class="hero-stat__value hero-stat__value--mono">{{ auth()->user()->account_id }}</strong>
                 </div>
-                <div style="
-                    background: linear-gradient(135deg, {{ auth()->user()->email_verified_at ? 'rgba(34,197,94,0.1)' : 'rgba(251,191,36,0.1)' }} 0%, {{ auth()->user()->email_verified_at ? 'rgba(34,197,94,0.05)' : 'rgba(251,191,36,0.05)' }} 100%);
-                    border: 1px solid {{ auth()->user()->email_verified_at ? 'rgba(34,197,94,0.4)' : 'rgba(251,191,36,0.4)' }};
-                    border-radius: 14px;
-                    padding: 14px;
-                    backdrop-filter: blur(10px);
-                    position: relative;
-                    overflow: hidden;
-                ">
-                    <div style="
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        height: 2px;
-                        background: linear-gradient(90deg, transparent, {{ auth()->user()->email_verified_at ? '#22c55e' : '#fbbf24' }}, transparent);
-                    "></div>
-                    <p style="color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px 0; font-weight: 600;">Status</p>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <div style="
-                            width: 20px;
-                            height: 20px;
-                            border-radius: 50%;
-                            background: {{ auth()->user()->email_verified_at ? '#22c55e' : '#fbbf24' }};
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-size: 12px;
-                            color: white;
-                            font-weight: 700;
-                            box-shadow: 0 0 12px {{ auth()->user()->email_verified_at ? 'rgba(34,197,94,0.5)' : 'rgba(251,191,36,0.5)' }};
-                        ">{{ auth()->user()->email_verified_at ? '✓' : '!' }}</div>
-                        <span style="color: {{ auth()->user()->email_verified_at ? '#22c55e' : '#fbbf24' }}; font-size: 14px; font-weight: 700;">{{ auth()->user()->email_verified_at ? 'Verified' : 'Unverified' }}</span>
+                <div class="hero-stat {{ auth()->user()->email_verified_at ? 'hero-stat--green' : 'hero-stat--amber' }}">
+                    <span class="hero-stat__label">Status</span>
+                    <div class="hero-status">
+                        <span class="hero-status__dot">{{ auth()->user()->email_verified_at ? '✓' : '!' }}</span>
+                        <span class="hero-status__text">{{ auth()->user()->email_verified_at ? 'Verified' : 'Unverified' }}</span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     @php
     $sections = [
@@ -254,13 +163,12 @@
     @endphp
 
     @foreach($sections as $sectionIndex => $section)
-    <!-- SECTION HEADER -->
     <div class="settings-section">
         <div class="section-header">
+            <span class="section-kicker">Control Panel</span>
             <h3 class="section-title">{{ $section['title'] }}</h3>
         </div>
 
-        <!-- SETTINGS CARDS GRID -->
         <div class="settings-grid">
             @foreach($section['items'] as $itemIndex => $item)
             <a href="{{ $item['link'] }}"
@@ -268,7 +176,6 @@
                 data-action="{{ $item['action'] ?? '' }}"
                 style="--card-color: {{ $item['color'] }}">
 
-                <!-- ICON -->
                 <div class="card-icon">
                     @switch($item['icon'])
                     @case('lock')
@@ -356,13 +263,11 @@
                     @endswitch
                 </div>
 
-                <!-- CONTENT -->
                 <div class="card-content">
                     <p class="card-title">{{ $item['title'] }}</p>
                     <p class="card-desc">{{ $item['desc'] }}</p>
                 </div>
 
-                <!-- BADGE & ARROW -->
                 <div class="card-action">
                     @if(isset($item['badge']))
                     <span class="badge">{{ $item['badge'] }}</span>
@@ -377,7 +282,6 @@
     </div>
     @endforeach
 
-    <!-- LOGOUT SECTION -->
     <div class="logout-section">
         <form method="POST" action="{{ route('logout') }}" class="logout-form">
             @csrf
@@ -391,10 +295,8 @@
             </button>
         </form>
     </div>
-
 </div>
 
-<!-- LANGUAGE MODAL -->
 <div id="languageModal" class="modal hidden">
     <div class="modal-content">
         <div class="modal-header">
@@ -437,10 +339,7 @@
     </div>
 </div>
 
-
-<!-- SCRIPTS -->
 <script>
-    // PWA Install functionality
     let deferredPrompt;
     const installAppCard = document.querySelector('[data-action="install-app"]');
 
@@ -455,16 +354,15 @@
     if (installAppCard) {
         installAppCard.addEventListener('click', async (e) => {
             e.preventDefault();
-            
+
             if (!deferredPrompt) {
-                // Show manual instructions
-                alert('To install:\n\niOS: Tap Share button → Add to Home Screen\n\nAndroid: Tap Menu (⋮) → Install App or Add to Home Screen');
+                alert('To install:\n\niOS: Tap Share button -> Add to Home Screen\n\nAndroid: Tap Menu (...) -> Install App or Add to Home Screen');
                 return;
             }
-            
+
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            
+
             if (outcome === 'accepted') {
                 console.log('App installed');
             }
@@ -472,7 +370,6 @@
         });
     }
 
-    // Language modal functionality
     const languageCard = document.querySelector('[data-action="language"]');
     const languageModal = document.getElementById('languageModal');
     const languageBtns = document.querySelectorAll('.language-btn');
