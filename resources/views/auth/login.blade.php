@@ -498,9 +498,9 @@
                     @csrf
 
                     <div class="field">
-                        <label class="field-label" for="username"><span>{{ __t('username') }} <span class="required">*</span></span></label>
+                        <label class="field-label" for="username"><span>Username or Email <span class="required">*</span></span></label>
                         <div class="input-wrap">
-                            <input id="username" type="text" name="username" value="{{ old('username') }}" class="{{ $errors->has('username') ? 'is-invalid' : '' }}" placeholder="Enter your username" autocomplete="username" required>
+                            <input id="username" type="text" name="username" value="{{ old('username') }}" class="{{ $errors->has('username') ? 'is-invalid' : '' }}" placeholder="Enter username or email" autocomplete="username" required>
                         </div>
                         @if($errors->has('username'))<span class="input-error">{{ $errors->first('username') }}</span>@endif
                     </div>

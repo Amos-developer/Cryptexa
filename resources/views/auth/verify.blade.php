@@ -38,7 +38,7 @@
         .input-error{font-size:.8rem}
         .submit,.resend-btn{border:0;border-radius:1.05rem;font-weight:800;letter-spacing:.08em}
         .submit{width:100%;min-height:3.6rem;background:linear-gradient(135deg,#74ebff 0%,#1bb8f2 52%,#16a5d7 100%);color:#03101d;font-size:.96rem;text-transform:uppercase;box-shadow:0 18px 40px rgba(27,184,242,.28)}
-        .resend-panel{position:relative;z-index:1;margin-top:.1rem;padding:1rem;border-radius:1rem;border:1px solid rgba(106,227,255,.14);background:rgba(106,227,255,.05)}
+        .resend-panel{position:relative;z-index:1;margin-top:1rem;padding:1rem;border-radius:1rem;border:1px solid rgba(106,227,255,.14);background:rgba(106,227,255,.05)}
         .resend-note{margin:0;font-size:.82rem}
         .resend-row{gap:1rem;margin-top:.8rem}
         .resend-btn{padding:.85rem 1rem;min-height:2.9rem;background:rgba(255,255,255,.04);color:var(--accent);border:1px solid rgba(106,227,255,.16);font-size:.8rem;text-transform:uppercase}
