@@ -16,7 +16,7 @@
         --warning: #fbbf24;
         min-height: 100vh;
         background: radial-gradient(circle at top left, rgba(27, 184, 242, 0.12), transparent 28%), linear-gradient(180deg, #06101d 0%, #07111f 48%, #0a1422 100%);
-        padding: 86px 14px 100px;
+        padding: 74px 14px 100px;
         color: var(--text);
     }
 
@@ -37,10 +37,10 @@
         justify-content: space-between;
         gap: 12px;
         margin-bottom: 18px;
-        margin-top: 12px;
+        margin-top: 0;
         padding: 10px 12px;
         border: 1px solid rgba(106, 227, 255, 0.14);
-        border-radius: 20px;
+        border-radius: 0 0 20px 20px;
         background: rgba(6, 16, 29, 0.82);
         backdrop-filter: blur(14px);
         box-shadow: 0 16px 34px rgba(0, 0, 0, 0.24);
@@ -384,7 +384,7 @@
 
     @media (min-width: 768px) {
         .track-page {
-            padding: 98px 18px 110px;
+            padding: 82px 18px 110px;
         }
 
         .track-hero,
@@ -394,7 +394,7 @@
 
         .track-topbar {
             width: min(980px, calc(100% - 36px));
-            margin-top: 16px;
+            margin-top: 0;
         }
     }
 </style>

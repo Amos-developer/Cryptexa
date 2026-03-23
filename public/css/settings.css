@@ -8,7 +8,7 @@
 
 .settings-container {
     min-height: 100vh;
-    padding: 86px 14px calc(env(safe-area-inset-bottom, 0px) + 118px);
+    padding: 74px 14px calc(env(safe-area-inset-bottom, 0px) + 118px);
     background:
         radial-gradient(circle at top center, rgba(56, 189, 248, 0.08), transparent 24%),
         linear-gradient(180deg, #020617 0%, #0b1220 48%, #0f172a 100%);
@@ -26,10 +26,10 @@
     justify-content: space-between;
     gap: 12px;
     margin-bottom: 18px;
-    margin-top: 12px;
+    margin-top: 0;
     padding: 10px 12px;
     border: 1px solid rgba(106, 227, 255, 0.14);
-    border-radius: 20px;
+    border-radius: 0 0 20px 20px;
     background: rgba(6, 16, 29, 0.82);
     backdrop-filter: blur(14px);
     box-shadow: 0 16px 34px rgba(0, 0, 0, 0.24);
@@ -470,7 +470,7 @@
 
 @media (max-width: 640px) {
     .settings-container {
-        padding: 86px 12px calc(env(safe-area-inset-bottom, 0px) + 112px);
+        padding: 74px 12px calc(env(safe-area-inset-bottom, 0px) + 112px);
     }
 
     .settings-hero {
@@ -521,12 +521,12 @@
     .settings-container {
         max-width: 1080px;
         margin: 0 auto;
-        padding: 98px 18px 120px;
+        padding: 82px 18px 120px;
     }
 
     .settings-topbar {
         width: min(1080px, calc(100% - 36px));
-        margin-top: 16px;
+        margin-top: 0;
     }
 
     .settings-hero {
