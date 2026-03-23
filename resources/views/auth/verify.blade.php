@@ -1,821 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover">
-
-    <!-- Fonts -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('fonts/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('fonts/font-icons.css') }}">
-
-    <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('images/logo/48.png') }}" />
-    <link rel="apple-touch-icon-precomposed" href="{{ asset('images/logo/48.png') }}" />
-
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="shortcut icon" href="{{ asset('images/logo/48.png') }}">
+    <link rel="apple-touch-icon-precomposed" href="{{ asset('images/logo/48.png') }}">
     <title>Email Verification | CRYPTEXA</title>
-
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0d1726 100%);
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Animated background elements */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background:
-                radial-gradient(circle at 20% 50%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(34, 211, 238, 0.05) 0%, transparent 50%);
-            animation: moveGradient 15s ease infinite;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        @keyframes moveGradient {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-
-            50% {
-                transform: translate(50px, 50px);
-            }
-        }
-
-        /* Animated floating circles */
-        body::after {
-            content: '';
-            position: fixed;
-            bottom: -100px;
-            right: -100px;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0px);
-            }
-
-            50% {
-                transform: translateY(-30px);
-            }
-        }
-
-        .verify-container {
-            position: relative;
-            z-index: 2;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .verify-wrapper {
-            width: 100%;
-            max-width: 420px;
-            animation: slideUp 0.8s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Logo */
-        .logo-section {
-            text-align: center;
-            margin-bottom: 40px;
-            animation: fadeInDown 0.6s ease-out;
-        }
-
-        .logo-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 15px;
-            background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 100%);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .logo-section h1 {
-            color: #fff;
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0 0 8px 0;
-            background: linear-gradient(135deg, #38bdf8, #22d3ee);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo-section p {
-            color: rgba(226, 232, 240, 0.6);
-            font-size: 14px;
-            margin: 0;
-        }
-
-        /* Card */
-        .verify-card {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 24px;
-            padding: 40px 28px;
-            box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.4),
-                inset 0 1px 1px rgba(255, 255, 255, 0.1);
-            animation: fadeIn 0.8s ease-out 0.2s both;
-            text-align: center;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        .verify-card h2 {
-            color: #fff;
-            font-size: 24px;
-            font-weight: 700;
-            margin: 0 0 12px 0;
-            background: linear-gradient(135deg, #38bdf8, #22d3ee);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeIn 0.8s ease-out 0.3s both;
-        }
-
-        .verify-card .subtitle {
-            color: rgba(226, 232, 240, 0.6);
-            font-size: 14px;
-            margin: 0 0 24px 0;
-            animation: fadeIn 0.8s ease-out 0.4s both;
-        }
-
-        /* Alert Messages */
-        .alert {
-            border-radius: 12px;
-            border: none;
-            padding: 14px 16px;
-            font-size: 14px;
-            margin-bottom: 24px;
-            animation: slideDown 0.4s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .alert-success {
-            background: rgba(34, 197, 94, 0.15);
-            color: #86efac;
-            border: 1px solid rgba(34, 197, 94, 0.3);
-        }
-
-        .alert-danger {
-            background: rgba(239, 68, 68, 0.15);
-            color: #fca5a5;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        /* OTP Input */
-        .otp-section {
-            margin: 28px 0;
-            animation: fadeIn 0.8s ease-out 0.5s both;
-        }
-
-        .otp-label {
-            display: block;
-            color: rgb(226, 232, 240);
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 14px;
-        }
-
-        .otp-input {
-            width: 100%;
-            padding: 13px 16px;
-            background: rgba(15, 23, 42, 0.7);
-            border: 2px solid rgba(56, 189, 248, 0.3);
-            border-radius: 14px;
-            color: rgb(226, 232, 240);
-            font-size: 18px;
-            font-weight: 600;
-            letter-spacing: 8px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .otp-input::placeholder {
-            color: rgba(226, 232, 240, 0.4);
-            letter-spacing: 2px;
-        }
-
-        .otp-input:focus {
-            outline: none;
-            border-color: rgba(56, 189, 248, 0.8);
-            background: rgba(15, 23, 42, 0.9);
-            box-shadow:
-                0 0 0 3px rgba(56, 189, 248, 0.1),
-                0 10px 30px rgba(56, 189, 248, 0.2);
-        }
-
-        .otp-input.is-invalid {
-            border-color: rgba(239, 68, 68, 0.6);
-        }
-
-        /* Error Messages */
-        .input-error {
-            display: block;
-            color: #fca5a5;
-            font-size: 12px;
-            margin-top: 8px;
-            animation: slideDown 0.3s ease-out;
-        }
-
-        /* Verify Button */
-        .btn-verify {
-            width: 100%;
-            padding: 14px 24px;
-            background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 100%);
-            color: #020617;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 0.8s ease-out 0.6s both;
-        }
-
-        .btn-verify::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn-verify:hover::before {
-            left: 100%;
-        }
-
-        .btn-verify:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(56, 189, 248, 0.4);
-        }
-
-        .btn-verify:active {
-            transform: translateY(0);
-        }
-
-        .btn-verify:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        /* Resend Section */
-        .resend-section {
-            margin-top: 28px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(56, 189, 248, 0.1);
-            animation: fadeIn 0.8s ease-out 0.7s both;
-        }
-
-        .resend-text {
-            color: rgba(226, 232, 240, 0.6);
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
-
-        .btn-resend {
-            background: none;
-            border: none;
-            color: #38bdf8;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 0;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .btn-resend:hover {
-            color: #22d3ee;
-            text-decoration: underline;
-        }
-
-        .btn-resend:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Countdown Timer */
-        .countdown-text {
-            color: rgba(226, 232, 240, 0.5);
-            font-size: 12px;
-            margin-top: 8px;
-        }
-
-        /* Timer display */
-        .timer-badge {
-            display: inline-block;
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            padding: 6px 12px;
-            border-radius: 8px;
-            color: #38bdf8;
-            font-size: 12px;
-            font-weight: 600;
-            margin-left: 8px;
-        }
-
-        /* Back link */
-        .back-link {
-            text-align: center;
-            margin-top: 20px;
-            animation: fadeIn 0.8s ease-out 0.8s both;
-        }
-
-        .back-link a {
-            color: rgba(226, 232, 240, 0.6);
-            text-decoration: none;
-            font-size: 13px;
-            transition: color 0.3s ease;
-        }
-
-        .back-link a:hover {
-            color: #38bdf8;
-        }
-
-        /* Validation errors container */
-        .validation-errors {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 12px;
-            padding: 12px 14px;
-            margin-bottom: 20px;
-            animation: slideDown 0.4s ease-out;
-        }
-
-        .validation-errors p {
-            margin: 4px 0;
-            color: #fca5a5;
-            font-size: 13px;
-        }
-
-        .validation-errors p:first-child {
-            margin-top: 0;
-        }
-
-        .validation-errors p:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Captcha */
-        .captcha-wrapper {
-            display: flex;
-            gap: 10px;
-            align-items: stretch;
-            margin-bottom: 10px;
-        }
-
-        .captcha-display {
-            flex: 1;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(34, 211, 238, 0.12));
-            border: 1.5px solid rgba(56, 189, 248, 0.25);
-            border-radius: 12px;
-            padding: 14px 16px;
-            font-size: 28px;
-            font-weight: 800;
-            letter-spacing: 8px;
-            color: #38bdf8;
-            user-select: none;
-            font-family: 'Courier New', monospace;
-            text-align: center;
-            text-shadow: 0 2px 10px rgba(56, 189, 248, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .captcha-refresh {
-            width: 48px;
-            min-width: 48px;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(34, 211, 238, 0.1));
-            border: 1.5px solid rgba(56, 189, 248, 0.3);
-            border-radius: 12px;
-            color: #38bdf8;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-        }
-
-        .captcha-refresh:hover {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(34, 211, 238, 0.2));
-            border-color: rgba(56, 189, 248, 0.5);
-            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
-        }
-
-        .captcha-refresh:active {
-            transform: scale(0.95);
-        }
-
-        .captcha-refresh img {
-            width: 20px;
-            height: 20px;
-            transition: transform 0.5s ease;
-        }
-
-        .captcha-refresh:hover img {
-            transform: rotate(180deg);
-        }
-
-        .captcha-input {
-            width: 100%;
-            padding: 13px 16px;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1.5px solid rgba(56, 189, 248, 0.25);
-            border-radius: 12px;
-            color: rgb(226, 232, 240);
-            font-size: 15px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .captcha-input::placeholder {
-            color: rgba(226, 232, 240, 0.4);
-            letter-spacing: 2px;
-            font-weight: 500;
-        }
-
-        .captcha-input:focus {
-            outline: none;
-            border-color: rgba(56, 189, 248, 0.6);
-            background: rgba(15, 23, 42, 0.8);
-            box-shadow:
-                0 0 0 3px rgba(56, 189, 248, 0.1),
-                0 8px 20px rgba(56, 189, 248, 0.15);
-        }
-
-        /* Mobile responsiveness */
-        @media (max-width: 480px) {
-            .verify-container {
-                padding: 16px;
-            }
-
-            .verify-card {
-                padding: 32px 20px;
-            }
-
-            .logo-section {
-                margin-bottom: 30px;
-            }
-
-            .logo-section h1 {
-                font-size: 24px;
-            }
-
-            .verify-card h2 {
-                font-size: 20px;
-            }
-
-            .verify-card .subtitle {
-                font-size: 13px;
-            }
-
-            .otp-input {
-                padding: 12px 14px;
-                font-size: 16px;
-                letter-spacing: 6px;
-            }
-
-            .btn-verify {
-                padding: 12px 20px;
-                font-size: 14px;
-            }
-
-            .verify-wrapper {
-                max-width: 100%;
-            }
-
-            .captcha-display {
-                font-size: 22px;
-                letter-spacing: 5px;
-                padding: 12px 14px;
-            }
-
-            .captcha-refresh {
-                width: 44px;
-                min-width: 44px;
-            }
-
-            .captcha-refresh img {
-                width: 18px;
-                height: 18px;
-            }
-        }
+        :root{--panel:rgba(8,19,35,.9);--line:rgba(106,227,255,.18);--line2:rgba(106,227,255,.38);--text:#e8f0ff;--muted:rgba(232,240,255,.66);--accent:#6ae3ff;--accent2:#1bb8f2;--success:#2dd4bf;--danger:#fb7185}
+        *{box-sizing:border-box} html,body{min-height:100%}
+        body{margin:0;font-family:"Sora","Segoe UI",sans-serif;color:var(--text);background:radial-gradient(circle at top left,rgba(27,184,242,.18),transparent 30%),radial-gradient(circle at bottom right,rgba(45,212,191,.12),transparent 24%),linear-gradient(180deg,#06101d 0%,#07111f 48%,#0a1422 100%);background-repeat:no-repeat;background-size:cover;background-attachment:fixed;overflow-x:hidden}
+        .page{min-height:100vh;padding:1rem;position:relative;display:flex;align-items:center}
+        .nav-btn,.lang-btn{position:fixed;top:1rem;z-index:5;width:3rem;height:3rem;border:1px solid var(--line2);border-radius:1rem;background:linear-gradient(180deg,rgba(10,24,42,.96),rgba(7,18,34,.92));display:flex;align-items:center;justify-content:center;box-shadow:0 16px 34px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.06);transition:border-color .2s ease,transform .2s ease,background .2s ease}
+        .nav-btn{left:1rem;color:var(--accent)} .lang-btn{right:1rem}
+        .nav-btn:hover,.lang-btn:hover{transform:translateY(-1px);border-color:rgba(106,227,255,.58);background:linear-gradient(180deg,rgba(11,27,48,.98),rgba(8,20,37,.96))}
+        .nav-btn span{display:block;color:var(--accent);font-size:2rem;line-height:.8;font-weight:700;transform:translateX(-1px)}
+        .lang-btn img{width:1.15rem;height:1.15rem;display:block;opacity:.92;filter:brightness(0) saturate(100%) invert(83%) sepia(31%) saturate(864%) hue-rotate(159deg) brightness(103%) contrast(103%)}
+        .layout{max-width:640px;margin:0 auto;display:grid;gap:1rem;padding-top:4.25rem;width:100%}
+        .card{border:1px solid var(--line);border-radius:1.5rem;background:linear-gradient(180deg,rgba(10,20,36,.94),var(--panel));box-shadow:0 24px 70px rgba(0,0,0,.42);position:relative;overflow:hidden;padding:1.25rem}
+        .card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(106,227,255,.08),transparent 28%,transparent 70%,rgba(45,212,191,.05));pointer-events:none}
+        .top,.brand,.eyebrow,.field-label,.resend-row{display:flex}.top,.field-label,.resend-row{justify-content:space-between}.top,.brand,.eyebrow,.resend-row{align-items:center}
+        .brand{gap:.85rem}.mark{width:2.9rem;height:2.9rem;border-radius:1rem;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(106,227,255,.22),rgba(27,184,242,.3));border:1px solid rgba(106,227,255,.32)}
+        .brand h1{margin:0;font-size:1rem;font-weight:700;letter-spacing:.16em}.brand p,.sub,.resend-note,.countdown-text,.alt-link,.input-error,.errs p{color:var(--muted)} .brand p{margin:.18rem 0 0;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase}
+        .badge,.eyebrow{padding:.45rem .7rem;border-radius:999px;font-size:.72rem}.badge{border:1px solid rgba(45,212,191,.28);background:rgba(45,212,191,.08);color:#96f7df}.eyebrow{gap:.45rem;background:rgba(106,227,255,.08);border:1px solid rgba(106,227,255,.18);color:#b7f4ff;text-transform:uppercase;letter-spacing:.08em;display:inline-flex;margin-bottom:.8rem}
+        .hero-title{margin:.25rem 0;font-size:clamp(1.7rem,7vw,2.2rem);line-height:1.02;letter-spacing:-.05em}.sub{margin:0;line-height:1.5;font-size:.92rem}
+        .top-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;margin:.9rem 0 1rem}.strip-item{padding:.7rem;border-radius:1rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.04)}
+        .strip-item span{display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.2rem;color:var(--muted)} .strip-item strong{font-size:.85rem}
+        .alert,.errs{position:relative;z-index:1;border-radius:1rem;padding:.9rem 1rem;margin-bottom:1rem;border:1px solid transparent;font-size:.88rem}.alert-success{background:rgba(45,212,191,.1);color:#99f6e4;border-color:rgba(45,212,191,.25)}.alert-danger,.errs{background:rgba(251,113,133,.1);border-color:rgba(251,113,133,.24);color:#fecdd3}.errs p{margin:.22rem 0;color:#fecdd3}
+        form{display:grid;gap:.95rem;position:relative;z-index:1}.field{display:grid;gap:.45rem}.field-label{gap:.75rem;font-size:.82rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:rgba(232,240,255,.88)}
+        .otp-input{width:100%;min-height:3.8rem;padding:.95rem 1rem;border-radius:1rem;border:1px solid rgba(106,227,255,.18);background:rgba(6,16,30,.86);color:var(--text);font-size:1.2rem;font-weight:700;text-align:center;letter-spacing:.45rem}
+        .otp-input::placeholder{color:rgba(232,240,255,.34);letter-spacing:.2rem}.otp-input:focus{outline:none;border-color:rgba(106,227,255,.56);background:rgba(8,21,39,.95);box-shadow:0 0 0 4px rgba(106,227,255,.08)} .otp-input.is-invalid{border-color:rgba(251,113,133,.52)}
+        .input-error{font-size:.8rem}
+        .submit,.resend-btn{border:0;border-radius:1.05rem;font-weight:800;letter-spacing:.08em}
+        .submit{width:100%;min-height:3.6rem;background:linear-gradient(135deg,#74ebff 0%,#1bb8f2 52%,#16a5d7 100%);color:#03101d;font-size:.96rem;text-transform:uppercase;box-shadow:0 18px 40px rgba(27,184,242,.28)}
+        .resend-panel{position:relative;z-index:1;margin-top:.1rem;padding:1rem;border-radius:1rem;border:1px solid rgba(106,227,255,.14);background:rgba(106,227,255,.05)}
+        .resend-note{margin:0;font-size:.82rem}
+        .resend-row{gap:1rem;margin-top:.8rem}
+        .resend-btn{padding:.85rem 1rem;min-height:2.9rem;background:rgba(255,255,255,.04);color:var(--accent);border:1px solid rgba(106,227,255,.16);font-size:.8rem;text-transform:uppercase}
+        .resend-btn:disabled{opacity:.5}
+        .timer-badge{display:inline-flex;align-items:center;justify-content:center;min-width:4rem;padding:.7rem .85rem;border-radius:.9rem;border:1px solid rgba(106,227,255,.18);background:rgba(255,255,255,.03);color:var(--accent);font-size:.82rem;font-weight:700}
+        .countdown-text{margin:.7rem 0 0;font-size:.78rem}
+        .alt-link{text-align:center;font-size:.88rem}
+        .alt-link a{color:var(--accent);text-decoration:none;font-weight:600}
+        .alt-link a:hover{color:#aef2ff;text-decoration:underline}
+        @media (max-width:480px){.otp-input{letter-spacing:.3rem;font-size:1.05rem}.resend-row{flex-direction:column;align-items:stretch}.timer-badge{width:100%}}
+        @media (min-width:768px){.page{padding:1.5rem}.layout{max-width:720px;padding-top:4.75rem}.card{padding:1.5rem}}
     </style>
 </head>
-
 <body>
-    <div class="verify-container">
-        <div class="verify-wrapper">
-            <!-- Logo Section -->
-            <div class="logo-section">
-                <div class="logo-icon">✉️</div>
-                <h1>CRYPTEXA</h1>
-                <p>Secure your account now</p>
-            </div>
+    <button type="button" class="nav-btn" onclick="goBack()" aria-label="Go back" title="Go back">
+        <span aria-hidden="true">&#8249;</span>
+    </button>
+    <button type="button" class="lang-btn" onclick="toggleLanguageSelector()" aria-label="Select language">
+        <img src="{{ asset('images/icons/globe.svg') }}" alt="" aria-hidden="true">
+    </button>
 
-            <!-- Verify Card -->
-            <div class="verify-card">
-                <h2>Verify Your Email</h2>
-                <p class="subtitle">
-                    Enter the 6-digit code we sent to your email address
-                </p>
+    <main class="page">
+        <section class="layout">
+            <section class="card" style="margin-top: -20px">
+                <div class="top">
+                    <div class="brand">
+                        <div class="mark">
+                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"></path><path d="M12 4v16"></path><circle cx="12" cy="12" r="8"></circle></svg>
+                        </div>
+                        <div><h1>CRYPTEXA</h1><p>Pro Trader Access</p></div>
+                    </div>
+                    <div class="badge">Secure verify</div>
+                </div>
 
-                <!-- Success Alert -->
+                <div class="head">
+                    <div class="eyebrow">Verify</div>
+                    <h2 class="hero-title">Confirm email</h2>
+                    <p class="sub">Enter the code sent to your email.</p>
+                </div>
+
+                <div class="top-strip">
+                    <div class="strip-item"><span>Step</span><strong>Verify</strong></div>
+                    <div class="strip-item"><span>Access</span><strong>Secure</strong></div>
+                    <div class="strip-item"><span>Next</span><strong>Home</strong></div>
+                </div>
+
                 @if(session('success'))
-                <div class="alert alert-success">
-                    ✓ {{ session('success') }}
-                </div>
+                    <div class="alert alert-success">{{ session('success') }}</div>
                 @endif
 
-                <!-- Info Alert -->
                 @if(session('info'))
-                <div class="alert alert-success">
-                    ℹ️ {{ session('info') }}
-                </div>
+                    <div class="alert alert-success">{{ session('info') }}</div>
                 @endif
 
-                <!-- Error Alert -->
                 @if(session('error'))
-                <div class="alert alert-danger">
-                    ✗ {{ session('error') }}
-                </div>
+                    <div class="alert alert-danger">{{ session('error') }}</div>
                 @endif
 
-                <!-- Validation Errors -->
                 @if($errors->any())
-                <div class="validation-errors">
-                    @foreach($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                    @endforeach
-                </div>
+                    <div class="errs">
+                        @foreach($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    </div>
                 @endif
 
-                <!-- Verification Form -->
                 <form method="POST" action="{{ route('verify.post') }}" id="verifyForm">
                     @csrf
-                    <!-- OTP Input -->
-                    <div class="otp-section">
-                        <label class="otp-label">Verification Code</label>
-                        <input
-                            type="text"
-                            name="otp"
-                            id="otpInput"
-                            class="otp-input{{ $errors->has('otp') ? ' is-invalid' : '' }}"
-                            placeholder="0 0 0 0 0 0"
-                            maxlength="6"
-                            inputmode="numeric"
-                            pattern="[0-9]*"
-                            required
-                            autocomplete="off">
+                    <div class="field">
+                        <label class="field-label" for="otpInput"><span>Verification Code</span></label>
+                        <input type="text" name="otp" id="otpInput" class="otp-input{{ $errors->has('otp') ? ' is-invalid' : '' }}" placeholder="0 0 0 0 0 0" maxlength="6" inputmode="numeric" pattern="[0-9]*" required autocomplete="off">
                         @if($errors->has('otp'))
-                        <span class="input-error">{{ $errors->first('otp') }}</span>
+                            <span class="input-error">{{ $errors->first('otp') }}</span>
                         @endif
                     </div>
-
-                    <!-- Verify Button -->
-                    <button type="submit" class="btn-verify" id="verifyBtn">
-                        Verify Email
-                    </button>
+                    <button type="submit" class="submit" id="verifyBtn">Verify Email</button>
                 </form>
 
-                <!-- Resend Section -->
-                <div class="resend-section">
-                    <p class="resend-text">Didn't receive the code?</p>
-                    <form method="POST" action="{{ route('verify.resend') }}" id="resendForm" style="display: inline;">
-                        @csrf
-                        <button type="submit" class="btn-resend" id="resendBtn">
-                            Resend Code
-                        </button>
-                        <span class="timer-badge" id="timerDisplay" style="display: none;">
-                            <span id="timerValue">60</span>s
-                        </span>
-                    </form>
-                    <p class="countdown-text" id="countdownText" style="display: none;">
-                        You can resend in <span id="countdownValue">60</span> seconds
-                    </p>
+                <div class="resend-panel">
+                    <p class="resend-note">Didn’t receive the code?</p>
+                    <div class="resend-row">
+                        <form method="POST" action="{{ route('verify.resend') }}" id="resendForm">
+                            @csrf
+                            <button type="submit" class="resend-btn" id="resendBtn">Resend Code</button>
+                        </form>
+                        <span class="timer-badge" id="timerDisplay" style="display:none;"><span id="timerValue">60</span>s</span>
+                    </div>
+                    <p class="countdown-text" id="countdownText" style="display:none;">You can resend in <span id="countdownValue">60</span> seconds</p>
                 </div>
 
-                <!-- Back Link -->
-                <div class="back-link">
-                    <a href="{{ route('login') }}">← Back to Login</a>
+                <div class="alt-link" style="margin-top:1.2rem;">
+                    <a href="{{ route('login') }}">Back to login</a>
                 </div>
-            </div>
-        </div>
-    </div>
+            </section>
+        </section>
+    </main>
 
-    <!-- JS -->
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-
-    <!-- Verify Page Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        const otpInput = document.getElementById('otpInput');
-        const verifyForm = document.getElementById('verifyForm');
-        const verifyBtn = document.getElementById('verifyBtn');
-        const resendBtn = document.getElementById('resendBtn');
-        const resendForm = document.getElementById('resendForm');
-        const timerDisplay = document.getElementById('timerDisplay');
-        const countdownText = document.getElementById('countdownText');
-        const timerValue = document.getElementById('timerValue');
-        const countdownValue = document.getElementById('countdownValue');
-
-        // Only allow numbers in OTP input
-        if (otpInput) {
-            otpInput.addEventListener('input', function() {
-                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6);
-
-                // Add visual feedback
-                if (this.value.length === 6) {
-                    this.style.borderColor = 'rgba(56, 189, 248, 0.8)';
-                } else {
-                    this.style.borderColor = '';
-                }
-            });
-
-            // Focus animation
-            otpInput.addEventListener('focus', function() {
-                this.style.transform = 'scale(1.02)';
-            });
-
-            otpInput.addEventListener('blur', function() {
-                this.style.transform = 'scale(1)';
-            });
-        }
-
-        // Form submission feedback
-        if (verifyForm) {
-            verifyForm.addEventListener('submit', function() {
-                if (verifyBtn) {
-                    verifyBtn.disabled = true;
-                    verifyBtn.innerHTML = 'Verifying...';
-                }
-            });
-        }
-
-        // Resend cooldown timer
-        function startResendCooldown(duration = 60) {
-            let remaining = duration;
-
-            resendBtn.disabled = true;
-            timerDisplay.style.display = 'inline-block';
-            countdownText.style.display = 'block';
-
-            const interval = setInterval(function() {
-                remaining--;
-                timerValue.textContent = remaining;
-                countdownValue.textContent = remaining;
-
-                if (remaining <= 0) {
-                    clearInterval(interval);
-                    resendBtn.disabled = false;
-                    timerDisplay.style.display = 'none';
-                    countdownText.style.display = 'none';
-                }
-            }, 1000);
-
-            // Store in localStorage to persist across page refreshes
-            sessionStorage.setItem('resendCooldownEnd', Date.now() + (remaining * 1000));
-        }
-
-        // Check if cooldown is active on page load
-        window.addEventListener('load', function() {
-            const cooldownEnd = sessionStorage.getItem('resendCooldownEnd');
-            if (cooldownEnd) {
-                const remaining = Math.ceil((cooldownEnd - Date.now()) / 1000);
-                if (remaining > 0) {
-                    startResendCooldown(remaining);
-                } else {
-                    sessionStorage.removeItem('resendCooldownEnd');
-                }
-            }
-        });
-
-        // Resend form submission
-        if (resendForm) {
-            resendForm.addEventListener('submit', function(e) {
-                startResendCooldown(60);
-            });
-        }
-
-        // Auto-focus OTP input
-        if (otpInput) {
-            otpInput.focus();
-        }
-
-        // Captcha generation
-        function generateCaptcha() {}
-
-        // Generate captcha on page load
-        window.addEventListener('load', generateCaptcha);
+        function goBack(){if(window.history.length>1){window.history.back()}else{window.location.href='{{ url('/') }}'}}
+        function toggleLanguageSelector(){Swal.fire({title:'Select Language',html:`<div style="display:grid;gap:8px;text-align:left;max-height:400px;overflow-y:auto;"><button onclick="changeLanguage('en')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">English</button><button onclick="changeLanguage('es')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Espanol</button><button onclick="changeLanguage('fr')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Francais</button><button onclick="changeLanguage('de')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Deutsch</button><button onclick="changeLanguage('zh')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Chinese</button><button onclick="changeLanguage('ja')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Japanese</button><button onclick="changeLanguage('ko')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Korean</button><button onclick="changeLanguage('pt')" style="padding:12px;background:linear-gradient(135deg, rgba(106,227,255,.1), rgba(27,184,242,.05));border:1px solid rgba(106,227,255,.18);border-radius:12px;color:#e5e7eb;cursor:pointer;">Portugues</button></div>`,background:'linear-gradient(180deg, rgba(8,21,39,.98), rgba(8,18,33,.98))',color:'#e5e7eb',showConfirmButton:false,showCloseButton:true,width:'400px',padding:'20px',backdrop:'rgba(0,0,0,.8)'})}
+        function changeLanguage(lang){fetch('/language/change',{method:'POST',headers:{'Content-Type':'application/json','X-CSRF-TOKEN':'{{ csrf_token() }}'},body:JSON.stringify({language:lang})}).then(r=>r.json()).then(d=>{if(d.success){Swal.fire({icon:'success',title:'Language Changed',text:'Language preference saved',background:'linear-gradient(180deg, rgba(8,21,39,.98), rgba(8,18,33,.98))',color:'#e5e7eb',timer:1500,showConfirmButton:false}).then(()=>window.location.reload())}}).catch(()=>Swal.fire({icon:'error',title:'Error',text:'Failed to change language',background:'linear-gradient(180deg, rgba(8,21,39,.98), rgba(8,18,33,.98))',color:'#e5e7eb'}))}
+        const otpInput=document.getElementById('otpInput'),verifyForm=document.getElementById('verifyForm'),verifyBtn=document.getElementById('verifyBtn'),resendBtn=document.getElementById('resendBtn'),resendForm=document.getElementById('resendForm'),timerDisplay=document.getElementById('timerDisplay'),countdownText=document.getElementById('countdownText'),timerValue=document.getElementById('timerValue'),countdownValue=document.getElementById('countdownValue');
+        if(otpInput){otpInput.addEventListener('input',function(){this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)});window.addEventListener('load',()=>otpInput.focus())}
+        if(verifyForm){verifyForm.addEventListener('submit',function(){if(verifyBtn){verifyBtn.disabled=true;verifyBtn.textContent='Verifying...'}})}
+        function startResendCooldown(duration=60){let remaining=duration;resendBtn.disabled=true;timerDisplay.style.display='inline-flex';countdownText.style.display='block';const interval=setInterval(function(){remaining--;timerValue.textContent=remaining;countdownValue.textContent=remaining;if(remaining<=0){clearInterval(interval);resendBtn.disabled=false;timerDisplay.style.display='none';countdownText.style.display='none';sessionStorage.removeItem('resendCooldownEnd')}},1000);sessionStorage.setItem('resendCooldownEnd',Date.now()+(remaining*1000))}
+        window.addEventListener('load',function(){const cooldownEnd=sessionStorage.getItem('resendCooldownEnd');if(cooldownEnd){const remaining=Math.ceil((cooldownEnd-Date.now())/1000);if(remaining>0){startResendCooldown(remaining)}else{sessionStorage.removeItem('resendCooldownEnd')}}})
+        if(resendForm){resendForm.addEventListener('submit',function(){startResendCooldown(60)})}
     </script>
-
 </body>
-
 </html>
