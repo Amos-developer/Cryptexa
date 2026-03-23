@@ -1,4 +1,7 @@
 <div class="mobile-footer">
+    <div class="footer-shell">
+        <div class="footer-edge"></div>
+        <!-- <div class="footer-caption">Cryptexa Terminal</div> -->
     <ul class="footer-nav">
 
         {{-- HOME --}}
@@ -46,4 +49,5 @@
         </li>
 
     </ul>
+    </div>
 </div>
