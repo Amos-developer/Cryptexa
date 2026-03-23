@@ -126,17 +126,18 @@
 
     .action-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
     }
 
     .home-action {
-        padding: 10px 8px;
+        padding: 8px 6px;
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
         justify-content: space-between;
-        min-height: 84px;
+        min-height: 72px;
         transition: transform 0.2s ease, border-color 0.2s ease;
-        border-radius: 16px;
+        border-radius: 14px;
     }
 
     .home-action:hover {
@@ -145,9 +146,9 @@
     }
 
     .action-icon {
-        width: 34px;
-        height: 34px;
-        border-radius: 11px;
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -157,20 +158,20 @@
 
     .action-icon img,
     .action-icon svg {
-        width: 17px;
-        height: 17px;
+        width: 15px;
+        height: 15px;
     }
 
     .action-title {
         color: var(--text);
-        font-size: 11px;
+        font-size: 10px;
         font-weight: 700;
         line-height: 1.2;
     }
 
     .action-sub {
         margin-top: 2px;
-        font-size: 9px;
+        font-size: 8px;
         letter-spacing: 0.02em;
     }
 
@@ -346,7 +347,7 @@
         </section>
 
         <section>
-            <div class="home-section-head" style="margin-bottom:10px;">
+            <div class="home-section-head" style="margin-bottom:8px;">
                 <div>
                     <h2 class="home-section-title">Quick Options</h2>
                     <div class="home-section-note">Fast access to key actions</div>

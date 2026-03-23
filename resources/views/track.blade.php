@@ -3,450 +3,569 @@
 @section('title', 'Compute Orders | Cryptexa')
 @section('hide-header', true)
 
-@section('content')
-
-<link rel="stylesheet" href="{{ asset('css/team.css') }}">
-
-<!-- HEADER BAR -->
-<div class="team-header">
-    <a href="{{ url()->previous() }}" class="back-btn">
-        <i class="icon-left-btn"></i>
-    </a>
-    <h6 class="header-title">{{ __t('my_pools') }}</h6>
-    <span class="placeholder"></span>
-</div>
-
-<!-- MAIN CONTENT -->
-<div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%);">
-    <div class="tf-container">
-
-        <!-- PAGE HEADER -->
-        <div class="mb-24" style="animation: slideDown 0.6s ease;">
-            <!-- <h1 style="color: #e5e7eb; font-weight: 900; font-size: 32px; margin: 0 0 8px 0;">{{ __t('my_pools') }}</h1> -->
-            <p class="text-secondary" style="font-size: 14px; margin: 0;">{{ __t('track_orders') }}</p>
-        </div>
-
-        <!-- TABS -->
-        <div style="
-            display: flex;
-            gap: 10px;
-            margin-bottom: 24px;
-            animation: slideUp 0.6s ease 0.1s backwards;
-        ">
-            <button class="tab-btn active" onclick="showTab('active')"
-                style="
-                    flex: 1;
-                    padding: 12px;
-                    border-radius: 12px;
-                    border: 1px solid rgba(56,189,248,0.2);
-                    background: linear-gradient(135deg, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0.05) 100%);
-                    color: #38bdf8;
-                    font-weight: 700;
-                    font-size: 14px;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                "
-                onmouseover="this.style.borderColor='rgba(56,189,248,0.4)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.2) 0%, rgba(56,189,248,0.1) 100%)';"
-                onmouseout="this.style.borderColor='rgba(56,189,248,0.2)'; this.style.background='linear-gradient(135deg, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0.05) 100%)';">
-                🚀 {{ __t('active_orders') }}
-            </button>
-
-            <button class="tab-btn" onclick="showTab('completed')"
-                style="
-                    flex: 1;
-                    padding: 12px;
-                    border-radius: 12px;
-                    border: 1px solid rgba(255,255,255,0.08);
-                    background: rgba(255,255,255,0.02);
-                    color: #94a3b8;
-                    font-weight: 700;
-                    font-size: 14px;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                "
-                onmouseover="this.style.borderColor='rgba(255,255,255,0.12)'; this.style.background='rgba(255,255,255,0.04)';"
-                onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'; this.style.background='rgba(255,255,255,0.02)';">
-                ✓ {{ __t('completed_orders') }}
-            </button>
-        </div>
-
-        <!-- ACTIVE ORDERS TAB -->
-        <div id="active-orders" style="animation: slideUp 0.6s ease 0.15s backwards;">
-
-            @forelse($activeOrders as $order)
-            <div style="
-                background: linear-gradient(135deg, rgba(251,191,36,0.1) 0%, rgba(251,191,36,0.03) 100%);
-                border: 1px solid rgba(251,191,36,0.2);
-                border-radius: 16px;
-                padding: 20px;
-                box-shadow: 0 8px 32px rgba(251,191,36,0.08);
-                backdrop-filter: blur(10px);
-                margin-bottom: 16px;
-                transition: all 0.3s ease;
-            "
-                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 12px 40px rgba(251,191,36,0.15)';"
-                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 32px rgba(251,191,36,0.08)';">
-
-                <!-- HEADER -->
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-                    <div>
-                        <h4 style="color: #e5e7eb; font-weight: 800; font-size: 16px; margin: 0 0 4px 0;">
-                            {{ optional($order->computePlan)->name ?? 'Compute Plan' }}
-                        </h4>
-                        <p style="color: #94a3b8; font-size: 12px; margin: 0;">Order #{{ $order->id }}</p>
-                    </div>
-                    <span style="
-                        background: linear-gradient(135deg, rgba(251,191,36,0.25) 0%, rgba(251,191,36,0.15) 100%);
-                        color: #fbbf24;
-                        padding: 8px 14px;
-                        border-radius: 999px;
-                        font-size: 11px;
-                        font-weight: 800;
-                        border: 1px solid rgba(251,191,36,0.3);
-                        white-space: nowrap;
-                    ">
-                        ⚡ ACTIVE
-                    </span>
-                </div>
-
-                <!-- END DATE/TIME CARD -->
-                <div style="
-                    background: linear-gradient(135deg, rgba(56,189,248,0.12) 0%, rgba(56,189,248,0.04) 100%);
-                    border: 1px solid rgba(56,189,248,0.25);
-                    border-radius: 12px;
-                    padding: 14px;
-                    margin-bottom: 16px;
-                ">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-                        <span style="font-size: 18px;">🎯</span>
-                        <p style="color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0; letter-spacing: 0.5px;">{{ __t('pool_ends_on') }}</p>
-                    </div>
-                    <p style="color: #38bdf8; font-size: 15px; font-weight: 800; margin: 0 0 4px 0;">
-                        {{ $order->ends_at->format('l, F j, Y') }}
-                    </p>
-                    <p style="color: #38bdf8; font-size: 13px; font-weight: 600; margin: 0;">
-                        {{ $order->ends_at->format('g:i A') }} ({{ $order->ends_at->timezone->getName() }})
-                    </p>
-                </div>
-
-                <!-- COUNTDOWN TIMER -->
-                @php
-                $remaining = max(0, now()->diffInSeconds($order->ends_at, false));
-                @endphp
-
-                <div style="
-                    background: rgba(0,0,0,0.3);
-                    border-radius: 12px;
-                    padding: 16px;
-                    text-align: center;
-                    margin-bottom: 16px;
-                    border: 1px solid rgba(251,191,36,0.2);
-                ">
-                    <p style="color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin: 0 0 8px 0; letter-spacing: 0.5px;">Time Remaining</p>
-                    <div class="countdown"
-                        data-remaining="{{ $remaining }}"
-                        style="
-                            color: #fbbf24;
-                            font-size: 22px;
-                            font-weight: 900;
-                            letter-spacing: 1px;
-                        ">
-                    </div>
-                </div>
-
-                <!-- PROGRESS BAR -->
-                @php
-                $totalDuration = $order->created_at->diffInSeconds($order->ends_at);
-                $elapsed = $order->created_at->diffInSeconds(now());
-                $progress = min(100, ($elapsed / $totalDuration) * 100);
-                @endphp
-                <div style="margin-bottom: 16px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span style="color: #94a3b8; font-size: 11px; font-weight: 600;">Progress</span>
-                        <span style="color: #fbbf24; font-size: 11px; font-weight: 700;">{{ number_format($progress, 1) }}%</span>
-                    </div>
-                    <div style="
-                        width: 100%;
-                        height: 8px;
-                        background: rgba(255,255,255,0.08);
-                        border-radius: 999px;
-                        overflow: hidden;
-                        border: 1px solid rgba(255,255,255,0.1);
-                    ">
-                        <div style="
-                            width: {{ $progress }}%;
-                            height: 100%;
-                            background: linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24);
-                            background-size: 200% 100%;
-                            animation: shimmer 2s infinite;
-                            transition: width 1s ease;
-                        "></div>
-                    </div>
-                </div>
-
-                <!-- STATS GRID -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
-                    <div style="
-                        background: rgba(0,0,0,0.3);
-                        padding: 12px;
-                        border-radius: 10px;
-                        border: 1px solid rgba(255,255,255,0.1);
-                    ">
-                        <p style="color: #94a3b8; font-size: 10px; font-weight: 700; text-transform: uppercase; margin: 0 0 6px 0; letter-spacing: 0.5px;">💰 Capital</p>
-                        <p style="color: #e5e7eb; font-size: 16px; font-weight: 800; margin: 0;">${{ number_format($order->amount, 2) }}</p>
-                    </div>
-
-                    <div style="
-                        background: rgba(0,0,0,0.3);
-                        padding: 12px;
-                        border-radius: 10px;
-                        border: 1px solid rgba(34,197,94,0.3);
-                    ">
-                        <p style="color: #94a3b8; font-size: 10px; font-weight: 700; text-transform: uppercase; margin: 0 0 6px 0; letter-spacing: 0.5px;">📈 Expected</p>
-                        <p style="color: #22c55e; font-size: 16px; font-weight: 800; margin: 0;">+${{ number_format($order->expected_profit, 2) }}</p>
-                    </div>
-                </div>
-
-                <!-- TOTAL RETURN -->
-                <div style="
-                    background: linear-gradient(135deg, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.05) 100%);
-                    border: 1px solid rgba(34,197,94,0.3);
-                    padding: 14px;
-                    border-radius: 10px;
-                    text-align: center;
-                ">
-                    <p style="color: #94a3b8; font-size: 10px; font-weight: 700; text-transform: uppercase; margin: 0 0 6px 0; letter-spacing: 0.5px;">🎁 Total Return</p>
-                    <p style="color: #22c55e; font-size: 20px; font-weight: 900; margin: 0;">${{ number_format($order->amount + $order->expected_profit, 2) }}</p>
-                </div>
-
-            </div>
-            @empty
-            <div style="
-                text-align: center;
-                padding: 40px 20px;
-                color: #94a3b8;
-                font-size: 14px;
-            ">
-                <p style="font-size: 32px; margin: 0 0 8px 0;">📭</p>
-                <p style="margin: 0;">{{ __t('no_active_orders') }}</p>
-            </div>
-            @endforelse
-
-        </div>
-
-        <!-- COMPLETED ORDERS TAB -->
-        <div id="completed-orders" style="display: none;">
-
-            @forelse($completedOrders as $order)
-            <div style="
-                background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.02) 100%);
-                border: 1px solid rgba(34,197,94,0.15);
-                border-radius: 14px;
-                padding: 18px;
-                box-shadow: 0 10px 30px rgba(34,197,94,0.05), inset 0 0 20px rgba(34,197,94,0.03);
-                backdrop-filter: blur(10px);
-                margin-bottom: 14px;
-                transition: all 0.3s ease;
-            "
-                onmouseover="this.style.borderColor='rgba(34,197,94,0.3)'; this.style.boxShadow='0 10px 30px rgba(34,197,94,0.1), inset 0 0 20px rgba(34,197,94,0.05)';"
-                onmouseout="this.style.borderColor='rgba(34,197,94,0.15)'; this.style.boxShadow='0 10px 30px rgba(34,197,94,0.05), inset 0 0 20px rgba(34,197,94,0.03)';">
-
-                <!-- HEADER -->
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                    <h4 style="color: #e5e7eb; font-weight: 700; font-size: 15px; margin: 0;">
-                        {{ optional($order->computePlan)->name ?? 'Compute Plan' }}
-                    </h4>
-                    <span style="
-                        background: rgba(34,197,94,0.2);
-                        color: #22c55e;
-                        padding: 6px 12px;
-                        border-radius: 999px;
-                        font-size: 11px;
-                        font-weight: 700;
-                    ">
-                        ✓ {{ __t('completed') }}
-                    </span>
-                </div>
-
-                <!-- STATS GRID -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
-                    <div style="
-                        background: rgba(255,255,255,0.02);
-                        padding: 10px;
-                        border-radius: 10px;
-                        border: 1px solid rgba(34,197,94,0.2);
-                    ">
-                        <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; margin: 0 0 4px 0;">Capital</p>
-                        <p style="color: #e5e7eb; font-size: 13px; font-weight: 700; margin: 0;">${{ number_format($order->amount, 2) }}</p>
-                    </div>
-
-                    <div style="
-                        background: rgba(255,255,255,0.02);
-                        padding: 10px;
-                        border-radius: 10px;
-                        border: 1px solid rgba(34,197,94,0.2);
-                    ">
-                        <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; margin: 0 0 4px 0;">{{ __t('profit') }}</p>
-                        <p style="color: #22c55e; font-size: 13px; font-weight: 700; margin: 0;">+${{ number_format($order->expected_profit, 2) }}</p>
-                    </div>
-                </div>
-
-                <!-- TOTAL RETURN -->
-                <div style="
-                    background: linear-gradient(135deg, rgba(56,189,248,0.08) 0%, rgba(56,189,248,0.02) 100%);
-                    border: 1px solid rgba(56,189,248,0.15);
-                    padding: 12px;
-                    border-radius: 10px;
-                    margin-bottom: 10px;
-                ">
-                    <p style="color: #94a3b8; font-size: 11px; font-weight: 600; text-transform: uppercase; margin: 0 0 4px 0;">Total Return</p>
-                    <p style="color: #38bdf8; font-size: 15px; font-weight: 900; margin: 0;">${{ number_format($order->amount + $order->expected_profit, 2) }}</p>
-                </div>
-
-                <!-- COMPLETION TIME -->
-                <p style="color: #94a3b8; font-size: 11px; margin: 0;">
-                    ✓ Finished {{ $order->ends_at->diffForHumans() }}
-                </p>
-
-            </div>
-            @empty
-            <div style="
-                text-align: center;
-                padding: 40px 20px;
-                color: #94a3b8;
-                font-size: 14px;
-            ">
-                <p style="font-size: 32px; margin: 0 0 8px 0;">📭</p>
-                <p style="margin: 0;">{{ __t('no_completed_orders') }}</p>
-            </div>
-            @endforelse
-
-        </div>
-
-    </div>
-</div>
-
-<!-- ANIMATIONS & STYLES -->
+@push('styles')
 <style>
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .track-page {
+        --panel: rgba(9, 18, 33, 0.94);
+        --line: rgba(106, 227, 255, 0.14);
+        --line-strong: rgba(106, 227, 255, 0.28);
+        --text: #e8f0ff;
+        --muted: rgba(232, 240, 255, 0.62);
+        --accent: #6ae3ff;
+        --success: #22c55e;
+        --warning: #fbbf24;
+        min-height: 100vh;
+        background: radial-gradient(circle at top left, rgba(27, 184, 242, 0.12), transparent 28%), linear-gradient(180deg, #06101d 0%, #07111f 48%, #0a1422 100%);
+        padding: 18px 14px 100px;
+        color: var(--text);
     }
 
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(15px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .track-shell {
+        max-width: 980px;
+        margin: 0 auto;
     }
 
-    @keyframes shimmer {
-        0% {
-            background-position: 200% 0;
-        }
-        100% {
-            background-position: -200% 0;
-        }
+    .track-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+        padding-top: 4px;
     }
 
-    /* MOBILE RESPONSIVE */
-    @media (max-width: 768px) {
-        .pt-80 {
-            padding-top: 80px !important;
-        }
-
-        .pb-80 {
-            padding-bottom: 80px !important;
-        }
-
-        h1 {
-            font-size: 26px !important;
-        }
-
-        .countdown {
-            font-size: 18px !important;
-        }
+    .track-back {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(180deg, rgba(10, 24, 42, 0.96), rgba(7, 18, 34, 0.92));
+        border: 1px solid rgba(106, 227, 255, 0.18);
+        color: var(--accent);
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.25);
     }
 
-    /* TABLET RESPONSIVE */
-    @media (min-width: 769px) and (max-width: 1024px) {
-        h1 {
-            font-size: 28px !important;
+    .track-back span {
+        font-size: 1.75rem;
+        line-height: 0.8;
+        transform: translateX(-1px);
+    }
+
+    .track-topbar h1 {
+        margin: 0;
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+    }
+
+    .track-topbar .placeholder {
+        width: 44px;
+        height: 44px;
+    }
+
+    .track-hero,
+    .track-tabs,
+    .track-order {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: linear-gradient(180deg, rgba(12, 24, 43, 0.94), var(--panel));
+        box-shadow: 0 18px 46px rgba(0, 0, 0, 0.24);
+    }
+
+    .track-hero::before,
+    .track-tabs::before,
+    .track-order::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(106, 227, 255, 0.06), transparent 28%, transparent 72%, rgba(34, 197, 94, 0.04));
+        pointer-events: none;
+    }
+
+    .track-hero {
+        padding: 16px;
+        margin-bottom: 14px;
+    }
+
+    .track-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 11px;
+        border-radius: 999px;
+        background: rgba(106, 227, 255, 0.08);
+        border: 1px solid rgba(106, 227, 255, 0.14);
+        color: #b7f4ff;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .track-hero h2 {
+        margin: 12px 0 6px;
+        font-size: clamp(1.6rem, 5vw, 2.35rem);
+        line-height: 0.96;
+        letter-spacing: -0.05em;
+    }
+
+    .track-hero p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .track-hero-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    .track-stat {
+        padding: 11px 12px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .track-stat span {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .track-stat strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .track-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        padding: 8px;
+        margin-bottom: 14px;
+    }
+
+    .track-tab-btn {
+        min-height: 46px;
+        border-radius: 14px;
+        border: 1px solid transparent;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
+        transition: all 0.22s ease;
+    }
+
+    .track-tab-btn.active[data-tab="active"] {
+        background: rgba(251, 191, 36, 0.1);
+        border-color: rgba(251, 191, 36, 0.22);
+        color: var(--warning);
+    }
+
+    .track-tab-btn.active[data-tab="completed"] {
+        background: rgba(34, 197, 94, 0.1);
+        border-color: rgba(34, 197, 94, 0.2);
+        color: #86efac;
+    }
+
+    .track-list {
+        display: grid;
+        gap: 12px;
+    }
+
+    .track-order {
+        padding: 16px;
+    }
+
+    .track-order-head,
+    .track-order-foot,
+    .track-meta-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .track-order-head {
+        margin-bottom: 14px;
+        align-items: flex-start;
+    }
+
+    .track-order-title {
+        margin: 0 0 4px;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .track-order-id {
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .track-badge {
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        white-space: nowrap;
+    }
+
+    .track-badge.active {
+        background: rgba(251, 191, 36, 0.12);
+        border: 1px solid rgba(251, 191, 36, 0.22);
+        color: var(--warning);
+    }
+
+    .track-badge.completed {
+        background: rgba(34, 197, 94, 0.12);
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        color: #86efac;
+    }
+
+    .track-time-card,
+    .track-countdown-card,
+    .track-total-return {
+        padding: 13px;
+        border-radius: 15px;
+        margin-bottom: 12px;
+    }
+
+    .track-time-card {
+        background: rgba(106, 227, 255, 0.06);
+        border: 1px solid rgba(106, 227, 255, 0.16);
+    }
+
+    .track-countdown-card {
+        background: rgba(251, 191, 36, 0.06);
+        border: 1px solid rgba(251, 191, 36, 0.16);
+        text-align: center;
+    }
+
+    .track-card-label {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 6px;
+    }
+
+    .track-time-card strong {
+        display: block;
+        color: var(--accent);
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .countdown {
+        color: var(--warning);
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+    }
+
+    .track-progress {
+        margin-bottom: 12px;
+    }
+
+    .track-progress-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 6px;
+        color: var(--muted);
+        font-size: 11px;
+    }
+
+    .track-progress-bar {
+        height: 7px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        overflow: hidden;
+    }
+
+    .track-progress-bar i {
+        display: block;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #fbbf24, #f59e0b);
+    }
+
+    .track-order-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .track-mini {
+        padding: 12px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .track-mini span {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .track-mini strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .track-total-return {
+        background: rgba(34, 197, 94, 0.07);
+        border: 1px solid rgba(34, 197, 94, 0.16);
+        text-align: center;
+    }
+
+    .track-total-return strong {
+        display: block;
+        color: #86efac;
+        font-size: 22px;
+        font-weight: 800;
+    }
+
+    .track-order-foot {
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .track-empty {
+        padding: 34px 18px;
+        border-radius: 18px;
+        border: 1px dashed rgba(106, 227, 255, 0.16);
+        background: rgba(255, 255, 255, 0.02);
+        text-align: center;
+        color: var(--muted);
+    }
+
+    .track-empty strong {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text);
+        font-size: 15px;
+    }
+
+    @media (min-width: 768px) {
+        .track-page {
+            padding: 22px 18px 110px;
         }
 
-        h4 {
-            font-size: 14px !important;
+        .track-hero,
+        .track-order {
+            padding: 18px;
         }
     }
 </style>
+@endpush
 
-<!-- SCRIPTS -->
+@section('content')
+@php
+    $activeCapital = $activeOrders->sum('amount');
+    $activeProfit = $activeOrders->sum('expected_profit');
+    $completedProfit = $completedOrders->sum('expected_profit');
+@endphp
+
+<div class="track-page">
+    <div class="track-shell">
+        <div class="track-topbar">
+            <a href="{{ url()->previous() }}" class="track-back" aria-label="Go back">
+                <span aria-hidden="true">&#8249;</span>
+            </a>
+            <h1>{{ __t('my_pools') }}</h1>
+            <span class="placeholder"></span>
+        </div>
+
+        <section class="track-hero">
+            <span class="track-kicker">Vault tracking</span>
+            <h2>Monitor active and completed positions.</h2>
+            <p>{{ __t('track_orders') }}</p>
+
+            <div class="track-hero-grid">
+                <div class="track-stat">
+                    <span>Active</span>
+                    <strong>{{ $activeOrders->count() }}</strong>
+                </div>
+                <div class="track-stat">
+                    <span>Capital</span>
+                    <strong>${{ number_format($activeCapital, 2) }}</strong>
+                </div>
+                <div class="track-stat">
+                    <span>Profit</span>
+                    <strong style="color:#86efac;">+${{ number_format($completedProfit + $activeProfit, 2) }}</strong>
+                </div>
+            </div>
+        </section>
+
+        <div class="track-tabs">
+            <button class="track-tab-btn active" data-tab="active" onclick="showTab('active', this)">{{ __t('active_orders') }}</button>
+            <button class="track-tab-btn" data-tab="completed" onclick="showTab('completed', this)">{{ __t('completed_orders') }}</button>
+        </div>
+
+        <div id="active-orders" class="track-list">
+            @forelse($activeOrders as $order)
+                @php
+                    $remaining = max(0, now()->diffInSeconds($order->ends_at, false));
+                    $totalDuration = $order->created_at->diffInSeconds($order->ends_at);
+                    $elapsed = $order->created_at->diffInSeconds(now());
+                    $progress = $totalDuration > 0 ? min(100, ($elapsed / $totalDuration) * 100) : 100;
+                @endphp
+
+                <div class="track-order">
+                    <div class="track-order-head">
+                        <div>
+                            <h3 class="track-order-title">{{ optional($order->computePlan)->name ?? 'Compute Plan' }}</h3>
+                            <div class="track-order-id">Order #{{ $order->id }}</div>
+                        </div>
+                        <span class="track-badge active">{{ __t('active_orders') }}</span>
+                    </div>
+
+                    <div class="track-time-card">
+                        <div class="track-card-label">{{ __t('pool_ends_on') }}</div>
+                        <strong>{{ $order->ends_at->format('l, F j, Y') }}</strong>
+                        <div style="margin-top:4px;color:var(--accent);font-size:13px;">{{ $order->ends_at->format('g:i A') }} ({{ $order->ends_at->timezone->getName() }})</div>
+                    </div>
+
+                    <div class="track-countdown-card">
+                        <div class="track-card-label">Time Remaining</div>
+                        <div class="countdown" data-remaining="{{ $remaining }}"></div>
+                    </div>
+
+                    <div class="track-progress">
+                        <div class="track-progress-top">
+                            <span>Progress</span>
+                            <strong style="color:#fbbf24;">{{ number_format($progress, 1) }}%</strong>
+                        </div>
+                        <div class="track-progress-bar">
+                            <i style="width: {{ $progress }}%;"></i>
+                        </div>
+                    </div>
+
+                    <div class="track-order-grid">
+                        <div class="track-mini">
+                            <span>Capital</span>
+                            <strong>${{ number_format($order->amount, 2) }}</strong>
+                        </div>
+                        <div class="track-mini">
+                            <span>Expected</span>
+                            <strong style="color:#86efac;">+${{ number_format($order->expected_profit, 2) }}</strong>
+                        </div>
+                    </div>
+
+                    <div class="track-total-return">
+                        <div class="track-card-label">Total Return</div>
+                        <strong>${{ number_format($order->amount + $order->expected_profit, 2) }}</strong>
+                    </div>
+
+                    <div class="track-order-foot">
+                        <span>Started {{ $order->created_at->diffForHumans() }}</span>
+                        <span>{{ optional($order->computePlan)->type ?? 'Vault' }}</span>
+                    </div>
+                </div>
+            @empty
+                <div class="track-empty">
+                    <strong>{{ __t('no_active_orders') }}</strong>
+                    <span>No live positions are running right now.</span>
+                </div>
+            @endforelse
+        </div>
+
+        <div id="completed-orders" class="track-list" style="display:none;">
+            @forelse($completedOrders as $order)
+                <div class="track-order">
+                    <div class="track-order-head">
+                        <div>
+                            <h3 class="track-order-title">{{ optional($order->computePlan)->name ?? 'Compute Plan' }}</h3>
+                            <div class="track-order-id">Order #{{ $order->id }}</div>
+                        </div>
+                        <span class="track-badge completed">{{ __t('completed') }}</span>
+                    </div>
+
+                    <div class="track-order-grid">
+                        <div class="track-mini">
+                            <span>Capital</span>
+                            <strong>${{ number_format($order->amount, 2) }}</strong>
+                        </div>
+                        <div class="track-mini">
+                            <span>{{ __t('profit') }}</span>
+                            <strong style="color:#86efac;">+${{ number_format($order->expected_profit, 2) }}</strong>
+                        </div>
+                    </div>
+
+                    <div class="track-total-return" style="margin-bottom:0;">
+                        <div class="track-card-label">Total Return</div>
+                        <strong style="color:var(--accent);">${{ number_format($order->amount + $order->expected_profit, 2) }}</strong>
+                    </div>
+
+                    <div class="track-order-foot">
+                        <span>Finished {{ $order->ends_at->diffForHumans() }}</span>
+                        <span>{{ optional($order->computePlan)->type ?? 'Vault' }}</span>
+                    </div>
+                </div>
+            @empty
+                <div class="track-empty">
+                    <strong>{{ __t('no_completed_orders') }}</strong>
+                    <span>No completed positions yet.</span>
+                </div>
+            @endforelse
+        </div>
+    </div>
+</div>
+
 @include('partials.alerts')
 <script>
-    function showTab(tab) {
-        const activeBtn = event.target;
-        const allButtons = document.querySelectorAll('.tab-btn');
+    function showTab(tab, button) {
+        const activeOrders = document.getElementById('active-orders');
+        const completedOrders = document.getElementById('completed-orders');
+        const allButtons = document.querySelectorAll('.track-tab-btn');
 
-        document.getElementById('active-orders').style.display = tab === 'active' ? 'block' : 'none';
-        document.getElementById('completed-orders').style.display = tab === 'completed' ? 'block' : 'none';
+        activeOrders.style.display = tab === 'active' ? 'grid' : 'none';
+        completedOrders.style.display = tab === 'completed' ? 'grid' : 'none';
 
-        allButtons.forEach(btn => {
-            btn.classList.remove('active');
-            if (tab === 'active') {
-                allButtons[0].style.background = 'linear-gradient(135deg, rgba(56,189,248,0.15) 0%, rgba(56,189,248,0.05) 100%)';
-                allButtons[0].style.color = '#38bdf8';
-                allButtons[0].style.borderColor = 'rgba(56,189,248,0.2)';
-                allButtons[1].style.background = 'rgba(255,255,255,0.02)';
-                allButtons[1].style.color = '#94a3b8';
-                allButtons[1].style.borderColor = 'rgba(255,255,255,0.08)';
-            } else {
-                allButtons[0].style.background = 'rgba(255,255,255,0.02)';
-                allButtons[0].style.color = '#94a3b8';
-                allButtons[0].style.borderColor = 'rgba(255,255,255,0.08)';
-                allButtons[1].style.background = 'linear-gradient(135deg, rgba(34,197,94,0.15) 0%, rgba(34,197,94,0.05) 100%)';
-                allButtons[1].style.color = '#22c55e';
-                allButtons[1].style.borderColor = 'rgba(34,197,94,0.2)';
-            }
-        });
-
-        activeBtn.classList.add('active');
+        allButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
     }
 
-    /* COUNTDOWN TIMER */
     document.querySelectorAll('.countdown').forEach(el => {
-        let seconds = parseInt(el.dataset.remaining);
+        let seconds = parseInt(el.dataset.remaining, 10);
 
         function tick() {
             if (seconds <= 0) {
                 el.innerText = 'Completed!';
                 el.style.color = '#22c55e';
-
-                // Soft refresh after 2s
-                setTimeout(() => {
-                    window.location.href = window.location.href;
-                }, 2000);
-
+                setTimeout(() => window.location.href = window.location.href, 2000);
                 return;
             }
 
-            let d = Math.floor(seconds / 86400);
-            let h = Math.floor((seconds % 86400) / 3600);
-            let m = Math.floor((seconds % 3600) / 60);
-            let s = seconds % 60;
-
-            el.innerText = d > 0 ? `${d}d ${h}h ${m}m ${s}s remaining` : `${h}h ${m}m ${s}s remaining`;
+            const d = Math.floor(seconds / 86400);
+            const h = Math.floor((seconds % 86400) / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            el.innerText = d > 0 ? `${d}d ${h}h ${m}m ${s}s` : `${h}h ${m}m ${s}s`;
             seconds--;
         }
 
@@ -454,5 +573,4 @@
         setInterval(tick, 1000);
     });
 </script>
-
 @endsection
