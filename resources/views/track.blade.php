@@ -16,7 +16,7 @@
         --warning: #fbbf24;
         min-height: 100vh;
         background: radial-gradient(circle at top left, rgba(27, 184, 242, 0.12), transparent 28%), linear-gradient(180deg, #06101d 0%, #07111f 48%, #0a1422 100%);
-        padding: 18px 14px 100px;
+        padding: 86px 14px 100px;
         color: var(--text);
     }
 
@@ -26,12 +26,24 @@
     }
 
     .track-topbar {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 40;
+        width: min(980px, calc(100% - 28px));
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 12px;
         margin-bottom: 18px;
-        padding-top: 4px;
+        margin-top: 12px;
+        padding: 10px 12px;
+        border: 1px solid rgba(106, 227, 255, 0.14);
+        border-radius: 20px;
+        background: rgba(6, 16, 29, 0.82);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.24);
     }
 
     .track-back {
@@ -372,12 +384,17 @@
 
     @media (min-width: 768px) {
         .track-page {
-            padding: 22px 18px 110px;
+            padding: 98px 18px 110px;
         }
 
         .track-hero,
         .track-order {
             padding: 18px;
+        }
+
+        .track-topbar {
+            width: min(980px, calc(100% - 36px));
+            margin-top: 16px;
         }
     }
 </style>
