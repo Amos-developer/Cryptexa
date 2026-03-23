@@ -15,6 +15,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     // Users
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/duplicate-ips', [UserController::class, 'duplicateIps'])->name('users.duplicate-ips');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');

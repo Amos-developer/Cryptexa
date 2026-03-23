@@ -43,6 +43,8 @@
 .meta-stack{display:flex;flex-direction:column;gap:4px}
 .meta-main{font-weight:600;color:var(--text-primary)}
 .meta-sub{font-size:12px;color:var(--text-secondary);word-break:break-word}
+.risk-badge{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.04em}
+.risk-badge.warn{background:#fef3c7;color:#92400e}
 .action-btn{width:36px;height:36px;border-radius:8px;border:none;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;justify-content:center;margin:0 4px}
 .action-btn.view{background:#dbeafe;color:#1e40af}
 .action-btn.view:hover{background:#bfdbfe}
@@ -150,6 +152,13 @@
             <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin</option>
           </select>
         </div>
+        <div class="filter-group">
+          <label>Risk</label>
+          <select name="risk" id="riskSelect" class="filter-select">
+            <option value="">All Users</option>
+            <option value="shared_ip" {{ request('risk') == 'shared_ip' ? 'selected' : '' }}>Shared IP Only</option>
+          </select>
+        </div>
         <div style="display:flex;gap:8px">
           <button type="submit" class="btn-filter btn-primary">🔍 Filter</button>
           <button type="button" id="resetBtn" class="btn-filter btn-secondary">↻ Reset</button>
@@ -194,6 +203,9 @@
             <td data-label="IP Address">
               <div class="meta-stack">
                 <span class="meta-main">{{ $user->tracked_ip_address ?: 'N/A' }}</span>
+                @if($user->same_ip_users_count > 0)
+                  <span class="risk-badge warn">Shared IP Risk</span>
+                @endif
                 <span class="meta-sub">{{ $user->same_ip_users_count > 0 ? 'Shared with ' . $user->same_ip_users_count . ' other account(s)' : 'Unique so far' }}</span>
               </div>
             </td>
@@ -267,6 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('filterForm');
   const searchInput = document.getElementById('searchInput');
   const roleSelect = document.getElementById('roleSelect');
+  const riskSelect = document.getElementById('riskSelect');
   const resetBtn = document.getElementById('resetBtn');
   const contentArea = document.getElementById('contentArea');
   
@@ -311,6 +324,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const params = new URLSearchParams(formData);
     loadUsers('{{ route('admin.users.index') }}?' + params.toString());
   });
+
+  riskSelect.addEventListener('change', function() {
+    const formData = new FormData(form);
+    const params = new URLSearchParams(formData);
+    loadUsers('{{ route('admin.users.index') }}?' + params.toString());
+  });
   
   form.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -322,6 +341,7 @@ document.addEventListener('DOMContentLoaded', function() {
   resetBtn.addEventListener('click', function() {
     searchInput.value = '';
     roleSelect.value = '';
+    riskSelect.value = '';
     loadUsers('{{ route('admin.users.index') }}');
   });
   

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -27,6 +28,34 @@ class UserController extends Controller
         
         if ($request->filled('role')) {
             $query->where('role', $request->role);
+        }
+
+        if ($request->filled('risk') && $request->risk === 'shared_ip') {
+            $query->where(function ($query) {
+                $query->whereNotNull('last_login_ip')
+                    ->whereExists(function ($subQuery) {
+                        $subQuery->selectRaw('1')
+                            ->from('users as other_users')
+                            ->whereColumn('other_users.id', '!=', 'users.id')
+                            ->where('other_users.role', '!=', 'admin')
+                            ->where(function ($ipMatch) {
+                                $ipMatch->whereColumn('other_users.last_login_ip', 'users.last_login_ip')
+                                    ->orWhereColumn('other_users.registration_ip', 'users.last_login_ip');
+                            });
+                    });
+            })->orWhere(function ($query) {
+                $query->whereNotNull('registration_ip')
+                    ->whereExists(function ($subQuery) {
+                        $subQuery->selectRaw('1')
+                            ->from('users as other_users')
+                            ->whereColumn('other_users.id', '!=', 'users.id')
+                            ->where('other_users.role', '!=', 'admin')
+                            ->where(function ($ipMatch) {
+                                $ipMatch->whereColumn('other_users.last_login_ip', 'users.registration_ip')
+                                    ->orWhereColumn('other_users.registration_ip', 'users.registration_ip');
+                            });
+                    });
+            });
         }
         
         $users = $query->latest('users.created_at')
@@ -84,6 +113,47 @@ class UserController extends Controller
     public function create()
     {
         return view('admin.users.create');
+    }
+
+    public function duplicateIps(Request $request)
+    {
+        $ipSources = User::query()
+            ->where('role', '!=', 'admin')
+            ->selectRaw('id, username, email, account_id, balance, created_at, COALESCE(last_login_ip, registration_ip) as tracked_ip')
+            ->selectRaw('COALESCE(last_login_user_agent, registration_user_agent) as tracked_user_agent');
+
+        $duplicateIpGroups = DB::query()
+            ->fromSub($ipSources, 'user_ips')
+            ->selectRaw('tracked_ip, COUNT(*) as account_count')
+            ->whereNotNull('tracked_ip')
+            ->groupBy('tracked_ip')
+            ->havingRaw('COUNT(*) > 1')
+            ->orderByDesc('account_count')
+            ->orderBy('tracked_ip');
+
+        if ($request->filled('search')) {
+            $duplicateIpGroups->where('tracked_ip', 'like', '%' . $request->search . '%');
+        }
+
+        $clusters = $duplicateIpGroups
+            ->paginate(15)
+            ->appends($request->all())
+            ->through(function ($cluster) use ($ipSources) {
+                $users = DB::query()
+                    ->fromSub($ipSources, 'user_ips')
+                    ->where('tracked_ip', $cluster->tracked_ip)
+                    ->orderBy('created_at')
+                    ->get()
+                    ->map(function ($user) {
+                        $user->device_label = $this->extractDeviceLabel($user->tracked_user_agent);
+                        return $user;
+                    });
+
+                $cluster->users = $users;
+                return $cluster;
+            });
+
+        return view('admin.users.duplicate-ips', compact('clusters'));
     }
     
     public function store(Request $request)

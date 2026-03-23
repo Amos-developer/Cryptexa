@@ -24,6 +24,9 @@
     <li class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
       <a href="{{ route('admin.users.index') }}"><i class="fa fa-users"></i> Manage Users</a>
     </li>
+    <li class="{{ request()->routeIs('admin.users.duplicate-ips') ? 'active' : '' }}">
+      <a href="{{ route('admin.users.duplicate-ips') }}"><i class="fa fa-exclamation-triangle"></i> Duplicate IPs</a>
+    </li>
   </div>
 
   <li class="header" onclick="toggleCat(this)">🔐 VAULTS</li>
