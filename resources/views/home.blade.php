@@ -2,382 +2,731 @@
 
 @section('title', 'Home | Cryptexa')
 
+@push('styles')
+<style>
+    .trade-home {
+        --panel: linear-gradient(180deg, rgba(10, 20, 36, 0.94), rgba(8, 19, 35, 0.92));
+        --line: rgba(106, 227, 255, 0.16);
+        --line-strong: rgba(106, 227, 255, 0.34);
+        --text: #e8f0ff;
+        --muted: rgba(232, 240, 255, 0.62);
+        --accent: #6ae3ff;
+        --accent-strong: #1bb8f2;
+        --success: #22c55e;
+        --warning: #fbbf24;
+        --danger: #fb7185;
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 84px 14px 110px;
+        color: var(--text);
+    }
+
+    .trade-home *,
+    .trade-home *::before,
+    .trade-home *::after {
+        box-sizing: border-box;
+    }
+
+    .trade-home a {
+        text-decoration: none;
+    }
+
+    .trade-shell {
+        display: grid;
+        gap: 16px;
+    }
+
+    .trade-card,
+    .trade-action,
+    .trade-pool {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        background: var(--panel);
+        box-shadow: 0 22px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .trade-card::before,
+    .trade-action::before,
+    .trade-pool::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(106, 227, 255, 0.08), transparent 28%, transparent 70%, rgba(45, 212, 191, 0.05));
+        pointer-events: none;
+    }
+
+    .trade-hero {
+        padding: 15px;
+    }
+
+    .trade-topline,
+    .trade-balance-row,
+    .trade-section-head,
+    .trade-pool-head,
+    .trade-pool-foot,
+    .trade-market-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .trade-kicker,
+    .trade-badge,
+    .trade-chip,
+    .trade-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .trade-kicker {
+        padding: 8px 12px;
+        border: 1px solid rgba(106, 227, 255, 0.16);
+        background: rgba(106, 227, 255, 0.08);
+        color: #b7f4ff;
+    }
+
+    .trade-badge {
+        padding: 7px 11px;
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        background: rgba(34, 197, 94, 0.1);
+        color: #86efac;
+        white-space: nowrap;
+    }
+
+    .trade-title {
+        margin: 14px 0 6px;
+        font-size: clamp(30px, 8vw, 48px);
+        line-height: 0.94;
+        letter-spacing: -0.05em;
+    }
+
+    .trade-subtitle {
+        margin: 0;
+        max-width: 42rem;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+    .trade-balance-row {
+        margin-top: 18px;
+        align-items: flex-end;
+    }
+
+    .trade-balance-label {
+        margin: 0 0 6px;
+        color: var(--muted);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    .trade-balance-amount {
+        margin: 0;
+        font-size: clamp(34px, 9vw, 56px);
+        line-height: 0.9;
+        font-weight: 800;
+        letter-spacing: -0.06em;
+    }
+
+    .trade-balance-note {
+        margin: 10px 0 0;
+        color: #86efac;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .trade-market-strip {
+        margin-top: 14px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .trade-market-tile,
+    .trade-stat,
+    .trade-pool-stat {
+        padding: 10px;
+        border-radius: 14px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02));
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .trade-market-tile span,
+    .trade-stat span,
+    .trade-pool-stat span,
+    .trade-pool-meta,
+    .trade-section-note {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+    }
+
+    .trade-market-tile strong,
+    .trade-stat strong,
+    .trade-pool-stat strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .trade-market-tile {
+        overflow: hidden;
+    }
+
+    .trade-market-tile::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, rgba(106, 227, 255, 0.9), rgba(27, 184, 242, 0.15));
+        opacity: 0.8;
+    }
+
+    .trade-market-tile.balance::after {
+        background: linear-gradient(90deg, rgba(106, 227, 255, 0.95), rgba(27, 184, 242, 0.18));
+    }
+
+    .trade-market-tile.profit::after {
+        background: linear-gradient(90deg, rgba(34, 197, 94, 0.95), rgba(34, 197, 94, 0.12));
+    }
+
+    .trade-market-tile.active::after {
+        background: linear-gradient(90deg, rgba(251, 191, 36, 0.95), rgba(251, 191, 36, 0.14));
+    }
+
+    .trade-market-tile small {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        color: rgba(232, 240, 255, 0.46);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .trade-market-up {
+        color: #86efac;
+    }
+
+    .trade-quick-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .trade-action {
+        min-height: 112px;
+        padding: 14px 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .trade-action:hover {
+        transform: translateY(-3px);
+        border-color: var(--line-strong);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+    }
+
+    .trade-action-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(106, 227, 255, 0.2), rgba(27, 184, 242, 0.25));
+        border: 1px solid rgba(106, 227, 255, 0.18);
+    }
+
+    .trade-action-icon img,
+    .trade-action-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .trade-action-label {
+        color: var(--text);
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .trade-action-sub {
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.4;
+    }
+
+    .trade-grid {
+        display: grid;
+        gap: 16px;
+    }
+
+    .trade-summary {
+        padding: 16px;
+    }
+
+    .trade-section-head {
+        margin-bottom: 14px;
+    }
+
+    .trade-section-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+    .trade-section-note {
+        margin-top: 4px;
+    }
+
+    .trade-summary-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .trade-track-card {
+        display: block;
+        padding: 16px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, rgba(251, 191, 36, 0.09), rgba(251, 191, 36, 0.03));
+        border: 1px solid rgba(251, 191, 36, 0.22);
+        color: inherit;
+        transition: transform 0.22s ease, border-color 0.22s ease;
+    }
+
+    .trade-track-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(251, 191, 36, 0.42);
+    }
+
+    .trade-track-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    .trade-pools {
+        padding: 16px;
+    }
+
+    .trade-pools-list {
+        display: grid;
+        gap: 14px;
+    }
+
+    .trade-pool {
+        display: block;
+        padding: 16px;
+        transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+        color: inherit;
+    }
+
+    .trade-pool:hover {
+        transform: translateY(-3px);
+        border-color: var(--line-strong);
+        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.24);
+    }
+
+    .trade-pool.is-locked {
+        opacity: 0.68;
+        cursor: not-allowed;
+    }
+
+    .trade-pool-icon {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
+        border-radius: 15px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+        box-shadow: 0 10px 24px rgba(56, 189, 248, 0.24);
+    }
+
+    .trade-pool-icon svg {
+        width: 22px;
+        height: 22px;
+        stroke: #fff;
+    }
+
+    .trade-pool-title {
+        margin: 0 0 4px;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .trade-pool-meta {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+    }
+
+    .trade-chip {
+        padding: 5px 9px;
+        border: 1px solid rgba(34, 197, 94, 0.24);
+        background: rgba(34, 197, 94, 0.1);
+        color: #86efac;
+    }
+
+    .trade-chip.locked {
+        border-color: rgba(251, 191, 36, 0.22);
+        background: rgba(251, 191, 36, 0.1);
+        color: #fbbf24;
+    }
+
+    .trade-pool-stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    .trade-pool-roi {
+        margin-top: 10px;
+    }
+
+    .trade-progress {
+        margin-top: 12px;
+    }
+
+    .trade-progress-bar {
+        height: 6px;
+        border-radius: 999px;
+        background: rgba(106, 227, 255, 0.1);
+        overflow: hidden;
+        margin-top: 6px;
+    }
+
+    .trade-progress-bar i {
+        display: block;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+    }
+
+    .trade-pool-foot {
+        margin-top: 14px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .trade-pool-link {
+        color: var(--accent);
+        font-weight: 700;
+    }
+
+    .trade-empty {
+        padding: 36px 20px;
+        text-align: center;
+        border-radius: 18px;
+        border: 1px dashed rgba(106, 227, 255, 0.18);
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .trade-empty strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 16px;
+    }
+
+    .trade-empty p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+    @media (min-width: 768px) {
+        .trade-home {
+            padding: 94px 18px 120px;
+        }
+
+        .trade-grid {
+            grid-template-columns: 340px minmax(0, 1fr);
+            align-items: start;
+        }
+
+        .trade-hero,
+        .trade-summary,
+        .trade-pools {
+            padding: 20px;
+        }
+
+        .trade-quick-grid {
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+        }
+    }
+</style>
+@endpush
+
 @section('content')
+@php
+    $activeOrders = $orders->where('status', 'running');
+    $totalCapital = $activeOrders->sum('amount');
+    $totalExpectedProfit = $activeOrders->sum('expected_profit');
+@endphp
 
-<link rel="stylesheet" href="{{ asset('css/home.css') }}">
-
-<div class="dashboard-container">
-
-    <!-- Top Header -->
-    <!-- <div class="dashboard-top">
-        <div class="dashboard-brand">Cryptexa</div>
-        <div class="dashboard-menu">
-            <img src="{{ asset('images/icons/settings.svg') }}" alt="Settings" style="width: 18px; height: 18px;">
-        </div>
-    </div> -->
-
-    <!-- Balance Section -->
-    <div class="balance-section">
-        <p class="balance-label">{{ __t('total_balance') }}</p>
-        <div class="balance-amount">${{ number_format(auth()->user()->balance, 2) }}</div>
-        <div class="balance-change">
-            <span class="balance-change-positive">
-                {{ __t('active_liquidity') }}
-            </span>
-        </div>
-        <div class="balance-glow">
-            <div class="glow-bar"></div>
-        </div>
-    </div>
-
-    <!-- Quick Actions -->
-    <div class="quick-actions">
-        <a href="{{ route('select.network') }}" class="action-card">
-            <div class="action-icon">
-                <img src="{{ asset('images/icons/deposit.svg') }}" alt="Deposit">
+<div class="trade-home">
+    <div class="trade-shell">
+        <section class="trade-card trade-hero">
+            <div class="trade-topline">
+                <div class="trade-kicker">Live trading desk</div>
+                <div class="trade-badge">Investment vaults</div>
             </div>
-            <div class="action-label">{{ __t('deposit') }}</div>
-        </a>
 
-        <a href="{{ route('withdraw') }}" class="action-card">
-            <div class="action-icon">
-                <img src="{{ asset('images/icons/withdraw.svg') }}" alt="Withdraw">
-            </div>
-            <div class="action-label">{{ __t('withdraw') }}</div>
-        </a>
-
-        <a href="{{ route('checkin') }}" class="action-card">
-            <div class="action-icon">
-                <img src="{{ asset('images/icons/checkin.svg') }}" alt="Check-in">
-            </div>
-            <div class="action-label">{{ __t('checkin') }}</div>
-        </a>
-
-        <a href="{{ route('luckybox') }}" class="action-card">
-            <div class="action-icon">
-                <img src="{{ asset('images/icons/luckybox.svg') }}" alt="Lucky Box">
-            </div>
-            <div class="action-label">{{ __t('lucky_box') }}</div>
-        </a>
-
-        <a href="{{ route('weekly-salary') }}" class="action-card">
-            <div class="action-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="4" width="20" height="16" rx="2"/>
-                    <path d="M7 15h0M12 15h0M17 15h0M7 11h10M7 7h10"/>
-                </svg>
-            </div>
-            <div class="action-label">{{ __t('weekly_salary') }}</div>
-        </a>
-
-        <a href="{{ route('leaderboard') }}" class="action-card">
-            <div class="action-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                    <path d="M2 17l10 5 10-5"/>
-                    <path d="M2 12l10 5 10-5"/>
-                </svg>
-            </div>
-            <div class="action-label">{{ __t('leaders_rank') }}</div>
-        </a>
-    </div>
-
-    <!-- Portfolio Analytics -->
-    <div class="section-container" style="margin-bottom: 24px;">
-        <div class="portfolio-card">
-            <div class="portfolio-icon">
-                <img src="{{ asset('images/icons/analytics.svg') }}" alt="Analytics" style="width: 16px; height: 16px;">
-            </div>
-            <p class="portfolio-text">{{ __t('liquidity_portfolio_overview') }}</p>
-        </div>
-    </div>
-
-    <!-- Active Pool Summary -->
-    @php
-        $activeOrders = $orders->where('status', 'running');
-        $totalCapital = $activeOrders->sum('amount');
-        $totalExpectedProfit = $activeOrders->sum('expected_profit');
-    @endphp
-
-    @if($activeOrders->count() > 0)
-    <div class="section-container" style="margin-bottom: 24px;">
-        <a href="{{ route('compute.track') }}" style="text-decoration: none; display: block;">
-            <div style="
-                background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(251,191,36,0.02));
-                border: 1px solid rgba(251,191,36,0.25);
-                border-radius: 16px;
-                padding: 16px;
-                position: relative;
-                overflow: hidden;
-                transition: all 0.3s ease;
-            "
-            onmouseover="this.style.borderColor='rgba(251,191,36,0.45)'; this.style.boxShadow='0 8px 24px rgba(251,191,36,0.12)'"
-            onmouseout="this.style.borderColor='rgba(251,191,36,0.25)'; this.style.boxShadow='none'">
-
-                <!-- Glow -->
-                <div style="position: absolute; top: 0; right: 0; width: 120px; height: 120px; background: radial-gradient(circle, rgba(251,191,36,0.1) 0%, transparent 70%); pointer-events: none;"></div>
-
-                <!-- Header -->
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <div style="width: 38px; height: 38px; background: linear-gradient(135deg, #fbbf24, #f59e0b); border-radius: 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(251,191,36,0.3);">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-                            </svg>
-                        </div>
-                        <div>
-                            <p style="color: #e5e7eb; font-weight: 700; font-size: 14px; margin: 0;">{{ __t('active_orders') }}</p>
-                            <p style="color: #94a3b8; font-size: 11px; margin: 0;">{{ __t('track_orders') }}</p>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <span style="background: rgba(251,191,36,0.15); border: 1px solid rgba(251,191,36,0.3); color: #fbbf24; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px;">
-                            ⚡ {{ $activeOrders->count() }} {{ __t('active') }}
-                        </span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2">
-                            <polyline points="9 18 15 12 9 6"/>
-                        </svg>
-                    </div>
+           
+            <div class="trade-balance-row">
+                <div>
+                    <p class="trade-balance-label">{{ __t('total_balance') }}</p>
+                    <p class="trade-balance-amount">${{ number_format(auth()->user()->balance, 2) }}</p>
+                    <p class="trade-balance-note">Vault capital ready</p>
                 </div>
-
-                <!-- Stats -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <div style="background: rgba(0,0,0,0.2); border: 1px solid rgba(251,191,36,0.15); border-radius: 10px; padding: 12px;">
-                        <p style="color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 5px 0; font-weight: 600;">💰 {{ __t('amount') }}</p>
-                        <p style="color: #e5e7eb; font-size: 16px; font-weight: 800; margin: 0;">${{ number_format($totalCapital, 2) }}</p>
-                    </div>
-                    <div style="background: rgba(0,0,0,0.2); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; padding: 12px;">
-                        <p style="color: #94a3b8; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 5px 0; font-weight: 600;">📈 {{ __t('total_profit') }}</p>
-                        <p style="color: #22c55e; font-size: 16px; font-weight: 800; margin: 0;">+${{ number_format($totalExpectedProfit, 2) }}</p>
-                    </div>
-                </div>
-
             </div>
-        </a>
-    </div>
-    @endif
 
-    <!-- Liquidity Growth Pools Section -->
-    <div class="main-grid">
+            <div class="trade-market-strip">
+                <div class="trade-market-tile balance">
+                    <span>Vault capital</span>
+                    <small>Allocated</small>
+                    <strong>${{ number_format($totalCapital, 2) }}</strong>
+                </div>
+                <div class="trade-market-tile profit">
+                    <span>Projected</span>
+                    <small>Expected</small>
+                    <strong class="trade-market-up">+${{ number_format($totalExpectedProfit, 2) }}</strong>
+                </div>
+                <div class="trade-market-tile active">
+                    <span>Running</span>
+                    <small>Vaults live</small>
+                    <strong>{{ $activeOrders->count() }} {{ __t('active') }}</strong>
+                </div>
+            </div>
+        </section>
 
-        <div class="section-container">
-            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <span class="section-title" style="display: flex; align-items: center; gap: 8px; color: #e5e7eb; font-weight: 700; font-size: 18px;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                        <path d="M2 17l10 5 10-5"/>
-                        <path d="M2 12l10 5 10-5"/>
-                    </svg>
-                    {{ __t('liquidity_pools') }}
+        <section class="trade-quick-grid">
+            <a href="{{ route('select.network') }}" class="trade-action">
+                <span class="trade-action-icon"><img src="{{ asset('images/icons/deposit.svg') }}" alt="Deposit"></span>
+                <div>
+                    <div class="trade-action-label">{{ __t('deposit') }}</div>
+                    <div class="trade-action-sub">Fund wallet</div>
+                </div>
+            </a>
+
+            <a href="{{ route('withdraw') }}" class="trade-action">
+                <span class="trade-action-icon"><img src="{{ asset('images/icons/withdraw.svg') }}" alt="Withdraw"></span>
+                <div>
+                    <div class="trade-action-label">{{ __t('withdraw') }}</div>
+                    <div class="trade-action-sub">Move capital</div>
+                </div>
+            </a>
+
+            <a href="{{ route('checkin') }}" class="trade-action">
+                <span class="trade-action-icon"><img src="{{ asset('images/icons/checkin.svg') }}" alt="Check-in"></span>
+                <div>
+                    <div class="trade-action-label">{{ __t('checkin') }}</div>
+                    <div class="trade-action-sub">Daily reward</div>
+                </div>
+            </a>
+
+            <a href="{{ route('luckybox') }}" class="trade-action">
+                <span class="trade-action-icon"><img src="{{ asset('images/icons/luckybox.svg') }}" alt="Lucky Box"></span>
+                <div>
+                    <div class="trade-action-label">{{ __t('lucky_box') }}</div>
+                    <div class="trade-action-sub">Bonus draw</div>
+                </div>
+            </a>
+
+            <a href="{{ route('weekly-salary') }}" class="trade-action">
+                <span class="trade-action-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M7 15h0M12 15h0M17 15h0M7 11h10M7 7h10"></path></svg>
                 </span>
-                <span style="color: #38bdf8; font-size: 12px; font-weight: 600;">{{ count($plans) }} {{ __t('active') }}</span>
-            </div>
+                <div>
+                    <div class="trade-action-label">{{ __t('weekly_salary') }}</div>
+                    <div class="trade-action-sub">Income desk</div>
+                </div>
+            </a>
 
-            <div style="display: grid; gap: 16px;">
+            <a href="{{ route('leaderboard') }}" class="trade-action">
+                <span class="trade-action-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                </span>
+                <div>
+                    <div class="trade-action-label">{{ __t('leaders_rank') }}</div>
+                    <div class="trade-action-sub">Top traders</div>
+                </div>
+            </a>
+        </section>
 
-                @forelse ($plans as $index => $plan)
-
-                @php
-                $days = $plan->duration_minutes / 1440;
-                $isLocked = $plan->price > auth()->user()->balance;
-                $tag = $isLocked ? 'div' : 'a';
-                $href = $isLocked ? '' : 'href="' . route('compute.show', $plan->id) . '"';
-                @endphp
-
-                <{{ $tag }} {!! $href !!}
-                   style="
-                       display: block;
-                       background: linear-gradient(135deg, rgba(56,189,248,0.08), rgba(56,189,248,0.02));
-                       border: 1px solid rgba(56,189,248,0.2);
-                       border-radius: 16px;
-                       padding: 16px;
-                       text-decoration: none;
-                       transition: all 0.3s ease;
-                       position: relative;
-                       overflow: hidden;
-                       animation: slideIn 0.5s ease {{ $index * 0.1 }}s backwards;
-                       {{ $isLocked ? 'cursor: not-allowed; opacity: 0.6;' : 'cursor: pointer;' }}
-                   "
-                   @if(!$isLocked)
-                   onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='rgba(56,189,248,0.4)'; this.style.boxShadow='0 8px 24px rgba(56,189,248,0.15)'"
-                   onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(56,189,248,0.2)'; this.style.boxShadow='none'"
-                   @endif>
-                   
-                    <!-- Gradient Overlay -->
-                    <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%); pointer-events: none;"></div>
-                    
-                    <!-- Header -->
-                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #38bdf8, #0ea5e9); border-radius: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(56,189,248,0.3);">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                                    <path d="M2 17l10 5 10-5"/>
-                                    <path d="M2 12l10 5 10-5"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 style="color: #e5e7eb; font-weight: 700; font-size: 16px; margin: 0 0 2px 0;">{{ $plan->name }}</h3>
-                                <p style="color: #94a3b8; font-size: 12px; margin: 0; display: flex; align-items: center; gap: 6px;">
-                                    <span style="display: inline-flex; align-items: center; gap: 3px;">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <circle cx="12" cy="12" r="10"/>
-                                            <polyline points="12 6 12 12 16 14"/>
-                                        </svg>
-                                        {{ $days }} {{ $days > 1 ? __t('days') : __t('day') }}
-                                    </span>
-                                    <span style="color: #64748b;">•</span>
-                                    <span>{{ $plan->type }}</span>
-                                </p>
-                            </div>
-                        </div>
-                        
-                        @if($isLocked)
-                        <div style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(251,191,36,0.15); border: 1px solid rgba(251,191,36,0.3); border-radius: 20px;">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                            </svg>
-                            <span style="color: #fbbf24; font-size: 10px; font-weight: 600;">{{ __t('locked') }}</span>
-                        </div>
-                        @else
-                        <div style="display: flex; align-items: center; gap: 4px; padding: 4px 10px; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); border-radius: 20px;">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                                <polyline points="22 4 12 14.01 9 11.01"/>
-                            </svg>
-                            <span style="color: #22c55e; font-size: 10px; font-weight: 600;">{{ __t('available') }}</span>
-                        </div>
-                        @endif
+        <section class="trade-grid">
+            <aside class="trade-card trade-summary">
+                <div class="trade-section-head">
+                    <div>
+                        <h2 class="trade-section-title">
+                            <img src="{{ asset('images/icons/analytics.svg') }}" alt="Analytics" style="width:18px;height:18px;">
+                            Investment vault overview
+                        </h2>
+                        <span class="trade-section-note">Current account deployment</span>
                     </div>
-                    
-                    <!-- Stats Grid -->
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px;">
-                        <div style="background: rgba(56,189,248,0.05); border: 1px solid rgba(56,189,248,0.15); border-radius: 8px; padding: 10px; text-align: center;">
-                            <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">{{ __t('investment_range') }}</p>
-                            <p style="color: #38bdf8; font-weight: 700; font-size: 15px; margin: 0;">
-                                ${{ number_format($plan->price, 0) }} - 
-                                @if($plan->max_investment)
-                                    ${{ number_format($plan->max_investment, 0) }}
-                                @else
-                                    <span style="font-size: 13px;">∞</span>
-                                @endif
-                            </p>
-                        </div>
-                        <div style="background: rgba(34,197,94,0.05); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; padding: 10px; text-align: center;">
-                            <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">{{ __t('daily_return') }}</p>
-                            <p style="color: #22c55e; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format($plan->daily_profit, 2) }}%</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Total ROI -->
-                    <div style="background: rgba(251,191,36,0.05); border: 1px solid rgba(251,191,36,0.15); border-radius: 8px; padding: 10px; text-align: center; margin-bottom: 12px;">
-                        <p style="color: #64748b; font-size: 10px; margin: 0 0 3px 0; text-transform: uppercase; letter-spacing: 0.5px;">{{ __t('total_roi') }}</p>
-                        <p style="color: #fbbf24; font-weight: 700; font-size: 15px; margin: 0;">{{ number_format((pow(1 + ($plan->daily_profit / 100), $days) - 1) * 100, 2) }}%</p>
-                    </div>
-                    
-                    <!-- Progress Bar -->
-                    <div style="margin-bottom: 10px;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                            <span style="color: #94a3b8; font-size: 11px;">{{ __t('pool_capacity') }}</span>
-                            <span style="color: #38bdf8; font-size: 11px; font-weight: 600;">{{ rand(60, 95) }}%</span>
-                        </div>
-                        <div style="height: 5px; background: rgba(56,189,248,0.1); border-radius: 3px; overflow: hidden;">
-                            <div style="height: 100%; width: {{ rand(60, 95) }}%; background: linear-gradient(90deg, #38bdf8, #0ea5e9); border-radius: 3px; transition: width 0.3s ease;"></div>
-                        </div>
-                    </div>
-                    
-                    <!-- Footer -->
-                    <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(56,189,248,0.1);">
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
-                            <span style="color: #64748b; font-size: 11px;">{{ rand(100, 500) }}+ {{ __t('investors') }}</span>
-                        </div>
-                        @if(!$isLocked)
-                        <div style="display: flex; align-items: center; gap: 5px; color: #38bdf8; font-weight: 600; font-size: 13px;">
-                            <span>{{ __t('view_details') }}</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="9 18 15 12 9 6"/>
-                            </svg>
-                        </div>
-                        @else
-                        <div style="display: flex; align-items: center; gap: 5px; color: #64748b; font-weight: 600; font-size: 13px;">
-                            <span>{{ __t('insufficient_balance') }}</span>
-                        </div>
-                        @endif
-                    </div>
-                    
-                </{{ $tag }}>
-
-                @empty
-
-                <div style="text-align: center; padding: 60px 20px; color: #94a3b8;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">📊</div>
-                    <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">No Pools Available</div>
-                    <div style="font-size: 14px;">Check back later for new liquidity pools</div>
                 </div>
 
-                @endforelse
+                <div class="trade-summary-grid">
+                    <div class="trade-stat">
+                        <span>{{ __t('total_balance') }}</span>
+                        <strong>${{ number_format(auth()->user()->balance, 2) }}</strong>
+                    </div>
+                    <div class="trade-stat">
+                        <span>{{ __t('active_orders') }}</span>
+                        <strong>{{ $activeOrders->count() }}</strong>
+                    </div>
+                    <div class="trade-stat">
+                        <span>{{ __t('amount') }}</span>
+                        <strong>${{ number_format($totalCapital, 2) }}</strong>
+                    </div>
+                    <div class="trade-stat">
+                        <span>{{ __t('total_profit') }}</span>
+                        <strong style="color:#86efac;">+${{ number_format($totalExpectedProfit, 2) }}</strong>
+                    </div>
+                </div>
 
-            </div>
-        </div>
+                @if($activeOrders->count() > 0)
+                    <a href="{{ route('compute.track') }}" class="trade-track-card">
+                        <div class="trade-section-head" style="margin-bottom:0;">
+                            <div>
+                                <h3 class="trade-section-title" style="font-size:15px;">
+                                    <span class="trade-action-icon" style="width:38px;height:38px;border-radius:12px;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                                    </span>
+                                    Track vaults
+                                </h3>
+                            </div>
+                            <span class="trade-pill" style="color:#fbbf24;">{{ $activeOrders->count() }} {{ __t('active') }}</span>
+                        </div>
+                        <div class="trade-track-grid">
+                            <div class="trade-pool-stat">
+                                <span>{{ __t('amount') }}</span>
+                                <strong>${{ number_format($totalCapital, 2) }}</strong>
+                            </div>
+                            <div class="trade-pool-stat">
+                                <span>{{ __t('total_profit') }}</span>
+                                <strong style="color:#86efac;">+${{ number_format($totalExpectedProfit, 2) }}</strong>
+                            </div>
+                        </div>
+                    </a>
+                @endif
+            </aside>
 
+            <section class="trade-card trade-pools">
+                <div class="trade-section-head">
+                    <div>
+                        <h2 class="trade-section-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                            Investment vaults
+                        </h2>
+                        <span class="trade-section-note">{{ count($plans) }} {{ __t('active') }}</span>
+                    </div>
+                </div>
+
+                <div class="trade-pools-list">
+                    @forelse ($plans as $plan)
+                        @php
+                            $days = $plan->duration_minutes / 1440;
+                            $isLocked = $plan->price > auth()->user()->balance;
+                            $progress = rand(60, 95);
+                            $investors = rand(100, 500);
+                            $roi = (pow(1 + ($plan->daily_profit / 100), $days) - 1) * 100;
+                            $tag = $isLocked ? 'div' : 'a';
+                            $href = $isLocked ? '' : 'href="' . route('compute.show', $plan->id) . '"';
+                        @endphp
+
+                        <{{ $tag }} {!! $href !!} class="trade-pool{{ $isLocked ? ' is-locked' : '' }}">
+                            <div class="trade-pool-head">
+                                <div style="display:flex;align-items:center;gap:12px;">
+                                    <span class="trade-pool-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+                                    </span>
+                                    <div>
+                                        <h3 class="trade-pool-title">{{ $plan->name }}</h3>
+                                        <div class="trade-pool-meta">
+                                            <span>{{ $days }} {{ $days > 1 ? __t('days') : __t('day') }}</span>
+                                            <span>•</span>
+                                            <span>{{ $plan->type }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="trade-chip{{ $isLocked ? ' locked' : '' }}">{{ $isLocked ? __t('locked') : __t('available') }}</span>
+                            </div>
+
+                            <div class="trade-pool-stats">
+                                <div class="trade-pool-stat">
+                                    <span>{{ __t('investment_range') }}</span>
+                                    <strong>
+                                        ${{ number_format($plan->price, 0) }}
+                                        @if($plan->max_investment)
+                                            - ${{ number_format($plan->max_investment, 0) }}
+                                        @else
+                                            - ∞
+                                        @endif
+                                    </strong>
+                                </div>
+                                <div class="trade-pool-stat">
+                                    <span>{{ __t('daily_return') }}</span>
+                                    <strong style="color:#86efac;">{{ number_format($plan->daily_profit, 2) }}%</strong>
+                                </div>
+                            </div>
+
+                            <div class="trade-pool-roi trade-pool-stat">
+                                <span>{{ __t('total_roi') }}</span>
+                                <strong style="color:#fbbf24;">{{ number_format($roi, 2) }}%</strong>
+                            </div>
+
+                            <div class="trade-progress">
+                                <div class="trade-market-row" style="font-size:11px;color:var(--muted);">
+                                    <span>{{ __t('pool_capacity') }}</span>
+                                    <strong style="font-size:11px;color:var(--accent);">{{ $progress }}%</strong>
+                                </div>
+                                <div class="trade-progress-bar">
+                                    <i style="width:{{ $progress }}%;"></i>
+                                </div>
+                            </div>
+
+                            <div class="trade-pool-foot">
+                                <span>{{ $investors }}+ {{ __t('investors') }}</span>
+                                <span class="trade-pool-link">{{ $isLocked ? __t('insufficient_balance') : __t('view_details') }}</span>
+                            </div>
+                        </{{ $tag }}>
+                    @empty
+                        <div class="trade-empty">
+                            <strong>No Pools Available</strong>
+                            <p>Check back later for new investment vaults.</p>
+                        </div>
+                    @endforelse
+                </div>
+            </section>
+        </section>
     </div>
-
-    <style>
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            .section-header {
-                font-size: 14px !important;
-            }
-            .section-header span:last-child {
-                font-size: 11px !important;
-            }
-            [style*="padding: 16px"] {
-                padding: 12px !important;
-            }
-            [style*="font-size: 16px"] {
-                font-size: 14px !important;
-            }
-            [style*="font-size: 15px"] {
-                font-size: 13px !important;
-            }
-            [style*="grid-template-columns: repeat(2, 1fr)"] {
-                gap: 8px !important;
-            }
-            [style*="width: 44px; height: 44px"] {
-                width: 36px !important;
-                height: 36px !important;
-            }
-            [style*="width: 22px; height: 22px"] {
-                width: 18px !important;
-                height: 18px !important;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            [style*="grid-template-columns: repeat(3, 1fr)"] {
-                grid-template-columns: 1fr !important;
-            }
-        }
-    </style>
-
 </div>
-
 @endsection
