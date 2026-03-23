@@ -162,6 +162,10 @@
     gap: 12px;
 }
 
+.hero-stat--primary {
+    order: 0;
+}
+
 .hero-stat {
     position: relative;
     overflow: hidden;
@@ -492,7 +496,7 @@
     }
 
     .settings-hero__stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .settings-card {

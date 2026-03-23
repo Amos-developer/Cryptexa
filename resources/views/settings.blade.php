@@ -24,18 +24,17 @@
                     <span>{{ strtoupper(substr(auth()->user()->username, 0, 1)) }}</span>
                 </div>
                 <div class="settings-user">
-                    <span class="settings-user__eyebrow">Account Desk</span>
                     <h2 class="settings-user__name">{{ auth()->user()->username }}</h2>
                     <p class="settings-user__email">{{ auth()->user()->email }}</p>
                 </div>
             </div>
 
             <div class="settings-hero__stats">
-                <div class="hero-stat hero-stat--cyan">
+                <div class="hero-stat hero-stat--cyan hero-stat--primary">
                     <span class="hero-stat__label">Account</span>
                     <strong class="hero-stat__value hero-stat__value--mono">{{ auth()->user()->account_id }}</strong>
                 </div>
-                <div class="hero-stat {{ auth()->user()->email_verified_at ? 'hero-stat--green' : 'hero-stat--amber' }}">
+                <div class="hero-stat {{ auth()->user()->email_verified_at ? 'hero-stat--green' : 'hero-stat--amber' }} hero-stat--primary">
                     <span class="hero-stat__label">Status</span>
                     <div class="hero-status">
                         <span class="hero-status__dot">{{ auth()->user()->email_verified_at ? '✓' : '!' }}</span>
@@ -165,7 +164,6 @@
     @foreach($sections as $sectionIndex => $section)
     <div class="settings-section">
         <div class="section-header">
-            <span class="section-kicker">Control Panel</span>
             <h3 class="section-title">{{ $section['title'] }}</h3>
         </div>
 
