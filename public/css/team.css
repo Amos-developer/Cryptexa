@@ -407,6 +407,9 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
+    align-items: stretch;
+    text-align: left;
 }
 
 .card-label {
@@ -421,6 +424,14 @@
     display: flex;
     gap: 6px;
     align-items: stretch;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.card-header .card-label,
+.card-content .card-label {
+    align-self: flex-start;
+    text-align: left;
 }
 
 .code-input {
@@ -449,6 +460,17 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+}
+
+.copy-btn svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    stroke: currentColor;
+    fill: none;
+    visibility: visible;
+    opacity: 1;
 }
 
 .copy-btn:hover,

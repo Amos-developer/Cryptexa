@@ -93,7 +93,7 @@
                 </div>
             </div>
 
-            <div class="card-header">
+            <div class="card-content">
                 <span class="card-label">{{ __t('referral_code') }}</span>
                 <div class="copy-group">
                     <input id="refCode"
@@ -134,8 +134,9 @@
             </div>
             <div class="share-buttons">
                 <a target="_blank"
-                    href="https://wa.me/?text={{ urlencode(__t('join_cryptexa_link').' '.url('/register?ref='.auth()->user()->referral_code)) }}"
+                    href="whatsapp://send?text={{ urlencode(__t('join_cryptexa_link').' '.url('/register?ref='.auth()->user()->referral_code)) }}"
                     class="share-btn share-whatsapp"
+                    onclick="openShareApp(event, 'whatsapp://send?text={{ urlencode(__t('join_cryptexa_link').' '.url('/register?ref='.auth()->user()->referral_code)) }}', 'https://wa.me/?text={{ urlencode(__t('join_cryptexa_link').' '.url('/register?ref='.auth()->user()->referral_code)) }}')"
                     title="{{ __t('share_on_whatsapp') }}">
                     <svg width="20" height="20" viewBox="0 0 32 32" fill="none" aria-hidden="true">
                         <circle cx="16" cy="16" r="16" fill="#25D366" />
@@ -144,8 +145,9 @@
                     <span>WhatsApp</span>
                 </a>
                 <a target="_blank"
-                    href="https://t.me/share/url?url={{ urlencode(url('/register?ref='.auth()->user()->referral_code)) }}"
+                    href="tg://msg_url?url={{ urlencode(url('/register?ref='.auth()->user()->referral_code)) }}&text={{ urlencode(__t('join_cryptexa_link')) }}"
                     class="share-btn share-telegram"
+                    onclick="openShareApp(event, 'tg://msg_url?url={{ urlencode(url('/register?ref='.auth()->user()->referral_code)) }}&text={{ urlencode(__t('join_cryptexa_link')) }}', 'https://t.me/share/url?url={{ urlencode(url('/register?ref='.auth()->user()->referral_code)) }}&text={{ urlencode(__t('join_cryptexa_link')) }}')"
                     title="{{ __t('share_on_telegram') }}">
                     <svg width="20" height="20" viewBox="0 0 32 32" fill="none" aria-hidden="true">
                         <circle cx="16" cy="16" r="16" fill="#229ED9" />
@@ -279,6 +281,19 @@
 
 <!-- SCRIPTS -->
 <script>
+    function openShareApp(event, appUrl, fallbackUrl) {
+        event.preventDefault();
+
+        const now = Date.now();
+        window.location.href = appUrl;
+
+        setTimeout(() => {
+            if (Date.now() - now < 1600) {
+                window.open(fallbackUrl, '_blank', 'noopener');
+            }
+        }, 900);
+    }
+
     function copyText(event, id) {
         const element = document.getElementById(id);
 
