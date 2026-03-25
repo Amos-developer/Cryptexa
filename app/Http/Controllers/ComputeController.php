@@ -21,7 +21,7 @@ class ComputeController extends Controller
         $user = auth()->user();
         $plan = ComputePlan::findOrFail($id);
 
-        $amount = $request->input('amount');
+        $amount = round((float) $request->input('amount'), 2);
 
         // Strong validation
         $rules = [
@@ -61,15 +61,9 @@ class ComputeController extends Controller
 
             $user->decrement('balance', $amount);
 
-            // Use fixed daily percentage
-            $dailyPercent = $plan->daily_profit;
-
             $principal = $amount;
-            $days = $plan->duration_minutes / 1440;
-
-            // Calculate expected profit with compound interest (convert percentage to decimal)
-            $finalAmount = $principal * pow((1 + ($dailyPercent / 100)), $days);
-            $expectedProfit = round($finalAmount - $principal, 2);
+            $dailyPercent = (float) $plan->daily_profit;
+            $expectedProfit = $plan->projectedProfit($principal);
 
             $order = ComputeOrder::create([
                 'user_id'         => $user->id,

@@ -109,9 +109,9 @@ $totalExpectedProfit = $activeOrders->sum('expected_profit');
                 <div class="vault-list">
                     @forelse ($plans as $plan)
                     @php
-                    $days = $plan->duration_minutes / 1440;
+                    $days = $plan->duration_days;
                     $isLocked = $plan->price > auth()->user()->balance;
-                    $roi = (pow(1 + ($plan->daily_profit / 100), $days) - 1) * 100;
+                    $roi = $plan->projected_roi_percentage;
                     $tag = $isLocked ? 'div' : 'a';
                     $href = $isLocked ? '' : 'href="' . route('compute.show', $plan->id) . '"';
                     @endphp

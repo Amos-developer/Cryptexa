@@ -24,10 +24,10 @@ class AdminPoolController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'type' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'max_investment' => 'nullable|numeric|min:0',
+            'price' => 'required|numeric|min:0.01',
+            'max_investment' => 'nullable|numeric|gte:price',
             'daily_profit' => 'required|numeric|min:0|max:100',
-            'duration_minutes' => 'required|integer|min:1',
+            'duration_minutes' => 'required|integer|min:1440|multiple_of:1440',
             'compound_interest' => 'nullable|boolean',
         ]);
         
@@ -53,10 +53,10 @@ class AdminPoolController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'type' => 'required|string',
-            'price' => 'required|numeric|min:0',
-            'max_investment' => 'nullable|numeric|min:0',
+            'price' => 'required|numeric|min:0.01',
+            'max_investment' => 'nullable|numeric|gte:price',
             'daily_profit' => 'required|numeric|min:0|max:100',
-            'duration_minutes' => 'required|integer|min:1',
+            'duration_minutes' => 'required|integer|min:1440|multiple_of:1440',
             'compound_interest' => 'nullable|boolean',
         ]);
         

@@ -282,25 +282,25 @@ Route::post('/nowpayments/ipn', [\App\Http\Controllers\NowPaymentsWebhookControl
 Route::post('/nowpayments/payout-webhook', [\App\Http\Controllers\NowPaymentsPayoutWebhookController::class, 'handle'])
     ->name('nowpayments.payout.webhook');
 
-// Automation endpoint for localhost (remove in production)
-Route::get('/automation/run', [\App\Http\Controllers\AutomationController::class, 'runAll'])
-    ->name('automation.run');
+if (app()->environment('local')) {
+    Route::get('/automation/run', [\App\Http\Controllers\AutomationController::class, 'runAll'])
+        ->name('automation.run');
 
-// Temporary route to clear opcache and test translations
-Route::get('/clear-all-cache', function() {
-    Artisan::call('cache:clear');
-    Artisan::call('config:clear');
-    Artisan::call('view:clear');
-    Artisan::call('route:clear');
-    
-    if (function_exists('opcache_reset')) {
-        opcache_reset();
-    }
-    
-    return response()->json([
-        'message' => 'All caches cleared!',
-        'test_translation' => __t('verification_code'),
-        'test_trans' => trans('english.verification_code'),
-        'locale' => app()->getLocale()
-    ]);
-});
+    Route::get('/clear-all-cache', function() {
+        Artisan::call('cache:clear');
+        Artisan::call('config:clear');
+        Artisan::call('view:clear');
+        Artisan::call('route:clear');
+        
+        if (function_exists('opcache_reset')) {
+            opcache_reset();
+        }
+        
+        return response()->json([
+            'message' => 'All caches cleared!',
+            'test_translation' => __t('verification_code'),
+            'test_trans' => trans('english.verification_code'),
+            'locale' => app()->getLocale()
+        ]);
+    });
+}

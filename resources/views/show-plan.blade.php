@@ -399,7 +399,7 @@
                 </div>
                 <div class="plan-metric">
                     <span>{{ __t('duration') }}</span>
-                    <strong>{{ $plan->duration_minutes / 1440 }} {{ __t('days') }}</strong>
+                    <strong>{{ $plan->duration_days }} {{ __t('days') }}</strong>
                 </div>
             </div>
         </section>
@@ -419,7 +419,7 @@
                 </div>
                 <div class="plan-stat">
                     <span>{{ __t('duration') }}</span>
-                    <strong>{{ $plan->duration_minutes }} min</strong>
+                    <strong>{{ $plan->duration_days }} {{ __t('days') }}</strong>
                 </div>
                 <div class="plan-stat profit" style="grid-column:1 / -1;">
                     <span>{{ __t('daily_return') }} ({{ __t('fixed') }})</span>
@@ -478,9 +478,9 @@
 
             <div class="amount-grid">
                 <button type="button" class="amount-chip" onclick="setAmount({{ $plan->price }})">${{ number_format($plan->price, 0) }}</button>
-                <button type="button" class="amount-chip" onclick="setAmount({{ $plan->price * 2 }})">${{ number_format($plan->price * 2, 0) }}</button>
-                <button type="button" class="amount-chip" onclick="setAmount({{ $plan->price * 5 }})">${{ number_format($plan->price * 5, 0) }}</button>
-                <button type="button" class="amount-chip" onclick="setAmount({{ $plan->price * 10 }})">${{ number_format($plan->price * 10, 0) }}</button>
+                <button type="button" class="amount-chip" onclick="setAmount({{ min($plan->max_investment ?? $plan->price * 2, $plan->price * 2) }})">${{ number_format(min($plan->max_investment ?? $plan->price * 2, $plan->price * 2), 0) }}</button>
+                <button type="button" class="amount-chip" onclick="setAmount({{ min($plan->max_investment ?? $plan->price * 5, $plan->price * 5) }})">${{ number_format(min($plan->max_investment ?? $plan->price * 5, $plan->price * 5), 0) }}</button>
+                <button type="button" class="amount-chip" onclick="setAmount({{ min($plan->max_investment ?? $plan->price * 10, $plan->price * 10) }})">${{ number_format(min($plan->max_investment ?? $plan->price * 10, $plan->price * 10), 0) }}</button>
                 <button type="button" class="amount-chip max" onclick="setAmount({{ $plan->max_investment ?? auth()->user()->balance }})">MAX</button>
             </div>
 
@@ -512,11 +512,14 @@
 </div>
 
 <script>
-    const dailyProfit = {{ $plan->daily_profit }};
-    const days = {{ $plan->duration_minutes / 1440 }};
+    const dailyProfit = {{ (float) $plan->daily_profit }};
+    const days = {{ $plan->duration_days }};
+    const minAmount = {{ (float) $plan->price }};
+    const maxAmount = {{ (float) ($plan->max_investment ?? auth()->user()->balance) }};
 
     function setAmount(value) {
-        document.getElementById('investmentAmount').value = value.toFixed(2);
+        const safeValue = Math.min(Math.max(value, minAmount), maxAmount);
+        document.getElementById('investmentAmount').value = safeValue.toFixed(2);
         calculateReturns();
     }
 
@@ -524,7 +527,7 @@
         const amount = parseFloat(document.getElementById('investmentAmount').value) || 0;
         const returnsCard = document.getElementById('returnsCard');
 
-        if (amount >= {{ $plan->price }}) {
+        if (amount >= minAmount && amount <= maxAmount) {
             const finalAmount = amount * Math.pow((1 + (dailyProfit / 100)), days);
             const profit = finalAmount - amount;
             const total = finalAmount;

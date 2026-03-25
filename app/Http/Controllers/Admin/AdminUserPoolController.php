@@ -59,7 +59,7 @@ class AdminUserPoolController extends Controller
         
         // Server-side double check for amount
         if ($request->has('amount')) {
-            $amount = $request->input('amount');
+            $amount = round((float) $request->input('amount'), 2);
             if ($amount < $plan->price) {
                 return back()->with('error', 'Investment amount must be at least $' . number_format($plan->price, 2));
             }
@@ -98,8 +98,9 @@ class AdminUserPoolController extends Controller
             $updateData = $request->only(['status', 'expected_profit']);
 
             if ($request->has('amount')) {
-                $updateData['amount'] = $request->amount;
-                $updateData['investment_amount'] = $request->amount;
+                $normalizedAmount = round((float) $request->amount, 2);
+                $updateData['amount'] = $normalizedAmount;
+                $updateData['investment_amount'] = $normalizedAmount;
             }
 
             $userPool->update($updateData);

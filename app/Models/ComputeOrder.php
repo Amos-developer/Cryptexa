@@ -58,7 +58,7 @@ class ComputeOrder extends Model
             return 0;
         }
 
-        $totalDays = max(0, (int) floor(((float) $this->computePlan->duration_minutes) / 1440));
+        $totalDays = max(0, (int) floor($this->computePlan->duration_days));
         $elapsedDays = max(0, $this->started_at->diffInDays(min(now(), $this->ends_at ?? now())));
 
         return min($elapsedDays, $totalDays);
@@ -97,14 +97,8 @@ class ComputeOrder extends Model
         }
 
         $principal = $this->principal_amount;
-        $dailyPercent = (float) ($this->daily_profit_percent ?? $this->computePlan->daily_profit ?? 0);
-        $days = max(0, ((float) $this->computePlan->duration_minutes) / 1440);
-
-        if ($this->computePlan->compound_interest) {
-            $expectedProfit = round(($principal * pow(1 + ($dailyPercent / 100), $days)) - $principal, 2);
-        } else {
-            $expectedProfit = round($principal * (($dailyPercent / 100) * $days), 2);
-        }
+        $this->daily_profit_percent = (float) ($this->daily_profit_percent ?? $this->computePlan->daily_profit ?? 0);
+        $expectedProfit = $this->computePlan->projectedProfit($principal);
 
         $hasChanges =
             round((float) $this->amount, 2) !== $principal ||
