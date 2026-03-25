@@ -50,6 +50,44 @@ class ComputeOrder extends Model
         return round($this->principal_amount + (float) $this->expected_profit, 2);
     }
 
+    public function getElapsedProfitDaysAttribute(): int
+    {
+        $this->loadMissing('computePlan');
+
+        if (!$this->started_at || !$this->computePlan) {
+            return 0;
+        }
+
+        $totalDays = max(0, (int) floor(((float) $this->computePlan->duration_minutes) / 1440));
+        $elapsedDays = max(0, $this->started_at->diffInDays(min(now(), $this->ends_at ?? now())));
+
+        return min($elapsedDays, $totalDays);
+    }
+
+    public function getCurrentAccruedValueAttribute(): float
+    {
+        $this->loadMissing('computePlan');
+
+        if (!$this->computePlan) {
+            return $this->principal_amount;
+        }
+
+        $principal = $this->principal_amount;
+        $dailyPercent = (float) ($this->daily_profit_percent ?? $this->computePlan->daily_profit ?? 0);
+        $elapsedDays = $this->elapsed_profit_days;
+
+        if ($this->computePlan->compound_interest) {
+            return round($principal * pow(1 + ($dailyPercent / 100), $elapsedDays), 2);
+        }
+
+        return round($principal * (1 + (($dailyPercent / 100) * $elapsedDays)), 2);
+    }
+
+    public function getCurrentAccruedProfitAttribute(): float
+    {
+        return round($this->current_accrued_value - $this->principal_amount, 2);
+    }
+
     public function syncProjectedFigures(bool $save = true): bool
     {
         $this->loadMissing('computePlan');

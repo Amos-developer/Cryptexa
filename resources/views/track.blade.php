@@ -492,6 +492,14 @@
                         </div>
                     </div>
 
+                    <div class="track-total-return" style="margin-top:-2px; margin-bottom:12px; background:rgba(106, 227, 255, 0.07); border-color:rgba(106, 227, 255, 0.16);">
+                        <div class="track-card-label">Current Capital + Profit</div>
+                        <strong style="color:var(--accent);">${{ number_format($order->current_accrued_value, 2) }}</strong>
+                        <div style="margin-top:6px; color:var(--muted); font-size:12px;">
+                            Profit so far: +${{ number_format($order->current_accrued_profit, 2) }} after {{ $order->elapsed_profit_days }} day{{ $order->elapsed_profit_days === 1 ? '' : 's' }}
+                        </div>
+                    </div>
+
                     <div class="track-total-return">
                         <div class="track-card-label">Total Return</div>
                         <strong>${{ number_format($order->total_return, 2) }}</strong>
