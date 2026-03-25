@@ -2,6 +2,7 @@
 
 @section('title', 'Compute Orders | Cryptexa')
 @section('hide-header', true)
+@section('page-heading', __t('my_pools'))
 
 @push('styles')
 <style>

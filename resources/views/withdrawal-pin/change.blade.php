@@ -2,6 +2,8 @@
 
 @section('title', 'Change Withdrawal PIN | Cryptexa')
 @section('hide-header', true)
+@section('page-heading', 'Change Withdrawal PIN')
+@section('page-back-url', route('account.settings'))
 
 @section('content')
 

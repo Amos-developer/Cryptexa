@@ -2,6 +2,8 @@
 
 @section('hide-header', true)
 @section('title', 'Deposit History | Cryptexa')
+@section('page-heading', 'Deposit History')
+@section('page-back-url', route('account.settings'))
 
 @section('content')
 

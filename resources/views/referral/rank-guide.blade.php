@@ -2,6 +2,8 @@
 
 @section('title', 'Leadership Ranks Guide')
 @section('hide-header', true)
+@section('page-heading', 'Leadership Ranks Guide')
+@section('page-back-url', route('home'))
 
 @section('content')
 
@@ -14,7 +16,7 @@
 .rank-card { animation: slideUp 0.6s ease; }
 </style>
 
-<div style="min-height: 100vh; background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0d1726 100%); padding: 16px; padding-bottom: 80px;">
+<div style="min-height: 100vh; background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0d1726 100%); padding: 80px 16px 80px;">
     <div style="max-width: 800px; margin: 0 auto;">
         
         <!-- HEADER BAR -->

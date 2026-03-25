@@ -2,20 +2,20 @@
 
 @section('hide-header', true)
 @section('title', 'Choose Network | Cryptexa')
+@section('page-heading', __t('select_network'))
 
 @section('content')
 
 <link rel="stylesheet" href="{{ asset('css/team.css') }}?v={{ filemtime(public_path('css/team.css')) }}">
 
-<div class="team-topbar">
+<div class="select-network-page">
+    <div style="display:none;">
     <a href="{{ url()->previous() }}" class="team-back">
         <span aria-hidden="true">‹</span>
     </a>
     <h1>{{ __t('select_network') }}</h1>
     <span class="placeholder"></span>
-</div>
-
-<div class="select-network-page">
+    </div>
     <div class="select-network-shell">
         <section class="select-hero">
             <div class="select-hero__glow select-hero__glow--cyan"></div>

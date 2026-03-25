@@ -2,6 +2,8 @@
 
 @section('title', __t('lucky_box'))
 @section('hide-header', true)
+@section('page-heading', __t('lucky_box'))
+@section('page-back-url', route('home'))
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/luckybox.css') }}">

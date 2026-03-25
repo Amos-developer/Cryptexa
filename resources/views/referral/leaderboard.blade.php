@@ -2,6 +2,8 @@
 
 @section('title', 'Leaderboard')
 @section('hide-header', true)
+@section('page-heading', __t('leaders_rank'))
+@section('page-back-url', route('home'))
 
 @section('content')
 <style>
@@ -46,7 +48,7 @@
     }
 </style>
 
-<div style="min-height: 100vh; background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0d1726 100%); padding: 16px; padding-bottom: 80px;">
+<div style="min-height: 100vh; background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0d1726 100%); padding: 80px 16px 80px;">
     <div style="max-width: 480px; margin: 0 auto;">
 
         <link rel="stylesheet" href="{{ asset('css/team.css') }}">

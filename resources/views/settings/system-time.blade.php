@@ -2,6 +2,8 @@
 
 @section('hide-header', true)
 @section('title', 'System Time | Cryptexa')
+@section('page-heading', __t('system_time'))
+@section('page-back-url', route('account.settings'))
 
 @section('content')
 

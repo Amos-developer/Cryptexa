@@ -2,6 +2,8 @@
 
 @section('hide-header', true)
 @section('title', 'Withdrawal Method | Cryptexa')
+@section('page-heading', __t('withdrawal_method'))
+@section('page-back-url', route('account.settings'))
 
 <link rel="stylesheet" href="{{ asset('css/withdrawal-method.css') }}">
 

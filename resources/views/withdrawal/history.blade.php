@@ -2,6 +2,8 @@
 
 @section('hide-header', true)
 @section('title', 'Withdrawal History | Cryptexa')
+@section('page-heading', __t('withdrawal_history'))
+@section('page-back-url', route('account.settings'))
 
 @section('content')
 
@@ -215,4 +217,3 @@
 </style>
 
 @endsection
-

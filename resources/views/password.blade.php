@@ -2,6 +2,7 @@
 
 @section('title', 'Change Password | Cryptexa')
 @section('hide-header', true)
+@section('page-heading', __t('password'))
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

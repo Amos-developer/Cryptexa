@@ -2,6 +2,8 @@
 
 @section('hide-header', true)
 @section('title', 'About Cryptexa | Cryptexa')
+@section('page-heading', 'About Cryptexa')
+@section('page-back-url', route('account.settings'))
 
 @section('content')
 

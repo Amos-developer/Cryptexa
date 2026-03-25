@@ -2,6 +2,8 @@
 
 @section('title', __t('daily_checkin'))
 @section('hide-header', true)
+@section('page-heading', __t('daily_checkin'))
+@section('page-back-url', route('home'))
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/checkin.css?v=' . time()) }}">

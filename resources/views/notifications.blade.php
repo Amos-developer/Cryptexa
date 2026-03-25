@@ -3,6 +3,7 @@
 @section('title', 'Notifications | Cryptexa')
 
 @section('hide-header', true)
+@section('page-heading', 'Notifications')
 
 @section('content')
 

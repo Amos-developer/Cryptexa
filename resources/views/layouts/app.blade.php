@@ -51,6 +51,25 @@
         @endunless
         @endauth
 
+        @if(View::hasSection('hide-header'))
+        @include('partials.subpage-topbar')
+        <style>
+            .team-header,
+            .team-topbar,
+            .settings-topbar,
+            .track-topbar,
+            .plan-topbar,
+            .luckybox-header,
+            .checkin-header,
+            .withdrawal-header,
+            .pin-header,
+            .settings-header,
+            .header.fixed-top {
+                display: none !important;
+            }
+        </style>
+        @endif
+
         {{-- MAIN CONTENT --}}
         <main class="app-content">
             @yield('content')

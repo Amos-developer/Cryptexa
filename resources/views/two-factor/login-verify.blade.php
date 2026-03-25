@@ -2,6 +2,8 @@
 
 @section('title', 'Two-Factor Authentication | Cryptexa')
 @section('hide-header', true)
+@section('page-heading', 'Verify Login')
+@section('page-back-url', route('login'))
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

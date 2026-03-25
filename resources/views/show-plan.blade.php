@@ -2,6 +2,7 @@
 
 @section('hide-header', true)
 @section('title', $plan->name . ' | Cryptexa')
+@section('page-heading', $plan->name)
 
 @push('styles')
 <style>
@@ -17,7 +18,7 @@
         --violet: #a855f7;
         min-height: 100vh;
         background: radial-gradient(circle at top left, rgba(27, 184, 242, 0.12), transparent 28%), linear-gradient(180deg, #06101d 0%, #07111f 48%, #0a1422 100%);
-        padding: 18px 14px 100px;
+        padding: 74px 14px 100px;
         color: var(--text);
     }
 
@@ -354,7 +355,7 @@
 
     @media (min-width: 768px) {
         .plan-page {
-            padding: 22px 18px 110px;
+            padding: 82px 18px 110px;
         }
 
         .plan-hero,

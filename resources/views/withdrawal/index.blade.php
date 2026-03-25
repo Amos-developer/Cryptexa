@@ -2,6 +2,7 @@
 
 @section('title', 'Withdraw Funds | Cryptexa')
 @section('hide-header', true)
+@section('page-heading', __t('withdraw_funds'))
 
 @section('content')
 

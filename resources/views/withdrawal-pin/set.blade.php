@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', 'Set Withdrawal PIN | Cryptexa')
+@section('hide-header', true)
+@section('page-heading', __t('withdrawal_pin'))
+@section('page-back-url', route('account.settings'))
 
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/withdrawal-pin.css') }}">

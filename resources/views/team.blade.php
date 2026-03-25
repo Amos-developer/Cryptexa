@@ -2,6 +2,7 @@
 
 @section('title', 'Referral Program | Cryptexa')
 @section('hide-header', true)
+@section('page-heading', __t('my_team'))
 
 @section('content')
 

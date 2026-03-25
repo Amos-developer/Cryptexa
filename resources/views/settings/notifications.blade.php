@@ -2,6 +2,8 @@
 
 @section('hide-header', true)
 @section('title', 'Notifications | Cryptexa')
+@section('page-heading', __t('notifications'))
+@section('page-back-url', route('account.settings'))
 
 @section('content')
 

@@ -2,20 +2,20 @@
 
 @section('title', 'Account Settings | Cryptexa')
 @section('hide-header', true)
+@section('page-heading', __t('settings'))
 
 @section('content')
 
 <link rel="stylesheet" href="{{ asset('css/settings.css') }}?v={{ filemtime(public_path('css/settings.css')) }}">
 
 <div class="settings-container">
-    <div class="settings-topbar">
+    <div style="display:none;">
         <a href="{{ url()->previous() }}" class="settings-back">
             <span aria-hidden="true">‹</span>
         </a>
         <h1>{{ __t('settings') }}</h1>
         <span class="placeholder"></span>
     </div>
-
     <section class="settings-hero">
         <div class="settings-hero__glow"></div>
         <div class="settings-hero__content">

@@ -2,6 +2,7 @@
 
 @section('hide-header', true)
 @section('title', 'Deposit QR Code | Cryptexa')
+@section('page-heading', __t('deposit_address'))
 
 @section('content')
 

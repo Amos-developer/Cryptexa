@@ -2,6 +2,8 @@
 
 @section('hide-header', true)
 @section('title', 'Language Settings | Cryptexa')
+@section('page-heading', __t('language'))
+@section('page-back-url', route('account.settings'))
 
 @section('content')
 
