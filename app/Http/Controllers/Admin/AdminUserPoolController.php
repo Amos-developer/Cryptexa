@@ -18,7 +18,9 @@ class AdminUserPoolController extends Controller
         $totalRunning = ComputeOrder::where('status', 'running')->count();
         $totalCompleted = ComputeOrder::where('status', 'completed')->count();
         $totalRevenue = ComputeOrder::where('status', 'completed')->sum('expected_profit');
-        $totalInvested = ComputeOrder::sum('amount');
+        $totalInvested = (float) ComputeOrder::query()
+            ->selectRaw('COALESCE(SUM(COALESCE(investment_amount, amount)), 0) as total')
+            ->value('total');
 
         return view('admin.user-pools.index', compact('userPools', 'totalRunning', 'totalCompleted', 'totalRevenue', 'totalInvested'));
     }
@@ -68,15 +70,19 @@ class AdminUserPoolController extends Controller
 
         // If status is being changed to completed, credit user
         if ($request->status == 'completed' && $userPool->status == 'running') {
-            $totalReturn = $userPool->amount + ($request->expected_profit ?? $userPool->expected_profit);
+            $principal = (float) ($request->amount ?? $userPool->principal_amount);
+            $profit = (float) ($request->expected_profit ?? $userPool->expected_profit);
+            $totalReturn = $principal + $profit;
             $userPool->user->increment('balance', $totalReturn);
             $userPool->user->refresh();
             $balanceAfter = $userPool->user->balance;
             
             $userPool->update([
+                'amount' => $principal,
+                'investment_amount' => $principal,
                 'status' => 'completed',
                 'is_paid' => true,
-                'expected_profit' => $request->expected_profit ?? $userPool->expected_profit,
+                'expected_profit' => $profit,
                 'balance_after' => $balanceAfter,
             ]);
             
@@ -89,7 +95,14 @@ class AdminUserPoolController extends Controller
                 'is_read' => false,
             ]);
         } else {
-            $userPool->update($request->only(['status', 'expected_profit']));
+            $updateData = $request->only(['status', 'expected_profit']);
+
+            if ($request->has('amount')) {
+                $updateData['amount'] = $request->amount;
+                $updateData['investment_amount'] = $request->amount;
+            }
+
+            $userPool->update($updateData);
         }
 
         return redirect()->route('admin.user-pools.index')->with('success', 'User pool updated successfully');

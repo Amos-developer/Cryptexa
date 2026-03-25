@@ -27,12 +27,14 @@ class ProcessComputeOrders extends Command
             $this->info("Found {$orders->count()} orders to process");
 
             foreach ($orders as $order) {
+                $order->loadMissing(['computePlan', 'user']);
+                $order->syncProjectedFigures();
 
                 $user = $order->user;
                 $balanceBefore = $user->balance;
 
                 // Capital + profit
-                $totalReturn = $order->amount + $order->expected_profit;
+                $totalReturn = $order->total_return;
 
                 // Credit user balance ONCE
                 $user->increment('balance', $totalReturn);

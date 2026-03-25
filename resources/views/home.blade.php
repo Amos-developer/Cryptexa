@@ -9,7 +9,7 @@
 @section('content')
 @php
 $activeOrders = $orders->where('status', 'running');
-$totalCapital = $activeOrders->sum('amount');
+$totalCapital = $activeOrders->sum(fn ($order) => $order->principal_amount);
 $totalExpectedProfit = $activeOrders->sum('expected_profit');
 @endphp
 

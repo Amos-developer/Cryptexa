@@ -38,11 +38,14 @@ class AutomationController extends Controller
         $orders = ComputeOrder::where('status', 'running')
             ->where('ends_at', '<=', now())
             ->where('is_paid', false)
+            ->with(['computePlan', 'user'])
             ->get();
 
         foreach ($orders as $order) {
             DB::transaction(function () use ($order, &$completed) {
-                $totalReturn = $order->amount + $order->expected_profit;
+                $order->syncProjectedFigures();
+
+                $totalReturn = $order->total_return;
                 $order->user->increment('balance', $totalReturn);
                 
                 $order->update([
@@ -74,29 +77,13 @@ class AutomationController extends Controller
         DB::transaction(function () use (&$processed) {
             $orders = ComputeOrder::where('status', 'running')
                 ->where('ends_at', '>', now())
-                ->lockForUpdate()
+                ->with('computePlan')
                 ->get();
 
             foreach ($orders as $order) {
-                $plan = $order->computePlan;
-                
-                if (!$plan->compound_interest) continue;
-
-                $lastProcessed = $order->last_compound_at ?? $order->started_at;
-                if ($lastProcessed->isToday()) continue;
-
-                $dailyPercent = $order->daily_profit_percent ?? (
-                    mt_rand($plan->min_profit * 10, $plan->max_profit * 10) / 10
-                );
-
-                $todayProfit = $order->amount * ($dailyPercent / 100);
-                $order->amount += $todayProfit;
-                $order->expected_profit += $todayProfit;
-                $order->daily_profit_percent = $dailyPercent;
-                $order->last_compound_at = now();
-                $order->save();
-
-                $processed++;
+                if ($order->syncProjectedFigures()) {
+                    $processed++;
+                }
             }
         });
 

@@ -45,7 +45,7 @@
         <input type="number" name="amount" class="form-input" step="0.01" 
                min="{{ $userPool->computePlan->price ?? 0 }}" 
                max="{{ $userPool->computePlan->max_investment ?? '' }}" 
-               value="{{ $userPool->amount ?? 0 }}" required>
+               value="{{ $userPool->principal_amount }}" required>
         @error('amount')
           <small style="color:#ef4444;font-size:12px;margin-top:4px;display:block">{{ $message }}</small>
         @enderror

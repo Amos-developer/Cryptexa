@@ -402,9 +402,8 @@
 
 @section('content')
 @php
-    $activeCapital = $activeOrders->sum('amount');
+    $activeCapital = $activeOrders->sum(fn ($order) => $order->principal_amount);
     $activeProfit = $activeOrders->sum('expected_profit');
-    $completedProfit = $completedOrders->sum('expected_profit');
 @endphp
 
 <div class="track-page">
@@ -432,8 +431,8 @@
                     <strong>${{ number_format($activeCapital, 2) }}</strong>
                 </div>
                 <div class="track-stat">
-                    <span>Profit</span>
-                    <strong style="color:#86efac;">+${{ number_format($completedProfit + $activeProfit, 2) }}</strong>
+                    <span>Expected Profit</span>
+                    <strong style="color:#86efac;">+${{ number_format($activeProfit, 2) }}</strong>
                 </div>
             </div>
         </section>
@@ -485,17 +484,17 @@
                     <div class="track-order-grid">
                         <div class="track-mini">
                             <span>Capital</span>
-                            <strong>${{ number_format($order->amount, 2) }}</strong>
+                            <strong>${{ number_format($order->principal_amount, 2) }}</strong>
                         </div>
                         <div class="track-mini">
-                            <span>Expected</span>
+                            <span>Expected Profit</span>
                             <strong style="color:#86efac;">+${{ number_format($order->expected_profit, 2) }}</strong>
                         </div>
                     </div>
 
                     <div class="track-total-return">
                         <div class="track-card-label">Total Return</div>
-                        <strong>${{ number_format($order->amount + $order->expected_profit, 2) }}</strong>
+                        <strong>${{ number_format($order->total_return, 2) }}</strong>
                     </div>
 
                     <div class="track-order-foot">
@@ -525,7 +524,7 @@
                     <div class="track-order-grid">
                         <div class="track-mini">
                             <span>Capital</span>
-                            <strong>${{ number_format($order->amount, 2) }}</strong>
+                            <strong>${{ number_format($order->principal_amount, 2) }}</strong>
                         </div>
                         <div class="track-mini">
                             <span>{{ __t('profit') }}</span>
@@ -535,7 +534,7 @@
 
                     <div class="track-total-return" style="margin-bottom:0;">
                         <div class="track-card-label">Total Return</div>
-                        <strong style="color:var(--accent);">${{ number_format($order->amount + $order->expected_profit, 2) }}</strong>
+                        <strong style="color:var(--accent);">${{ number_format($order->total_return, 2) }}</strong>
                     </div>
 
                     <div class="track-order-foot">

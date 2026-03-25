@@ -40,6 +40,50 @@ class ComputeOrder extends Model
         return $this->belongsTo(ComputePlan::class);
     }
 
+    public function getPrincipalAmountAttribute(): float
+    {
+        return round((float) ($this->investment_amount ?? $this->amount ?? 0), 2);
+    }
+
+    public function getTotalReturnAttribute(): float
+    {
+        return round($this->principal_amount + (float) $this->expected_profit, 2);
+    }
+
+    public function syncProjectedFigures(bool $save = true): bool
+    {
+        $this->loadMissing('computePlan');
+
+        if (!$this->computePlan) {
+            return false;
+        }
+
+        $principal = $this->principal_amount;
+        $dailyPercent = (float) ($this->daily_profit_percent ?? $this->computePlan->daily_profit ?? 0);
+        $days = max(0, ((float) $this->computePlan->duration_minutes) / 1440);
+
+        if ($this->computePlan->compound_interest) {
+            $expectedProfit = round(($principal * pow(1 + ($dailyPercent / 100), $days)) - $principal, 2);
+        } else {
+            $expectedProfit = round($principal * (($dailyPercent / 100) * $days), 2);
+        }
+
+        $hasChanges =
+            round((float) $this->amount, 2) !== $principal ||
+            round((float) $this->expected_profit, 2) !== $expectedProfit ||
+            $this->investment_amount === null;
+
+        $this->amount = $principal;
+        $this->investment_amount = $principal;
+        $this->expected_profit = $expectedProfit;
+
+        if ($hasChanges && $save) {
+            $this->save();
+        }
+
+        return $hasChanges;
+    }
+
     /** Progress percentage */
     public function getProgressPercentageAttribute(): int
     {

@@ -79,7 +79,7 @@ class ComputeController extends Controller
                 'expected_profit' => $expectedProfit,
                 'daily_profit_percent' => $dailyPercent,
                 'started_at'      => now(),
-                'ends_at'         => now()->addDays($days),
+                'ends_at'         => now()->addMinutes((int) $plan->duration_minutes),
                 'last_compound_at' => now(),
                 'status'          => 'running',
                 'is_paid'         => false,
@@ -112,16 +112,25 @@ class ComputeController extends Controller
     public function track()
     {
         $this->setLocale();
-        // Process any completed orders for this user
-        $completingOrders = ComputeOrder::where('user_id', auth()->id())
+        $runningOrders = ComputeOrder::with(['computePlan', 'user'])
+            ->where('user_id', auth()->id())
             ->where('status', 'running')
-            ->where('ends_at', '<=', now())
-            ->where('is_paid', false)
+            ->latest()
             ->get();
+
+        foreach ($runningOrders as $order) {
+            $order->syncProjectedFigures();
+        }
+
+        $completingOrders = $runningOrders
+            ->where('is_paid', false)
+            ->filter(fn (ComputeOrder $order) => $order->ends_at && $order->ends_at->lte(now()));
 
         foreach ($completingOrders as $order) {
             DB::transaction(function () use ($order) {
-                $totalReturn = $order->amount + $order->expected_profit;
+                $order->syncProjectedFigures();
+
+                $totalReturn = $order->total_return;
                 $order->user->increment('balance', $totalReturn);
                 $order->user->refresh();
                 $balanceAfter = $order->user->balance;
@@ -145,11 +154,13 @@ class ComputeController extends Controller
 
         $activeOrders = ComputeOrder::where('user_id', auth()->id())
             ->where('status', 'running')
+            ->with('computePlan')
             ->latest()
             ->get();
 
         $completedOrders = ComputeOrder::where('user_id', auth()->id())
             ->where('status', 'completed')
+            ->with('computePlan')
             ->latest()
             ->get();
 

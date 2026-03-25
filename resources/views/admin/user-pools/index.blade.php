@@ -123,7 +123,7 @@
               @endif
             </td>
             <td data-label="Vault" style="font-weight:700;color:#667eea">{{ $userPool->computePlan->name ?? 'N/A' }}</td>
-            <td data-label="Amount Invested" style="font-weight:700;color:#dc2626">${{ number_format($userPool->amount ?? 0, 2) }}</td>
+            <td data-label="Amount Invested" style="font-weight:700;color:#dc2626">${{ number_format($userPool->principal_amount, 2) }}</td>
             <td data-label="Status">
               @if($userPool->status == 'running')
                 <span class="status-badge status-active">✓ Running</span>
