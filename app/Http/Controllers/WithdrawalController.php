@@ -83,9 +83,11 @@ class WithdrawalController extends Controller
         }
 
         // 5️⃣ Fees (8% for all networks)
+        // The entered amount is the total debit from the user's balance.
+        $withdrawalAmount = round((float) $request->amount, 2);
         $feePercentage = 8;
-        $fee = ($request->amount * $feePercentage) / 100;
-        $totalDebit = $request->amount + $fee;
+        $fee = round(($withdrawalAmount * $feePercentage) / 100, 2);
+        $totalDebit = $withdrawalAmount;
 
         // 6️⃣ Check balance
         if ($user->balance < $totalDebit) {
@@ -104,7 +106,7 @@ class WithdrawalController extends Controller
             // Create withdrawal
             Withdrawal::create([
                 'user_id'  => $user->id,
-                'amount'   => $request->amount,
+                'amount'   => $withdrawalAmount,
                 'currency' => 'USDT_' . $request->network,
                 'address'  => $request->address,
                 'status'   => 'pending',

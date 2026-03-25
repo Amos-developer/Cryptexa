@@ -287,6 +287,17 @@
                 <div style="margin-top: 10px; font-size: 12px; text-align: center;">
                     <span class="text-secondary">{{ __t('minimum') }}: <span style="color: #38bdf8; font-weight: 700;">$10</span></span>
                 </div>
+
+                <div style="
+                    margin-top: 12px;
+                    background: rgba(34,197,94,0.08);
+                    border: 1px solid rgba(34,197,94,0.18);
+                    border-radius: 12px;
+                    padding: 12px 14px;
+                ">
+                    <p style="color: #86efac; font-size: 12px; font-weight: 700; margin: 0 0 4px 0;">8% fee is taken from the amount you enter</p>
+                    <p style="color: #94a3b8; font-size: 12px; line-height: 1.6; margin: 0;">If you enter $100, your balance is reduced by $100, you receive $92, and the company keeps $8.</p>
+                </div>
             </div>
 
             <!-- WALLET ADDRESS -->
