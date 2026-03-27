@@ -6,9 +6,9 @@
     --accent: #6ae3ff;
     --success: #22c55e;
     --warning: #fbbf24;
-    max-width: 1080px;
+    max-width: 1180px;
     margin: 0 auto;
-    padding: 106px 14px calc(env(safe-area-inset-bottom, 0px) + 138px);
+    padding: 106px 12px calc(env(safe-area-inset-bottom, 0px) + 138px);
     color: var(--text);
 }
 
@@ -24,7 +24,7 @@
 
 .home-grid {
     display: grid;
-    gap: 16px;
+    gap: 14px;
 }
 
 .home-card,
@@ -37,7 +37,7 @@
 }
 
 .home-card {
-    padding: 16px;
+    padding: 14px;
 }
 
 .home-eyebrow {
@@ -88,20 +88,20 @@
 .action-grid,
 .vault-stats {
     display: grid;
-    gap: 10px;
+    gap: 9px;
 }
 
 .metric-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    margin-top: 16px;
+    margin-top: 14px;
 }
 
 .metric-card,
 .vault-stat {
-    padding: 12px;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 11px;
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .metric-card span,
@@ -129,20 +129,20 @@
 
 .action-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
+    gap: 9px;
 }
 
 .home-action {
-    padding: 8px 6px;
+    padding: 10px 8px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 7px;
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: 72px;
+    min-height: 78px;
     transition: transform 0.2s ease, border-color 0.2s ease;
-    border-radius: 14px;
+    border-radius: 16px;
 }
 
 .home-action:hover {
@@ -151,9 +151,9 @@
 }
 
 .action-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 10px;
+    width: 32px;
+    height: 32px;
+    border-radius: 11px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -163,20 +163,20 @@
 
 .action-icon img,
 .action-icon svg {
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
 }
 
 .action-title {
     color: var(--text);
-    font-size: 10px;
+    font-size: 10.5px;
     font-weight: 700;
     line-height: 1.2;
 }
 
 .action-sub {
     margin-top: 2px;
-    font-size: 8px;
+    font-size: 8.5px;
     letter-spacing: 0.02em;
 }
 
@@ -194,7 +194,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 12px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 .home-section-head--tight {
@@ -222,14 +222,15 @@
 
 .vault-list {
     display: grid;
-    gap: 14px;
+    gap: 12px;
 }
 
 .vault-card {
     display: block;
-    padding: 20px;
+    padding: 16px;
     color: inherit;
     transition: transform 0.2s ease, border-color 0.2s ease;
+    border-radius: 20px;
 }
 
 .vault-card:hover {
@@ -281,12 +282,12 @@
 
 .vault-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: 14px;
+    margin-top: 12px;
 }
 
 .vault-foot {
-    margin-top: 14px;
-    padding-top: 14px;
+    margin-top: 12px;
+    padding-top: 12px;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     font-size: 12px;
 }
@@ -321,7 +322,15 @@
     }
 
     .home-layout {
-        grid-template-columns: 320px minmax(0, 1fr);
+        grid-template-columns: 1fr;
         align-items: start;
+    }
+
+    .home-card {
+        padding: 16px;
+    }
+
+    .vault-card {
+        padding: 18px;
     }
 }
