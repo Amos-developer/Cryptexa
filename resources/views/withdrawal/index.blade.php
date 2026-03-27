@@ -18,12 +18,23 @@
 </div>
 
 <!-- MAIN CONTENT -->
-<div class="pt-80 pb-80" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%); min-height: 100vh;">
-    <div class="tf-container" style="max-width: 500px; margin: 0 auto; padding: 0 20px;">
+<div class="pt-80 pb-80 withdraw-page" style="background: linear-gradient(135deg, #020617 0%, #0f172a 100%); min-height: 100vh;">
+    <div class="tf-container withdraw-shell" style="max-width: 500px; margin: 0 auto; padding: 0 20px;">
+
+        <section class="withdraw-hero-panel" style="animation: slideDown 0.6s ease;">
+            <div class="withdraw-hero-panel__eyebrow">CRYP TEXA PAYOUT DESK</div>
+            <div class="withdraw-hero-panel__head">
+                <div>
+                    <h2>Withdraw with confidence</h2>
+                    <p>Your amount is deducted once, the 8% fee stays inside it, and the rest reaches the user's wallet.</p>
+                </div>
+                <div class="withdraw-hero-panel__pill">Mobile-first flow</div>
+            </div>
+        </section>
 
         <!-- BALANCE CARD -->
-        <div style="text-align: center; margin-bottom: 24px; animation: slideDown 0.6s ease;">
-            <div style="background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(34,197,94,0.1)); border: 1px solid rgba(56,189,248,0.2); border-radius: 20px; padding: 24px; box-shadow: 0 10px 40px rgba(56,189,248,0.15);">
+        <div class="withdraw-balance-wrap" style="text-align: center; animation: slideDown 0.6s ease;">
+            <div class="withdraw-balance-card" style="background: linear-gradient(135deg, rgba(56,189,248,0.1), rgba(34,197,94,0.1)); border: 1px solid rgba(56,189,248,0.2); border-radius: 20px; padding: 24px; box-shadow: 0 10px 40px rgba(56,189,248,0.15);">
                 <p style="color: #94a3b8; font-size: 12px; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">{{ __t('available_balance') }}</p>
                 <h1 style="color: #e5e7eb; font-weight: 900; font-size: 36px; margin: 0 0 4px 0; background: linear-gradient(135deg, #38bdf8, #22d3ee); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${{ number_format(auth()->user()->balance, 2) }}</h1>
                 <p style="color: #64748b; font-size: 11px; margin: 0;">USDT • {{ __t('min_withdrawal') }} $10</p>
@@ -143,7 +154,7 @@
         </script>
         @endif
 
-        <form method="POST" action="{{ route('withdraw.submit') }}" @if(!$hasCompletedPool || !$hasWithdrawalPin) style="opacity: 0.5; pointer-events: none;" @endif>
+        <form method="POST" action="{{ route('withdraw.submit') }}" class="withdraw-form-card" @if(!$hasCompletedPool || !$hasWithdrawalPin) style="opacity: 0.5; pointer-events: none;" @endif>
             @csrf
 
             <!-- NETWORK SELECT -->
@@ -297,6 +308,21 @@
                 ">
                     <p style="color: #86efac; font-size: 12px; font-weight: 700; margin: 0 0 4px 0;">8% fee is taken from the amount you enter</p>
                     <p style="color: #94a3b8; font-size: 12px; line-height: 1.6; margin: 0;">If you enter $100, your balance is reduced by $100, you receive $92, and the company keeps $8.</p>
+                </div>
+
+                <div class="withdraw-preview-grid">
+                    <div class="withdraw-preview-tile">
+                        <span>Balance debit</span>
+                        <strong id="previewDebit">$0.00</strong>
+                    </div>
+                    <div class="withdraw-preview-tile">
+                        <span>Company fee</span>
+                        <strong id="previewFee">$0.00</strong>
+                    </div>
+                    <div class="withdraw-preview-tile withdraw-preview-tile--accent">
+                        <span>User receives</span>
+                        <strong id="previewReceive">$0.00</strong>
+                    </div>
                 </div>
             </div>
 
@@ -496,6 +522,139 @@
 
 <!-- ANIMATIONS & STYLES -->
 <style>
+    .withdraw-page {
+        position: relative;
+        overflow: hidden;
+        background:
+            radial-gradient(circle at top right, rgba(56, 189, 248, 0.14), transparent 26%),
+            radial-gradient(circle at bottom left, rgba(34, 197, 94, 0.10), transparent 22%),
+            linear-gradient(180deg, #020617 0%, #08111f 42%, #0f172a 100%) !important;
+    }
+
+    .withdraw-shell {
+        position: relative;
+        display: grid;
+        gap: 18px;
+        z-index: 1;
+    }
+
+    .withdraw-hero-panel {
+        margin-top: 88px;
+        padding: 20px;
+        border-radius: 24px;
+        border: 1px solid rgba(56, 189, 248, 0.14);
+        background: linear-gradient(180deg, rgba(9, 17, 30, 0.92), rgba(15, 23, 42, 0.92));
+        box-shadow: 0 22px 50px rgba(0, 0, 0, 0.28);
+    }
+
+    .withdraw-hero-panel__eyebrow {
+        display: inline-flex;
+        margin-bottom: 12px;
+        color: #6ae3ff;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+    }
+
+    .withdraw-hero-panel__head {
+        display: grid;
+        gap: 14px;
+    }
+
+    .withdraw-hero-panel__head h2 {
+        margin: 0 0 6px;
+        color: #f8fbff;
+        font-size: 28px;
+        line-height: 1.02;
+        font-weight: 900;
+    }
+
+    .withdraw-hero-panel__head p {
+        margin: 0;
+        color: #94a3b8;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .withdraw-hero-panel__pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        min-height: 36px;
+        padding: 0 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        background: rgba(56, 189, 248, 0.08);
+        color: #d8f7ff;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .withdraw-balance-wrap {
+        margin-top: -6px;
+    }
+
+    .withdraw-balance-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 26px !important;
+        box-shadow: 0 18px 44px rgba(8, 145, 178, 0.16) !important;
+    }
+
+    .withdraw-form-card > div[class^="mb-"],
+    .withdraw-form-card > button,
+    .withdraw-form-card > div[style*="margin-top: 20px"] {
+        position: relative;
+        overflow: hidden;
+        border-radius: 22px;
+        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
+    }
+
+    .network-option > div {
+        border-radius: 18px !important;
+        min-height: 88px;
+    }
+
+    .withdraw-preview-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    .withdraw-preview-tile {
+        padding: 13px 12px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(255, 255, 255, 0.04);
+        text-align: left;
+    }
+
+    .withdraw-preview-tile span {
+        display: block;
+        margin-bottom: 8px;
+        color: #94a3b8;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .withdraw-preview-tile strong {
+        color: #f8fbff;
+        font-size: 16px;
+        font-weight: 800;
+    }
+
+    .withdraw-preview-tile--accent {
+        border-color: rgba(34, 197, 94, 0.18);
+        background: rgba(34, 197, 94, 0.08);
+    }
+
+    .withdraw-preview-tile--accent strong {
+        color: #86efac;
+    }
+
     @keyframes slideDown {
         from {
             opacity: 0;
@@ -547,6 +706,21 @@
 
         h5 {
             font-size: 14px !important;
+        }
+
+        .withdraw-preview-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (min-width: 640px) {
+        .withdraw-hero-panel__head {
+            grid-template-columns: 1fr auto;
+            align-items: end;
+        }
+
+        .withdraw-form-card > div:first-child > div:last-child {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         }
     }
 </style>
@@ -623,6 +797,16 @@
     const amountInput = document.querySelector('input[name="amount"]');
     const maxBalance = parseFloat(amountInput.dataset.maxBalance);
 
+    function updateWithdrawalPreview() {
+        const amount = parseFloat(amountInput.value) || 0;
+        const fee = amount * 0.08;
+        const receive = Math.max(amount - fee, 0);
+
+        document.getElementById('previewDebit').textContent = '$' + amount.toFixed(2);
+        document.getElementById('previewFee').textContent = '$' + fee.toFixed(2);
+        document.getElementById('previewReceive').textContent = '$' + receive.toFixed(2);
+    }
+
     amountInput.addEventListener('input', function() {
         if (parseFloat(this.value) < 10) {
             this.style.borderColor = '#ef4444';
@@ -631,7 +815,11 @@
         } else {
             this.style.borderColor = 'rgba(56,189,248,0.2)';
         }
+
+        updateWithdrawalPreview();
     });
+
+    updateWithdrawalPreview();
 
     // Send verification code with cooldown
     let cooldownTimer = null;

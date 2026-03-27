@@ -1,9 +1,9 @@
 <div class="header-style2 fixed-top trade-header-wrap">
     <div class="trade-header">
         <div class="trade-header__profile">
-            <div class="trade-header__avatar-shell">
-                <div class="trade-header__avatar">
-                    <img src="{{ asset('images/avt/avt2.jpg') }}" alt="{{ auth()->user()->username }}">
+            <div class="trade-header__avatar-shell" style="width: 48px; height: 48px; flex: 0 0 48px;">
+                <div class="trade-header__avatar" style="width: 48px; height: 48px; overflow: hidden; border-radius: 16px;">
+                    <img src="{{ asset('images/avt/avt2.jpg') }}" alt="{{ auth()->user()->username }}" style="display: block; width: 100%; height: 100%; object-fit: cover;">
                 </div>
                 <span class="trade-header__signal"></span>
             </div>
